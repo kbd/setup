@@ -1,0 +1,11 @@
+todo:
+* code to install/update all homebrew packages
+* provide a script to bootstrap a new system:
+  * that you can run with curl-a-script-from-github shenanigans
+  * that'll ensure homebrew and git are installed
+  * that'll check out this repo and get the setup going
+* record all osx system settings that you like and write code to apply them
+* write a script to update your repo so that you don't have to manually
+  do cd ~/setup; git -am "message". Instead, commit-config "message"
+* save coding font to repository and ensure it's installed
+
