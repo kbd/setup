@@ -39,7 +39,8 @@ def symlink_files(source_dir, dest_dir):
         if file in DEST_OVERRIDES:
             # if an override, should still be *within* the dest_dir
             dest_dir_override = os.path.join(dest_dir, DEST_OVERRIDES[file])
-            log.debug("Overridden destination for file {!r} is {!r}".format(file, dest_dir_override))
+            log.debug("Overridden destination for file {!r} is {!r}".format(
+                file, dest_dir_override))
 
         repo_path = os.path.join(source_dir, file)
         dest_path = os.path.join(dest_dir_override, file)
