@@ -1,4 +1,5 @@
 todo:
+* have setup script checkout the newest version from git
 * code to install/update all homebrew packages
 * provide a script to bootstrap a new system:
   * that you can run with curl-a-script-from-github shenanigans
