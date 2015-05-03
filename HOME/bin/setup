@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import datetime
 import os
-import shutil
 import logging
 
 log = logging.getLogger()
@@ -10,9 +9,10 @@ DEST_OVERRIDES = {
     'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User/'
 }
 
+
 def create_backup_path(path):
     """
-    Create a backup path given path. Use case is that a file exists at path and 
+    Create a backup path given path. Use case is that a file exists at path and
     you want to rename it to (a non-existent) backup path. Obviously there's a small
     race condition here but if the race condition fails and a path exists at the
     target by the time we go to move something there, the move will simply fail
@@ -61,6 +61,7 @@ def symlink_files(source_dir, dest_dir):
 
         os.symlink(repo_path, dest_path)
 
+
 if __name__ == '__main__':
     # todo: support setting debug level from command line?
     logging.basicConfig(level=logging.INFO)
@@ -68,7 +69,7 @@ if __name__ == '__main__':
     # for all files and directories within $repo/HOME/,
     # symlink them into $HOME unless it's in NON_HOME
     # this setup program lives in $repo/HOME/bin/, which should be symlinked to
-    # $HOME/bin, so $repo/HOME/bin/../.. will get the root of the repository 
+    # $HOME/bin, so $repo/HOME/bin/../.. will get the root of the repository
     repo_root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '../..'))
     repo_home_dir = os.path.join(repo_root_dir, 'HOME')
     home_dir = os.path.expanduser('~')
