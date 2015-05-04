@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
+import argparse
 import datetime
 import os
 import logging
 
 log = logging.getLogger()
 
+# overrides should not have slashes at the end even though it's a directory
+# because it refers to the symlink that's created
 DEST_OVERRIDES = {
-    'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User/'
+    'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User'
 }
+
+IGNORES = [  # do this for now, piggyback off of .gitignore later
+    '.DS_Store'
+]
 
 
 def create_backup_path(path):
@@ -34,16 +41,22 @@ def symlink_files(source_dir, dest_dir):
     files = os.listdir(source_dir)
     log.debug("source_dir is: {!r}, dest_dir is: {!r}".format(source_dir, dest_dir))
     for file in files:
+        if file in IGNORES:
+            log.debug("{!r} is ignored")
+            continue
+
         # default to the provided dest_dir, otherwise use the override
-        dest_dir_override = dest_dir
         if file in DEST_OVERRIDES:
             # if an override, should still be *within* the dest_dir
             dest_dir_override = os.path.join(dest_dir, DEST_OVERRIDES[file])
             log.debug("Overridden destination for file {!r} is {!r}".format(
                 file, dest_dir_override))
 
+            dest_path = dest_dir_override
+        else:
+            dest_path = os.path.join(dest_dir, file)
+
         repo_path = os.path.join(source_dir, file)
-        dest_path = os.path.join(dest_dir_override, file)
         log.debug("Linking {!r} to {!r}".format(repo_path, dest_path))
         if os.path.lexists(dest_path):
             # if the file exists, it's ok to overwrite if it's already a symlink
@@ -63,8 +76,12 @@ def symlink_files(source_dir, dest_dir):
 
 
 if __name__ == '__main__':
-    # todo: support setting debug level from command line?
-    logging.basicConfig(level=logging.INFO)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug logging')
+    args = parser.parse_args()
+
+    loglevel = logging.DEBUG if args.debug else logging.INFO
+    logging.basicConfig(level=loglevel)
 
     # for all files and directories within $repo/HOME/,
     # symlink them into $HOME unless it's in NON_HOME

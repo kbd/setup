@@ -1,0 +1,14 @@
+[
+	{ "keys": ["super+."], "command": "find_under_expand" },
+	{ "keys": ["shift+super+."], "command": "find_under_expand_skip" },
+
+	{ "keys": ["home"], "command": "move_to", "args": {"to": "bol", "extend": false} },
+	{ "keys": ["end"], "command": "move_to", "args": {"to": "eol", "extend": false} },
+
+	// { "keys": ["super+d"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} },
+	{ "keys": ["super+d"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete Line.sublime-macro"} },
+	{ "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/User/convert-indentation-to-4-spaces.sublime-macro"} },
+
+	// dunno why there's no built-in shortcut for this
+	{ "keys": ["alt+w"], "command": "toggle_setting", "args": {"setting": "word_wrap"} }
+]

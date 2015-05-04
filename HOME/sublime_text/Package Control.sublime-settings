@@ -1,0 +1,12 @@
+{
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Package Control",
+		"Python Flake8 Lint",
+		"Python PEP8 Autoformat",
+		"Theme - Soda"
+	]
+}
