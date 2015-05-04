@@ -20,9 +20,10 @@ IGNORES = [  # do this for now, piggyback off of .gitignore later
 def create_backup_path(path):
     """
     Create a backup path given path. Use case is that a file exists at path and
-    you want to rename it to (a non-existent) backup path. Obviously there's a small
-    race condition here but if the race condition fails and a path exists at the
-    target by the time we go to move something there, the move will simply fail
+    you want to rename it to (a non-existent) backup path. Obviously there's a
+    small race condition (where a file is created at the backup path you
+    specify before you move the file there but after this determines the backup
+    path), but that's not worth handling.
 
     """
     d = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
