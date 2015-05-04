@@ -241,6 +241,7 @@ alias ......="cd ../../../../.."
 
 alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
+alias lla="ls -la"  # and this
 
 # alias meld="\meld 2> /dev/null"
 
