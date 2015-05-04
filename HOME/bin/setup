@@ -18,14 +18,14 @@ def create_backup_path(path):
     target by the time we go to move something there, the move will simply fail
 
     """
-    d = datetime.datetime.now().isoformat()
+    d = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
 
     while os.path.exists(path):  # keep adding to filename until you get a non-existent one
         # strip a trailing slash so you don't create something like foo/.bak...
         if path[-1] == '/':
             path = path[:-1]
 
-        path += '.bak.' + d
+        path += '.bak' + d
 
     return path
 
