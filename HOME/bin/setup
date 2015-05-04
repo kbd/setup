@@ -38,6 +38,14 @@ def create_backup_path(path):
 
 
 def symlink_files(source_dir, dest_dir):
+    """
+    For all files and directories within source_dir, symlink them into dest_dir.
+
+    The destination in the dest_dir defaults to its location in the source_dir
+    unless it's overridden in DEST_OVERRIDES.
+
+    """
+
     files = os.listdir(source_dir)
     log.debug("source_dir is: {!r}, dest_dir is: {!r}".format(source_dir, dest_dir))
     for file in files:
@@ -83,11 +91,10 @@ if __name__ == '__main__':
     loglevel = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(level=loglevel)
 
-    # for all files and directories within $repo/HOME/,
-    # symlink them into $HOME unless it's in NON_HOME
-    # this setup program lives in $repo/HOME/bin/, which should be symlinked to
-    # $HOME/bin, so $repo/HOME/bin/../.. will get the root of the repository
+    # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
+    # get the root of the repository. Use realpath to resolve symbolic links
     repo_root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '../..'))
     repo_home_dir = os.path.join(repo_root_dir, 'HOME')
     home_dir = os.path.expanduser('~')
+
     symlink_files(repo_home_dir, home_dir)
