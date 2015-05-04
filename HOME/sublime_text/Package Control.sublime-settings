@@ -4,6 +4,7 @@
 	],
 	"installed_packages":
 	[
+		"Better CoffeeScript",
 		"Package Control",
 		"Python Flake8 Lint",
 		"Python PEP8 Autoformat",
