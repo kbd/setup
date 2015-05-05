@@ -85,10 +85,10 @@ def symlink_files(source_dir, dest_dir):
             else:
                 # move to backup location before proceeding
                 backup_path = create_backup_path(dest_path)
-                log.info("Destination exists at {!r}. Renaming to {!r}".format(
-                    dest_path, backup_path))
-
+                log.info("Renaming {!r} to {!r}".format(dest_path, backup_path))
                 os.rename(dest_path, backup_path)
+
+                log.info("Creating new symlink of {!r} to {!r}".format(file, dest_path))
                 os.symlink(repo_path, dest_path)
         else:
             log.info("Creating new symlink of {!r} to {!r}".format(file, dest_path))
