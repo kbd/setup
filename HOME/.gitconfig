@@ -1,0 +1,23 @@
+[user]
+	name = Keith Devens
+[push]
+	default = simple
+[merge]
+	tool = git_ext_merge
+[mergetool "git_ext_merge"]
+	cmd = git_ext_merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[diff]
+	external = git_ext_diff
+[mergetool]
+	trustExitCode = false
+[core]
+	excludesfile = ~/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[include]
+	# allow machine-specific configuration (eg. work vs home)
+	path = ~/.gitconfig_machine
