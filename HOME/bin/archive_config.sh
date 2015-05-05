@@ -1,5 +1,6 @@
 # disable-copyfile prevents getting extended attribute files on mac
-tar czvf ~/config.tar.gz \
+# -L to resolve symbolic links
+tar czv -L -f ~/config.tar.gz \
 --exclude-from ~/.gitignore_global \
 --disable-copyfile \
 -C ~ \
