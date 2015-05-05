@@ -243,7 +243,29 @@ alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
 alias lla="ls -la"  # and this
 
-# alias meld="\meld 2> /dev/null"
+alias ipython="ipython --no-banner --no-confirm-exit"
+
+function ipython {
+    # fix ipython to handle arguments like python
+    # https://twitter.com/keithdevens/status/595294880533876736
+    # this is an imperfect hack because you could do "-c 'command'" and
+    # have command actually be a file in contrived cases, but this
+    # shouldn't cause problems normally
+    local i=1
+    local new_args=$@
+
+    for arg in $@; do
+        i=$((i+1))
+        if [[ $arg != -* && -f $arg ]]; then
+            # if arg doesn't start with a dash and the arg is a file
+            # then consider this the script passed to ipython and
+            # all args after this are args to the script
+            new_args="${@:0:$i} -- ${@:$i}"
+            break
+        fi
+    done
+    command ipython $new_args
+}
 
 # shopts
 shopt -s histappend
