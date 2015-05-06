@@ -8,6 +8,8 @@
 		"Package Control",
 		"Python Flake8 Lint",
 		"Python PEP8 Autoformat",
+		"SublimeLinter",
+		"SublimeLinter-shellcheck",
 		"Theme - Soda"
 	]
 }

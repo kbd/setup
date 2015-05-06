@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export PLATFORM=$(uname)
 export PATH="$HOME/bin:$PATH"
 export EDITOR=vi
@@ -252,19 +253,19 @@ function ipython {
     # have command actually be a file in contrived cases, but this
     # shouldn't cause problems normally
     local i=1
-    local new_args=$@
+    local new_args=("$@")
 
-    for arg in $@; do
+    for arg in "$@"; do
         i=$((i+1))
         if [[ $arg != -* && -f $arg ]]; then
             # if arg doesn't start with a dash and the arg is a file
             # then consider this the script passed to ipython and
             # all args after this are args to the script
-            new_args="${@:0:$i} -- ${@:$i}"
+            new_args=("${@:0:$i}" "--" "${@:$i}")
             break
         fi
     done
-    command ipython $new_args
+    command ipython "${new_args[@]}"
 }
 
 # shopts
@@ -307,4 +308,3 @@ alias su="export PROMPT_COMMAND='source $_LOGIN_BASH_PROFILE; $PROMPT_COMMAND' &
 _source_completions /usr/local/etc/bash_completion.d
 _source_completions $HOME/bin/shell_sources
 complete -cf sudo  # allow autocompletions after sudo.
-
