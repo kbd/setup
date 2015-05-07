@@ -2,8 +2,10 @@
 import argparse
 import datetime
 import os
-import logging
+import subprocess
+from functools import partial
 
+import logging
 log = logging.getLogger()
 
 # overrides should not have slashes at the end even though it's a directory
@@ -17,7 +19,7 @@ IGNORES = [  # do this for now, piggyback off of .gitignore later
 ]
 
 
-def create_backup_path(path):
+def get_backup_path(path):
     """
     Create a backup path given path. Use case is that a file exists at path and
     you want to rename it to (a non-existent) backup path. Obviously there's a
@@ -38,7 +40,7 @@ def create_backup_path(path):
     return path
 
 
-def symlink_files(source_dir, dest_dir):
+def create_symlinks(source_dir, dest_dir):
     """
     For all files and directories within source_dir, symlink them into dest_dir.
 
@@ -84,7 +86,7 @@ def symlink_files(source_dir, dest_dir):
                     os.symlink(repo_path, dest_path)
             else:
                 # move to backup location before proceeding
-                backup_path = create_backup_path(dest_path)
+                backup_path = get_backup_path(dest_path)
                 log.info("Renaming {!r} to {!r}".format(dest_path, backup_path))
                 os.rename(dest_path, backup_path)
 
@@ -94,9 +96,39 @@ def symlink_files(source_dir, dest_dir):
             log.info("Creating new symlink of {!r} to {!r}".format(file, dest_path))
             os.symlink(repo_path, dest_path)
 
+
+repo_actions = {
+    # sub_action: None (optional), False (disallowed), True (required)
+    'status': {'cmd': ['git', 'status'], 'sub_action': False},
+    'diff':   {'cmd': ['git', 'diff'], 'sub_action': False},
+    'commit': {'cmd': ['git', 'commit', '-am', None], 'sub_action': True},
+    'update': {'cmd': ['git', 'pull'], 'sub_action': False},
+    'pull':   {'cmd': ['git', 'pull'], 'sub_action': False},
+}
+
+
+def repo(cwd, action, sub_action=None):
+    call = partial(subprocess.call, cwd=cwd)
+
+    params = repo_actions[action]
+    if params['sub_action'] is False and sub_action:
+        raise Exception("Not allowed to provide sub action for '{}'".format(action))
+    elif params['sub_action'] is True and not sub_action:
+        raise Exception("Must provide sub action for '{}'".format(action))
+
+    cmd = repo_actions[action]['cmd']
+    if sub_action:
+        # the sub action position is identified by None in the command, so replace it
+        cmd = [i or sub_action for i in cmd]
+
+    call(cmd)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--debug', action='store_true', help='enable debug logging')
+    parser.add_argument('action', nargs='?', choices=repo_actions.keys())
+    parser.add_argument('sub_action', nargs='?')
     args = parser.parse_args()
 
     loglevel = logging.DEBUG if args.debug else logging.INFO
@@ -108,4 +140,7 @@ if __name__ == '__main__':
     repo_home_dir = os.path.join(repo_root_dir, 'HOME')
     home_dir = os.path.expanduser('~')
 
-    symlink_files(repo_home_dir, home_dir)
+    if args.action:
+        repo(repo_root_dir, args.action, args.sub_action)
+    else:
+        create_symlinks(repo_home_dir, home_dir)
