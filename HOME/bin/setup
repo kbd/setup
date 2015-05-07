@@ -3,7 +3,6 @@ import argparse
 import datetime
 import os
 import subprocess
-from functools import partial
 
 import logging
 log = logging.getLogger()
@@ -108,8 +107,6 @@ repo_actions = {
 
 
 def repo(cwd, action, sub_action=None):
-    call = partial(subprocess.call, cwd=cwd)
-
     params = repo_actions[action]
     if params['sub_action'] is False and sub_action:
         raise Exception("Not allowed to provide sub action for '{}'".format(action))
@@ -121,7 +118,7 @@ def repo(cwd, action, sub_action=None):
         # the sub action position is identified by None in the command, so replace it
         cmd = [i or sub_action for i in cmd]
 
-    call(cmd)
+    subprocess.call(cmd, cwd=cwd)
 
 
 if __name__ == '__main__':
