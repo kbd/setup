@@ -114,7 +114,7 @@ def repo(cwd, action, sub_action=None):
     elif params['sub_action'] is True and not sub_action:
         raise Exception("Must provide sub action for '{}'".format(action))
 
-    cmd = repo_actions[action]['cmd']
+    cmd = params['cmd']
     if sub_action:
         # the sub action position is identified by None in the command, so replace it
         cmd = [i or sub_action for i in cmd]
