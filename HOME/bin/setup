@@ -103,6 +103,7 @@ repo_actions = {
     'commit': {'cmd': ['git', 'commit', '-am', None], 'sub_action': True},
     'update': {'cmd': ['git', 'pull'], 'sub_action': False},
     'pull':   {'cmd': ['git', 'pull'], 'sub_action': False},
+    'push':   {'cmd': ['git', 'push'], 'sub_action': False},
 }
 
 
