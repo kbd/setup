@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 import argparse
 import datetime
+import getpass
+import json
 import os
+import pwd
+import shutil
 import subprocess
+from copy import copy
 
 import logging
 log = logging.getLogger()
@@ -96,49 +101,146 @@ def create_symlinks(source_dir, dest_dir):
             os.symlink(repo_path, dest_path)
 
 
-repo_actions = {
-    # sub_action: None (optional), False (disallowed), True (required)
-    'status': {'cmd': ['git', 'status'], 'sub_action': False},
-    'diff':   {'cmd': ['git', 'diff'], 'sub_action': False},
-    'commit': {'cmd': ['git', 'commit', '-am', None], 'sub_action': True},
-    'update': {'cmd': ['git', 'pull'], 'sub_action': False},
-    'pull':   {'cmd': ['git', 'pull'], 'sub_action': False},
-    'push':   {'cmd': ['git', 'push'], 'sub_action': False},
-}
+def create_command_line_parser(actions):
+    """
+    Create and return a command line parser configured with 'actions'
 
-
-def repo(cwd, action, sub_action=None):
-    params = repo_actions[action]
-    if params['sub_action'] is False and sub_action:
-        raise Exception("Not allowed to provide sub action for '{}'".format(action))
-    elif params['sub_action'] is True and not sub_action:
-        raise Exception("Must provide sub action for '{}'".format(action))
-
-    cmd = params['cmd']
-    if sub_action:
-        # the sub action position is identified by None in the command, so replace it
-        cmd = [i or sub_action for i in cmd]
-
-    subprocess.call(cmd, cwd=cwd)
-
-
-if __name__ == '__main__':
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--debug', action='store_true', help='enable debug logging')
-    parser.add_argument('action', nargs='?', choices=repo_actions.keys())
-    parser.add_argument('sub_action', nargs='?')
+
+    subparsers = parser.add_subparsers(dest='action')
+
+    for action, params in sorted(actions.items()):
+        subparser = subparsers.add_parser(
+            action, help=params['help'],
+            aliases=params.get('aliases', [])
+        )
+        subparser.set_defaults(func=params['func'])
+        args = params.get('args', {})
+        for k, v in args.items():
+            subparser.add_argument(k, help=v['help'])
+
+    return parser
+
+
+def repo(action, **kwargs):
+    cmd = ['git'] + action['cmd']
+    log.debug("cmd is {!r} and kwargs is: {!r}".format(cmd, kwargs))
+    cmd = [c.format(**kwargs) for c in cmd]
+    subprocess.check_call(cmd)
+
+
+def brew(*args, **kwargs):
+    # ensure homebrew is installed
+    if not shutil.which('brew'):  # hey look 'which' is built in as of Python 3.3
+        # todo: install homebrew if not installed
+        # http://brew.sh/
+        # ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        raise Exception("Homebrew must be installed")
+
+    with open('homebrew.json') as f:
+        j = json.load(f)
+
+    formulas = j['formulas']
+
+    # fix permissions on /usr/local if necessary
+    user = getpass.getuser()
+    uid = os.stat('/usr/local').st_uid
+    local_owner = pwd.getpwuid(uid).pw_name
+
+    log.debug("Currently logged in user is {!r}, owner of /usr/local is {!r}".format(
+        user, local_owner))
+
+    if user != local_owner:
+        log.info("Fixing permissions on /usr/local before running Homebrew")
+        # stupid that there's a shutil.chown but no shutil.chown -R
+        cmd = ['sudo', 'chown', '-R', user, '/usr/local']
+        log.info("Executing command: {!r}".format(cmd))
+        subprocess.check_call(cmd)
+
+    # ensure homebrew updated
+    log.info("Running 'brew update'")
+    subprocess.check_call(['brew', 'update'])
+
+    # upgrade all existing packages
+    log.info("Running 'brew upgrade'")
+    subprocess.call(['brew', 'upgrade', '--all'])
+    # ideally this would be check_call but homebrew returns an error code in cases that
+    # aren't actually errors: https://github.com/Homebrew/homebrew/issues/27048
+    # so, make sure to inspect the output for problems
+
+    # ensure expected packages are installed
+    log.info("Expected packages are: {}".format(', '.join(sorted(formulas))))
+    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
+    # but I suppose to really do this correctly I should check that. However, pretty sure
+    # all Homebrew package names should be ascii anyway so it's fine
+    installed_packages = subprocess.check_output(['brew', 'list']).decode().split()
+    log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
+
+    missing_packages = sorted(set(formulas) - set(installed_packages))
+    log.info("Missing packages are {}".format(', '.join(missing_packages)))
+
+    for p in missing_packages:
+        log.info("Installing package: {}".format(p))
+        subprocess.check_call(['brew', 'install', p])
+
+actions = {
+    'status': {
+        'func': repo,
+        'cmd': ['status'],
+        'help': 'Get repository status'
+    },
+    'diff': {
+        'func': repo,
+        'cmd': ['diff'],
+        'help': 'Get repository diff'
+    },
+    'commit': {
+        'func': repo,
+        'cmd': ['commit', '-am', '{message}'],
+        'args': {'message': {'help': 'The commit message'}},
+        'help': 'Commit to repository'
+    },
+    'pull': {
+        'func': repo,
+        'cmd': ['pull'],
+        'help': 'Pull repository from server',
+        'aliases': ['update'],
+    },
+    'push': {
+        'func': repo,
+        'cmd': ['push'],
+        'help': 'Push repository to server'
+    },
+    'brew': {
+        'func': brew,
+        # initial space because the beermug takes up two character spaces
+        # and overlaps if you don't pad it with a space afterwards
+        'help': "\U0001F37A Homebrew\U0001F37A"
+    }
+}
+
+if __name__ == '__main__':
+    parser = create_command_line_parser(actions)
     args = parser.parse_args()
 
     loglevel = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(level=loglevel)
 
+    log.debug("Command line arguments were: {!r}".format(args))
+
     # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
     # get the root of the repository. Use realpath to resolve symbolic links
     repo_root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '../..'))
     repo_home_dir = os.path.join(repo_root_dir, 'HOME')
+    os.chdir(repo_root_dir)  # set the cwd to the root of the repository
+    log.debug("Set cwd to {!r}".format(repo_root_dir))
     home_dir = os.path.expanduser('~')
 
-    if args.action:
-        repo(repo_root_dir, args.action, args.sub_action)
+    if args.func:
+        argsdict = copy(vars(args))
+        del argsdict['action']
+        args.func(actions[args.action], **argsdict)
     else:
         create_symlinks(repo_home_dir, home_dir)

@@ -1,10 +1,8 @@
 todo:
-* code to install/update all homebrew packages ('setup brew' or 'setup packages')
 * provide a script to bootstrap a new system:
   * that you can run with curl-a-script-from-github shenanigans
   * that'll ensure homebrew and git are installed
   * that'll check out this repo and get the setup going
 * record all osx system settings that you like and write code to apply them
 * save coding font to repository and ensure it's installed
-* see if it's possible to use argparse better so you don't need to do
-  'action' and 'sub-action' shenanigans that don't provide useful help output
+* expand homebrew package setup to all package setup, like pip, gems, etc.
