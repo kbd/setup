@@ -238,8 +238,8 @@ if __name__ == '__main__':
     log.debug("Set cwd to {!r}".format(repo_root_dir))
     home_dir = os.path.expanduser('~')
 
-    if args.func:
-        argsdict = copy(vars(args))
+    argsdict = copy(vars(args))
+    if 'func' in argsdict:
         del argsdict['action']
         args.func(actions[args.action], **argsdict)
     else:
