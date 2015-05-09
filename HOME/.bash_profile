@@ -282,7 +282,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     export CLICOLOR=1
 
     # no clue why this is necessary but Python isn't finding modules I've pip-installed
-    export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
+    # export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
 
     alias ls="ls -F"  # color handled by CLICOLOR
 else
