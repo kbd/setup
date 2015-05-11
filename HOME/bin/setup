@@ -179,7 +179,7 @@ def brew(*args, **kwargs):
     log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
 
     missing_packages = sorted(set(formulas) - set(installed_packages))
-    log.info("Missing packages are {}".format(', '.join(missing_packages)))
+    log.info("Missing packages are: {}".format(', '.join(missing_packages)))
 
     for p in missing_packages:
         log.info("Installing package: {}".format(p))
