@@ -1,6 +1,6 @@
 {
 	"formulas": [
 		"jq",
-		"homebrew/x11/meld"
+		"meld"
 	]
 }
