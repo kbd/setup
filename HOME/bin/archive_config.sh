@@ -12,5 +12,4 @@ tar czv -L -f ~/config.tar.gz \
  .hgignore_global \
  .subversion/config \
  .screenrc \
- .vimrc \
-"$HOME/Library/Application Support/Sublime Text 3/Packages/User/"
+ .vimrc
