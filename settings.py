@@ -107,10 +107,32 @@
                 'ShowPathbar': True,
                 'ShowStatusBar': True,
             },
-            "com.apple.menuextra.battery": {
+            'com.apple.menuextra.battery': {
                 # the menubar widget actually sets 'YES' or 'NO' but bool values work too
                 'ShowPercent': True,
             },
+
+            # trackpad settings
+            'com.apple.AppleMultitouchTrackpad': {
+                'Clicking': True,  # touch to click
+
+                # enable *both* methods of right clicking
+                'TrackpadRightClick': True,  # two finger tap
+                'TrackpadCornerSecondaryClick': 2,  # pushing to click in right corner
+
+                # disable "smart zoom" because it puts a delay on two-finger-tap right click
+                'TrackpadTwoFingerDoubleTapGesture': False,
+
+                'TrackpadThreeFingerDrag': True,
+            },
+            # 'com.apple.driver.AppleBluetoothMultitouch.trackpad': {
+            #     'TrackpadCornerSecondaryClick': 2,
+            #     'TrackpadRightClick': True
+            # },
+            # 'NSGlobalDomain': {
+            #     'com.apple.trackpad.trackpadCornerClickBehavior': 1,
+            #     'com.apple.trackpad.enableSecondaryClick': True,
+            # }
         }
     }
 }
