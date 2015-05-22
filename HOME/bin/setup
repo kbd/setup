@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import abc
 import argparse
 import code
 import datetime
@@ -189,8 +190,24 @@ def brew(action, settings, *args, **kwargs):
         subprocess.check_call(['brew', 'install', p])
 
 
+class mybool(metaclass=abc.ABCMeta):
+    """
+    Provide something that will parse '0' as False
+    because that's how 'defaults' returns false values
+
+    """
+    def __new__(self, value=False):
+        if value == '0':
+            value = False
+        return bool(value)
+
+    @classmethod
+    def __subclasshook__(cls, othercls):
+        return othercls is bool
+
+
 PYTHON_TO_DEFAULTS_TYPE_MAPPING = {
-    bool: 'boolean',
+    mybool: 'boolean',
     int: 'integer',
     str: 'string',
     float: 'float',
@@ -211,9 +228,9 @@ def defaults_read(domain, key):
     cmd = ['defaults', 'read', domain, key]
     log.debug("Executing command: {!r}".format(cmd))
     result = subprocess.check_output(cmd)
-    log.debug("Result was: {!r}".format(result))
-    result = result.decode().rstrip('\n')
-    return type(result)
+    typed_result = type(result.decode().rstrip('\n'))
+    log.debug("Result was: {!r}, typed_result was {!r}".format(result, typed_result))
+    return typed_result
 
 
 def defaults_write(domain, key, value):
