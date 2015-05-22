@@ -125,10 +125,18 @@
 
                 'TrackpadThreeFingerDrag': True,
             },
-            # 'com.apple.driver.AppleBluetoothMultitouch.trackpad': {
-            #     'TrackpadCornerSecondaryClick': 2,
-            #     'TrackpadRightClick': True
-            # },
+            'com.apple.driver.AppleBluetoothMultitouch.trackpad': {
+                'Clicking': True,  # touch to click
+
+                # enable *both* methods of right clicking
+                'TrackpadRightClick': True,  # two finger tap
+                'TrackpadCornerSecondaryClick': 2,  # pushing to click in right corner
+
+                # disable "smart zoom" because it puts a delay on two-finger-tap right click
+                'TrackpadTwoFingerDoubleTapGesture': False,
+
+                'TrackpadThreeFingerDrag': True,
+            },
             # 'NSGlobalDomain': {
             #     'com.apple.trackpad.trackpadCornerClickBehavior': 1,
             #     'com.apple.trackpad.enableSecondaryClick': True,
