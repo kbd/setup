@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import argparse
+import code
 import datetime
 import getpass
-import json
+import fnmatch
 import os
 import pwd
+import re
 import shutil
 import subprocess
 from copy import copy
@@ -12,15 +14,7 @@ from copy import copy
 import logging
 log = logging.getLogger()
 
-# overrides should not have slashes at the end even though it's a directory
-# because it refers to the symlink that's created
-DEST_OVERRIDES = {
-    'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User'
-}
-
-IGNORES = [  # do this for now, piggyback off of .gitignore later
-    '.DS_Store'
-]
+SETTINGS_FILE_LOCATION = 'settings.py'
 
 
 def get_backup_path(path):
@@ -44,26 +38,37 @@ def get_backup_path(path):
     return path
 
 
-def create_symlinks(source_dir, dest_dir):
+def create_symlinks(symlink_settings, source_dir, dest_dir):
     """
     For all files and directories within source_dir, symlink them into dest_dir.
 
     The destination in the dest_dir defaults to its location in the source_dir
-    unless it's overridden in DEST_OVERRIDES.
+    unless it's overridden in symlink_settings['overrides'].
 
     """
+    overrides = symlink_settings['overrides']
+    ignores = symlink_settings['ignores']
+
+    # ignores_file = symlink_settings['ignores_file']
+    #
+    # if os.path.exists(ignores_file):
+    #     ignores = list(filter(None, open(ignores_file).read().splitlines()))
+    # else:
+    #     path = os.path.join(os.getcwd(), ignores_file)
+    #     log.warning("Couldn't read ignores file at {!r}".format(path))
+    #     ignores = []
 
     files = os.listdir(source_dir)
     log.debug("source_dir is: {!r}, dest_dir is: {!r}".format(source_dir, dest_dir))
     for file in files:
-        if file in IGNORES:
+        if any(fnmatch.fnmatch(file, ignore) for ignore in ignores):
             log.debug("{!r} is ignored".format(file))
             continue
 
         # default to the provided dest_dir, otherwise use the override
-        if file in DEST_OVERRIDES:
+        if file in overrides:
             # if an override, should still be *within* the dest_dir
-            dest_dir_override = os.path.join(dest_dir, DEST_OVERRIDES[file])
+            dest_dir_override = os.path.join(dest_dir, overrides[file])
             log.debug("Overridden destination for file {!r} is {!r}".format(
                 file, dest_dir_override))
 
@@ -111,12 +116,13 @@ def create_command_line_parser(actions):
 
     subparsers = parser.add_subparsers(dest='action')
 
+    gs = globals()  # to resolve the function names specified in actions
     for action, params in sorted(actions.items()):
         subparser = subparsers.add_parser(
             action, help=params['help'],
             aliases=params.get('aliases', [])
         )
-        subparser.set_defaults(func=params['func'])
+        subparser.set_defaults(func=gs[params['func']])
         args = params.get('args', {})
         for k, v in args.items():
             subparser.add_argument(k, help=v['help'])
@@ -124,14 +130,14 @@ def create_command_line_parser(actions):
     return parser
 
 
-def repo(action, **kwargs):
+def repo(action, settings, *args, **kwargs):
     cmd = ['git'] + action['cmd']
     log.debug("cmd is {!r} and kwargs is: {!r}".format(cmd, kwargs))
     cmd = [c.format(**kwargs) for c in cmd]
     subprocess.check_call(cmd)
 
 
-def brew(*args, **kwargs):
+def brew(action, settings, *args, **kwargs):
     # ensure homebrew is installed
     if not shutil.which('brew'):  # hey look 'which' is built in as of Python 3.3
         # todo: install homebrew if not installed
@@ -139,10 +145,7 @@ def brew(*args, **kwargs):
         # ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         raise Exception("Homebrew must be installed")
 
-    with open('homebrew.json') as f:
-        j = json.load(f)
-
-    formulas = j['formulas']
+    formulas = settings['homebrew']['formulas']
 
     # fix permissions on /usr/local if necessary
     user = getpass.getuser()
@@ -185,62 +188,105 @@ def brew(*args, **kwargs):
         log.info("Installing package: {}".format(p))
         subprocess.check_call(['brew', 'install', p])
 
-actions = {
-    'status': {
-        'func': repo,
-        'cmd': ['status'],
-        'help': 'Get repository status'
-    },
-    'diff': {
-        'func': repo,
-        'cmd': ['diff'],
-        'help': 'Get repository diff'
-    },
-    'commit': {
-        'func': repo,
-        'cmd': ['commit', '-am', '{message}'],
-        'args': {'message': {'help': 'The commit message'}},
-        'help': 'Commit to repository'
-    },
-    'pull': {
-        'func': repo,
-        'cmd': ['pull'],
-        'help': 'Pull repository from server',
-        'aliases': ['update'],
-    },
-    'push': {
-        'func': repo,
-        'cmd': ['push'],
-        'help': 'Push repository to server'
-    },
-    'brew': {
-        'func': brew,
-        # initial space because the beermug takes up two character spaces
-        # and overlaps if you don't pad it with a space afterwards
-        'help': "\U0001F37A Homebrew\U0001F37A"
-    }
+
+PYTHON_TO_DEFAULTS_TYPE_MAPPING = {
+    bool: 'boolean',
+    int: 'integer',
+    str: 'string',
+    float: 'float',
 }
 
+
+def defaults_read(domain, key):
+    cmd = ['defaults', 'read-type', domain, key]
+    log.debug("Executing command: {!r}".format(cmd))
+    result = subprocess.check_output(cmd)
+    log.debug("Result was: {!r}".format(result))
+
+    # reverse the type mapping to go from strings to Python types
+    type_mapping = {s: t for t, s in PYTHON_TO_DEFAULTS_TYPE_MAPPING.items()}
+    result_type = re.match('Type is (\w+)', result.decode()).group(1)
+    type = type_mapping[result_type]
+
+    cmd = ['defaults', 'read', domain, key]
+    log.debug("Executing command: {!r}".format(cmd))
+    result = subprocess.check_output(cmd)
+    log.debug("Result was: {!r}".format(result))
+    result = result.decode().rstrip('\n')
+    return type(result)
+
+
+def defaults_write(domain, key, value):
+    cmd = ['defaults', 'write', domain, key]
+
+    type = None
+    for t, ts in PYTHON_TO_DEFAULTS_TYPE_MAPPING.items():
+        if isinstance(value, t):
+            type = ts
+            break
+
+    if type is None:
+        raise Exception("Unsupported value type provided to defaults_write: {!r}".format(value))
+
+    cmd.extend(['-{}'.format(type), str(value)])
+
+    log.debug("Executing command: {!r}".format(cmd))
+    subprocess.check_call(cmd)
+
+
+def update_os_settings(settings):
+    # useful resources
+    # https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+
+    # defaults read | pbcopy to get a list of all current settings
+
+    defaults = settings['osx']['defaults']
+    for domain, settings in sorted(defaults.items()):
+        for key, value in sorted(settings.items()):
+            old_value = defaults_read(domain, key)
+            if old_value != value:
+                log.info("Setting new value for {}:{}. Old value: {!r}, new value: {!r}.".format(
+                    domain, key, old_value, value))
+
+            defaults_write(domain, key, value)
+
+
+def restart_os_functions(*args, **kwargs):
+    for item in ('Finder', 'Dock', 'SystemUIServer'):
+        cmd = ['killall', item]
+        log.info("Executing command: {!r}".format(cmd))
+        subprocess.check_call(cmd)
+
+
+def debug(*args, **kwargs):
+    code.interact(local=globals()),
+
 if __name__ == '__main__':
-    parser = create_command_line_parser(actions)
-    args = parser.parse_args()
-
-    loglevel = logging.DEBUG if args.debug else logging.INFO
-    logging.basicConfig(level=loglevel)
-
-    log.debug("Command line arguments were: {!r}".format(args))
-
     # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
     # get the root of the repository. Use realpath to resolve symbolic links
     repo_root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '../..'))
     repo_home_dir = os.path.join(repo_root_dir, 'HOME')
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
-    log.debug("Set cwd to {!r}".format(repo_root_dir))
     home_dir = os.path.expanduser('~')
 
+    # get settings and set up command line parser
+    settings = eval(open(SETTINGS_FILE_LOCATION).read())
+    actions = settings['actions']
+    parser = create_command_line_parser(actions)
+    args = parser.parse_args()
+
+    # set up logging
+    loglevel = logging.DEBUG if args.debug else logging.INFO
+    logging.basicConfig(level=loglevel)
+
+    log.debug("Set cwd to {!r}".format(repo_root_dir))
+    log.debug("Command line arguments were: {!r}".format(args))
+
+    # actually do stuff
     argsdict = copy(vars(args))
     if 'func' in argsdict:
         del argsdict['action']
-        args.func(actions[args.action], **argsdict)
+        args.func(actions[args.action], settings, **argsdict)
     else:
-        create_symlinks(repo_home_dir, home_dir)
+        create_symlinks(settings['symlinks'], repo_home_dir, home_dir)
+        update_os_settings(settings)
