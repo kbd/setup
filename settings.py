@@ -57,7 +57,7 @@
         'ignores': list(
             filter(
                 # ignore comments, negations, and empty lines
-                lambda line: not line.startswith(('#', '!')) and line,
+                lambda line: not line.startswith(('#', '!')) and line.strip(),
                 open('HOME/.gitignore_global').read().splitlines()
             )
         ),
