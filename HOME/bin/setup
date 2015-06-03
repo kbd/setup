@@ -278,6 +278,17 @@ def restart_os_functions(*args, **kwargs):
 def debug(*args, **kwargs):
     code.interact(local=globals()),
 
+
+def resolve_action_aliases(actions):
+    # handle aliases
+    actions_copy = copy(actions)
+    for a, d in actions.items():
+        for alias in d.get('aliases', ()):
+            actions_copy[alias] = d
+
+    return actions_copy
+
+
 if __name__ == '__main__':
     # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
     # get the root of the repository. Use realpath to resolve symbolic links
@@ -303,6 +314,7 @@ if __name__ == '__main__':
     argsdict = copy(vars(args))
     if 'func' in argsdict:
         del argsdict['action']
+        actions = resolve_action_aliases(actions)
         args.func(actions[args.action], settings, **argsdict)
     else:
         create_symlinks(settings['symlinks'], repo_home_dir, home_dir)
