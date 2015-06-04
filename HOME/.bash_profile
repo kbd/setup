@@ -279,15 +279,13 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     export CPPFLAGS=-Qunused-arguments
 
     export EDITOR='open -t'
-    export CLICOLOR=1
 
-    # no clue why this is necessary but Python isn't finding modules I've pip-installed
-    # export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
-
-    alias ls="ls -F"  # color handled by CLICOLOR
+    alias ls="ls -FG"
 else
     alias ls="ls -F --color"
 fi
+
+alias edit="$EDITOR"
 
 ### SU HACK ###
 # brilliant hack below derived from http://superuser.com/a/636475
