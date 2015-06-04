@@ -280,9 +280,9 @@ if [[ $PLATFORM == 'Darwin' ]]; then
 
     export EDITOR='open -t'
 
-    alias ls="ls -FG"
+    alias ls="ls -FG"  # bsd ls
 else
-    alias ls="ls -F --color"
+    alias ls="ls -F --color"  # gnu ls
 fi
 
 alias edit="$EDITOR"
