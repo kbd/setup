@@ -197,7 +197,7 @@ function generate_ps1 {
 # export PS1="\u@\h:\w$ "
 
 function prompt_command_is_readonly {
-    if [[ -n $(readonly -p | awk -F' |=' '{print $3}' | grep -Fx 'PROMPT_COMMAND') ]]; then
+    if readonly -p | awk -F' |=' '{print $3}' | grep -qFx 'PROMPT_COMMAND'; then
         echo 1
     fi
 }
