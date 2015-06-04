@@ -214,10 +214,23 @@ PYTHON_TO_DEFAULTS_TYPE_MAPPING = {
 }
 
 
-def defaults_read(domain, key):
+def defaults_read(domain, key, missing_ok=False):
     cmd = ['defaults', 'read-type', domain, key]
     log.debug("Executing command: {!r}".format(cmd))
-    result = subprocess.check_output(cmd)
+    try:
+        result = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode()  # bytes -> string
+        log.warning("Error reading setting {}:{}. Return code {}, output was: {}".format(
+            domain, key, e.returncode, output))
+
+        if 'does not exist' in output:
+            log.warning("Prior value doesn't exist")
+            if missing_ok:
+                return None
+
+        raise
+
     log.debug("Result was: {!r}".format(result))
 
     # reverse the type mapping to go from strings to Python types
@@ -260,7 +273,8 @@ def update_os_settings(settings):
     defaults = settings['osx']['defaults']
     for domain, settings in sorted(defaults.items()):
         for key, value in sorted(settings.items()):
-            old_value = defaults_read(domain, key)
+            old_value = defaults_read(domain, key, missing_ok=True)
+
             if old_value != value:
                 log.info("Setting new value for {}:{}. Old value: {!r}, new value: {!r}.".format(
                     domain, key, old_value, value))

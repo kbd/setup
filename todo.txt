@@ -6,10 +6,13 @@ todo:
 * record all osx system settings that you like and write code to apply them
   - like setting sublime text as the system default editor
     http://apple.stackexchange.com/questions/123833/replace-text-edit-as-the-default-text-editor
+
+    I haven't done this yet because I can't find documentation on it,
+    and even though I have my default editor set to sublime text, when I
+    run 'defaults read' to see all my current settings it doesn't show up
   - and setting keyboard shortcuts like mapping F12 to mission control
 * save coding font to repository and ensure it's installed
 * expand homebrew package setup to all package setup, like pip, gems, etc.
-* make it possible to write osx defaults that don't already exist. Currently it fails.
 
 some neat items here:
 http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac

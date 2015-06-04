@@ -137,10 +137,14 @@
 
                 'TrackpadThreeFingerDrag': True,
             },
-            # 'NSGlobalDomain': {
-            #     'com.apple.trackpad.trackpadCornerClickBehavior': 1,
-            #     'com.apple.trackpad.enableSecondaryClick': True,
-            # }
+            'NSGlobalDomain': {
+                #     'com.apple.trackpad.trackpadCornerClickBehavior': 1,
+                #     'com.apple.trackpad.enableSecondaryClick': True,
+
+                # set key repeat rate and initial repeat delay
+                'KeyRepeat': 2,
+                'InitialKeyRepeat': 10,
+            }
         }
     }
 }
