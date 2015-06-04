@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # disable-copyfile prevents getting extended attribute files on mac
 # -L to resolve symbolic links
 tar czv -L -f ~/config.tar.gz \
