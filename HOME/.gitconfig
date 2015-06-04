@@ -22,9 +22,10 @@
 	# allow machine-specific configuration (eg. work vs home)
 	path = ~/.gitconfig_machine
 [alias]
+	st = status
 	co = checkout
 	br = branch
 	ci = commit
-	st = status
-	ca = commit -am
+	ca = commit -a
+	cam = commit -am
 	unstage = reset HEAD --
