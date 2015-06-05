@@ -64,8 +64,17 @@
     },
     'homebrew': {
         "formulas": [
+            "ruby",
+            "python",
+            "python3",
+            "pypy",
+            "go",
+            "lua",
+            "rust",
             "jq",
-            "meld"
+            "meld",
+            "youtube-dl",
+            "wget",
         ]
     },
     'osx': {
