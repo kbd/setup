@@ -239,6 +239,7 @@ alias    ...="cd ../.."
 alias   ....="cd ../../.."
 alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
+alias -- -="cd -"
 
 alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
