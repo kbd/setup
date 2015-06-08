@@ -65,7 +65,8 @@
     'homebrew': {
         "formulas": [
             "jq",
-            "meld"
+            "meld",
+            "tree"
         ]
     },
     'osx': {
