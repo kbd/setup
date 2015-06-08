@@ -285,8 +285,6 @@ else
     alias ls="ls -F --color"  # gnu ls
 fi
 
-alias edit="$EDITOR"
-
 ### SU HACK ###
 # brilliant hack below derived from http://superuser.com/a/636475
 # causes your own bash_profile to be sourced even when su-ing around

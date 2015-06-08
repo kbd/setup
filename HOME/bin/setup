@@ -293,6 +293,10 @@ def debug(*args, **kwargs):
     code.interact(local=globals()),
 
 
+def edit(*args, **kwargs):
+    subprocess.call(['edit', os.path.dirname(__file__)])
+
+
 def resolve_action_aliases(actions):
     # handle aliases
     actions_copy = copy(actions)

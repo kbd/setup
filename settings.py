@@ -37,6 +37,10 @@
             'func': 'debug',
             'help': 'Start an interactive console'
         },
+        'edit': {  # open the setup directory in your editor
+            'func': 'edit',
+            'help': 'Open the setup directory in your editor',
+        },
         'restart_os_functions': {
             # https://blog.cloudtroopers.com/how-restart-mac-os-x-finder-dock-or-menubar
             # this should be run if any settings change, but you don't necessarily
