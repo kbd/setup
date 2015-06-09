@@ -11,6 +11,7 @@ import re
 import shutil
 import subprocess
 from copy import copy
+from functools import partial
 
 import logging
 log = logging.getLogger()
@@ -124,9 +125,13 @@ def create_command_line_parser(actions):
             aliases=params.get('aliases', [])
         )
         subparser.set_defaults(func=gs[params['func']])
-        args = params.get('args', {})
-        for k, v in args.items():
-            subparser.add_argument(k, help=v['help'])
+        args = params.get('args', ())
+        for (name, params) in args:
+            add_arg = partial(subparser.add_argument, name, help=params['help'])
+            if params.get('optional', False):
+                partial(add_arg, nargs='?')
+
+            add_arg()
 
     return parser
 
@@ -145,6 +150,13 @@ def brew(action, settings, *args, **kwargs):
         # http://brew.sh/
         # ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         raise Exception("Homebrew must be installed")
+
+    if kwargs.get('fix_repo', False):
+        # http://stackoverflow.com/questions/14113427/brew-update-failed
+        log.info("Fixing Homebrew repository")
+        cmd = 'cd `brew --prefix`; git reset --hard origin/master'
+        log.info("Executing command: {!r}".format(cmd))
+        subprocess.check_call(cmd, shell=True)
 
     formulas = settings['homebrew']['formulas']
 

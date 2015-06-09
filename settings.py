@@ -13,7 +13,9 @@
         'commit': {
             'func': 'repo',
             'cmd': ['commit', '-am', '{message}'],
-            'args': {'message': {'help': 'The commit message'}},
+            'args': [
+                ('message', {'help': 'The commit message'})
+            ],
             'help': 'Commit to repository'
         },
         'pull': {
@@ -29,6 +31,9 @@
         },
         'brew': {
             'func': 'brew',
+            'args': [
+                ('fix_repo', {'help': 'Fix a broken repository', 'optional': True})
+            ],
             # initial space because the beermug takes up two character spaces
             # and overlaps if you don't pad it with a space afterwards
             'help': "\U0001F37A Homebrew\U0001F37A"
