@@ -245,6 +245,9 @@ alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
 alias lla="ls -la"  # and this
 
+# be super lazy and also prevent typos because of which hand things are typed on in dvorak
+alias e=edit
+
 alias ipython="ipython --no-banner --no-confirm-exit"
 
 function ipython {
