@@ -80,6 +80,7 @@
             'jq',
             'meld',
             'tree',
+            'readline',
             'python',
             'python3',
             'pypy',
