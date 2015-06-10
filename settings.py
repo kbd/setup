@@ -72,11 +72,25 @@
         ),
     },
     'homebrew': {
-        "formulas": [
-            "jq",
-            "meld",
-            "tree"
+        'formulas': [
+            'jq',
+            'meld',
+            'tree',
+            'pypy',
         ]
+    },
+    'python': {
+        'packages': [
+            'pip',
+            'setuptools',
+            'ipython[notebook]',
+            'pytest',
+            'flake8',
+            'requests',
+            'ftfy',
+            'pudb',
+            'pandas',
+        ],
     },
     'osx': {
         'defaults': {
