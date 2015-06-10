@@ -201,6 +201,17 @@ def brew(action, settings, *args, **kwargs):
         log.info("Installing package: {}".format(p))
         subprocess.check_call(['brew', 'install', p])
 
+    # run post-install operations
+    post_install = settings['homebrew']['post_install']
+    if post_install:
+        log.info("Running post-install operations")
+
+    for cmd in post_install:
+        # only if the item is a string, run it with shell=True
+        shell = isinstance(cmd, str)
+        log.info("Running cmd (shell={!r}): {!r}".format(shell, cmd))
+        subprocess.check_call(cmd, shell=shell)
+
 
 def packages(action, settings, *args, **kwargs):
     log.info("Installing/upgrading language-specific packages")

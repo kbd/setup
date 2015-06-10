@@ -89,6 +89,12 @@
             'ruby',
             'go',
             'rust',
+            'z',
+        ],
+        'post_install': [
+            # symlink 'z' into my local shell sources so it'll be 1. run automatically in my
+            # .bash_profile, 2. copied to servers by my copy_config_to_host script
+            'ln -sf `brew --prefix`/etc/profile.d/z.sh HOME/bin/shell_sources/',
         ],
     },
     'packages': {
@@ -100,7 +106,8 @@
                 'ipython[notebook]',
                 'pytest',
                 'flake8',
-                'autopep8',  # autopep8 after flake8: autopep8 installs newer versions of dependencies
+                # autopep8 after flake8: autopep8 installs newer versions of dependencies
+                'autopep8',
                 'requests',
                 'ftfy',
                 'pudb',
