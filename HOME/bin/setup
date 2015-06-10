@@ -129,7 +129,7 @@ def create_command_line_parser(actions):
         for (name, params) in args:
             add_arg = partial(subparser.add_argument, name, help=params['help'])
             if params.get('optional', False):
-                partial(add_arg, nargs='?')
+                add_arg = partial(add_arg, nargs='?')
 
             add_arg()
 
