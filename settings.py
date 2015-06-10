@@ -80,7 +80,10 @@
             'jq',
             'meld',
             'tree',
+            'python',
+            'python3',
             'pypy',
+            'ruby',
             'go',
             'rust',
         ]
