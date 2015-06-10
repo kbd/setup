@@ -202,6 +202,16 @@ def brew(action, settings, *args, **kwargs):
         subprocess.check_call(['brew', 'install', p])
 
 
+def packages(action, settings, *args, **kwargs):
+    log.info("Installing/upgrading language-specific packages")
+    for language, params in settings['packages'].items():
+        log.info("Installing/upgrading packages for: {}".format(language))
+        for package in params['packages']:
+            log.info("Installing/upgrading package: {}".format(package))
+            cmd = [c.format(package=package) for c in params['cmd']]
+            subprocess.check_call(cmd)
+
+
 class mybool(metaclass=abc.ABCMeta):
     """
     Provide something that will parse '0' as False
