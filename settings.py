@@ -81,6 +81,8 @@
             'meld',
             'tree',
             'pypy',
+            'go',
+            'rust',
         ]
     },
     'packages': {
