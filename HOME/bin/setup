@@ -237,7 +237,7 @@ def defaults_read(domain, key, missing_ok=False):
             domain, key, e.returncode, output))
 
         if 'does not exist' in output:
-            log.warning("Prior value doesn't exist")
+            log.warning("Prior value for {}:{} doesn't exist".format(domain, key))
             if missing_ok:
                 return None
 
