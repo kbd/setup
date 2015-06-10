@@ -12,7 +12,6 @@ todo:
     run 'defaults read' to see all my current settings it doesn't show up
   - and setting keyboard shortcuts like mapping F12 to mission control
 * save coding font to repository and ensure it's installed
-* expand homebrew package setup to all package setup, like pip, gems, etc.
 
 some neat items here:
 http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac

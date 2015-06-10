@@ -77,6 +77,8 @@
     },
     'homebrew': {
         'formulas': [
+            'bash-completion',
+            'git',
             'jq',
             'meld',
             'tree',
@@ -87,7 +89,7 @@
             'ruby',
             'go',
             'rust',
-        ]
+        ],
     },
     'packages': {
         'python': {
