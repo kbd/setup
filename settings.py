@@ -109,6 +109,7 @@
                 'flake8',
                 # autopep8 after flake8: autopep8 installs newer versions of dependencies
                 'autopep8',
+                'pylint',
                 'requests',
                 'ftfy',
                 'pudb',
