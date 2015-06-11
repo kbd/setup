@@ -11,6 +11,7 @@ import re
 import shutil
 import subprocess
 from copy import copy
+from functools import partial
 
 import logging
 log = logging.getLogger()
@@ -124,9 +125,13 @@ def create_command_line_parser(actions):
             aliases=params.get('aliases', [])
         )
         subparser.set_defaults(func=gs[params['func']])
-        args = params.get('args', {})
-        for k, v in args.items():
-            subparser.add_argument(k, help=v['help'])
+        args = params.get('args', ())
+        for (name, params) in args:
+            add_arg = partial(subparser.add_argument, name, help=params['help'])
+            if params.get('optional', False):
+                add_arg = partial(add_arg, nargs='?')
+
+            add_arg()
 
     return parser
 
@@ -145,6 +150,13 @@ def brew(action, settings, *args, **kwargs):
         # http://brew.sh/
         # ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         raise Exception("Homebrew must be installed")
+
+    if kwargs.get('fix_repo', False):
+        # http://stackoverflow.com/questions/14113427/brew-update-failed
+        log.info("Fixing Homebrew repository")
+        cmd = 'cd `brew --prefix`; git reset --hard origin/master'
+        log.info("Executing command: {!r}".format(cmd))
+        subprocess.check_call(cmd, shell=True)
 
     formulas = settings['homebrew']['formulas']
 
@@ -189,6 +201,27 @@ def brew(action, settings, *args, **kwargs):
         log.info("Installing package: {}".format(p))
         subprocess.check_call(['brew', 'install', p])
 
+    # run post-install operations
+    post_install = settings['homebrew']['post_install']
+    if post_install:
+        log.info("Running post-install operations")
+
+    for cmd in post_install:
+        # only if the item is a string, run it with shell=True
+        shell = isinstance(cmd, str)
+        log.info("Running cmd (shell={!r}): {!r}".format(shell, cmd))
+        subprocess.check_call(cmd, shell=shell)
+
+
+def packages(action, settings, *args, **kwargs):
+    log.info("Installing/upgrading language-specific packages")
+    for language, params in settings['packages'].items():
+        log.info("Installing/upgrading packages for: {}".format(language))
+        for package in params['packages']:
+            log.info("Installing/upgrading package: {}".format(package))
+            cmd = [c.format(package=package) for c in params['cmd']]
+            subprocess.check_call(cmd)
+
 
 class mybool(metaclass=abc.ABCMeta):
     """
@@ -225,7 +258,7 @@ def defaults_read(domain, key, missing_ok=False):
             domain, key, e.returncode, output))
 
         if 'does not exist' in output:
-            log.warning("Prior value doesn't exist")
+            log.warning("Prior value for {}:{} doesn't exist".format(domain, key))
             if missing_ok:
                 return None
 
@@ -291,6 +324,10 @@ def restart_os_functions(*args, **kwargs):
 
 def debug(*args, **kwargs):
     code.interact(local=globals()),
+
+
+def edit(*args, **kwargs):
+    subprocess.call(['edit', '.'])  # works because cwd is set
 
 
 def resolve_action_aliases(actions):

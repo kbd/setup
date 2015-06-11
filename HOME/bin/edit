@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# I'm intentionally not quoting the $1
+# so it works with or without an argument passed
+$EDITOR $1

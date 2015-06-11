@@ -239,10 +239,14 @@ alias    ...="cd ../.."
 alias   ....="cd ../../.."
 alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
+alias -- -="cd -"
 
 alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
 alias lla="ls -la"  # and this
+
+# be super lazy and also prevent typos because of which hand things are typed on in dvorak
+alias e=edit
 
 alias ipython="ipython --no-banner --no-confirm-exit"
 
@@ -284,8 +288,6 @@ if [[ $PLATFORM == 'Darwin' ]]; then
 else
     alias ls="ls -F --color"  # gnu ls
 fi
-
-alias edit="$EDITOR"
 
 ### SU HACK ###
 # brilliant hack below derived from http://superuser.com/a/636475

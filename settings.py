@@ -13,7 +13,9 @@
         'commit': {
             'func': 'repo',
             'cmd': ['commit', '-am', '{message}'],
-            'args': {'message': {'help': 'The commit message'}},
+            'args': [
+                ('message', {'help': 'The commit message'})
+            ],
             'help': 'Commit to repository'
         },
         'pull': {
@@ -29,13 +31,24 @@
         },
         'brew': {
             'func': 'brew',
+            'args': [
+                ('fix_repo', {'help': 'Fix a broken repository', 'optional': True})
+            ],
             # initial space because the beermug takes up two character spaces
             # and overlaps if you don't pad it with a space afterwards
             'help': "\U0001F37A Homebrew\U0001F37A"
         },
+        'packages': {
+            'func': 'packages',
+            'help': 'Install/update language-specific packages \U0001F40D'  # snake emoji
+        },
         'debug': {  # load the setup program as a module and start an interactive console
             'func': 'debug',
             'help': 'Start an interactive console'
+        },
+        'edit': {  # open the setup directory in your editor
+            'func': 'edit',
+            'help': 'Open the setup directory in your editor',
         },
         'restart_os_functions': {
             # https://blog.cloudtroopers.com/how-restart-mac-os-x-finder-dock-or-menubar
@@ -63,19 +76,45 @@
         ),
     },
     'homebrew': {
-        "formulas": [
-            "ruby",
-            "python",
-            "python3",
-            "pypy",
-            "go",
-            "lua",
-            "rust",
-            "jq",
-            "meld",
+        'formulas': [
+            'bash-completion',
+            'git',
+            'jq',
+            'meld',
+            'tree',
+            'readline',
+            'python',
+            'python3',
+            'pypy',
+            'ruby',
+            'go',
+            'rust',
             "youtube-dl",
-            "wget",
-        ]
+            'z',
+        ],
+        'post_install': [
+            # symlink 'z' into my local shell sources so it'll be 1. run automatically in my
+            # .bash_profile, 2. copied to servers by my copy_config_to_host script
+            'ln -sf `brew --prefix`/etc/profile.d/z.sh HOME/bin/shell_sources/',
+        ],
+    },
+    'packages': {
+        'python': {
+            'cmd': ['pip', 'install', '--upgrade', '{package}'],
+            'packages': [
+                'pip',
+                'setuptools',
+                'ipython[notebook]',
+                'pytest',
+                'flake8',
+                # autopep8 after flake8: autopep8 installs newer versions of dependencies
+                'autopep8',
+                'requests',
+                'ftfy',
+                'pudb',
+                'pandas',
+            ],
+        },
     },
     'osx': {
         'defaults': {
