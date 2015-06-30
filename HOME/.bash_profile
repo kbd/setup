@@ -35,20 +35,17 @@ export BGCOLOR_PURPLE="\[$(tput setab 5)\]"
 export   BGCOLOR_CYAN="\[$(tput setab 6)\]"
 export   BGCOLOR_GREY="\[$(tput setab 7)\]"
 
-#source virtualenvwrapper
-#source /usr/local/bin/virtualenvwrapper.sh
-
-#from Amy
-function _source_completions {
+function _source {
     if [[ -d "$1" ]]; then
+        # if it's a directory, source everything in the directory
         for I in "$1"/*; do
             source "$I" 2>/dev/null
         done
     elif [[ -f "$1" ]]; then
+        # else source the file if it exists
         source "$1" 2>/dev/null
     fi
 }
-#end from Amy
 
 # source control information in prompt
 function _prompt_repo {
@@ -305,6 +302,8 @@ alias su="export PROMPT_COMMAND='source $_LOGIN_BASH_PROFILE; $PROMPT_COMMAND' &
 ### COMPLETIONS ###
 # note, completions are at the end because 'z' modifies your PROMPT_COMMAND,
 # so it has to come after you set yours
-_source_completions /usr/local/etc/bash_completion.d
-_source_completions $HOME/bin/shell_sources
+_source /usr/local/etc/bash_completion.d
+_source $HOME/bin/shell_sources
 complete -cf sudo  # allow autocompletions after sudo.
+
+_source .bash_profile_machine_specific
