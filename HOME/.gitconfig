@@ -20,7 +20,7 @@
 	trustExitCode = true
 [include]
 	# allow machine-specific configuration (eg. work vs home)
-	path = ~/.gitconfig_machine
+	path = ~/.gitconfig_machine_specific
 [alias]
 	st = status
 	co = checkout
