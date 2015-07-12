@@ -42,6 +42,10 @@
             'func': 'packages',
             'help': 'Install/update language-specific packages \U0001F40D'  # snake emoji
         },
+        'addons': {
+            'func': 'addons',
+            'help': "Install World of Warcraft (and maybe other) addons",
+        },
         'debug': {  # load the setup program as a module and start an interactive console
             'func': 'debug',
             'help': 'Start an interactive console'
@@ -116,6 +120,23 @@
                 'pandas',
             ],
         },
+    },
+    'addons': {
+        'wow': {
+            'installation_path': '/Applications/World of Warcraft/Interface/AddOns/',
+            'addons': [
+                # 'altoholic',
+                'bagnon',
+                'deadly-boss-mods',
+                'dominos',
+                'droodfocus',
+                'mik-scrolling-battle-text',  # msbt
+                'need-to-know',
+                'omni-cc',
+                'recount',
+                'shadowed-unit-frames'
+            ]
+        }
     },
     'osx': {
         'defaults': {

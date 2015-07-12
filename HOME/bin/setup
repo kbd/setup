@@ -3,13 +3,16 @@ import abc
 import argparse
 import code
 import datetime
-import getpass
 import fnmatch
+import getpass
+import io
 import os
 import pwd
 import re
+import requests
 import shutil
 import subprocess
+import zipfile
 from copy import copy
 from functools import partial
 
@@ -223,6 +226,57 @@ def packages(action, settings, *args, **kwargs):
             subprocess.check_call(cmd)
 
 
+def addons(action, settings, *args, **kwargs):
+    log.info("Installing addons")
+    for type, params in settings['addons'].items():
+        log.info("Installing addons for {!r}".format(type))
+        for addon in params['addons']:
+            log.info("Downloading addon {!r}".format(addon))
+            result = addon_download(type, addon, params['installation_path'])
+            if result:
+                log.info("Successfully downloaded {!r}".format(addon))
+            else:
+                log.warning("Couldn't download {!r}".format(addon))
+
+    log.info("Finished installing addons")
+
+
+def addon_download(type, name, installation_path):
+    uri_pattern = 'http://www.curse.com/addons/wow/{}/download'
+
+    # get the download page
+    log.debug("Requesting download page for {!r}".format(name))
+    response = requests.get(uri_pattern.format(name))
+    if response.status_code != 200:
+        log.warning("Error getting download page for {}".format(name))
+        return False
+
+    # parse out the download link
+    # download links look like:
+    # <p>If your download doesn't begin <a data-project="4872" data-file="887016" data-href="http://addons.curse.cursecdn.com/files/887/16/Recount-v6.2.0f_release.zip" class="download-link" href="#">click here</a>.</p>
+    log.debug("Parsing out download uri")
+    regex = r'<a\s+.*?data-href="([^"]+)".*?class="download-link"'
+    match = re.search(regex, response.text)
+    download_uri = match.group(1)
+
+    # download the addon
+    log.debug("Downloading from {!r}".format(download_uri))
+    response = requests.get(download_uri)
+    if response.status_code != 200:
+        return False
+
+    log.debug("Extracting zip content to {!r}".format(installation_path))
+    try:
+        file = io.BytesIO(response.content)
+        zfile = zipfile.ZipFile(file)
+        zfile.extractall(installation_path)
+    except:
+        log.exception("Couldn't extract files for {!r}".format(name))
+        return False
+
+    return True
+
+
 class mybool(metaclass=abc.ABCMeta):
     """
     Provide something that will parse '0' as False
@@ -357,6 +411,9 @@ if __name__ == '__main__':
     # set up logging
     loglevel = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(level=loglevel)
+
+    # set requests loglevel
+    logging.getLogger('requests').setLevel(logging.WARNING)
 
     log.debug("Set cwd to {!r}".format(repo_root_dir))
     log.debug("Command line arguments were: {!r}".format(args))
