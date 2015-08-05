@@ -7,7 +7,7 @@
         },
         'diff': {
             'func': 'repo',
-            'cmd': ['diff'],
+            'cmd': ['difftool'],
             'help': 'Get repository diff'
         },
         'commit': {
@@ -81,6 +81,7 @@
             'git',
             'jq',
             'meld',
+            'kdiff3',
             'tree',
             'readline',
             'python',
