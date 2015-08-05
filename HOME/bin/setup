@@ -217,7 +217,7 @@ def brew(action, settings, *args, **kwargs):
 
 def packages(action, settings, *args, **kwargs):
     log.info("Installing/upgrading language-specific packages")
-    for language, params in settings['packages'].items():
+    for language, params in sorted(settings['packages'].items()):
         log.info("Installing/upgrading packages for: {}".format(language))
         for package in params['packages']:
             log.info("Installing/upgrading package: {}".format(package))
