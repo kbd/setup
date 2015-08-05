@@ -104,8 +104,8 @@
         ],
     },
     'packages': {
-        'python': {
-            'cmd': ['pip', 'install', '--upgrade', '{package}'],
+        'python{}'.format(version): {
+            'cmd': ['pip{}'.format(version), 'install', '--upgrade', '{package}'],
             'packages': [
                 'pip',
                 'setuptools',
@@ -120,7 +120,8 @@
                 'pudb',
                 'pandas',
             ],
-        },
+        }
+        for version in ('', '3')
     },
     'addons': {
         'wow': {
