@@ -9,6 +9,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export VERTICAINI=/etc/vertica.ini
 export LS_COLORS="ex=31"  # set executables to red (gnu ls)
+export GREP_OPTIONS='--color=auto'
 
 export    COLOR_RESET="\[$(tput sgr0)\]"
 export     COLOR_BOLD="\[$(tput bold)\]"
