@@ -1,11 +1,11 @@
 [user]
 	name = Keith Devens
 [push]
-	default = simple
+	default = current
 [merge]
 	tool = git_ext_merge
 [mergetool "git_ext_merge"]
-	cmd = git_ext_merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	cmd = git_ext_merge \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 [diff]
 	external = git_ext_diff
 [mergetool]
@@ -29,3 +29,6 @@
 	ca = commit -a
 	cam = commit -am
 	unstage = reset HEAD --
+	pretty-log = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
+	pl         = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
+	prune-merged = !git branch --merged | grep -v '^*' | grep -vx '\\s*master\\s*' | grep -vx '\\s*develop\\s*' | xargs -n1 git branch -d
