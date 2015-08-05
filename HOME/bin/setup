@@ -15,8 +15,6 @@ import zipfile
 from copy import copy
 from functools import partial
 
-import requests
-
 import logging
 log = logging.getLogger()
 
@@ -243,6 +241,8 @@ def addons(action, settings, *args, **kwargs):
 
 
 def addon_download(type, name, installation_path):
+    import requests
+
     uri_pattern = 'http://www.curse.com/addons/wow/{}/download'
 
     # get the download page
