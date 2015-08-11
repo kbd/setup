@@ -7,7 +7,7 @@
         },
         'diff': {
             'func': 'repo',
-            'cmd': ['diff'],
+            'cmd': ['difftool'],
             'help': 'Get repository diff'
         },
         'commit': {
@@ -85,6 +85,7 @@
             'git',
             'jq',
             'meld',
+            'kdiff3',
             'tree',
             'readline',
             'python',
@@ -103,8 +104,8 @@
         ],
     },
     'packages': {
-        'python': {
-            'cmd': ['pip', 'install', '--upgrade', '{package}'],
+        'python{}'.format(version): {
+            'cmd': ['pip{}'.format(version), 'install', '--upgrade', '{package}'],
             'packages': [
                 'pip',
                 'setuptools',
@@ -119,7 +120,8 @@
                 'pudb',
                 'pandas',
             ],
-        },
+        }
+        for version in ('', '3')
     },
     'addons': {
         'wow': {

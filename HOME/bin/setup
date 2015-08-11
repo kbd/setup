@@ -9,7 +9,6 @@ import io
 import os
 import pwd
 import re
-import requests
 import shutil
 import subprocess
 import zipfile
@@ -218,7 +217,7 @@ def brew(action, settings, *args, **kwargs):
 
 def packages(action, settings, *args, **kwargs):
     log.info("Installing/upgrading language-specific packages")
-    for language, params in settings['packages'].items():
+    for language, params in sorted(settings['packages'].items()):
         log.info("Installing/upgrading packages for: {}".format(language))
         for package in params['packages']:
             log.info("Installing/upgrading package: {}".format(package))
@@ -242,6 +241,8 @@ def addons(action, settings, *args, **kwargs):
 
 
 def addon_install(type, name, installation_path):
+    import requests
+
     uri_pattern = 'http://www.curse.com/addons/wow/{}/download'
 
     # get the download page

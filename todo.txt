@@ -15,3 +15,4 @@ todo:
 
 some neat items here:
 http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac
+https://github.com/donnemartin/dev-setup/blob/master/osx.sh

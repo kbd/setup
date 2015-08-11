@@ -1,27 +1,31 @@
+# base config
 [user]
 	name = Keith Devens
 [push]
-	default = simple
-[merge]
-	tool = git_ext_merge
-[mergetool "git_ext_merge"]
-	cmd = git_ext_merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
-[diff]
-	external = git_ext_diff
-[mergetool]
-	trustExitCode = false
-[core]
-	excludesfile = ~/.gitignore_global
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+	default = current
 [include]
 	# allow machine-specific configuration (eg. work vs home)
 	path = ~/.gitconfig_machine_specific
+[core]
+	excludesfile = ~/.gitignore_global
+
+# diff / merge config
+[diff]
+	# git has built-in knowledge of how to call meld
+	tool = meld
+
+[merge]
+	tool = meld
+
+[difftool]
+	prompt = false
+
+[mergetool]
+	prompt = false
+
+# aliases
 [alias]
+	d = difftool
 	st = status
 	co = checkout
 	br = branch
@@ -29,3 +33,6 @@
 	ca = commit -a
 	cam = commit -am
 	unstage = reset HEAD --
+	pretty-log = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
+	pl         = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
+	prune-merged = !git branch --merged | grep -v '^*' | grep -vx '\\s*master\\s*' | grep -vx '\\s*develop\\s*' | xargs -n1 git branch -d
