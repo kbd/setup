@@ -232,16 +232,16 @@ def addons(action, settings, *args, **kwargs):
         log.info("Installing addons for {!r}".format(type))
         for addon in params['addons']:
             log.info("Downloading addon {!r}".format(addon))
-            result = addon_download(type, addon, params['installation_path'])
+            result = addon_install(type, addon, params['installation_path'])
             if result:
-                log.info("Successfully downloaded {!r}".format(addon))
+                log.info("Successfully installed {!r}".format(addon))
             else:
-                log.warning("Couldn't download {!r}".format(addon))
+                log.warning("Couldn't install {!r}".format(addon))
 
     log.info("Finished installing addons")
 
 
-def addon_download(type, name, installation_path):
+def addon_install(type, name, installation_path):
     uri_pattern = 'http://www.curse.com/addons/wow/{}/download'
 
     # get the download page

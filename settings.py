@@ -134,7 +134,9 @@
                 'need-to-know',
                 'omni-cc',
                 'recount',
-                'shadowed-unit-frames'
+                'shadowed-unit-frames',
+                'tidy-plates',
+                'macro-toolkit',
             ]
         }
     },
