@@ -243,8 +243,8 @@ alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
 alias lla="ls -la"  # and this
 
-# be super lazy. Alternatively: huffman code all the things!
-alias e=edit  # 'edit' is a script in ~/bin that opens $EDITOR
+alias edit=\$EDITOR "$@"
+alias e=\$EDITOR "$@"  # Huffman code all the things!
 
 alias ipython="ipython --no-banner --no-confirm-exit"
 
