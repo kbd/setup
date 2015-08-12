@@ -272,6 +272,7 @@ function ipython {
 
 # shopts
 shopt -s histappend
+shopt -s dotglob
 
 ### PLATFORM SPECIFIC ###
 if [[ $PLATFORM == 'Darwin' ]]; then
