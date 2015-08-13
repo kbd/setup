@@ -195,13 +195,11 @@ function generate_ps1 {
 # export PS1="\u@\h:\w$ "
 
 function prompt_command_is_readonly {
-    if readonly -p | awk -F' |=' '{print $3}' | grep -qFx 'PROMPT_COMMAND'; then
-        echo 1
-    fi
+    readonly -p | awk -F' |=' '{print $3}' | grep -qxF 'PROMPT_COMMAND'
 }
 
 # work around the PROMPT_COMMAND being read-only. At least you'll get a basic prompt.
-if [[ $(prompt_command_is_readonly) ]]; then
+if prompt_command_is_readonly; then
     echo "PROMPT_COMMAND is readonly"
     eval "PS1=$(generate_ps1 1)"
 else
@@ -232,19 +230,19 @@ function echoerr {
 }
 
 # aliases
+alias   -- -="cd -"
 alias     ..="cd .."
 alias    ...="cd ../.."
 alias   ....="cd ../../.."
 alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
-alias -- -="cd -"
 
 alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
 alias lla="ls -la"  # and this
 
-# be super lazy and also prevent typos because of which hand things are typed on in dvorak
-alias e=edit
+alias edit=\$EDITOR "$@"
+alias e=\$EDITOR "$@"  # Huffman code all the things!
 
 alias ipython="ipython --no-banner --no-confirm-exit"
 
@@ -272,6 +270,7 @@ function ipython {
 
 # shopts
 shopt -s histappend
+shopt -s dotglob
 
 ### PLATFORM SPECIFIC ###
 if [[ $PLATFORM == 'Darwin' ]]; then
