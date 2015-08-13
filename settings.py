@@ -68,6 +68,11 @@
             # because it refers to the symlink that's created
             'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User'
         },
+        'partials': [
+            # with 'partial' directories, only files that are present in the directory in source
+            # control are versioned/overwritten. Normally, an entire directory would be versioned
+            '.config'
+        ],
         # 'ignores_file': '.gitignore_global',  # piggyback off of gitignore_global
         # this path should be resolved correctly because 'setup' sets the cwd
         # to the root of the repository

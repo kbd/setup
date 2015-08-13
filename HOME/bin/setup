@@ -42,6 +42,11 @@ def get_backup_path(path):
     return path
 
 
+def create_symlink(source_path, dest_path):
+    log.info("Creating new symlink of {!r} to {!r}".format(source_path, dest_path))
+    os.symlink(source_path, dest_path)
+
+
 def create_symlinks(symlink_settings, source_dir, dest_dir):
     """
     For all files and directories within source_dir, symlink them into dest_dir.
@@ -52,6 +57,7 @@ def create_symlinks(symlink_settings, source_dir, dest_dir):
     """
     overrides = symlink_settings['overrides']
     ignores = symlink_settings['ignores']
+    partials = symlink_settings['partials']
 
     # ignores_file = symlink_settings['ignores_file']
     #
@@ -98,16 +104,18 @@ def create_symlinks(symlink_settings, source_dir, dest_dir):
                     os.remove(dest_path)
                     os.symlink(repo_path, dest_path)
             else:
-                # move to backup location before proceeding
-                backup_path = get_backup_path(dest_path)
-                log.info("Renaming {!r} to {!r}".format(dest_path, backup_path))
-                os.rename(dest_path, backup_path)
+                if dest_path in partials:
+                    log.info("{!r} is a partial location, not overwriting".format(dest_path))
 
-                log.info("Creating new symlink of {!r} to {!r}".format(file, dest_path))
-                os.symlink(repo_path, dest_path)
+                else:
+                    # move to backup location before proceeding
+                    backup_path = get_backup_path(dest_path)
+                    log.info("Renaming {!r} to {!r}".format(dest_path, backup_path))
+                    os.rename(dest_path, backup_path)
+
+                    create_symlink(repo_path, dest_path)
         else:
-            log.info("Creating new symlink of {!r} to {!r}".format(file, dest_path))
-            os.symlink(repo_path, dest_path)
+            create_symlink(repo_path, dest_path)
 
 
 def create_command_line_parser(actions):
