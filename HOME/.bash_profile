@@ -195,13 +195,11 @@ function generate_ps1 {
 # export PS1="\u@\h:\w$ "
 
 function prompt_command_is_readonly {
-    if readonly -p | awk -F' |=' '{print $3}' | grep -qFx 'PROMPT_COMMAND'; then
-        echo 1
-    fi
+    readonly -p | awk -F' |=' '{print $3}' | grep -qxF 'PROMPT_COMMAND'
 }
 
 # work around the PROMPT_COMMAND being read-only. At least you'll get a basic prompt.
-if [[ $(prompt_command_is_readonly) ]]; then
+if prompt_command_is_readonly; then
     echo "PROMPT_COMMAND is readonly"
     eval "PS1=$(generate_ps1 1)"
 else
