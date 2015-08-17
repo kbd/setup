@@ -244,7 +244,7 @@ alias lla="ls -la"  # and this
 alias edit=\$EDITOR "$@"
 alias e=\$EDITOR "$@"  # Huffman code all the things!
 
-alias grep=egrep
+alias g=egrep
 
 alias ipython="ipython --no-banner --no-confirm-exit"
 
