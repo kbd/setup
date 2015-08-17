@@ -273,6 +273,8 @@ function ipython {
 # shopts
 shopt -s histappend
 shopt -s dotglob
+shopt -s globstar 2>/dev/null  # not supported in bash 3
+shopt -s autocd 2>/dev/null  # not supported in bash 3
 
 ### PLATFORM SPECIFIC ###
 if [[ $PLATFORM == 'Darwin' ]]; then
