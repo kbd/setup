@@ -28,6 +28,7 @@
 	d = difftool
 	st = status
 	co = checkout
+	cob = checkout -b
 	br = branch
 	ci = commit
 	ca = commit -a
