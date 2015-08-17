@@ -237,7 +237,8 @@ alias lla="ls -la"  # and this
 alias edit=\$EDITOR "$@"
 alias e=edit  # Huffman code all the things!
 
-alias g=egrep
+alias grep=egrep
+alias g=grep
 
 alias ercho='>&2 echo'  # echo to stderr
 
