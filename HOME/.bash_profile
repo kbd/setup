@@ -222,13 +222,6 @@ function cl {
     ls "${@}"
 }
 
-function echoerr {
-    # echo to stderr instead of stdout
-    # "${@}" to prevent the shell substititution
-    # that would normally happen with just $@ or "$@"
-    echo "${@}" 1>&2;
-}
-
 # aliases
 alias   -- -="cd -"
 alias     ..="cd .."
@@ -242,9 +235,11 @@ alias ll="ls -l"  # might as well make this work too
 alias lla="ls -la"  # and this
 
 alias edit=\$EDITOR "$@"
-alias e=\$EDITOR "$@"  # Huffman code all the things!
+alias e=edit  # Huffman code all the things!
 
 alias g=egrep
+
+alias ercho='>&2 echo'  # echo to stderr
 
 alias ipython="ipython --no-banner --no-confirm-exit"
 
