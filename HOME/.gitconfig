@@ -31,6 +31,7 @@
 	cob = checkout -b
 	br = branch
 	ci = commit
+	cim = commit -m
 	ca = commit -a
 	cam = commit -am
 	unstage = reset HEAD --
