@@ -195,7 +195,7 @@ function generate_ps1 {
 # export PS1="\u@\h:\w$ "
 
 function prompt_command_is_readonly {
-    readonly -p | awk -F' |=' '{print $3}' | grep -qxF 'PROMPT_COMMAND'
+    readonly -p | awk -F' |=' '{print $3}' | fgrep -qx 'PROMPT_COMMAND'
 }
 
 # work around the PROMPT_COMMAND being read-only. At least you'll get a basic prompt.
@@ -236,9 +236,12 @@ alias lla="ls -la"  # and this
 
 alias edit=\$EDITOR "$@"
 alias e=edit  # Huffman code all the things!
+alias e.="e ."
 
 alias grep=egrep
 alias g=grep
+
+alias h=history
 
 alias ercho='>&2 echo'  # echo to stderr
 
