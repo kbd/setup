@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+"""
+Enable password-less login to remote host using SSH keys
+
+"""
+import argparse
+import getpass
+import logging
+import os
+import socket
+import subprocess
+
+# todo: allow type and bit-length to be customizable?
+KEY_TYPE = 'rsa'
+KEY_BITS = 4096
+KEY_FILE = 'id_rsa'
+
+SSH_DIR = '~/.ssh'
+DEST_PATH = '~/.ssh/authorized_keys'
+
+KEYGEN_CMD = 'ssh-keygen -t {type} -b {bits} -C {comment} -f {file}'
+
+log = logging.getLogger()
+
+
+def create_ssh_key():
+    """Create the SSH key if necessary and return the path to the public key"""
+    ssh_dir = os.path.expanduser(SSH_DIR)
+    if not os.path.exists(ssh_dir):
+        log.info(".ssh dir doesn't exist, creating it")
+        os.mkdir(ssh_dir)
+        log.info("Created ssh directory")
+
+    key_path = os.path.join(ssh_dir, KEY_FILE)
+    public_key_path = key_path + '.pub'
+    if os.path.exists(public_key_path):
+        log.info("Key exists at: {}".format(public_key_path))
+    else:
+        log.info("No existing ssh key")
+
+        user = getpass.getuser()
+        host = socket.gethostname()
+        comment = '{}@{}'.format(user, host)
+        cmd = KEYGEN_CMD.format(type=KEY_TYPE, bits=KEY_BITS, file=key_path, comment=comment)
+
+        log.info("Executing command: {!r}".format(cmd))
+        subprocess.check_call(cmd, shell=True)
+        log.info("Created key")
+
+    return public_key_path
+
+
+def upload_ssh_key(key_path, dest_path, host, user=None, port=None):
+    """Copy the public key to the remote host"""
+    remote_cmd = [
+        'key=$(cat)',        # save your key in an env var
+        'mkdir -p {dir}',    # ensure the directory exists
+        'touch {path}',      # ensure the file exists
+        'chmod go-w {dir}',  # ensure correct permissions
+        'chmod 600 {path}',  # http://www.openssh.com/faq.html#3.14
+
+        # base command without being particular about error codes:
+        # 'grep -qx "$key" {path} || echo $key >> {path}'  # write key if it doesn't exist
+        'key_exists=$(grep -qx -- "$key" {path}; echo $?)',
+        'if [[ $key_exists == 1 ]]',
+        'then echo "$key" >> {path} && exit 99',
+        'else exit $key_exists',
+        'fi'
+    ]
+
+    cmd = ['cat', key_path, '|', 'ssh', host]
+    if user:
+        cmd.extend(['-l', user])
+    if port:
+        cmd.extend(['-p', port])
+
+    remote_cmd_str = '; '.join(remote_cmd).format(path=DEST_PATH, dir=os.path.dirname(DEST_PATH))
+    cmd_str = "{} '{}'".format(' '.join(cmd), remote_cmd_str)
+
+    log.info("Executing: {!r}".format(cmd_str))
+    ret = subprocess.call(cmd_str, shell=True)
+
+    if ret == 0:
+        log.info("Key already exists on host")
+    elif ret == 99:
+        # note, 99 should be within the user-defined return code range
+        # http://tldp.org/LDP/abs/html/exitcodes.html
+        log.info("Successfully copied key to the server")
+    else:
+        log.warning("Error: code {}".format(ret))
+
+
+def username(s):
+    if s.isidentifier():
+        return s
+
+    raise argparse.ArgumentTypeError("invalid username")
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description="Copy SSH keys to host for password-less login, creating keys if necessary")
+    parser.add_argument('host', help='The host to copy your key to')
+    parser.add_argument('-u', '--user', type=username)
+    parser.add_argument('-p', '--port', type=int)
+
+    args = parser.parse_args()
+
+    logging.basicConfig(level=logging.DEBUG)
+
+    public_key_path = create_ssh_key()
+    upload_ssh_key(public_key_path, DEST_PATH, args.host, args.user, args.port)
