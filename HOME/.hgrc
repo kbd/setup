@@ -1,5 +1,1 @@
-[extensions]
-hgext.extdiff = meld
-cmd.meld =
-
 %include ~/.hgrc_machine_specific
