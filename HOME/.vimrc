@@ -10,10 +10,10 @@ set shiftwidth=4
 function Load_if_readable(file)
 	" echo 'Loading machine specific config: '.a:file
 	if filereadable(a:file)
-	    exec 'source '.fnameescape(a:file)
-	    " echo 'Successfully loaded '.a:file
+		exec 'source '.fnameescape(a:file)
+		" echo 'Successfully loaded '.a:file
 	else
-	    " echo a:file.' not found'
+		" echo a:file.' not found'
 	endif
 endfunction
 
