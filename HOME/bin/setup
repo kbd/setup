@@ -390,7 +390,7 @@ def debug(*args, **kwargs):
 
 
 def edit(*args, **kwargs):
-    subprocess.call(['edit', '.'])  # works because cwd is set
+    subprocess.call('$EDITOR .', shell=True)  # works because cwd is set
 
 
 def resolve_action_aliases(actions):

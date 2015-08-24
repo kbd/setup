@@ -195,13 +195,11 @@ function generate_ps1 {
 # export PS1="\u@\h:\w$ "
 
 function prompt_command_is_readonly {
-    if readonly -p | awk -F' |=' '{print $3}' | grep -qFx 'PROMPT_COMMAND'; then
-        echo 1
-    fi
+    readonly -p | awk -F' |=' '{print $3}' | fgrep -qx 'PROMPT_COMMAND'
 }
 
 # work around the PROMPT_COMMAND being read-only. At least you'll get a basic prompt.
-if [[ $(prompt_command_is_readonly) ]]; then
+if prompt_command_is_readonly; then
     echo "PROMPT_COMMAND is readonly"
     eval "PS1=$(generate_ps1 1)"
 else
@@ -224,27 +222,28 @@ function cl {
     ls "${@}"
 }
 
-function echoerr {
-    # echo to stderr instead of stdout
-    # "${@}" to prevent the shell substititution
-    # that would normally happen with just $@ or "$@"
-    echo "${@}" 1>&2;
-}
-
 # aliases
+alias   -- -="cd -"
 alias     ..="cd .."
 alias    ...="cd ../.."
 alias   ....="cd ../../.."
 alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
-alias -- -="cd -"
 
 alias l=ls  # fix what I often type by mistake
 alias ll="ls -l"  # might as well make this work too
 alias lla="ls -la"  # and this
 
-# be super lazy and also prevent typos because of which hand things are typed on in dvorak
-alias e=edit
+alias edit=\$EDITOR "$@"
+alias e=edit  # Huffman code all the things!
+alias e.="e ."
+
+alias grep=egrep
+alias g=grep
+
+alias h=history
+
+alias ercho='>&2 echo'  # echo to stderr
 
 alias ipython="ipython --no-banner --no-confirm-exit"
 
@@ -272,6 +271,9 @@ function ipython {
 
 # shopts
 shopt -s histappend
+shopt -s dotglob
+shopt -s globstar 2>/dev/null  # not supported in bash 3
+shopt -s autocd 2>/dev/null  # not supported in bash 3
 
 ### PLATFORM SPECIFIC ###
 if [[ $PLATFORM == 'Darwin' ]]; then
