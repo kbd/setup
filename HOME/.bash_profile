@@ -48,6 +48,66 @@ function _source {
     fi
 }
 
+function _prompt_date {
+    echo "$COLOR_GREY\D{%m/%d@%H:%M}$COLOR_RESET:"
+}
+
+function _prompt_user {
+    # root/user info
+    if [[ $EUID -eq 0 ]]; then
+        local user="$COLOR_RED\u$COLOR_RESET"
+    elif [[ $USER != "$(logname)" ]]; then
+        # if the current user is different from the logon user
+        local user="$COLOR_YELLOW$COLOR_BOLD\u$COLOR_RESET"
+    else
+        local user="$COLOR_GREEN\u$COLOR_RESET"
+    fi
+    echo "$user"
+}
+
+function _prompt_at {
+    # show the @ in red if not local
+    local at='@'
+    if [[ -n $SSH_TTY ]]; then
+        at="$COLOR_RED$COLOR_BOLD$at$COLOR_RESET"
+    fi
+    echo "$at"
+}
+
+function _prompt_host {
+    echo "$COLOR_BLUE\h$COLOR_RESET"
+}
+
+# screen/tmux status in prompt
+function _prompt_screen {
+    if [[ $TERM == "screen" ]]; then
+        # figure out whether 'screen' or 'tmux'
+        if [[ -n "$TMUX" ]]; then
+            local screen='tmux'
+            local name="$(tmux display-message -p '#S')"
+            local window="$(tmux display-message -p '#I')"
+        else  # screen
+            local screen='screen'
+            local name="$STY"
+            local window="$WINDOW"
+        fi
+        echo "[$COLOR_ULINE$COLOR_GREEN$screen$COLOR_BLACK:$COLOR_BLUE$name$COLOR_BLACK:$COLOR_PURPLE$window$COLOR_RESET]"
+    fi
+}
+
+function _prompt_sep {
+    # separator - red if cwd unwritable
+    local sep=':';
+    if [[ ! -w "${PWD}" ]]; then
+        sep="$COLOR_RED$COLOR_BOLD$sep$COLOR_RESET"
+    fi
+    echo "$sep"
+}
+
+function _prompt_path {
+    echo "$COLOR_PURPLE\w$COLOR_RESET"
+}
+
 # source control information in prompt
 function _prompt_repo {
     local vcs=
@@ -100,54 +160,6 @@ function _prompt_jobs {
     fi
 }
 
-function _prompt_at {
-    # show the @ in red if not local
-    local at='@'
-    if [[ -n $SSH_TTY ]]; then
-        at="$COLOR_RED$COLOR_BOLD$at$COLOR_RESET"
-    fi
-    echo "$at"
-}
-
-# screen/tmux status in prompt
-function _prompt_screen {
-    if [[ $TERM == "screen" ]]; then
-        # figure out whether 'screen' or 'tmux'
-        if [[ -n "$TMUX" ]]; then
-            local screen='tmux'
-            local name="$(tmux display-message -p '#S')"
-            local window="$(tmux display-message -p '#I')"
-        else  # screen
-            local screen='screen'
-            local name="$STY"
-            local window="$WINDOW"
-        fi
-        echo "[$COLOR_ULINE$COLOR_GREEN$screen$COLOR_BLACK:$COLOR_BLUE$name$COLOR_BLACK:$COLOR_PURPLE$window$COLOR_RESET]"
-    fi
-}
-
-function _prompt_user {
-    # root/user info
-    if [[ $EUID -eq 0 ]]; then
-        local user="$COLOR_RED\u$COLOR_RESET"
-    elif [[ $USER != "$(logname)" ]]; then
-        # if the current user is different from the logon user
-        local user="$COLOR_YELLOW$COLOR_BOLD\u$COLOR_RESET"
-    else
-        local user="$COLOR_GREEN\u$COLOR_RESET"
-    fi
-    echo "$user"
-}
-
-function _prompt_sep {
-    # separator - red if cwd unwritable
-    local sep=':';
-    if [[ ! -w "${PWD}" ]]; then
-        sep="$COLOR_RED$COLOR_BOLD$sep$COLOR_RESET"
-    fi
-    echo "$sep"
-}
-
 function _prompt_char {
     # prompt char, with info about last return code
     local pchar="\\$" # slashes to prevent further substitution
@@ -161,18 +173,6 @@ function _prompt_char {
 
 function _save_last_return_code {
     export _LAST_RETURN_CODE=$? # save away last command result
-}
-
-function _prompt_date {
-    echo "$COLOR_GREY\D{%m/%d@%H:%M}$COLOR_RESET:"
-}
-
-function _prompt_host {
-    echo "$COLOR_BLUE\h$COLOR_RESET"
-}
-
-function _prompt_path {
-    echo "$COLOR_PURPLE\w$COLOR_RESET"
 }
 
 # PROMPT_COMMAND function
