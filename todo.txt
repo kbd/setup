@@ -15,6 +15,10 @@ todo:
 * Upgrade shell using homebrew. Will have to programmatically add to /etc/shells
   (but only if the homebrew version doesn't already exist there) and chsh
   http://johndjameson.com/blog/updating-your-shell-with-homebrew/
+* maybe make bash prompt only show user@host when you're not your user on local?
+  - maybe replace \h with \H in prompt_host to show the fully qualified hostname
+    kinda long though :(
+
 
 some neat items here:
 http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac
