@@ -25,7 +25,8 @@
 
 # aliases
 [alias]
-	d = difftool
+	d = diff
+	dt = difftool
 	st = status
 	co = checkout
 	cob = checkout -b
