@@ -18,7 +18,10 @@ todo:
 * maybe make bash prompt only show user@host when you're not your user on local?
   - maybe replace \h with \H in prompt_host to show the fully qualified hostname
     kinda long though :(
-
+* Change every reference to $HOME in your bash_profile to be the home of your login
+  user, so that when you sudo you still get *your* home stuff like the path pointing
+  to your $HOME/bin so you have access to 'z' and so on. Maybe $myhome = eval "~$(logname)'?
+  http://stackoverflow.com/questions/20504662/how-to-get-home-directory-of-different-user-in-bash-script
 
 some neat items here:
 http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac
