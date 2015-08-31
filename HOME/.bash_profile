@@ -294,7 +294,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
 
     function cb { [[ -t 0 ]] && pbpaste || pbcopy; }  # cb=clipboard
     # see if you can use xclip or xsel on linux, or write your own
-    # that behaves similarly but uses an env variable
+    # that behaves similarly but uses an env variable or a file
     # http://superuser.com/questions/288320/whats-like-osxs-pbcopy-for-linux
 
     alias ls="ls -FG"  # bsd ls
