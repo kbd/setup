@@ -76,6 +76,8 @@ function _prompt_at {
     echo "$at"
 }
 
+# a function so that it can do more logic later if desired
+# such as showing the full host by default if you're not local
 function _prompt_show_full_host { [[ -n $PROMPT_SHOW_FULL_HOST ]]; }
 
 function _prompt_host {
