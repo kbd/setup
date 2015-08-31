@@ -285,11 +285,6 @@ shopt -s autocd 2>/dev/null  # not supported in bash 3
 
 ### PLATFORM SPECIFIC ###
 if [[ $PLATFORM == 'Darwin' ]]; then
-    # this is to fix broken python module installation on new versions of xcode
-    # use 'sudo -E pip install X' to inherit your environment variables as root
-    export CFLAGS=-Qunused-arguments
-    export CPPFLAGS=-Qunused-arguments
-
     export EDITOR='open -t'
 
     function cb { [[ -t 0 ]] && pbpaste || pbcopy; }  # cb=clipboard
