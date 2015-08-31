@@ -76,8 +76,13 @@ function _prompt_at {
     echo "$at"
 }
 
+function _prompt_show_full_host {
+    if [[ -n $PROMPT_SHOW_FULL_HOST ]]; then return 0; else return 1; fi
+}
+
 function _prompt_host {
-    echo "$COLOR_BLUE\h$COLOR_RESET"
+    local host=$(_prompt_show_full_host && echo '\H' || echo '\h')
+    echo "$COLOR_BLUE$host$COLOR_RESET"
 }
 
 # screen/tmux status in prompt
