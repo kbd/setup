@@ -4,9 +4,11 @@ export PATH="$HOME/bin:$PATH"
 export EDITOR=vi
 export SVN_EDITOR=vi
 export GIT_EDITOR=vi
-export GIT_PS1_SHOWCOLORHINTS=true
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM='auto'
 export VERTICAINI=/etc/vertica.ini
 export LS_COLORS="ex=31"  # set executables to red (gnu ls)
 export GREP_OPTIONS='--color=auto'
