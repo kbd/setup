@@ -21,7 +21,7 @@ set statusline+=%m       " modified flag ('+' if modified)
 set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding (utf-8)
 set statusline+=%{&ff}]  " file format (unix)
 
-set statusline+=%y       " file type (like, python)
+set statusline+=%y       " file type (python)
 set statusline+=%=       " right align the rest
 set statusline+=%l,      " cursor line
 set statusline+=%c       " cursor column
