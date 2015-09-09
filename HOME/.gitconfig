@@ -13,13 +13,10 @@
 [diff]
 	# git has built-in knowledge of how to call meld
 	tool = meld
-
 [merge]
 	tool = meld
-
 [difftool]
 	prompt = false
-
 [mergetool]
 	prompt = false
 
