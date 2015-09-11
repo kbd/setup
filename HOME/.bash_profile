@@ -38,6 +38,9 @@ export BGCOLOR_PURPLE="\[$(tput setab 5)\]"
 export   BGCOLOR_CYAN="\[$(tput setab 6)\]"
 export   BGCOLOR_GREY="\[$(tput setab 7)\]"
 
+# BEGIN general functions
+
+# source a file or a directory of files
 function _source {
     if [[ -d "$1" ]]; then
         # if it's a directory, source everything in the directory
@@ -49,6 +52,26 @@ function _source {
         source "$1" 2>/dev/null
     fi
 }
+
+# mkdir + cd
+function mcd {
+    if [[ -z "$1" ]]; then
+        echo "missing argument"
+        return 1
+    fi
+    mkdir -p "$1" && cd "$1";
+}
+
+# cd + ls
+function cl {
+    cd "$1"
+    shift
+    ls "${@}"
+}
+
+# END general functions
+
+# BEGIN prompt code
 
 function _prompt_date {
     echo "$COLOR_GREY\D{%m/%d@%H:%M}$COLOR_RESET:"
@@ -221,23 +244,9 @@ else
     PROMPT_COMMAND=generate_ps1
 fi
 
-# mkdir + cd
-function mcd {
-    if [[ -z "$1" ]]; then
-        echo "missing argument"
-        return 1
-    fi
-    mkdir -p "$1" && cd "$1";
-}
+# END prompt code
 
-# cd + ls
-function cl {
-    cd "$1"
-    shift
-    ls "${@}"
-}
-
-# aliases
+# ALIASES
 alias   -- -="cd -"
 alias     ..="cd .."
 alias    ...="cd ../.."
@@ -284,13 +293,13 @@ function ipython {
     command ipython "${new_args[@]}"
 }
 
-# shopts
+# SHOPTS
 shopt -s histappend
 shopt -s dotglob
 shopt -s globstar 2>/dev/null  # not supported in bash 3
 shopt -s autocd 2>/dev/null  # not supported in bash 3
 
-### PLATFORM SPECIFIC ###
+# PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
     export EDITOR='open -t'
 
@@ -304,7 +313,8 @@ else
     alias ls="ls -F --color"  # gnu ls
 fi
 
-### SU HACK ###
+# BEGIN su hack
+
 # brilliant hack below derived from http://superuser.com/a/636475
 # causes your own bash_profile to be sourced even when su-ing around
 if [[ $USER == "$(logname)" ]]; then
@@ -315,13 +325,17 @@ alias su="export PROMPT_COMMAND='source $_LOGIN_BASH_PROFILE; $PROMPT_COMMAND' &
 
 # note: this doesn't work if the user you SU to has their own PROMPT_COMMAND set
 # todo: figure out how to get around this...
-### END SU HACK ###
 
-### COMPLETIONS ###
-# note, completions are at the end because 'z' modifies your PROMPT_COMMAND,
-# so it has to come after you set yours
+# END su hack
+
+# SOURCES
+_source "$HOME/bin/shell_sources"
+
+# COMPLETIONS
+# note, completions must be at the end because 'z' modifies
+# your PROMPT_COMMAND, so it has to come after you set yours
 _source /usr/local/etc/bash_completion.d
-_source $HOME/bin/shell_sources
 complete -cf sudo  # allow autocompletions after sudo.
 
+# machine-specific bash config
 _source .bash_profile_machine_specific
