@@ -152,11 +152,11 @@ function _prompt_repo {
         branch="$(__git_ps1 '%s')"
     fi
     if [[ $branch ]]; then
-        #this is what to use if __git_ps1 is not sourced
-        #branch=$(type -P git &>/dev/null && git branch 2>/dev/null)
+        # this is what to use if __git_ps1 is not sourced
+        # branch=$(type -P git &>/dev/null && git branch 2>/dev/null)
         vcs=git
     else
-        #would be nice to replace with hg_prompt and get dirty information etc.
+        # would be nice to replace with hg_prompt and get dirty information etc.
         branch=$(type -P hg &>/dev/null && hg branch 2>/dev/null)
         if [[ $branch ]]; then
             vcs=hg
@@ -176,19 +176,19 @@ function _prompt_repo {
 
 # running and stopped jobs
 function _prompt_jobs {
-    local running=$(( $(jobs -rp | wc -l) )) # convert to numeric
-    local stopped=$(( $(jobs -sp | wc -l) )) # convert to numeric
+    local running=$(( $(jobs -rp | wc -l) ))  # convert to numeric
+    local stopped=$(( $(jobs -sp | wc -l) ))  # convert to numeric
 
     local jobs=''
     if [[ $running -ne 0 ]]; then
-        jobs="$COLOR_GREEN$running&$COLOR_RESET" # '&' for 'background'
+        jobs="$COLOR_GREEN$running&$COLOR_RESET"  # '&' for 'background'
     fi
 
     if [[ $stopped -ne 0 ]]; then
         if [[ $jobs ]]; then
-            jobs="$jobs:" #  separate running and stopped job count with a colon
+            jobs="$jobs:"  # separate running and stopped job count with a colon
         fi
-        jobs="$jobs$COLOR_RED${stopped}z$COLOR_RESET" # 'z' for 'ctrl+z' to stop
+        jobs="$jobs$COLOR_RED${stopped}z$COLOR_RESET"  # 'z' for 'ctrl+z' to stop
     fi
 
     if [[ $jobs ]]; then
@@ -198,7 +198,7 @@ function _prompt_jobs {
 
 function _prompt_char {
     # prompt char, with info about last return code
-    local pchar="\\$" # slashes to prevent further substitution
+    local pchar="\\$"  # slashes to prevent further substitution
     if [[ $_LAST_RETURN_CODE -eq 0 ]]; then
         local prompt="$COLOR_GREEN$pchar$COLOR_RESET"
     else
@@ -208,7 +208,7 @@ function _prompt_char {
 }
 
 function _save_last_return_code {
-    export _LAST_RETURN_CODE=$? # save away last command result
+    export _LAST_RETURN_CODE=$?  # save away last command result
 }
 
 function trap_debug {
