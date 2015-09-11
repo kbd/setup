@@ -183,6 +183,11 @@ function _save_last_return_code {
     export _LAST_RETURN_CODE=$? # save away last command result
 }
 
+function trap_debug {
+    printf "\e[0m"  # reset prompt formatting
+}
+trap trap_debug DEBUG
+
 # PROMPT_COMMAND function
 function generate_ps1 {
     _save_last_return_code
@@ -190,6 +195,8 @@ function generate_ps1 {
     for f in 'date' 'user' 'at' 'host' 'screen' 'sep' 'path' 'repo' 'jobs' 'char'; do
         ps1+="\$(_prompt_$f)"
     done
+
+    ps1+='$COLOR_BOLD'  # bold what you type. Reset formatting in trap_debug.
 
     # if provided no argument, set PS1 yourself, else echo it to be used elsewhere
     if [[ -z $1 ]]; then
