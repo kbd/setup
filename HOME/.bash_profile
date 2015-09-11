@@ -53,6 +53,11 @@ function _source {
     fi
 }
 
+# set the window title
+function set_title {
+    echo -ne "\033]0;$1\007"
+}
+
 # mkdir + cd
 function mcd {
     if [[ -z "$1" ]]; then
