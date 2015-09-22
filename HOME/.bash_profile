@@ -275,6 +275,7 @@ alias h=history
 alias ercho='>&2 echo'  # echo to stderr
 
 alias ipython="ipython --no-banner --no-confirm-exit"
+alias ipython3="ipython3 --no-banner --no-confirm-exit"
 
 function ipython {
     # fix ipython to handle arguments like python
