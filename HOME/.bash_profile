@@ -57,6 +57,7 @@ function _source {
 function set_title {
     echo -ne "\033]0;$1\007"
 }
+alias settitle=set_title
 
 # mkdir + cd
 function mcd {
