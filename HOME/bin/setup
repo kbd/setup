@@ -145,6 +145,22 @@ def repo(action, settings, *args, **kwargs):
     subprocess.check_call(cmd)
 
 
+def ensure_correct_usrlocal_permissions(*args, **kwargs):
+    user = getpass.getuser()
+    uid = os.stat('/usr/local').st_uid
+    local_owner = pwd.getpwuid(uid).pw_name
+
+    log.debug("Currently logged in user is {!r}, owner of /usr/local is {!r}".format(
+        user, local_owner))
+
+    if user != local_owner:
+        log.info("Fixing permissions on /usr/local before running Homebrew")
+        # stupid that there's a shutil.chown but no shutil.chown -R
+        cmd = ['sudo', 'chown', '-R', user, '/usr/local']
+        log.info("Executing command: {!r}".format(cmd))
+        subprocess.check_call(cmd)
+
+
 def brew(action, settings, *args, **kwargs):
     # ensure homebrew is installed
     if not shutil.which('brew'):  # hey look 'which' is built in as of Python 3.3
@@ -163,19 +179,7 @@ def brew(action, settings, *args, **kwargs):
     formulas = settings['homebrew']['formulas']
 
     # fix permissions on /usr/local if necessary
-    user = getpass.getuser()
-    uid = os.stat('/usr/local').st_uid
-    local_owner = pwd.getpwuid(uid).pw_name
-
-    log.debug("Currently logged in user is {!r}, owner of /usr/local is {!r}".format(
-        user, local_owner))
-
-    if user != local_owner:
-        log.info("Fixing permissions on /usr/local before running Homebrew")
-        # stupid that there's a shutil.chown but no shutil.chown -R
-        cmd = ['sudo', 'chown', '-R', user, '/usr/local']
-        log.info("Executing command: {!r}".format(cmd))
-        subprocess.check_call(cmd)
+    ensure_correct_usrlocal_permissions()
 
     # ensure homebrew updated
     log.info("Running 'brew update'")
