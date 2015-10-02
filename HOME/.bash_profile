@@ -12,6 +12,9 @@ export GIT_PS1_SHOWUPSTREAM='auto'
 export VERTICAINI=/etc/vertica.ini
 export LS_COLORS="ex=31"  # set executables to red (gnu ls)
 export GREP_OPTIONS='--color=auto'
+export HISTCONTROL='ignoredups'  # I'd prefer to ignore dups on autocomplete instead of eliminating
+                                 # them from history, but that seems not possible
+export HISTTIMEFORMAT="[%F %T %z] "
 
 export    COLOR_RESET="\[$(tput sgr0)\]"
 export     COLOR_BOLD="\[$(tput bold)\]"
