@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import zipfile
 from copy import copy
+from distutils.util import strtobool
 from functools import partial
 
 import logging
@@ -288,14 +289,10 @@ class mybool(metaclass=abc.ABCMeta):
     because that's how 'defaults' returns false values
 
     """
-    def __new__(self, value=False):
-        if value == '0':
-            value = False
-        return bool(value)
+    def __new__(self, value='0'):
+        return bool(strtobool(value))
 
-    @classmethod
-    def __subclasshook__(cls, othercls):
-        return othercls is bool
+mybool.register(bool)
 
 
 PYTHON_TO_DEFAULTS_TYPE_MAPPING = {
