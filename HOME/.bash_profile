@@ -263,9 +263,9 @@ alias   ....="cd ../../.."
 alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-alias l=ls  # fix what I often type by mistake
-alias ll="ls -l"  # might as well make this work too
-alias lla="ls -la"  # and this
+alias l=ls
+alias ll="ls -l"
+alias lla="ls -la"
 
 alias edit=\$EDITOR "$@"
 alias e=edit  # Huffman code all the things!
@@ -319,9 +319,19 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     # that behaves similarly but uses an env variable or a file
     # http://superuser.com/questions/288320/whats-like-osxs-pbcopy-for-linux
 
-    alias ls="ls -FG"  # bsd ls
+    # bsd ls
+    alias ls="ls -FG"
+    # escape ls to ignore -F so you don't get directories with // at the end
+    alias lsd="\ls -dG */"
+    alias lld="\ls -ldG */"
 else
-    alias ls="ls -F --color"  # gnu ls
+    # gnu ls
+    alias ls="ls -F --color"
+    # '--' necessary to correctly handle filenames beginning with -
+    # bsd ls handles this correctly by default and doesn't allow --
+    # indicator-style=none so you don't get directories with // at the end
+    alias lsd="ls -d --indicator-style=none -- */"
+    alias lld="ll -d --indicator-style=none -- */"
 fi
 
 # BEGIN su hack
