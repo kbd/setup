@@ -289,7 +289,6 @@ function ipython {
             break
         fi
     done
-    echo "Starting $cmd"
     command $cmd "${new_args[@]}"
 }
 
