@@ -63,19 +63,21 @@
         }
     },
     'symlinks': {
-        'overrides': {
-            # overrides should not have slashes at the end even though it's a directory
+        'pointers': {
+            # pointers should not have slashes at the end even though it's a directory
             # because it refers to the symlink that's created
             'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User'
         },
         'partials': [
-            # with 'partial' directories, only files that are present in the directory in source
-            # control are versioned/overwritten. Normally, an entire directory would be versioned
-            '.config'
+            # partials refer to directories that won't be symlinked directly, but will have their
+            # contents symlinked. This avoids overwriting a directory that has files we want to
+            # leave in place and not alter. Pointer directories can be partials, and partials can
+            # be nested, otherwise subdirs within the partial will still be treated normally
+            # partials should be an absolute path, possibly with the home directory
+            '~/.config'
         ],
         # 'ignores_file': '.gitignore_global',  # piggyback off of gitignore_global
-        # this path should be resolved correctly because 'setup' sets the cwd
-        # to the root of the repository
+        # the relative path should be correct because 'setup' sets the cwd to the root of the repo
         'ignores': list(
             filter(
                 # ignore comments, negations, and empty lines
@@ -117,6 +119,7 @@
                 'setuptools',
                 'ipython[notebook]',
                 'pytest',
+                'pytest-capturelog'
                 'flake8',
                 # autopep8 after flake8: autopep8 installs newer versions of dependencies
                 'autopep8',
