@@ -3,7 +3,6 @@ import os as os_module
 import pytest
 import sys
 import unittest.mock as mock
-from importlib.machinery import SourceFileLoader
 from os.path import join
 from unittest.mock import call, patch
 
