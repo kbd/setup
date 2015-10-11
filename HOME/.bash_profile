@@ -225,6 +225,7 @@ alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
 alias l=ls
+alias la="ls -a"
 alias ll="ls -l"
 alias lla="ls -la"
 
