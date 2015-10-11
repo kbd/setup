@@ -12,7 +12,9 @@ import re
 import shutil
 import subprocess
 import zipfile
+from collections import OrderedDict
 from copy import copy
+from distutils.util import strtobool
 from functools import partial
 
 import logging
@@ -145,6 +147,22 @@ def repo(action, settings, *args, **kwargs):
     subprocess.check_call(cmd)
 
 
+def ensure_correct_usrlocal_permissions(*args, **kwargs):
+    user = getpass.getuser()
+    uid = os.stat('/usr/local').st_uid
+    local_owner = pwd.getpwuid(uid).pw_name
+
+    log.debug("Currently logged in user is {!r}, owner of /usr/local is {!r}".format(
+        user, local_owner))
+
+    if user != local_owner:
+        log.info("Fixing permissions on /usr/local before running Homebrew")
+        # stupid that there's a shutil.chown but no shutil.chown -R
+        cmd = ['sudo', 'chown', '-R', user, '/usr/local']
+        log.info("Executing command: {!r}".format(cmd))
+        subprocess.check_call(cmd)
+
+
 def brew(action, settings, *args, **kwargs):
     # ensure homebrew is installed
     if not shutil.which('brew'):  # hey look 'which' is built in as of Python 3.3
@@ -163,19 +181,7 @@ def brew(action, settings, *args, **kwargs):
     formulas = settings['homebrew']['formulas']
 
     # fix permissions on /usr/local if necessary
-    user = getpass.getuser()
-    uid = os.stat('/usr/local').st_uid
-    local_owner = pwd.getpwuid(uid).pw_name
-
-    log.debug("Currently logged in user is {!r}, owner of /usr/local is {!r}".format(
-        user, local_owner))
-
-    if user != local_owner:
-        log.info("Fixing permissions on /usr/local before running Homebrew")
-        # stupid that there's a shutil.chown but no shutil.chown -R
-        cmd = ['sudo', 'chown', '-R', user, '/usr/local']
-        log.info("Executing command: {!r}".format(cmd))
-        subprocess.check_call(cmd)
+    ensure_correct_usrlocal_permissions()
 
     # ensure homebrew updated
     log.info("Running 'brew update'")
@@ -284,22 +290,20 @@ class mybool(metaclass=abc.ABCMeta):
     because that's how 'defaults' returns false values
 
     """
-    def __new__(self, value=False):
-        if value == '0':
-            value = False
-        return bool(value)
+    def __new__(self, value='0'):
+        return bool(strtobool(value))
 
-    @classmethod
-    def __subclasshook__(cls, othercls):
-        return othercls is bool
+mybool.register(bool)
 
 
-PYTHON_TO_DEFAULTS_TYPE_MAPPING = {
-    mybool: 'boolean',
-    int: 'integer',
-    str: 'string',
-    float: 'float',
-}
+# map 'defaults' types to Python's types
+# Use OrderedDict because isinstance(True, int) is True, so compare to bool first
+DEFAULTS_TO_PYTHON_TYPE = OrderedDict((
+    ('boolean', mybool),
+    ('integer', int),
+    ('float', float),
+    ('string', str),
+))
 
 
 def defaults_read(domain, key, missing_ok=False):
@@ -321,10 +325,8 @@ def defaults_read(domain, key, missing_ok=False):
 
     log.debug("Result was: {!r}".format(result))
 
-    # reverse the type mapping to go from strings to Python types
-    type_mapping = {s: t for t, s in PYTHON_TO_DEFAULTS_TYPE_MAPPING.items()}
     result_type = re.match('Type is (\w+)', result.decode()).group(1)
-    type = type_mapping[result_type]
+    type = DEFAULTS_TO_PYTHON_TYPE[result_type]
 
     cmd = ['defaults', 'read', domain, key]
     log.debug("Executing command: {!r}".format(cmd))
@@ -337,16 +339,13 @@ def defaults_read(domain, key, missing_ok=False):
 def defaults_write(domain, key, value):
     cmd = ['defaults', 'write', domain, key]
 
-    type = None
-    for t, ts in PYTHON_TO_DEFAULTS_TYPE_MAPPING.items():
-        if isinstance(value, t):
-            type = ts
+    for type_str, type in DEFAULTS_TO_PYTHON_TYPE.items():
+        if isinstance(value, type):
             break
-
-    if type is None:
+    else:
         raise Exception("Unsupported value type provided to defaults_write: {!r}".format(value))
 
-    cmd.extend(['-{}'.format(type), str(value)])
+    cmd.extend(['-{}'.format(type_str), str(value)])
 
     log.debug("Executing command: {!r}".format(cmd))
     subprocess.check_call(cmd)

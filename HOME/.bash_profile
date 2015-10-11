@@ -12,6 +12,9 @@ export GIT_PS1_SHOWUPSTREAM='auto'
 export VERTICAINI=/etc/vertica.ini
 export LS_COLORS="ex=31"  # set executables to red (gnu ls)
 export GREP_OPTIONS='--color=auto'
+export HISTCONTROL='ignoredups'  # I'd prefer to ignore dups on autocomplete instead of eliminating
+                                 # them from history, but that seems not possible
+export HISTTIMEFORMAT="[%F %T %z] "
 
 export    COLOR_RESET="\[$(tput sgr0)\]"
 export     COLOR_BOLD="\[$(tput bold)\]"
@@ -37,44 +40,6 @@ export   BGCOLOR_BLUE="\[$(tput setab 4)\]"
 export BGCOLOR_PURPLE="\[$(tput setab 5)\]"
 export   BGCOLOR_CYAN="\[$(tput setab 6)\]"
 export   BGCOLOR_GREY="\[$(tput setab 7)\]"
-
-# BEGIN general functions
-
-# source a file or a directory of files
-function _source {
-    if [[ -d "$1" ]]; then
-        # if it's a directory, source everything in the directory
-        for I in "$1"/*; do
-            source "$I" 2>/dev/null
-        done
-    elif [[ -f "$1" ]]; then
-        # else source the file if it exists
-        source "$1" 2>/dev/null
-    fi
-}
-
-# set the window title
-function set_title {
-    echo -ne "\033]0;$1\007"
-}
-
-# mkdir + cd
-function mcd {
-    if [[ -z "$1" ]]; then
-        echo "missing argument"
-        return 1
-    fi
-    mkdir -p "$1" && cd "$1";
-}
-
-# cd + ls
-function cl {
-    cd "$1"
-    shift
-    ls "${@}"
-}
-
-# END general functions
 
 # BEGIN prompt code
 
@@ -259,12 +224,12 @@ alias   ....="cd ../../.."
 alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-alias l=ls  # fix what I often type by mistake
-alias ll="ls -l"  # might as well make this work too
-alias lla="ls -la"  # and this
+alias l=ls
+alias ll="ls -l"
+alias lla="ls -la"
 
 alias edit=\$EDITOR "$@"
-alias e=edit  # Huffman code all the things!
+alias e=edit
 alias e.="e ."
 
 alias grep=egrep
@@ -274,35 +239,9 @@ alias h=history
 
 alias ercho='>&2 echo'  # echo to stderr
 
-alias ipython="ipython --no-banner --no-confirm-exit"
-
-function ipython {
-    # fix ipython to handle arguments like python
-    # https://twitter.com/keithdevens/status/595294880533876736
-    # this is an imperfect hack because you could do "-c 'command'" and
-    # have command actually be a file in contrived cases, but this
-    # shouldn't cause problems normally
-    local i=1
-    local new_args=("$@")
-
-    for arg in "$@"; do
-        i=$((i+1))
-        if [[ $arg != -* && -f $arg ]]; then
-            # if arg doesn't start with a dash and the arg is a file
-            # then consider this the script passed to ipython and
-            # all args after this are args to the script
-            new_args=("${@:0:$i}" "--" "${@:$i}")
-            break
-        fi
-    done
-    command ipython "${new_args[@]}"
-}
-
-# SHOPTS
-shopt -s histappend
-shopt -s dotglob
-shopt -s globstar 2>/dev/null  # not supported in bash 3
-shopt -s autocd 2>/dev/null  # not supported in bash 3
+# backslashes are necessary to call the function 'ipython' instead of the built-in
+alias ipython="\ipython '' --no-banner --no-confirm-exit"
+alias ipython3="\ipython 3 --no-banner --no-confirm-exit"
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
@@ -313,10 +252,86 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     # that behaves similarly but uses an env variable or a file
     # http://superuser.com/questions/288320/whats-like-osxs-pbcopy-for-linux
 
-    alias ls="ls -FG"  # bsd ls
+    # bsd ls
+    alias ls="ls -FG"
+    # escape ls to ignore -F so you don't get directories with // at the end
+    alias lsd="\ls -dG */"
+    alias lld="\ls -ldG */"
 else
-    alias ls="ls -F --color"  # gnu ls
+    # gnu ls
+    alias ls="ls -F --color"
+    # '--' necessary to correctly handle filenames beginning with -
+    # bsd ls handles this correctly by default and doesn't allow --
+    # indicator-style=none so you don't get directories with // at the end
+    alias lsd="ls -d --indicator-style=none -- */"
+    alias lld="ll -d --indicator-style=none -- */"
 fi
+
+function ipython {
+    # fix ipython to handle arguments like python
+    # https://twitter.com/keithdevens/status/595294880533876736
+    # this is an imperfect hack because you could do "-c 'command'" and have command
+    # actually be a file in contrived cases, but this shouldn't cause problems normally
+    # to show why this is necessary, use ipython -i python print_sysargv.py -i
+    local version=$1
+    shift
+    local cmd="ipython$version"
+    local new_args=("$@")
+
+    local i=1
+    for arg in "$@"; do
+        i=$((i+1))
+        if [[ $arg != -* && -f $arg ]]; then
+            # if arg doesn't start with a dash and the arg is a file
+            # then consider this the script passed to ipython and
+            # all args after this are args to the script
+            new_args=("${@:0:$i}" "--" "${@:$i}")
+            break
+        fi
+    done
+    command $cmd "${new_args[@]}"
+}
+
+# source a file or a directory of files
+function _source {
+    if [[ -d "$1" ]]; then
+        # if it's a directory, source everything in the directory
+        for I in "$1"/*; do
+            source "$I" 2>/dev/null
+        done
+    elif [[ -f "$1" ]]; then
+        # else source the file if it exists
+        source "$1" 2>/dev/null
+    fi
+}
+
+# set the window title
+function set_title {
+    echo -ne "\033]0;$1\007"
+}
+alias settitle=set_title
+
+# mkdir + cd
+function mcd {
+    if [[ -z "$1" ]]; then
+        echo "missing argument"
+        return 1
+    fi
+    mkdir -p "$1" && cd "$1";
+}
+
+# cd + ls
+function cl {
+    cd "$1"
+    shift
+    ls "${@}"
+}
+
+# SHOPTS
+shopt -s histappend
+shopt -s dotglob
+shopt -s globstar 2>/dev/null  # not supported in bash 3
+shopt -s autocd 2>/dev/null  # not supported in bash 3
 
 # BEGIN su hack
 

@@ -8,6 +8,7 @@ tar czv -L -f ~/config.tar.gz \
 -C ~ \
  bin/ \
  .bash_profile \
+ .inputrc \
  .gitconfig \
  .gitignore_global \
  .hgrc \
