@@ -20,96 +20,9 @@ from functools import partial
 import logging
 log = logging.getLogger()
 
+from lib import symlink
+
 SETTINGS_FILE_LOCATION = 'settings.py'
-
-
-def get_backup_path(path):
-    """
-    Create a backup path given path. Use case is that a file exists at path and
-    you want to rename it to (a non-existent) backup path. Obviously there's a
-    small race condition (where a file is created at the backup path you
-    specify before you move the file there but after this determines the backup
-    path), but that's not worth handling.
-
-    """
-    d = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
-
-    while os.path.exists(path):  # keep adding to filename until you get a non-existent one
-        # strip a trailing slash so you don't create something like foo/.bak...
-        if path[-1] == '/':
-            path = path[:-1]
-
-        path += '.bak' + d
-
-    return path
-
-
-def create_symlinks(symlink_settings, source_dir, dest_dir):
-    """
-    For all files and directories within source_dir, symlink them into dest_dir.
-
-    The destination in the dest_dir defaults to its location in the source_dir
-    unless it's overridden in symlink_settings['overrides'].
-
-    """
-    overrides = symlink_settings['overrides']
-    ignores = symlink_settings['ignores']
-
-    # ignores_file = symlink_settings['ignores_file']
-    #
-    # if os.path.exists(ignores_file):
-    #     ignores = list(filter(None, open(ignores_file).read().splitlines()))
-    # else:
-    #     path = os.path.join(os.getcwd(), ignores_file)
-    #     log.warning("Couldn't read ignores file at {!r}".format(path))
-    #     ignores = []
-
-    files = os.listdir(source_dir)
-    log.debug("source_dir is: {!r}, dest_dir is: {!r}".format(source_dir, dest_dir))
-    for file in files:
-        if any(fnmatch.fnmatch(file, ignore) for ignore in ignores):
-            log.debug("{!r} is ignored".format(file))
-            continue
-
-        # default to the provided dest_dir, otherwise use the override
-        if file in overrides:
-            # if an override, should still be *within* the dest_dir
-            dest_dir_override = os.path.join(dest_dir, overrides[file])
-            log.debug("Overridden destination for file {!r} is {!r}".format(
-                file, dest_dir_override))
-
-            dest_path = dest_dir_override
-        else:
-            dest_path = os.path.join(dest_dir, file)
-
-        repo_path = os.path.join(source_dir, file)
-        log.debug("Linking {!r} to {!r}".format(repo_path, dest_path))
-        if os.path.lexists(dest_path):
-            log.debug("Path {!r} already exists".format(dest_path))
-            if os.path.islink(dest_path):
-                log.debug("{!r} is a symlink.".format(dest_path))
-                prior_symlink = os.readlink(dest_path)
-                if prior_symlink == repo_path:
-                    log.debug("{!r} already points where we want, making no changes".format(
-                        dest_path))
-                else:
-                    log.info("Changing symlink at {!r} to point to {!r}. "
-                             "Currently points to {!r}".format(
-                                 dest_path, repo_path, prior_symlink))
-
-                    os.remove(dest_path)
-                    os.symlink(repo_path, dest_path)
-            else:
-                # move to backup location before proceeding
-                backup_path = get_backup_path(dest_path)
-                log.info("Renaming {!r} to {!r}".format(dest_path, backup_path))
-                os.rename(dest_path, backup_path)
-
-                log.info("Creating new symlink of {!r} to {!r}".format(file, dest_path))
-                os.symlink(repo_path, dest_path)
-        else:
-            log.info("Creating new symlink of {!r} to {!r}".format(file, dest_path))
-            os.symlink(repo_path, dest_path)
 
 
 def create_command_line_parser(actions):
@@ -425,5 +338,5 @@ if __name__ == '__main__':
         actions = resolve_action_aliases(actions)
         args.func(actions[args.action], settings, **argsdict)
     else:
-        create_symlinks(settings['symlinks'], repo_home_dir, home_dir)
+        symlink.create(settings['symlinks'], repo_home_dir, home_dir)
         update_os_settings(settings)
