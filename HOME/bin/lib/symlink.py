@@ -86,6 +86,7 @@ def is_a_partial_directory(partials, file):
     ['~/.config'], the destination is '~/.config/myconfig', expanduser on everything to be safe,
 
     """
+    log.debug("Checking if dest path {!r} is in partials: {!r}".format(file, partials))
     return os.path.isdir(file) and file in partials
 
 
@@ -130,7 +131,6 @@ def create(symlink_settings, source_dir, dest_dir):
             else:
                 back_up_existing_file(dest_path)
 
-        log.info("Checking if dest path {!r} is in partials: {!r}".format(dest_path, partials))
         if is_a_partial_directory(partials, dest_path):
             handle_partials(symlink_settings, repo_path, dest_path)
         else:
