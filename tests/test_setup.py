@@ -102,7 +102,6 @@ class TestCreateSymlinks(object):
         os.listdir.side_effect = [['.config'], ['myconfig']]
         os.path.lexists.return_value = True
         with patch('lib.symlink.create_symlink') as create_symlink:
-            # pytest.set_trace()
             symlink.create(symlink_settings, SOURCE_DIR, DEST_DIR)
 
         os.mkdir.assert_not_called()
