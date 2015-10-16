@@ -327,26 +327,30 @@ function cl {
     ls "${@}"
 }
 
+# get the homedir of another user. Be careful cause of eval.
+# http://stackoverflow.com/a/20506895
+function user_home {
+    eval echo "~$1"
+}
+
+function my_home {
+    user_home $(logname)
+}
+
 # SHOPTS
 shopt -s histappend
 shopt -s dotglob
 shopt -s globstar 2>/dev/null  # not supported in bash 3
 shopt -s autocd 2>/dev/null  # not supported in bash 3
 
-# BEGIN su hack
-
-# brilliant hack below derived from http://superuser.com/a/636475
-# causes your own bash_profile to be sourced even when su-ing around
-if [[ $USER == "$(logname)" ]]; then
-    export _LOGIN_BASH_PROFILE="$HOME/.bash_profile"
+# bind my keyboard shortcuts even when su-d
+if [[ $USER != "$(logname)" ]]; then
+    bind -f "$(my_home)/.inputrc"
 fi
 
-alias su="export PROMPT_COMMAND='source $_LOGIN_BASH_PROFILE; $PROMPT_COMMAND' && su"
-
-# note: this doesn't work if the user you SU to has their own PROMPT_COMMAND set
-# todo: figure out how to get around this...
-
-# END su hack
+# source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
+# note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
+alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAND' && su"
 
 # SOURCES
 _source "$HOME/bin/shell_sources"
