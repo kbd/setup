@@ -1,7 +1,6 @@
 import datetime
 import fnmatch
 import os
-from pathlib import Path
 
 import logging
 
