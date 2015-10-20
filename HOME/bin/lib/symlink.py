@@ -110,7 +110,7 @@ def handle_existing_symlink(repo_path, dest_path):
 
 
 def handle_existing_path(partials, repo_path, dest_path):
-    "Handle existing symlink, return True if a new symlink needs to be created"
+    "Handle existing symlink, return True if there's nothing left to do."
     if os.path.lexists(dest_path):
         log.debug("Path {!r} already exists".format(dest_path))
         if os.path.islink(dest_path):
