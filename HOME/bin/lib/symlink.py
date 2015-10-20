@@ -48,16 +48,6 @@ def back_up_existing_file(dest_path):
     os.rename(dest_path, backup_path)
 
 
-def remove_existing_symlink(repo_path, dest_path):
-    prior_symlink = os.readlink(dest_path)
-    if prior_symlink == repo_path:
-        log.debug("{!r} already points where we want, making no changes".format(dest_path))
-    else:
-        log.info("Symlink at {!r} points to {!r}. Removing existing symlink".format(
-            dest_path, prior_symlink))
-        os.remove(dest_path)
-
-
 def follow_pointer(pointers, dest_dir, file):
     """Return the correct destination path taking pointers into account"""
     # default to the provided dest_dir, otherwise use the pointer
@@ -102,6 +92,35 @@ def handle_partials(symlink_settings, repo_path, dest_path):
     create(symlink_settings, repo_path, dest_path)
 
 
+def handle_existing_symlink(repo_path, dest_path):
+    """
+    Remove existing symlink if it doesn't point where we want.
+
+    Return True if there's nothing left to do.
+
+    """
+    prior_symlink = os.readlink(dest_path)
+    if prior_symlink == repo_path:
+        log.debug("{!r} already points where we want, making no changes".format(dest_path))
+        return True
+    else:
+        log.info("Symlink at {!r} points to {!r}. Removing existing symlink".format(
+            dest_path, prior_symlink))
+        os.remove(dest_path)
+
+
+def handle_existing_path(partials, repo_path, dest_path):
+    "Handle existing symlink, return True if a new symlink needs to be created"
+    if os.path.lexists(dest_path):
+        log.debug("Path {!r} already exists".format(dest_path))
+        if os.path.islink(dest_path):
+            return handle_existing_symlink(repo_path, dest_path)
+        elif is_a_partial_directory(partials, dest_path):
+            log.debug("{!r} is a partial, not backing up".format(dest_path))
+        else:
+            back_up_existing_file(dest_path)
+
+
 def create(symlink_settings, source_dir, dest_dir):
     """
     For all files and directories within source_dir, symlink them into dest_dir.
@@ -113,6 +132,7 @@ def create(symlink_settings, source_dir, dest_dir):
     pointers = symlink_settings.get('pointers', {})
     ignores = symlink_settings.get('ignores', [])
     partials = symlink_settings.get('partials', [])
+    partials = list(map(os.path.expanduser, partials))
 
     files = os.listdir(source_dir)
     log.debug("source_dir is: {!r}, dest_dir is: {!r}".format(source_dir, dest_dir))
@@ -123,13 +143,11 @@ def create(symlink_settings, source_dir, dest_dir):
 
         repo_path = os.path.join(source_dir, file)
         dest_path = follow_pointer(pointers, dest_dir, file)
+
         log.debug("Linking {!r} to {!r}".format(repo_path, dest_path))
-        if os.path.lexists(dest_path):
-            log.debug("Path {!r} already exists".format(dest_path))
-            if os.path.islink(dest_path):
-                remove_existing_symlink(repo_path, dest_path)
-            else:
-                back_up_existing_file(dest_path)
+        if handle_existing_path(partials, repo_path, dest_path):
+            # existing symlink pointed where we wanted, or was a partial, nothing to do
+            continue
 
         if is_a_partial_directory(partials, dest_path):
             handle_partials(symlink_settings, repo_path, dest_path)

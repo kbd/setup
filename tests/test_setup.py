@@ -127,6 +127,43 @@ class TestCreateSymlinks(object):
             new_path = symlink.get_backup_path(original_path)
         assert new_path == expected_path
 
+    def test_handle_existing_path(self, os):
+        partials = ['~/.config']
+
+        os.path.lexists.return_value = False  # no existing file case
+        return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
+        # handle_existing_path returns falsy cause the symlink needs to be created
+        assert bool(return_value) is False
+
+        os.path.lexists.return_value = True  # test what it does when file exists
+        os.path.islink.return_value = True  # and is a symlink
+        os.readlink.return_value = 'repo_path'  # that points to where we want
+
+        return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
+        assert bool(return_value) is True  # nothing to do in this case
+
+        os.readlink.return_value = 'another_path'  # this time it doesn't point where we want
+        return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
+        os.remove.assert_called_with('dest_path')
+        assert bool(return_value) is False  # need to create
+
+        # lastly, test the case where it's not a symlink but a real file, and test that
+        # the file is renamed and that handle_existing_path returns True
+        os.path.islink.return_value = False
+        with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
+            return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
+
+        assert bool(return_value) is False
+        back_up_existing_file.assert_called_with('dest_path')
+
+        # make sure that it's *not* backed up if it's a partial directory
+        os.path.isdir.return_value = True
+        with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
+            return_value = symlink.handle_existing_path(partials, 'repo/HOME/.config', '~/.config')
+
+        assert bool(return_value) is False
+        assert not back_up_existing_file.called
+
 
 def test_follow_pointer(symlink_settings):
     pointers = symlink_settings['pointers']

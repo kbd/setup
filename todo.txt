@@ -23,3 +23,11 @@ todo:
 some neat items here:
 http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac
 https://github.com/donnemartin/dev-setup/blob/master/osx.sh
+
+* maybe change lld to be a function that notices if it takes an argument and
+  does the right thing, either listing only directories that match the argument
+  or listing all directories within the current directory with no argument
+
+* add tests for symlink that ensure that something can be both a pointer and a partial
+* make sure the user's home (~) is always expanded in setup/symlink so that things
+  are consistent, such as comparisons to partials

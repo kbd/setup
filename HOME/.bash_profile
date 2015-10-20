@@ -359,4 +359,4 @@ _source /usr/local/etc/bash_completion.d
 complete -cf sudo  # allow autocompletions after sudo.
 
 # machine-specific bash config
-_source .bash_profile_machine_specific
+_source .config/machine_specific/.bash_profile
