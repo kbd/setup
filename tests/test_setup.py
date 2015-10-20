@@ -164,6 +164,14 @@ class TestCreateSymlinks(object):
         assert bool(return_value) is False
         assert not back_up_existing_file.called
 
+        # make sure it doesn't consider a regular file a partial
+        os.path.isdir.return_value = False
+        with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
+            return_value = symlink.handle_existing_path(partials, 'repo/HOME/.config', '~/.config')
+
+        assert bool(return_value) is False
+        back_up_existing_file.assert_called_with('~/.config')
+
 
 def test_follow_pointer(symlink_settings):
     pointers = symlink_settings['pointers']
