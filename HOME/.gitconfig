@@ -22,11 +22,11 @@
 
 # aliases
 [alias]
-    ap = add -p
+	ap = add -p
 	d = diff
 	dt = difftool
-    ds = diff --staged
-    dts = difftool --staged
+	ds = diff --staged
+	dts = difftool --staged
 	st = status
 	co = checkout
 	cob = checkout -b
