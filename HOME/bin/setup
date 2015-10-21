@@ -115,9 +115,9 @@ def brew(action, settings, *args, **kwargs):
     installed_packages = subprocess.check_output(['brew', 'list']).decode().split()
     log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
 
+    # install missing packages
     missing_packages = sorted(set(formulas) - set(installed_packages))
     log.info("Missing packages are: {}".format(', '.join(missing_packages)))
-
     for p in missing_packages:
         log.info("Installing package: {}".format(p))
         subprocess.check_call(['brew', 'install', p])
@@ -127,11 +127,14 @@ def brew(action, settings, *args, **kwargs):
     if post_install:
         log.info("Running post-install operations")
 
-    for cmd in post_install:
-        # only if the item is a string, run it with shell=True
-        shell = isinstance(cmd, str)
-        log.info("Running cmd (shell={!r}): {!r}".format(shell, cmd))
-        subprocess.check_call(cmd, shell=shell)
+        for cmd in post_install:
+            shell = isinstance(cmd, str)  # run with shell=True if the command is a string
+            log.info("Running cmd (shell={!r}): {!r}".format(shell, cmd))
+            subprocess.check_call(cmd, shell=shell)
+
+    # clean up outdated packages
+    log.info("Running 'brew cleanup'")
+    subprocess.call(['brew', 'cleanup'])
 
 
 def packages(action, settings, *args, **kwargs):
