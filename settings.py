@@ -125,8 +125,7 @@
                 'pytest',
                 'pytest-capturelog'
                 'flake8',
-                # autopep8 after flake8: autopep8 installs newer versions of dependencies
-                'autopep8',
+                'autopep8',  # after flake8 as autopep8 installs newer versions of dependencies
                 'pylint',
                 'requests',
                 'ftfy',
