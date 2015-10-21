@@ -35,3 +35,5 @@ https://github.com/donnemartin/dev-setup/blob/master/osx.sh
 * move all your machine-specific configs to .config/machine_specific
 * add that directory to your gitignore so things there don't get checked in
 * make tests pass by always expanding user
+
+* figure out how to get pytest for python 2 and python 3 installed simultaneously
