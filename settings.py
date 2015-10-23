@@ -123,7 +123,7 @@
                 'setuptools',
                 'ipython[notebook]',
                 'pytest',
-                'pytest-capturelog'
+                'pytest-capturelog',
                 'flake8',
                 'autopep8',  # after flake8 as autopep8 installs newer versions of dependencies
                 'pylint',
