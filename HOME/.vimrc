@@ -39,4 +39,4 @@ function Load_if_readable(file)
 	endif
 endfunction
 
-call Load_if_readable($HOME.'/.vimrc_machine_specific')
+call Load_if_readable($HOME.'/.config/machine_specific/.vimrc')

@@ -5,7 +5,7 @@
 	default = current
 [include]
 	# allow machine-specific configuration (eg. work vs home)
-	path = ~/.gitconfig_machine_specific
+	path = ~/.config/machine_specific/.gitconfig
 [core]
 	excludesfile = ~/.gitignore_global
 
