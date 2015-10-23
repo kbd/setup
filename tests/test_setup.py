@@ -13,7 +13,9 @@ sys.path.append(BINPATH)
 from lib import symlink
 
 SOURCE_DIR = '~/setup/HOME'
+ABS_SOURCE_DIR = '/Users/user/setup/HOME'
 DEST_DIR = '~'
+ABS_DEST_DIR = '/Users/user'
 
 
 @pytest.fixture
@@ -28,8 +30,11 @@ def symlink_settings():
     }
 
 
-# mock everything in 'os', except use the real os.path.join
-@patch('lib.symlink.os', **{'path.join': os_module.path.join})
+# mock everything in 'os', except use the real os.path.join and fake expanduser
+@patch('lib.symlink.os', **{
+    'path.join': os_module.path.join,
+    'path.expanduser': lambda x: x.replace('~', '/Users/user'),
+})
 class TestCreateSymlinks(object):
     def test_create_symlink(self, os):
         "Test that create_symlink correctly calls os.symlink"
@@ -50,7 +55,7 @@ class TestCreateSymlinks(object):
             symlink.create(symlink_settings, SOURCE_DIR, DEST_DIR)
 
         create_symlink.assert_called_with(
-            join(SOURCE_DIR, files[0]), join(DEST_DIR, files[0]))
+            join(ABS_SOURCE_DIR, files[0]), join(ABS_DEST_DIR, files[0]))
 
     def test_create_symlinks_pointers(self, os, symlink_settings):
         "Test that symlink creation correctly follows pointers"
@@ -62,7 +67,7 @@ class TestCreateSymlinks(object):
 
         pointers = symlink_settings['pointers']
         create_symlink.assert_called_with(
-            join(SOURCE_DIR, 'sublime_text'), join(DEST_DIR, pointers['sublime_text'])
+            join(ABS_SOURCE_DIR, 'sublime_text'), join(ABS_DEST_DIR, pointers['sublime_text'])
         )
 
     def test_ignores(self, os):
@@ -75,7 +80,7 @@ class TestCreateSymlinks(object):
             symlink.create(symlink_settings, SOURCE_DIR, DEST_DIR)
 
         create_symlink.assert_called_once_with(
-            join(SOURCE_DIR, 'hello'), join(DEST_DIR, 'hello'))
+            join(ABS_SOURCE_DIR, 'hello'), join(ABS_DEST_DIR, 'hello'))
 
     def test_create_symlinks_partials_none_existing(self, os, symlink_settings):
         "Test that symlink creation creates the intermediate directory and then symlinks the file"
@@ -85,12 +90,12 @@ class TestCreateSymlinks(object):
         with patch('lib.symlink.create_symlink') as create_symlink:
             symlink.create(symlink_settings, SOURCE_DIR, DEST_DIR)
 
-        os.mkdir.assert_called_with('~/.config')
+        os.mkdir.assert_called_with('/Users/user/.config')
 
         expected_calls = []
         for file in files_within_config:
-            source = join(SOURCE_DIR, '.config', file)
-            dest = join(DEST_DIR, '.config', file)
+            source = join(ABS_SOURCE_DIR, '.config', file)
+            dest = join(ABS_DEST_DIR, '.config', file)
             expected_calls.append(call(source, dest))
 
         assert create_symlink.mock_calls == expected_calls
@@ -128,7 +133,7 @@ class TestCreateSymlinks(object):
         assert new_path == expected_path
 
     def test_handle_existing_path(self, os):
-        partials = ['~/.config']
+        partials = ['/Users/user/.config']
 
         os.path.lexists.return_value = False  # no existing file case
         return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
@@ -159,7 +164,8 @@ class TestCreateSymlinks(object):
         # make sure that it's *not* backed up if it's a partial directory
         os.path.isdir.return_value = True
         with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
-            return_value = symlink.handle_existing_path(partials, 'repo/HOME/.config', '~/.config')
+            return_value = symlink.handle_existing_path(
+                partials, 'repo/HOME/.config', '/Users/user/.config')
 
         assert bool(return_value) is False
         assert not back_up_existing_file.called
@@ -167,10 +173,11 @@ class TestCreateSymlinks(object):
         # make sure it doesn't consider a regular file a partial
         os.path.isdir.return_value = False
         with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
-            return_value = symlink.handle_existing_path(partials, 'repo/HOME/.config', '~/.config')
+            return_value = symlink.handle_existing_path(
+                partials, 'repo/HOME/.config', '/Users/user/.config')
 
         assert bool(return_value) is False
-        back_up_existing_file.assert_called_with('~/.config')
+        back_up_existing_file.assert_called_with('/Users/user/.config')
 
 
 def test_follow_pointer(symlink_settings):

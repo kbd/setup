@@ -128,6 +128,8 @@ def create(symlink_settings, source_dir, dest_dir):
     unless it's overridden in symlink_settings['pointers'].
 
     """
+    source_dir = os.path.expanduser(source_dir)
+    dest_dir = os.path.expanduser(dest_dir)
     pointers = symlink_settings.get('pointers', {})
     ignores = symlink_settings.get('ignores', [])
     partials = symlink_settings.get('partials', [])
