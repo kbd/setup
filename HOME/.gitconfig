@@ -22,6 +22,7 @@
 
 # aliases
 [alias]
+	a = add
 	ap = add -p
 	d = diff
 	dt = difftool
