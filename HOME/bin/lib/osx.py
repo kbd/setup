@@ -3,6 +3,7 @@ import getpass
 import logging
 import os
 import pwd
+import re
 import shutil
 import subprocess
 from collections import OrderedDict

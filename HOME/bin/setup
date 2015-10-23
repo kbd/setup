@@ -12,7 +12,8 @@ from functools import partial
 import logging
 log = logging.getLogger()
 
-from lib.osx import brew, ensure_correct_usrlocal_permissions, restart_os_functions
+from lib.osx import brew, ensure_correct_usrlocal_permissions, restart_os_functions, \
+    update_os_settings
 from lib import symlink
 
 SETTINGS_FILE_LOCATION = 'settings.py'
