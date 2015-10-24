@@ -135,16 +135,21 @@ def resolve_action_aliases(actions):
     return actions_copy
 
 
-if __name__ == '__main__':
+def load_settings():
+    return eval(open(SETTINGS_FILE_LOCATION).read())
+
+
+def main():
     # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
     # get the root of the repository. Use realpath to resolve symbolic links
     repo_root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '../..'))
     repo_home_dir = os.path.join(repo_root_dir, 'HOME')
+    log.debug("repo_home_dir is {!r}".format(repo_home_dir))
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
     home_dir = os.path.expanduser('~')
 
     # get settings and set up command line parser
-    settings = eval(open(SETTINGS_FILE_LOCATION).read())
+    settings = load_settings()
     actions = settings['actions']
     parser = create_command_line_parser(actions)
     args = parser.parse_args()
@@ -168,3 +173,7 @@ if __name__ == '__main__':
     else:
         symlink.create(settings['symlinks'], repo_home_dir, home_dir)
         update_os_settings(settings)
+
+
+if __name__ == '__main__':
+    main()
