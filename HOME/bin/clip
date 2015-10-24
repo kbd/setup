@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+
+CLIPS = {
+    'shrug': "¯\_(ツ)_/¯",
+    'check': "☑",
+    'nocheck': "☐",
+    'thumb': "👍",
+    'thumbdown': "👎",
+    'poop': "💩",
+    'snowman': "☃",
+    'flip': "(╯°□°）╯︵ ┻━┻"
+}
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("Available clips:")
+        for c, v in sorted(CLIPS.items()):
+            print(c, v)
+        sys.exit()
+
+    clips = sys.argv[1:]
+
+    output = []
+    for clip in clips:
+        if clip not in CLIPS:
+            print("No clip named {!r}".format(clip), file=sys.stderr)
+            continue
+
+        output.append(CLIPS[clip])
+
+    cmd = "echo '{}' | pbcopy".format(' '.join(output).replace("'", "'\\''"))
+    subprocess.check_call(cmd, shell=True)
