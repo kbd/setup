@@ -5,6 +5,7 @@ import sys
 
 CLIPS = {
     'shrug': "¯\_(ツ)_/¯",
+    'shrug2': "¯\(°_o)/¯",
     'check': "☑",
     'nocheck': "☐",
     'thumb': "👍",
@@ -17,15 +18,13 @@ CLIPS = {
     'lod': "ಠ_ಠ",
 }
 
-
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
+    clips = sys.argv[1:]
+    if not clips:
         print("Available clips:")
         for c, v in sorted(CLIPS.items()):
             print(c, v)
         sys.exit()
-
-    clips = sys.argv[1:]
 
     output = []
     for clip in clips:
