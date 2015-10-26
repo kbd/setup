@@ -16,6 +16,7 @@ CLIPS = {
     'heart': "❤️",
     'heartp': "️💜",
     'lod': "ಠ_ಠ",
+    'goat': "🐐",
 }
 
 if __name__ == '__main__':
