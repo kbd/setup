@@ -9,6 +9,7 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='auto'
+export _Z_NO_RESOLVE_SYMLINKS=1
 export VERTICAINI=/etc/vertica.ini
 export LS_COLORS="ex=31"  # set executables to red (gnu ls)
 export GREP_OPTIONS='--color=auto'
