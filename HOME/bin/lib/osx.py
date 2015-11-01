@@ -52,6 +52,12 @@ def brew(action, settings, *args, **kwargs):
     log.info("Running 'brew update'")
     subprocess.check_call(['brew', 'update'])
 
+    # ensure command line tools are installed
+    log.info("Ensuring command line tools are installed")
+    returncode = subprocess.call(['xcode-select', '--install'])
+    if returncode == 1:
+        log.info("Command line tools already installed")
+
     # upgrade all existing packages
     log.info("Running 'brew upgrade'")
     subprocess.call(['brew', 'upgrade', '--all'])
