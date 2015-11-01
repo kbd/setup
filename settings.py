@@ -97,6 +97,7 @@
             'go',
             'jq',
             'kdiff3',
+            'macvim',
             'meld',
             'pypy',
             'python',
@@ -108,6 +109,7 @@
             'tree',
             'youtube-dl',
             'z',
+            'Caskroom/cask/xquartz',
         ],
         'post_install': [
             # symlink 'z' into my local shell sources so it'll be 1. run automatically in my
