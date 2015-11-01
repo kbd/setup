@@ -43,14 +43,11 @@ def brew(action, settings, *args, **kwargs):
         log.info("Executing command: {!r}".format(cmd))
         subprocess.check_call(cmd, shell=True)
 
-    formulas = settings['homebrew']['formulas']
+    formulas = settings['homebrew'].get('formulas', [])
+    casks = settings['homebrew'].get('casks', [])
 
     # fix permissions on /usr/local if necessary
     ensure_correct_usrlocal_permissions()
-
-    # ensure homebrew updated
-    log.info("Running 'brew update'")
-    subprocess.check_call(['brew', 'update'])
 
     # ensure command line tools are installed
     log.info("Ensuring command line tools are installed")
@@ -58,27 +55,13 @@ def brew(action, settings, *args, **kwargs):
     if returncode == 1:
         log.info("Command line tools already installed")
 
-    # upgrade all existing packages
-    log.info("Running 'brew upgrade'")
-    subprocess.call(['brew', 'upgrade', '--all'])
-    # ideally this would be check_call but homebrew returns an error code in cases that
-    # aren't actually errors: https://github.com/Homebrew/homebrew/issues/27048
-    # so, make sure to inspect the output for problems
+    # ensure homebrew updated, this works for both casks and normal
+    log.info("Running 'brew update'")
+    subprocess.check_call(['brew', 'update'])
 
-    # ensure expected packages are installed
-    log.info("Expected packages are: {}".format(', '.join(sorted(formulas))))
-    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
-    # but I suppose to really do this correctly I should check that. However, pretty sure
-    # all Homebrew package names should be ascii anyway so it's fine
-    installed_packages = subprocess.check_output(['brew', 'list']).decode().split()
-    log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
-
-    # install missing packages
-    missing_packages = sorted(set(formulas) - set(installed_packages))
-    log.info("Missing packages are: {}".format(', '.join(missing_packages)))
-    for p in missing_packages:
-        log.info("Installing package: {}".format(p))
-        subprocess.check_call(['brew', 'install', p])
+    # update formulas and casks
+    update_brew_formulas(formulas)
+    update_brew_casks(casks)
 
     # run post-install operations
     post_install = settings['homebrew']['post_install']
@@ -90,9 +73,47 @@ def brew(action, settings, *args, **kwargs):
             log.info("Running cmd (shell={!r}): {!r}".format(shell, cmd))
             subprocess.check_call(cmd, shell=shell)
 
+
+def update_brew_formulas(formulas):
+    update_brew(formulas)
+
+
+def update_brew_casks(formulas):
+    update_brew(formulas, 'cask')
+
+
+def update_brew(formulas, type=''):
+    cmd = ['brew']
+    if type == 'cask':
+        cmd.append('cask')
+
+    # brew cask doesn't support upgrade yet https://github.com/caskroom/homebrew-cask/issues/4678
+    if type != 'cask':
+        # upgrade all existing packages
+        log.info("Running upgrade")
+        # ideally this would be check_call but homebrew returns an error code in cases that
+        # aren't actually errors: https://github.com/Homebrew/homebrew/issues/27048
+        # so, make sure to inspect the output for problems
+        subprocess.call(cmd + ['upgrade', '--all'])
+
+    # ensure expected packages are installed
+    log.info("Expected packages are: {}".format(', '.join(sorted(formulas))))
+    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
+    # but I suppose to really do this correctly I should check that. However, pretty sure
+    # all Homebrew package names should be ascii anyway so it's fine
+    installed_packages = subprocess.check_output(cmd + ['list']).decode().split()
+    log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
+
+    # install missing packages
+    missing_packages = sorted(set(formulas) - set(installed_packages))
+    log.info("Missing packages are: {}".format(', '.join(missing_packages)))
+    for p in missing_packages:
+        log.info("Installing package: {}".format(p))
+        subprocess.check_call(cmd + ['install', p])
+
     # clean up outdated packages
-    log.info("Running 'brew cleanup'")
-    subprocess.call(['brew', 'cleanup'])
+    log.info("Running cleanup")
+    subprocess.call(cmd + ['cleanup'])
 
 
 class mybool(metaclass=abc.ABCMeta):
