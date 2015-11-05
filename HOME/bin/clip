@@ -6,8 +6,9 @@ import sys
 CLIPS = {
     'shrug': "¯\_(ツ)_/¯",
     'shrug2': "¯\(°_o)/¯",
-    'check': "☑",
-    'nocheck': "☐",
+    'check': "✓",
+    'chbox': "☑",
+    'nochbox': "☐",
     'thumb': "👍",
     'thumbdown': "👎",
     'poop': "💩",
@@ -18,6 +19,8 @@ CLIPS = {
     'lod': "ಠ_ಠ",
     'goat': "🐐",
     'lenny': "( ͡° ͜ʖ ͡°)",
+    'yeah': "ᕕ( ᐛ )ᕗ",
+    'donger': "ヽ༼ຈل͜ຈ༽ﾉ",
 }
 
 if __name__ == '__main__':
