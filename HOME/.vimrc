@@ -7,6 +7,10 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
+set ignorecase
+set smartcase
+set incsearch
+
 " STATUSLINE
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
 " http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
