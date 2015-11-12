@@ -253,6 +253,8 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     # see if you can use xclip or xsel on linux, or write your own
     # that behaves similarly but uses an env variable or a file
     # http://superuser.com/questions/288320/whats-like-osxs-pbcopy-for-linux
+    # or maybe write a separate Python program and use pyperclip
+    # which is cross-platform https://github.com/asweigart/pyperclip
 
     # bsd ls
     alias ls="ls -FG"
