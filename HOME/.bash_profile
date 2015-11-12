@@ -239,7 +239,22 @@ alias g=grep
 
 alias h=history
 
+alias v=vim
+alias vi=vim
+
 alias ercho='>&2 echo'  # echo to stderr
+
+# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
+alias title='printf "\e]0;%s\a"'
+alias tabtitle='printf "\e]1;%s\a"'
+alias wintitle='printf "\e]2;%s\a"'
+
+# http://invisible-island.net/xterm/xterm.faq.html
+# http://www.opensource.apple.com/source/X11apps/X11apps-30.1/xterm/xterm-251/ctlseqs.txt
+# http://stackoverflow.com/questions/4471278/how-to-capture-the-title-of-a-terminal-window-in-bash-using-ansi-escape-sequence
+# I think these only work on linux, can't test atm
+alias getwintitle='printf "\e[21t"'
+alias gettabtitle='printf "\e[20t"'
 
 # backslashes are necessary to call the function 'ipython' instead of the built-in
 alias ipython="\ipython '' --no-banner --no-confirm-exit"
@@ -308,18 +323,6 @@ function _source {
         source "$1" 2>/dev/null
     fi
 }
-
-# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
-alias title='printf "\e]0;%s\a"'
-alias tabtitle='printf "\e]1;%s\a"'
-alias wintitle='printf "\e]2;%s\a"'
-
-# http://invisible-island.net/xterm/xterm.faq.html
-# http://www.opensource.apple.com/source/X11apps/X11apps-30.1/xterm/xterm-251/ctlseqs.txt
-# http://stackoverflow.com/questions/4471278/how-to-capture-the-title-of-a-terminal-window-in-bash-using-ansi-escape-sequence
-# I think these only work on linux, can't test atm
-alias getwintitle='printf "\e[21t"'
-alias gettabtitle='printf "\e[20t"'
 
 # mkdir + cd
 function mcd {
