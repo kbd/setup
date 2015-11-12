@@ -309,11 +309,17 @@ function _source {
     fi
 }
 
-# set the window title
-function set_title {
-    echo -ne "\033]0;$1\007"
-}
-alias settitle=set_title
+# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
+alias title='printf "\e]0;%s\a"'
+alias tabtitle='printf "\e]1;%s\a"'
+alias wintitle='printf "\e]2;%s\a"'
+
+# http://invisible-island.net/xterm/xterm.faq.html
+# http://www.opensource.apple.com/source/X11apps/X11apps-30.1/xterm/xterm-251/ctlseqs.txt
+# http://stackoverflow.com/questions/4471278/how-to-capture-the-title-of-a-terminal-window-in-bash-using-ansi-escape-sequence
+# I think these only work on linux, can't test atm
+alias getwintitle='printf "\e[21t"'
+alias gettabtitle='printf "\e[20t"'
 
 # mkdir + cd
 function mcd {
