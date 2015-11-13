@@ -91,6 +91,9 @@
         ),
     },
     'homebrew': {
+        'taps': [  # not yet implemented
+            "neovim/neovim",
+        ],
         'formulas': [
             'bash-completion',
             'git',
@@ -106,6 +109,7 @@
             'rust',
             'tmux',
             'tree',
+            'vim',
             'youtube-dl',
             'z',
         ],
@@ -135,6 +139,7 @@
                 'ftfy',
                 'pudb',
                 'pandas',
+                'pygments',
             ],
         }
         for version in ('', '3')
