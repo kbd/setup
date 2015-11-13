@@ -324,6 +324,16 @@ function _source {
     fi
 }
 
+# 'less' using vim
+function vless {
+    # http://vimdoc.sourceforge.net/htmldoc/starting.html#$VIMRUNTIME
+    # http://vimdoc.sourceforge.net/htmldoc/various.html#less
+    # maybe use https://github.com/rkitover/vimpager instead?
+    local vimruntime=`vim -e -T dumb --cmd 'exe "set t_cm=\<C-M>"|echo $VIMRUNTIME|quit' | tr -d '\015' `
+    local lessvim="$vimruntime/macros/less.vim"
+    vim -u "$lessvim" "$@"
+}
+
 # mkdir + cd
 function mcd {
     if [[ -z "$1" ]]; then
