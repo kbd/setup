@@ -337,7 +337,7 @@ function vless {
 # mkdir + cd
 function mcd {
     if [[ -z "$1" ]]; then
-        echo "missing argument"
+        ercho "missing argument"
         return 1
     fi
     mkdir -p "$1" && cd "$1";
