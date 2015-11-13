@@ -81,7 +81,7 @@ def is_a_partial_directory(partials, file):
 
 def handle_partials(symlink_settings, repo_path, dest_path):
     """Create symlinks for partial directories"""
-    log.info("{!r} is a partial location, not overwriting".format(dest_path))
+    log.debug("{!r} is a partial location, not overwriting".format(dest_path))
     # ensure directory exists
     if not os.path.lexists(dest_path):
         log.debug("Partial directory {!r} doesn't exist, creating it".format(dest_path))
