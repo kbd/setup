@@ -95,6 +95,7 @@
             "neovim/neovim",
         ],
         'formulas': [
+            'bash',
             'bash-completion',
             'git',
             'go',
@@ -121,6 +122,7 @@
             # symlink 'z' into my local shell sources so it'll be 1. run automatically in my
             # .bash_profile, 2. copied to servers by my copy_config_to_host script
             'ln -sf `brew --prefix`/etc/profile.d/z.sh HOME/bin/shell_sources/',
+            'update_shell.sh `brew --prefix`/bin/bash',  # set shell to homebrew'd bash
         ],
     },
     'packages': {

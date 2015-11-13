@@ -139,19 +139,6 @@ def load_settings():
     return eval(open(SETTINGS_FILE_LOCATION).read())
 
 
-def update_shell(shell, shellfile='/etc/shells'):
-    log.info("Ensuring shell is set to {!r}".format(shell))
-    cmd = (
-        "fgrep -qx '{0}' {1} || echo '{0}' | 1>/dev/null sudo tee -a {1}"
-    ).format(shell, shellfile)
-    log.debug("Executing {!r}".format(cmd))
-    subprocess.check_call(cmd, shell=True)
-
-    cmd = "if [[ $SHELL != {0} ]]; then chsh -s {0}; fi".format(shell)
-    log.debug("Executing {!r}".format(cmd))
-    subprocess.check_call(cmd, shell=True)
-
-
 def main():
     # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
     # get the root of the repository. Use realpath to resolve symbolic links
