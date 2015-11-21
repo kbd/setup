@@ -162,6 +162,9 @@
                 'shadowed-unit-frames',
                 'tidy-plates',
                 'macro-toolkit',
+
+                # other addons I've used in the past:
+                # elkano's buff bars, monkeyquest, prat, auctioneer
             ]
         }
     },
