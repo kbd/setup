@@ -108,6 +108,7 @@
             'readline',
             'ruby',
             'rust',
+            'selecta',
             'tmux',
             'tree',
             'vim',
