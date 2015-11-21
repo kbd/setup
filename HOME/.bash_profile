@@ -234,6 +234,9 @@ alias edit=\$EDITOR "$@"
 alias e=edit
 alias e.="e ."
 
+alias o=open
+alias o.="o ."
+
 alias grep=egrep
 alias g=grep
 
