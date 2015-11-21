@@ -10,9 +10,12 @@ if [[ -z $shell ]]; then
 fi
 
 echo "Ensuring shell is set to '$shell'"
-if [[ $SHELL != $shell ]]; then
+if [[ $SHELL == $shell ]]; then
+	echo "Confirmed shell is set to '$shell'"
+else
 	echo "Ensuring '$shell' is in '$shellfile'"
 	fgrep -qx "$shell" "$shellfile" || echo "$shell" | 1>/dev/null sudo tee -a "$shellfile"
 	echo "Changing shell to '$shell'"
 	chsh -s "$shell"
+	echo "Shell changed"
 fi
