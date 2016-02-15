@@ -102,6 +102,7 @@
             'jq',
             'kdiff3',
             'meld',
+            'node',
             'pypy',
             'python',
             'python3',
@@ -128,7 +129,7 @@
         ],
     },
     'packages': {
-        'python{}'.format(version): {
+        **{'python{}'.format(version): {
             'cmd': ['pip{}'.format(version), 'install', '--upgrade', '{package}'],
             'packages': [
                 'pip',
@@ -145,8 +146,15 @@
                 'pandas',
                 'pygments',
             ],
-        }
-        for version in ('', '3')
+        } for version in ('', '3')},
+        **{
+        'node': {
+            'cmd': ['npm', 'install', '-g', '{package}'],
+            'packages': [
+                'elm',
+                'elm-oracle',
+            ],
+        }}
     },
     'addons': {
         'wow': {
