@@ -49,11 +49,9 @@ function _prompt_date {
 }
 
 function _prompt_user {
-    # root/user info
-    if [[ $EUID -eq 0 ]]; then
+    if [[ $EUID -eq 0 ]]; then  # if root
         local user="$COLOR_RED\u$COLOR_RESET"
-    elif [[ $USER != "$(logname)" ]]; then
-        # if the current user is different from the logon user
+    elif [[ $USER != "$(logname)" ]]; then  # if current user != login user
         local user="$COLOR_YELLOW$COLOR_BOLD\u$COLOR_RESET"
     else
         local user="$COLOR_GREEN\u$COLOR_RESET"
