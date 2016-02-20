@@ -118,6 +118,7 @@
             'z',
         ],
         'casks': [
+            'atom',
             'caffeine',
             'macvim',
             'xquartz',
