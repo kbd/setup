@@ -102,7 +102,7 @@
             'go',
             'jq',
             'kdiff3',
-            'homebrew/gui/meld',
+            'meld',
             'node',
             'pypy',
             'python',
