@@ -11,7 +11,7 @@
 
 # diff / merge config
 [diff]
-	# git has built-in knowledge of how to call meld
+	# git has built-in knowledge of how to call certain diff tools
 	tool = meld
 [merge]
 	tool = meld
