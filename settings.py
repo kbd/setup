@@ -91,8 +91,9 @@
         ),
     },
     'homebrew': {
-        'taps': [  # not yet implemented
+        'taps': [
             "neovim/neovim",
+            "caskroom/versions",
         ],
         'formulas': [
             'bash',

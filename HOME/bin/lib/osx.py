@@ -45,6 +45,7 @@ def brew(action, settings, *args, **kwargs):
 
     formulas = settings['homebrew'].get('formulas', [])
     casks = settings['homebrew'].get('casks', [])
+    taps = settings['homebrew'].get('taps', [])
 
     # fix permissions on /usr/local if necessary
     ensure_correct_usrlocal_permissions()
@@ -59,9 +60,10 @@ def brew(action, settings, *args, **kwargs):
     log.info("Running 'brew update'")
     subprocess.check_call(['brew', 'update'])
 
-    # update formulas and casks
-    update_brew_formulas(formulas)
-    update_brew_casks(casks)
+    # update taps, formulas, and casks
+    update_brew(taps, type='tap')
+    update_brew(formulas, type='formula')
+    update_brew(casks, type='cask')
 
     # run post-install operations
     post_install = settings['homebrew']['post_install']
@@ -74,34 +76,36 @@ def brew(action, settings, *args, **kwargs):
             subprocess.check_call(cmd, shell=shell)
 
 
-def update_brew_formulas(formulas):
-    update_brew(formulas)
+def update_brew(formulas, type='formula'):
+    # this function needs to be refactored :)
+    assert type in ('cask', 'tap', 'formula')
+    base_cmd = ['brew']
+    if type != 'formula':
+        base_cmd.append(type)
 
-
-def update_brew_casks(formulas):
-    update_brew(formulas, 'cask')
-
-
-def update_brew(formulas, type=''):
-    cmd = ['brew']
-    if type == 'cask':
-        cmd.append('cask')
+    log.info("Updating brew {}s".format(type))
 
     # brew cask doesn't support upgrade yet https://github.com/caskroom/homebrew-cask/issues/4678
-    if type != 'cask':
+    # and it doesn't make sense to upgrade taps
+    if type == 'formula':
         # upgrade all existing packages
         log.info("Running upgrade")
         # ideally this would be check_call but homebrew returns an error code in cases that
         # aren't actually errors: https://github.com/Homebrew/homebrew/issues/27048
         # so, make sure to inspect the output for problems
-        subprocess.call(cmd + ['upgrade', '--all'])
+        cmd = base_cmd + ['upgrade', '--all']
+        log.debug("Executing: {}".format(cmd))
+        subprocess.call(cmd)
 
     # ensure expected packages are installed
     log.info("Expected packages are: {}".format(', '.join(sorted(formulas))))
+    # 'brew list' and 'brew cask list', but only 'brew tap' to get list of installed things
+    cmd = base_cmd + (['list'] if type != 'tap' else [])
+    log.debug("Executing: {}".format(cmd))
     # bytes.decode defaults to utf-8, which *should* also be the default system encoding
     # but I suppose to really do this correctly I should check that. However, pretty sure
     # all Homebrew package names should be ascii anyway so it's fine
-    installed_packages = subprocess.check_output(cmd + ['list']).decode().split()
+    installed_packages = subprocess.check_output(cmd).decode().split()
     log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
 
     # install missing packages
@@ -109,11 +113,24 @@ def update_brew(formulas, type=''):
     log.info("Missing packages are: {}".format(', '.join(missing_packages)))
     for p in missing_packages:
         log.info("Installing package: {}".format(p))
-        subprocess.check_call(cmd + ['install', p])
+        install_suffix = [p]
+        if type != 'tap':  # 'brew tap {p}' for tap vs 'brew install {p}' for packages/casks
+            install_suffix.insert(0, 'install')
 
-    # clean up outdated packages
-    log.info("Running cleanup")
-    subprocess.call(cmd + ['cleanup'])
+        cmd = base_cmd + install_suffix
+        log.debug("Executing: {}".format(cmd))
+        subprocess.check_call(cmd)
+
+    # clean up outdated formula
+    if type == 'formula':
+        log.info("Running cleanup")
+        cmd = base_cmd + ['cleanup']
+        log.debug("Executing: {}".format(cmd))
+        subprocess.call(cmd)
+
+    # possible todo: remove things not in settings, but that'd delete things you installed manually
+    # maybe provide option to list things that "shouldn't" be installed so they can be
+    # removed manually
 
 
 class mybool(metaclass=abc.ABCMeta):
