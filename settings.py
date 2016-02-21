@@ -120,6 +120,7 @@
         'casks': [
             'atom',
             'caffeine',
+            'iterm2-beta',
             'macvim',
             'xquartz',
         ],
