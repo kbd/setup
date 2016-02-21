@@ -78,8 +78,25 @@ def brew(action, settings, *args, **kwargs):
 
 def get_command_output(cmd):
     """Execute the specified command, parse its output, and return a list of items in the output"""
+    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
+    # but I suppose to really do this correctly I should check that. However, pretty sure
+    # all Homebrew package names should be ascii anyway so it's fine
     return subprocess.check_output(cmd).decode().split()
 
+
+# command patterns:
+# list:
+#   brew list
+#   brew cask list
+#   brew tap
+# cleanup:
+#   only on formulas
+# upgrade:
+#   only on formulas
+# install:
+#   brew install {cask}
+#   brew install {formula}
+#   brew tap {tap}
 
 def update_brew(formulas, type='formula'):
     # this function needs to be refactored :)
@@ -107,16 +124,13 @@ def update_brew(formulas, type='formula'):
     # 'brew list' and 'brew cask list', but only 'brew tap' to get list of installed things
     cmd = base_cmd + (['list'] if type != 'tap' else [])
     log.debug("Executing: {}".format(cmd))
-    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
-    # but I suppose to really do this correctly I should check that. However, pretty sure
-    # all Homebrew package names should be ascii anyway so it's fine
-    installed_packages = get_command_output(cmd)
-    log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
+    installed = get_command_output(cmd)
+    log.info("Currently installed packages are: {}".format(', '.join(installed)))
 
     # install missing packages
-    missing_packages = sorted(set(formulas) - set(installed_packages))
-    log.info("Missing packages are: {}".format(', '.join(missing_packages)))
-    for p in missing_packages:
+    missing = sorted(set(formulas) - set(installed))
+    log.info("Missing packages are: {}".format(', '.join(missing)))
+    for p in missing:
         log.info("Installing package: {}".format(p))
         install_suffix = [p]
         if type != 'tap':  # 'brew tap {p}' for tap vs 'brew install {p}' for packages/casks
