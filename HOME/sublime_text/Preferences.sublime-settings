@@ -1,8 +1,8 @@
 {
 	"always_show_minimap_viewport": true,
 	"color_scheme": "Packages/User/SublimeLinter/Tomorrow-Night-Keith (Flake8Lint) (SL).tmTheme",
-	"font_face": "ProggyTinyTTSZ",
-	"font_size": 16.0,
+	"font_face": "Fantasque Sans Mono Regular",
+	"font_size": 13,
 	"ignored_packages":
 	[
 		"Vintage"
