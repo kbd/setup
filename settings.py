@@ -98,6 +98,7 @@
         'formulas': [
             'bash',
             'bash-completion',
+            'diff-so-fancy',
             'git',
             'go',
             'jq',

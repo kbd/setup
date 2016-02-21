@@ -40,3 +40,7 @@
 	pretty-log = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
 	pl         = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
 	prune-merged = !git branch --merged | egrep -v '^\\*' | egrep -vx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
+
+[pager]
+	diff = diff-so-fancy | less --tabs=1,5 -RFX
+	show = diff-so-fancy | less --tabs=1,5 -RFX
