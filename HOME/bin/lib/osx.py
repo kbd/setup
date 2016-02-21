@@ -76,6 +76,11 @@ def brew(action, settings, *args, **kwargs):
             subprocess.check_call(cmd, shell=shell)
 
 
+def get_command_output(cmd):
+    """Execute the specified command, parse its output, and return a list of items in the output"""
+    return subprocess.check_output(cmd).decode().split()
+
+
 def update_brew(formulas, type='formula'):
     # this function needs to be refactored :)
     assert type in ('cask', 'tap', 'formula')
@@ -105,7 +110,7 @@ def update_brew(formulas, type='formula'):
     # bytes.decode defaults to utf-8, which *should* also be the default system encoding
     # but I suppose to really do this correctly I should check that. However, pretty sure
     # all Homebrew package names should be ascii anyway so it's fine
-    installed_packages = subprocess.check_output(cmd).decode().split()
+    installed_packages = get_command_output(cmd)
     log.info("Currently installed packages are: {}".format(', '.join(installed_packages)))
 
     # install missing packages
