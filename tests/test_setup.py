@@ -1,14 +1,13 @@
 import datetime
 import os as os_module
 import pytest
-import sys
 import unittest.mock as mock
 from os.path import join
 from unittest.mock import call, patch
 
-BINPATH = os_module.path.abspath(
-    os_module.path.join(os_module.path.dirname(__file__), '../HOME/bin'))
-sys.path.append(BINPATH)
+import utils
+
+utils.add_bin_to_path()
 
 from lib import symlink
 

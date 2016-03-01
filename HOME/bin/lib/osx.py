@@ -76,14 +76,6 @@ def brew(action, settings, *args, **kwargs):
             subprocess.check_call(cmd, shell=shell)
 
 
-def get_command_output(cmd):
-    """Execute the specified command, parse its output, and return a list of items in the output"""
-    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
-    # but I suppose to really do this correctly I should check that. However, pretty sure
-    # all Homebrew package names should be ascii anyway so it's fine
-    return subprocess.check_output(cmd).decode().split()
-
-
 # command patterns:
 # list:
 #   brew list
@@ -97,6 +89,20 @@ def get_command_output(cmd):
 #   brew install {cask}
 #   brew install {formula}
 #   brew tap {tap}
+
+def subprocess_call(cmd):
+    log.debug("Executing: {}".format(cmd))
+    subprocess.check_call(cmd)
+
+
+def get_command_output(cmd):
+    """Execute the specified command, parse its output, and return a list of items in the output"""
+    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
+    # but I suppose to really do this correctly I should check that. However, pretty sure
+    # all Homebrew package names should be ascii anyway so it's fine
+    log.debug("Executing: {}".format(cmd))
+    return subprocess.check_output(cmd).decode().split()
+
 
 def update_brew(formulas, type='formula'):
     # this function needs to be refactored :)
@@ -116,14 +122,12 @@ def update_brew(formulas, type='formula'):
         # aren't actually errors: https://github.com/Homebrew/homebrew/issues/27048
         # so, make sure to inspect the output for problems
         cmd = base_cmd + ['upgrade', '--all']
-        log.debug("Executing: {}".format(cmd))
-        subprocess.call(cmd)
+        subprocess_call(cmd)
 
     # ensure expected packages are installed
     log.info("Expected packages are: {}".format(', '.join(sorted(formulas))))
     # 'brew list' and 'brew cask list', but only 'brew tap' to get list of installed things
     cmd = base_cmd + (['list'] if type != 'tap' else [])
-    log.debug("Executing: {}".format(cmd))
     installed = get_command_output(cmd)
     log.info("Currently installed packages are: {}".format(', '.join(installed)))
 
@@ -137,15 +141,13 @@ def update_brew(formulas, type='formula'):
             install_suffix.insert(0, 'install')
 
         cmd = base_cmd + install_suffix
-        log.debug("Executing: {}".format(cmd))
-        subprocess.check_call(cmd)
+        subprocess_call(cmd)
 
     # clean up outdated formula
     if type == 'formula':
         log.info("Running cleanup")
         cmd = base_cmd + ['cleanup']
-        log.debug("Executing: {}".format(cmd))
-        subprocess.call(cmd)
+        subprocess_call(cmd)
 
     # possible todo: remove things not in settings, but that'd delete things you installed manually
     # maybe provide option to list things that "shouldn't" be installed so they can be
