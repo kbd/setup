@@ -55,10 +55,13 @@ def update():
 
 def upgrade():
     log.info("Running upgrade")
-    # ideally this would be check_call but homebrew returns an error code in cases that
-    # aren't actually errors: https://github.com/Homebrew/homebrew/issues/27048
-    # so, make sure to inspect the output for problems
-    _execute(['brew', 'upgrade', '--all'])
+    # Homebrew can return an error code in cases that aren't errors:
+    # https://github.com/Homebrew/homebrew/issues/27048
+    # so, catch any error here and make sure to inspect the output for problems
+    try:
+        _execute(['brew', 'upgrade', '--all'])
+    except:
+        pass
 
 
 def install_missing(type, expected):
