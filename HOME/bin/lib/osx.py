@@ -14,6 +14,12 @@ from . import homebrew
 log = logging.getLogger(__name__)
 
 
+def brew(action, settings, *args, **kwargs):
+    # filter for valid args to workflow
+    kwargs = {k: v for k, v in kwargs.items() if k in ['fix_repo']}
+    homebrew.workflow(settings['homebrew'], **kwargs)
+
+
 class mybool(metaclass=abc.ABCMeta):
     """
     Provide something that will parse '0' as False
