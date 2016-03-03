@@ -160,6 +160,7 @@
             # could update outdated and install uninstalled but too much work here
             'cmd': ['npm', 'install', '-g', '{package}'],
             'packages': [
+                'coffee-script',
                 'elm',
                 'elm-oracle',
             ],
