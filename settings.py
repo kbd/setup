@@ -153,6 +153,11 @@
         } for version in ('', '3')},
         **{
         'node': {
+            # this will reinstall packages that are already installed and up-to-date
+            # there's no easy way to do the equivalent of pip install --upgrade package
+            # this gets a list of outdated packages:
+            # npm outdated --parseable --depth=0 | cut -d: -f2 | cut -d@ -f1
+            # could update outdated and install uninstalled but too much work here
             'cmd': ['npm', 'install', '-g', '{package}'],
             'packages': [
                 'elm',
