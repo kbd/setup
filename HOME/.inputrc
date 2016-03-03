@@ -1,2 +1,12 @@
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+
+# control <- and -> and option <- and ->
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+"\e\e[D": backward-word
+"\e\e[C": forward-word
+
+# make the home and end keys do the right thing
+"\e[H": beginning-of-line
+"\e[F": end-of-line
