@@ -172,14 +172,13 @@ def run_post_install(post_install):
 
     log.info("Running post-install operations")
     for cmd in post_install:
-        _execute(cmd, shell=isinstance(cmd, str))  # run with shell=True if the command is a string
+        _execute(cmd)
 
 
 def fix_repository():
     # http://stackoverflow.com/questions/14113427/brew-update-failed
     log.info("Fixing Homebrew repository")
-    cmd = 'cd `brew --prefix`; git reset --hard origin/master'
-    _execute(cmd, shell=True)
+    _execute('cd `brew --prefix`; git reset --hard origin/master')
 
 
 def _get_command_output(cmd):
@@ -193,4 +192,4 @@ def _get_command_output(cmd):
 
 def _execute(cmd, shell=False):
     log.debug("Executing: {}".format(cmd))
-    subprocess.check_call(cmd, shell=shell)
+    subprocess.check_call(cmd, shell=isinstance(cmd, str))
