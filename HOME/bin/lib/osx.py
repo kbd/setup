@@ -9,149 +9,30 @@ import subprocess
 from collections import OrderedDict
 from distutils.util import strtobool
 
+from . import homebrew
+
 log = logging.getLogger(__name__)
 
 
-def ensure_correct_usrlocal_permissions(*args, **kwargs):
-    user = getpass.getuser()
-    uid = os.stat('/usr/local').st_uid
-    local_owner = pwd.getpwuid(uid).pw_name
-
-    log.debug("Currently logged in user is {!r}, owner of /usr/local is {!r}".format(
-        user, local_owner))
-
-    if user != local_owner:
-        log.info("Fixing permissions on /usr/local before running Homebrew")
-        # stupid that there's a shutil.chown but no shutil.chown -R
-        cmd = ['sudo', 'chown', '-R', user, '/usr/local']
-        log.info("Executing command: {!r}".format(cmd))
-        subprocess.check_call(cmd)
-
-
 def brew(action, settings, *args, **kwargs):
-    # ensure homebrew is installed
-    if not shutil.which('brew'):  # hey look 'which' is built in as of Python 3.3
+    """Run an entire Homebrew update workflow."""
+    if not homebrew.is_installed():
         # todo: install homebrew if not installed
-        # http://brew.sh/
-        # ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         raise Exception("Homebrew must be installed")
 
     if kwargs.get('fix_repo', False):
-        # http://stackoverflow.com/questions/14113427/brew-update-failed
-        log.info("Fixing Homebrew repository")
-        cmd = 'cd `brew --prefix`; git reset --hard origin/master'
-        log.info("Executing command: {!r}".format(cmd))
-        subprocess.check_call(cmd, shell=True)
+        homebrew.fix_repository()
 
-    formulas = settings['homebrew'].get('formulas', [])
-    casks = settings['homebrew'].get('casks', [])
-    taps = settings['homebrew'].get('taps', [])
+    homebrew.ensure_correct_permissions()
+    homebrew.ensure_command_line_tools_installed()
 
-    # fix permissions on /usr/local if necessary
-    ensure_correct_usrlocal_permissions()
+    homebrew.update()
 
-    # ensure command line tools are installed
-    log.info("Ensuring command line tools are installed")
-    returncode = subprocess.call(['xcode-select', '--install'])
-    if returncode == 1:
-        log.info("Command line tools already installed")
+    homebrew.update_taps(settings['homebrew'].get('taps', []))
+    homebrew.update_formulas(settings['homebrew'].get('formulas', []))
+    homebrew.update_casks(settings['homebrew'].get('casks', []))
 
-    # ensure homebrew updated, this works for both casks and normal
-    log.info("Running 'brew update'")
-    subprocess.check_call(['brew', 'update'])
-
-    # update taps, formulas, and casks
-    update_brew(taps, type='tap')
-    update_brew(formulas, type='formula')
-    update_brew(casks, type='cask')
-
-    # run post-install operations
-    post_install = settings['homebrew']['post_install']
-    if post_install:
-        log.info("Running post-install operations")
-
-        for cmd in post_install:
-            shell = isinstance(cmd, str)  # run with shell=True if the command is a string
-            log.info("Running cmd (shell={!r}): {!r}".format(shell, cmd))
-            subprocess.check_call(cmd, shell=shell)
-
-
-# command patterns:
-# list:
-#   brew list
-#   brew cask list
-#   brew tap
-# cleanup:
-#   only on formulas
-# upgrade:
-#   only on formulas
-# install:
-#   brew install {cask}
-#   brew install {formula}
-#   brew tap {tap}
-
-def subprocess_call(cmd):
-    log.debug("Executing: {}".format(cmd))
-    subprocess.check_call(cmd)
-
-
-def get_command_output(cmd):
-    """Execute the specified command, parse its output, and return a list of items in the output"""
-    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
-    # but I suppose to really do this correctly I should check that. However, pretty sure
-    # all Homebrew package names should be ascii anyway so it's fine
-    log.debug("Executing: {}".format(cmd))
-    return subprocess.check_output(cmd).decode().split()
-
-
-def update_brew(formulas, type='formula'):
-    # this function needs to be refactored :)
-    assert type in ('cask', 'tap', 'formula')
-    base_cmd = ['brew']
-    if type != 'formula':
-        base_cmd.append(type)
-
-    log.info("Updating brew {}s".format(type))
-
-    # brew cask doesn't support upgrade yet https://github.com/caskroom/homebrew-cask/issues/4678
-    # and it doesn't make sense to upgrade taps
-    if type == 'formula':
-        # upgrade all existing packages
-        log.info("Running upgrade")
-        # ideally this would be check_call but homebrew returns an error code in cases that
-        # aren't actually errors: https://github.com/Homebrew/homebrew/issues/27048
-        # so, make sure to inspect the output for problems
-        cmd = base_cmd + ['upgrade', '--all']
-        subprocess_call(cmd)
-
-    # ensure expected packages are installed
-    log.info("Expected packages are: {}".format(', '.join(sorted(formulas))))
-    # 'brew list' and 'brew cask list', but only 'brew tap' to get list of installed things
-    cmd = base_cmd + (['list'] if type != 'tap' else [])
-    installed = get_command_output(cmd)
-    log.info("Currently installed packages are: {}".format(', '.join(installed)))
-
-    # install missing packages
-    missing = sorted(set(formulas) - set(installed))
-    log.info("Missing packages are: {}".format(', '.join(missing)))
-    for p in missing:
-        log.info("Installing package: {}".format(p))
-        install_suffix = [p]
-        if type != 'tap':  # 'brew tap {p}' for tap vs 'brew install {p}' for packages/casks
-            install_suffix.insert(0, 'install')
-
-        cmd = base_cmd + install_suffix
-        subprocess_call(cmd)
-
-    # clean up outdated formula
-    if type == 'formula':
-        log.info("Running cleanup")
-        cmd = base_cmd + ['cleanup']
-        subprocess_call(cmd)
-
-    # possible todo: remove things not in settings, but that'd delete things you installed manually
-    # maybe provide option to list things that "shouldn't" be installed so they can be
-    # removed manually
+    homebrew.run_post_install(settings['homebrew']['post_install'])
 
 
 class mybool(metaclass=abc.ABCMeta):
