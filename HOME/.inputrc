@@ -1,7 +1,8 @@
+# up/down arrow history completion based on what you've typed
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 
-# control <- and -> and option <- and ->
+# control + <- / -> and option + <- / ->
 "\e[1;5D": backward-word
 "\e[1;5C": forward-word
 "\e\e[D": backward-word
