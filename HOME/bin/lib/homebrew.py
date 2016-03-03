@@ -10,6 +10,27 @@ import subprocess
 log = logging.getLogger(__name__)
 
 
+def workflow(action, settings, *args, **kwargs):
+    """Run an entire Homebrew update workflow."""
+    if not is_installed():
+        # todo: install homebrew if not installed
+        raise Exception("Homebrew must be installed")
+
+    if kwargs.get('fix_repo', False):
+        fix_repository()
+
+    ensure_correct_permissions()
+    ensure_command_line_tools_installed()
+
+    update()
+
+    update_taps(settings['homebrew'].get('taps', []))
+    update_formulas(settings['homebrew'].get('formulas', []))
+    update_casks(settings['homebrew'].get('casks', []))
+
+    run_post_install(settings['homebrew']['post_install'])
+
+
 def get_installed_formulas():
     log.info("Getting installed formulas")
     return _get_command_output(['brew', 'list'])

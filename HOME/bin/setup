@@ -11,8 +11,8 @@ from copy import copy
 from functools import partial
 
 from lib import symlink
-from lib.homebrew import ensure_correct_permissions
-from lib.osx import brew, restart_os_functions, update_os_settings
+from lib.homebrew import ensure_correct_permissions, workflow as brew
+from lib.osx import restart_os_functions, update_os_settings
 
 SETTINGS_FILE_LOCATION = 'settings.py'
 

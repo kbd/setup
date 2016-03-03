@@ -14,27 +14,6 @@ from . import homebrew
 log = logging.getLogger(__name__)
 
 
-def brew(action, settings, *args, **kwargs):
-    """Run an entire Homebrew update workflow."""
-    if not homebrew.is_installed():
-        # todo: install homebrew if not installed
-        raise Exception("Homebrew must be installed")
-
-    if kwargs.get('fix_repo', False):
-        homebrew.fix_repository()
-
-    homebrew.ensure_correct_permissions()
-    homebrew.ensure_command_line_tools_installed()
-
-    homebrew.update()
-
-    homebrew.update_taps(settings['homebrew'].get('taps', []))
-    homebrew.update_formulas(settings['homebrew'].get('formulas', []))
-    homebrew.update_casks(settings['homebrew'].get('casks', []))
-
-    homebrew.run_post_install(settings['homebrew']['post_install'])
-
-
 class mybool(metaclass=abc.ABCMeta):
     """
     Provide something that will parse '0' as False
