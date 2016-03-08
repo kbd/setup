@@ -27,21 +27,35 @@ CLIPS = {
     'kirby': "<(^.^<) (>^.^)>",
 }
 
-if __name__ == '__main__':
-    clips = sys.argv[1:]
-    if not clips:
-        print("Available clips:")
-        for c, v in sorted(CLIPS.items()):
-            print(c, v)
-        sys.exit()
+def print_clips(CLIPS):
+    print("Available clips:")
+    for c, v in sorted(CLIPS.items()):
+        print(c, v)
 
-    output = []
-    for clip in clips:
-        if clip not in CLIPS:
+
+def get_requested_clips(all_clips, requested_clips):
+    result = []
+    for clip in requested_clips:
+        if clip not in all_clips:
             print("No clip named {!r}".format(clip), file=sys.stderr)
             continue
 
-        output.append(CLIPS[clip])
+        result.append(all_clips[clip])
 
+    return result
+
+def copy_to_clipboard(output):
+    # todo: replace this with pyperclip
     cmd = "echo '{}' | pbcopy".format(' '.join(output).replace("'", "'\\''"))
     subprocess.check_call(cmd, shell=True)
+
+
+if __name__ == '__main__':
+    clips = sys.argv[1:]
+    if not clips:
+        print_clips(CLIPS)
+        sys.exit()
+
+    output = get_requested_clips(CLIPS, clips)
+
+    copy_to_clipboard(output)
