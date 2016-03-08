@@ -346,9 +346,7 @@ function mcd {
 
 # cd + ls
 function cl {
-    cd "$1"
-    shift
-    ls "$@"
+    cd "$1" && ls "${@:2}"
 }
 
 # get the homedir of another user. Be careful cause of eval.
