@@ -44,10 +44,11 @@ def get_requested_clips(all_clips, requested_clips):
 
     return result
 
+
 def copy_to_clipboard(output):
     # todo: replace this with pyperclip
-    cmd = "echo '{}' | pbcopy".format(' '.join(output).replace("'", "'\\''"))
-    subprocess.check_call(cmd, shell=True)
+    cmd = "echo -n '{}' | pbcopy".format(' '.join(output).replace("'", "'\\''"))
+    subprocess.check_call(cmd, shell=True, executable='/bin/bash')
 
 
 if __name__ == '__main__':
