@@ -183,7 +183,7 @@ trap trap_debug DEBUG
 function generate_ps1 {
     _save_last_return_code
     local ps1=''
-    for f in 'date' 'user' 'at' 'host' 'screen' 'sep' 'path' 'repo' 'jobs' 'char'; do
+    for f in date user at host screen sep path repo jobs char; do
         ps1+="\$(_prompt_$f)"
     done
 
