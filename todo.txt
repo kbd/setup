@@ -12,9 +12,6 @@ todo:
     run 'defaults read' to see all my current settings it doesn't show up
   - and setting keyboard shortcuts like mapping F12 to mission control
 * save coding font to repository and ensure it's installed
-* Upgrade shell using homebrew. Will have to programmatically add to /etc/shells
-  (but only if the homebrew version doesn't already exist there) and chsh
-  http://johndjameson.com/blog/updating-your-shell-with-homebrew/
 * Change every reference to $HOME in your bash_profile to be the home of your login
   user, so that when you sudo you still get *your* home stuff like the path pointing
   to your $HOME/bin so you have access to 'z' and so on. Maybe $myhome = eval "~$(logname)'?
@@ -31,3 +28,21 @@ https://github.com/donnemartin/dev-setup/blob/master/osx.sh
 * add tests for symlink that ensure that something can be both a pointer and a partial
 
 * figure out how to get pytest for python 2 and python 3 installed simultaneously
+
+* provide a way to specify that a brew cask is installed globally
+  https://github.com/caskroom/homebrew-cask/issues/2261
+
+* move as much as you can to be managed by homebrew casks
+  - Google Chrome
+  - Firefox
+  - LibreOffice
+  - Spotify
+  - AppCleaner
+  - VLC
+  - coconutbattery
+  - karabiner
+  - grandperspective
+  - sonos
+  - sublime-text3
+
+* Maybe allow profiles somehow like "work" and "home" so you don't install Sonos at work?
