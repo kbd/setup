@@ -56,7 +56,7 @@ def install_cask(cask):
     # https://github.com/caskroom/homebrew-cask/issues/4678
 
     log.info("Installing cask: {}".format(cask))
-    _execute(['brew', 'install', cask])
+    _execute(['brew', 'cask', 'install', cask])
 
 
 def install_tap(tap):
