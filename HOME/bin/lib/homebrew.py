@@ -64,9 +64,14 @@ def install_tap(tap):
     _execute(['brew', 'tap', tap])
 
 
-def cleanup():
-    log.info("Running cleanup")
+def cleanup_formulas():
+    log.info("Running cleanup: formulas")
     _execute(['brew', 'cleanup'])
+
+
+def cleanup_casks():
+    log.info("Running cleanup: casks")
+    _execute(['brew', 'cask', 'cleanup'])
 
 
 def update():
@@ -104,7 +109,7 @@ def update_formulas(formulas):
     log.info("Updating formulas")
     upgrade()
     install_missing('formula', formulas)
-    cleanup()
+    cleanup_formulas()
 
     # possible todo: remove things not in settings, but that'd delete things you installed manually
     # maybe provide option to list things that "shouldn't" be installed so they can be
@@ -113,6 +118,7 @@ def update_formulas(formulas):
 
 def update_casks(casks):
     install_missing('cask', casks)
+    cleanup_casks()
 
 
 def update_taps(taps):
