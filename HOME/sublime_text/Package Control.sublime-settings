@@ -12,6 +12,7 @@
 		"Python PEP8 Autoformat",
 		"SublimeLinter",
 		"SublimeLinter-shellcheck",
+		"SublimeREPL",
 		"Theme - Soda"
 	]
 }
