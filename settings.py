@@ -117,7 +117,7 @@
             'vim',
             'youtube-dl',
             'z',
-            '--devel homebrew/devel-only/elm-format',
+            # '--devel homebrew/devel-only/elm-format',
         ],
         'casks': [
             'atom',
