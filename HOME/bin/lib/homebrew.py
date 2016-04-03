@@ -100,9 +100,12 @@ def install_missing(type, expected):
     log.info("Currently installed {}s are: {}".format(type, ', '.join(installed)))
 
     missing = sorted(set(expected) - set(installed))
-    log.info("Missing {}s are: {}".format(type, ', '.join(missing)))
-    for item in missing:
-        install(item)
+    if missing:
+        log.info("Missing {}s are: {}".format(type, ', '.join(missing)))
+        for item in missing:
+            install(item)
+    else:
+        log.info("No missing {}s".format(type))
 
 
 def update_formulas(formulas):
