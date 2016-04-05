@@ -115,6 +115,7 @@
             'tmux',
             'tree',
             'vim',
+            'wget',
             'youtube-dl',
             'z',
             # '--devel homebrew/devel-only/elm-format',
