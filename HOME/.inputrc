@@ -2,9 +2,10 @@
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 
-# control + <- / -> and option + <- / ->
+# control + <- / ->
 "\e[1;5D": backward-word
 "\e[1;5C": forward-word
+# and option + <- / ->
 "\e\e[D": backward-word
 "\e\e[C": forward-word
 
