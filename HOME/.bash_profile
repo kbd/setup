@@ -265,13 +265,6 @@ alias ipython3="ipython_func 3 --no-banner --no-confirm-exit"
 if [[ $PLATFORM == 'Darwin' ]]; then
     export EDITOR='open -t'
 
-    cb() { [[ -t 0 ]] && pbpaste || pbcopy; }  # cb=clipboard
-    # see if you can use xclip or xsel on linux, or write your own
-    # that behaves similarly but uses an env variable or a file
-    # http://superuser.com/questions/288320/whats-like-osxs-pbcopy-for-linux
-    # or maybe write a separate Python program and use pyperclip
-    # which is cross-platform https://github.com/asweigart/pyperclip
-
     # bsd ls
     alias ls="ls -FG"
     # escape ls to ignore -F so you don't get directories with // at the end

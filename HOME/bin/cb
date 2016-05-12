@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# currently this is Mac only
+# see if you can use xclip or xsel on linux, or write your own
+# that behaves similarly but uses an env variable or a file
+# http://superuser.com/questions/288320/whats-like-osxs-pbcopy-for-linux
+# or use pyperclip which is cross-platform
+# https://github.com/asweigart/pyperclip
+
+# examples:
+# "foo" is in clipboard
+# $ cb
+# foo
+#
+# $ echo bar | cb
+# $ cb
+# bar
+#
+# $ cb baz
+# $ cb
+# baz
+#
+# also works with redirects
+# $ cb <testfile
+#
+# or like so:
+# cb "$(cat testfile)"
+
+if [[ -t 0 ]]; then  # if interactive session (not pipeline)
+    if [[ $# -eq 0 ]]; then  # if no args
+        pbpaste
+    else
+        echo "$@" | pbcopy
+    fi
+else
+    pbcopy
+fi
