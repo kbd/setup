@@ -342,6 +342,11 @@ cl() {
     cd "$1" && ls "${@:2}"
 }
 
+# download
+dl() {
+    youtube-dl "$@" "$(cb)"
+}
+
 # get the homedir of another user. Be careful cause of eval.
 # http://stackoverflow.com/a/20506895
 user_home() {
