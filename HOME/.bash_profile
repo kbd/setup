@@ -44,11 +44,11 @@ export   BGCOLOR_GREY="\[$(tput setab 7)\]"
 
 # BEGIN prompt code
 
-function _prompt_date {
+_prompt_date() {
     echo "$COLOR_GREY\D{%m/%d@%H:%M}$COLOR_RESET:"
 }
 
-function _prompt_user {
+_prompt_user() {
     if [[ $EUID -eq 0 ]]; then  # if root
         local user="$COLOR_RED\u$COLOR_RESET"
     elif [[ $USER != "$(logname)" ]]; then  # if current user != login user
@@ -59,7 +59,7 @@ function _prompt_user {
     echo "$user"
 }
 
-function _prompt_at {
+_prompt_at() {
     # show the @ in red if not local
     local at='@'
     if [[ -n $SSH_TTY ]]; then
@@ -70,16 +70,16 @@ function _prompt_at {
 
 # a function so that it can do more logic later if desired
 # such as showing the full host by default if you're not local
-function _prompt_show_full_host { [[ -n $PROMPT_SHOW_FULL_HOST ]]; }
+_prompt_show_full_host() { [[ -n $PROMPT_SHOW_FULL_HOST ]]; }
 
-function _prompt_host {
+_prompt_host() {
     local host
     _prompt_show_full_host && host='\H' || host='\h'
     echo "$COLOR_BLUE$host$COLOR_RESET"
 }
 
 # screen/tmux status in prompt
-function _prompt_screen {
+_prompt_screen() {
     if [[ $TERM == "screen" ]]; then
         # figure out whether 'screen' or 'tmux'
         if [[ -n "$TMUX" ]]; then
@@ -95,7 +95,7 @@ function _prompt_screen {
     fi
 }
 
-function _prompt_sep {
+_prompt_sep() {
     # separator - red if cwd unwritable
     local sep=':';
     if [[ ! -w "${PWD}" ]]; then
@@ -104,12 +104,12 @@ function _prompt_sep {
     echo "$sep"
 }
 
-function _prompt_path {
+_prompt_path() {
     echo "$COLOR_PURPLE\w$COLOR_RESET"
 }
 
 # source control information in prompt
-function _prompt_repo {
+_prompt_repo() {
     local vcs=
     local branch=
     if [[ $(declare -F __git_ps1) ]]; then
@@ -139,7 +139,7 @@ function _prompt_repo {
 }
 
 # running and stopped jobs
-function _prompt_jobs {
+_prompt_jobs() {
     local running=$(( $(jobs -rp | wc -l) ))  # convert to numeric
     local stopped=$(( $(jobs -sp | wc -l) ))  # convert to numeric
 
@@ -160,7 +160,7 @@ function _prompt_jobs {
     fi
 }
 
-function _prompt_char {
+_prompt_char() {
     # prompt char, with info about last return code
     local pchar="\\$"  # slashes to prevent further substitution
     if [[ $_LAST_RETURN_CODE -eq 0 ]]; then
@@ -171,17 +171,17 @@ function _prompt_char {
     echo "$prompt "
 }
 
-function _save_last_return_code {
+_save_last_return_code() {
     export _LAST_RETURN_CODE=$?  # save away last command result
 }
 
-function trap_debug {
+trap_debug() {
     printf "\e[0m"  # reset prompt formatting
 }
 trap trap_debug DEBUG
 
 # PROMPT_COMMAND function
-function generate_ps1 {
+generate_ps1() {
     _save_last_return_code
     local ps1=''
     for f in date user at host screen sep path repo jobs char; do
@@ -201,7 +201,7 @@ function generate_ps1 {
 # basic prompt
 # export PS1="\u@\h:\w$ "
 
-function prompt_command_is_readonly {
+prompt_command_is_readonly() {
     readonly -p | awk -F' |=' '{print $3}' | fgrep -qx 'PROMPT_COMMAND'
 }
 
@@ -266,7 +266,7 @@ alias ipython3="\ipython 3 --no-banner --no-confirm-exit"
 if [[ $PLATFORM == 'Darwin' ]]; then
     export EDITOR='open -t'
 
-    function cb { [[ -t 0 ]] && pbpaste || pbcopy; }  # cb=clipboard
+    cb() { [[ -t 0 ]] && pbpaste || pbcopy; }  # cb=clipboard
     # see if you can use xclip or xsel on linux, or write your own
     # that behaves similarly but uses an env variable or a file
     # http://superuser.com/questions/288320/whats-like-osxs-pbcopy-for-linux
@@ -288,7 +288,7 @@ else
     alias lld="ll -d --indicator-style=none -- */"
 fi
 
-function ipython {
+ipython() {
     # fix ipython to handle arguments like python
     # https://twitter.com/keithdevens/status/595294880533876736
     # this is an imperfect hack because you could do "-c 'command'" and have command
@@ -314,7 +314,7 @@ function ipython {
 }
 
 # source a file or a directory of files
-function _source {
+_source() {
     if [[ -d "$1" ]]; then
         # if it's a directory, source everything in the directory
         for I in "$1"/*; do
@@ -327,7 +327,7 @@ function _source {
 }
 
 # 'less' using vim
-function vless {
+vless() {
     # http://vimdoc.sourceforge.net/htmldoc/starting.html#$VIMRUNTIME
     # http://vimdoc.sourceforge.net/htmldoc/various.html#less
     # maybe use https://github.com/rkitover/vimpager instead?
@@ -337,7 +337,7 @@ function vless {
 }
 
 # mkdir + cd
-function mcd {
+mcd() {
     if [[ -z "$1" ]]; then
         ercho "missing argument"
         return 1
@@ -346,17 +346,17 @@ function mcd {
 }
 
 # cd + ls
-function cl {
+cl() {
     cd "$1" && ls "${@:2}"
 }
 
 # get the homedir of another user. Be careful cause of eval.
 # http://stackoverflow.com/a/20506895
-function user_home {
+user_home() {
     eval echo "~$1"
 }
 
-function my_home {
+my_home() {
     user_home $(logname)
 }
 
