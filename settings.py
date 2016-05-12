@@ -123,10 +123,11 @@
         'casks': [
             'atom',
             'caffeine',
+            'epichrome',
             'iterm2-beta',
+            'kindle',
             'macvim',
             'xquartz',
-            'epichrome',
         ],
         'post_install': [
             # symlink 'z' into my local shell sources so it'll be 1. run automatically in my
