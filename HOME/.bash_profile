@@ -258,9 +258,8 @@ alias wintitle='printf "\e]2;%s\a"'
 alias getwintitle='printf "\e[21t"'
 alias gettabtitle='printf "\e[20t"'
 
-# backslashes are necessary to call the function 'ipython' instead of the built-in
-alias ipython="\ipython '' --no-banner --no-confirm-exit"
-alias ipython3="\ipython 3 --no-banner --no-confirm-exit"
+alias ipython="ipython_func '' --no-banner --no-confirm-exit"
+alias ipython3="ipython_func 3 --no-banner --no-confirm-exit"
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
@@ -288,7 +287,7 @@ else
     alias lld="ll -d --indicator-style=none -- */"
 fi
 
-ipython() {
+ipython_func() {
     # fix ipython to handle arguments like python
     # https://twitter.com/keithdevens/status/595294880533876736
     # this is an imperfect hack because you could do "-c 'command'" and have command
