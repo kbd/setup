@@ -123,7 +123,7 @@
         'casks': [
             'atom',
             'caffeine',
-            'epichrome',
+            'fluid',
             'iterm2-beta',
             'kindle',
             'macvim',
