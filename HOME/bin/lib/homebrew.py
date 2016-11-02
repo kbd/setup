@@ -85,7 +85,7 @@ def upgrade():
     # https://github.com/Homebrew/homebrew/issues/27048
     # so, catch any error here and make sure to inspect the output for problems
     try:
-        _execute(['brew', 'upgrade', '--all'])
+        _execute(['brew', 'upgrade'])
     except:
         pass
 
