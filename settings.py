@@ -124,7 +124,7 @@
             'atom',
             'caffeine',
             'fluid',
-            'iterm2-beta',
+            'iterm2',
             'kindle',
             'macvim',
             'xquartz',
