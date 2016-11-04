@@ -17,44 +17,44 @@ export HISTCONTROL='ignoredups'  # I'd prefer to ignore dups on autocomplete ins
                                  # them from history, but that seems not possible
 export HISTTIMEFORMAT="[%F %T %z] "
 
-export    COLOR_RESET="\[$(tput sgr0)\]"
-export     COLOR_BOLD="\[$(tput bold)\]"
-export      COLOR_DIM="\[$(tput dim)\]"
-export    COLOR_ULINE="\[$(tput smul)\]"
-export COLOR_NO_ULINE="\[$(tput rmul)\]"
-export    COLOR_BLINK="\[$(tput blink)\]"
+export    COLOR_RESET="$(tput sgr0)"
+export     COLOR_BOLD="$(tput bold)"
+export      COLOR_DIM="$(tput dim)"
+export    COLOR_ULINE="$(tput smul)"
+export COLOR_NO_ULINE="$(tput rmul)"
+export    COLOR_BLINK="$(tput blink)"
 
-export    COLOR_BLACK="\[$(tput setaf 0)\]"
-export      COLOR_RED="\[$(tput setaf 1)\]"
-export    COLOR_GREEN="\[$(tput setaf 2)\]"
-export   COLOR_YELLOW="\[$(tput setaf 3)\]"
-export     COLOR_BLUE="\[$(tput setaf 4)\]"
-export   COLOR_PURPLE="\[$(tput setaf 5)\]"
-export     COLOR_CYAN="\[$(tput setaf 6)\]"
-export     COLOR_GREY="\[$(tput setaf 7)\]"
+export    COLOR_BLACK="$(tput setaf 0)"
+export      COLOR_RED="$(tput setaf 1)"
+export    COLOR_GREEN="$(tput setaf 2)"
+export   COLOR_YELLOW="$(tput setaf 3)"
+export     COLOR_BLUE="$(tput setaf 4)"
+export   COLOR_PURPLE="$(tput setaf 5)"
+export     COLOR_CYAN="$(tput setaf 6)"
+export     COLOR_GREY="$(tput setaf 7)"
 
-export  BGCOLOR_BLACK="\[$(tput setab 0)\]"
-export    BGCOLOR_RED="\[$(tput setab 1)\]"
-export  BGCOLOR_GREEN="\[$(tput setab 2)\]"
-export BGCOLOR_YELLOW="\[$(tput setab 3)\]"
-export   BGCOLOR_BLUE="\[$(tput setab 4)\]"
-export BGCOLOR_PURPLE="\[$(tput setab 5)\]"
-export   BGCOLOR_CYAN="\[$(tput setab 6)\]"
-export   BGCOLOR_GREY="\[$(tput setab 7)\]"
+export  BGCOLOR_BLACK="$(tput setab 0)"
+export    BGCOLOR_RED="$(tput setab 1)"
+export  BGCOLOR_GREEN="$(tput setab 2)"
+export BGCOLOR_YELLOW="$(tput setab 3)"
+export   BGCOLOR_BLUE="$(tput setab 4)"
+export BGCOLOR_PURPLE="$(tput setab 5)"
+export   BGCOLOR_CYAN="$(tput setab 6)"
+export   BGCOLOR_GREY="$(tput setab 7)"
 
 # BEGIN prompt code
 
 _prompt_date() {
-    echo "$COLOR_GREY\D{%m/%d@%H:%M}$COLOR_RESET:"
+    echo '\[$COLOR_GREY\]\D{%m/%d@%H:%M}\[$COLOR_RESET\]:'
 }
 
 _prompt_user() {
     if [[ $EUID -eq 0 ]]; then  # if root
-        local user="$COLOR_RED\u$COLOR_RESET"
+        local user='\[$COLOR_RED\]\u\[$COLOR_RESET\]'
     elif [[ $USER != "$(logname)" ]]; then  # if current user != login user
-        local user="$COLOR_YELLOW$COLOR_BOLD\u$COLOR_RESET"
+        local user='\[$COLOR_YELLOW\]\[$COLOR_BOLD\]\u\[$COLOR_RESET\]'
     else
-        local user="$COLOR_GREEN\u$COLOR_RESET"
+        local user='\[$COLOR_GREEN\]\u\[$COLOR_RESET\]'
     fi
     echo "$user"
 }
@@ -63,7 +63,7 @@ _prompt_at() {
     # show the @ in red if not local
     local at='@'
     if [[ -n $SSH_TTY ]]; then
-        at="$COLOR_RED$COLOR_BOLD$at$COLOR_RESET"
+        at='\[$COLOR_RED\]\[$COLOR_BOLD\]'$at'\[$COLOR_RESET\]'
     fi
     echo "$at"
 }
@@ -75,7 +75,7 @@ _prompt_show_full_host() { [[ -n $PROMPT_SHOW_FULL_HOST ]]; }
 _prompt_host() {
     local host
     _prompt_show_full_host && host='\H' || host='\h'
-    echo "$COLOR_BLUE$host$COLOR_RESET"
+    echo '\[$COLOR_BLUE\]'$host'\[$COLOR_RESET\]'
 }
 
 # screen/tmux status in prompt
@@ -91,7 +91,10 @@ _prompt_screen() {
             local name="$STY"
             local window="$WINDOW"
         fi
-        echo "[$COLOR_ULINE$COLOR_GREEN$screen$COLOR_BLACK:$COLOR_BLUE$name$COLOR_BLACK:$COLOR_PURPLE$window$COLOR_RESET]"
+        echo -n '[\[$COLOR_ULINE\]\[$COLOR_GREEN\]'"$screen"
+        echo -n '\[$COLOR_BLACK\]:\[$COLOR_BLUE\]'"$name"
+        echo -n '\[$COLOR_BLACK\]:\[$COLOR_PURPLE\]'"$window"
+        echo '\[$COLOR_RESET\]]'
     fi
 }
 
@@ -99,13 +102,13 @@ _prompt_sep() {
     # separator - red if cwd unwritable
     local sep=':';
     if [[ ! -w "${PWD}" ]]; then
-        sep="$COLOR_RED$COLOR_BOLD$sep$COLOR_RESET"
+        sep='\[$COLOR_RED\]\[$COLOR_BOLD\]'$sep'\[$COLOR_RESET\]'
     fi
     echo "$sep"
 }
 
 _prompt_path() {
-    echo "$COLOR_PURPLE\w$COLOR_RESET"
+    echo '\[$COLOR_PURPLE\]\w\[$COLOR_RESET\]'
 }
 
 # source control information in prompt
@@ -132,9 +135,9 @@ _prompt_repo() {
     fi
     if [[ $vcs ]]; then
         if [[ $branch ]]; then
-            vcs="$COLOR_CYAN$vcs$COLOR_RESET:$COLOR_YELLOW$branch$COLOR_RESET"
+            vcs='\[$COLOR_CYAN\]'"$vcs"'\[$COLOR_RESET\]:\[$COLOR_YELLOW\]'"$branch"'\[$COLOR_RESET\]'
         fi
-        echo -n "[$vcs]"
+        echo "[$vcs]"
     fi
 }
 
@@ -145,14 +148,14 @@ _prompt_jobs() {
 
     local jobs=''
     if [[ $running -ne 0 ]]; then
-        jobs="$COLOR_GREEN$running&$COLOR_RESET"  # '&' for 'background'
+        jobs='\[$COLOR_GREEN\]'$running'&\[$COLOR_RESET\]'  # '&' for 'background'
     fi
 
     if [[ $stopped -ne 0 ]]; then
         if [[ $jobs ]]; then
             jobs="$jobs:"  # separate running and stopped job count with a colon
         fi
-        jobs="$jobs$COLOR_RED${stopped}z$COLOR_RESET"  # 'z' for 'ctrl+z' to stop
+        jobs="$jobs"'\[$COLOR_RED\]'$stopped'z\[$COLOR_RESET\]'  # 'z' for 'ctrl+z' to stop
     fi
 
     if [[ $jobs ]]; then
@@ -162,13 +165,18 @@ _prompt_jobs() {
 
 _prompt_char() {
     # prompt char, with info about last return code
-    local pchar="\\$"  # slashes to prevent further substitution
+    local pchar='\$'
     if [[ $_LAST_RETURN_CODE -eq 0 ]]; then
-        local prompt="$COLOR_GREEN$pchar$COLOR_RESET"
+        local prompt='\[$COLOR_GREEN\]'"$pchar"'\[$COLOR_RESET\]'
     else
-        local prompt="$COLOR_RED$pchar:$_LAST_RETURN_CODE$COLOR_RESET"
+        local prompt='\[$COLOR_RED\]'"$pchar:$_LAST_RETURN_CODE"'\[$COLOR_RESET\]'
     fi
     echo "$prompt "
+}
+
+_prompt_text() {
+    # control formatting of what you type. Formatting is reset in trap_debug.
+    echo '\[$COLOR_BOLD\]'
 }
 
 _save_last_return_code() {
@@ -176,7 +184,7 @@ _save_last_return_code() {
 }
 
 trap_debug() {
-    printf "\e[0m"  # reset prompt formatting
+    printf "$COLOR_RESET"
 }
 trap trap_debug DEBUG
 
@@ -184,11 +192,9 @@ trap trap_debug DEBUG
 generate_ps1() {
     _save_last_return_code
     local ps1=''
-    for f in date user at host screen sep path repo jobs char; do
+    for f in date user at host screen sep path repo jobs char text; do
         ps1+="\$(_prompt_$f)"
     done
-
-    ps1+='$COLOR_BOLD'  # bold what you type. Reset formatting in trap_debug.
 
     # if provided no argument, set PS1 yourself, else echo it to be used elsewhere
     if [[ -z $1 ]]; then
@@ -316,6 +322,10 @@ _source() {
         # else source the file if it exists
         source "$1" 2>/dev/null
     fi
+}
+
+printv() {  # v for verbatim
+    printf '%s\n' "$1"
 }
 
 # 'less' using vim
