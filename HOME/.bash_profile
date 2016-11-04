@@ -354,7 +354,9 @@ cl() {
 
 # download
 dl() {
-    youtube-dl "$@" "$(cb)"
+    local url="$(cb)"  # get from clipboard
+    echo "${COLOR_BOLD}${COLOR_BLUE}Downloading: ${COLOR_YELLOW}$url${COLOR_RESET}"
+    youtube-dl "$@" "$url"
 }
 
 # get the homedir of another user. Be careful cause of eval.
