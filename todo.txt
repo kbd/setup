@@ -46,3 +46,5 @@ https://github.com/donnemartin/dev-setup/blob/master/osx.sh
   - sublime-text3
 
 * Maybe allow profiles somehow like "work" and "home" so you don't install Sonos at work?
+
+* switch selecta->heatseeker? (https://github.com/rschmitt/heatseeker)
