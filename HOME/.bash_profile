@@ -140,8 +140,6 @@ fi
 alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAND' && su"
 
 # COMPLETIONS
-# note, completions must be at the end because 'z' modifies
-# your PROMPT_COMMAND, so it has to come after you set yours
 _source /usr/local/etc/bash_completion.d
 complete -cf sudo  # allow autocompletions after sudo.
 
