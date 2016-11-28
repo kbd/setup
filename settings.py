@@ -227,6 +227,9 @@
                 'wvous-br-corner': 3,
                 'wvous-br-modifier': 0,
             },
+            'com.apple.dashboard': {
+                'mcx-disabled': True,
+            },
             'com.apple.finder': {
                 'ShowPathbar': True,
                 'ShowStatusBar': True,
