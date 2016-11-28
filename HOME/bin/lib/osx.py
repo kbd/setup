@@ -93,6 +93,8 @@ def update_os_settings(settings):
 
     # defaults read | pbcopy to get a list of all current settings
 
+    settings_changed = False
+
     defaults = settings['osx']['defaults']
     for domain, settings in sorted(defaults.items()):
         for key, value in sorted(settings.items()):
@@ -102,7 +104,12 @@ def update_os_settings(settings):
                 log.info("Setting new value for {}:{}. Old value: {!r}, new value: {!r}.".format(
                     domain, key, old_value, value))
 
-            defaults_write(domain, key, value)
+                defaults_write(domain, key, value)
+                settings_changed = True
+
+    if settings_changed:
+        log.info("Settings changed, restarting services")
+        restart_os_functions()
 
 
 def restart_os_functions(*args, **kwargs):
