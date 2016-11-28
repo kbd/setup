@@ -67,8 +67,8 @@ _prompt_path() {
 
 # source control information in prompt
 _prompt_repo() {
-    local vcs=
-    local branch=
+    local vcs
+    local branch
     if [[ $(declare -F __git_ps1) ]]; then
         branch="$(__git_ps1 '%s')"
     fi

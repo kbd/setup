@@ -112,8 +112,9 @@ fi
 _source() {
     if [[ -d "$1" ]]; then
         # if it's a directory, source everything in the directory
-        for I in "$1"/*; do
-            source "$I" 2>/dev/null
+        local file
+        for file in "$1"/*; do
+            source "$file" 2>/dev/null
         done
     elif [[ -f "$1" ]]; then
         # else source the file if it exists

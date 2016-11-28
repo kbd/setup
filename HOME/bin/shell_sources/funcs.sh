@@ -10,6 +10,7 @@ ipython_func() {
     local new_args=("$@")
 
     local i=1
+    local arg
     for arg in "$@"; do
         i=$((i+1))
         if [[ $arg != -* && -f $arg ]]; then
