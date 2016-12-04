@@ -108,6 +108,7 @@
             'python',
             'python3',
             'readline',
+            'ripgrep',
             'ruby',
             'rust',
             'selecta',
