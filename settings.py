@@ -118,7 +118,6 @@
             'wget',
             'youtube-dl',
             'z',
-            # '--devel homebrew/devel-only/elm-format',
         ],
         'casks': [
             'atom',
@@ -128,6 +127,7 @@
             'kdiff3',
             'kindle',
             'macvim',
+            'visual-studio-code',
             'xquartz',
         ],
         'post_install': [
@@ -166,8 +166,7 @@
             'cmd': ['npm', 'install', '-g', '{package}'],
             'packages': [
                 'coffee-script',
-                'elm',
-                'elm-oracle',
+                'typescript',
             ],
         }}
     },

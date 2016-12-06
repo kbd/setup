@@ -15,6 +15,7 @@
 		"SublimeLinter",
 		"SublimeLinter-shellcheck",
 		"SublimeREPL",
-		"Theme - Soda"
+		"Theme - Soda",
+		"TypeScript"
 	]
 }
