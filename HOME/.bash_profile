@@ -144,5 +144,8 @@ alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAN
 _source /usr/local/etc/bash_completion.d
 complete -cf sudo  # allow autocompletions after sudo.
 
+# 3rd party software config
+eval "$(thefuck --alias)"
+
 # machine-specific bash config
 _source .config/machine_specific/.bash_profile
