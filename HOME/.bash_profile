@@ -42,6 +42,12 @@ export BGCOLOR_PURPLE="$(tput setab 5)"
 export   BGCOLOR_CYAN="$(tput setab 6)"
 export   BGCOLOR_GREY="$(tput setab 7)"
 
+# SHOPTS
+shopt -s histappend
+shopt -s dotglob
+shopt -s globstar 2>/dev/null  # not supported in bash 3
+shopt -s autocd 2>/dev/null  # not supported in bash 3
+
 # ALIASES
 alias   -- -="cd -"
 alias     ..="cd .."
@@ -108,6 +114,7 @@ else
     alias lld="ll -d --indicator-style=none -- */"
 fi
 
+# FUNCTIONS
 # source a file or a directory of files
 _source() {
     if [[ -d "$1" ]]; then
@@ -121,12 +128,6 @@ _source() {
         source "$1" 2>/dev/null
     fi
 }
-
-# SHOPTS
-shopt -s histappend
-shopt -s dotglob
-shopt -s globstar 2>/dev/null  # not supported in bash 3
-shopt -s autocd 2>/dev/null  # not supported in bash 3
 
 # SOURCES
 _source "$HOME/bin/shell_sources"
