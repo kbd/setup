@@ -112,6 +112,7 @@
             'ruby',
             'rust',
             'selecta',
+            'thefuck',
             'tmux',
             'tree',
             'vim',
