@@ -1,8 +1,9 @@
 import datetime
+import imp
 import os as os_module
 import pytest
 import unittest.mock as mock
-from os.path import join
+from os.path import join, expanduser
 from unittest.mock import call, patch
 
 import utils
@@ -15,6 +16,15 @@ SOURCE_DIR = '~/setup/HOME'
 ABS_SOURCE_DIR = '/Users/user/setup/HOME'
 DEST_DIR = '~'
 ABS_DEST_DIR = '/Users/user'
+
+# "import setup" doesn't work because 'setup' needs a .py extension
+# a few options to test python "executables".
+# 1. put all testable code in a lib so you can import them safely and the exe is
+#    just a thin wrapper (main still not testable, damages your code)
+# 2. just make the 'executable' a symlink to the .py file (clutters ls)
+# 3. do an import like this for the tests on executables
+setup_path = join(expanduser(SOURCE_DIR), 'bin/setup')
+setup = imp.load_source('setup', setup_path)
 
 
 @pytest.fixture
@@ -32,6 +42,20 @@ def symlink_settings():
 @pytest.fixture
 def partials():
     return ['/Users/user/.config']
+
+
+@pytest.fixture
+def actions():
+    return {
+        'actions': {
+            'pull': {
+                'func': 'repo',
+                'cmd': ['pull'],
+                'help': 'Pull repository from server',
+                'aliases': ['update'],
+            },
+        }
+    }
 
 
 # mock everything in 'os', except use the real os.path.join and fake expanduser
@@ -208,3 +232,20 @@ def test_follow_pointer(symlink_settings):
     expected = os_module.path.join(dest_dir, pointers['sublime_text'])
     actual = symlink.follow_pointer(pointers, dest_dir, 'sublime_text')
     assert actual == expected
+
+
+def test_resolve_action_aliases(actions):
+    actions = actions['actions']
+    assert 'pull' in actions
+    assert 'update' not in actions
+    updated_actions = setup.resolve_action_aliases(actions)
+    assert 'update' in updated_actions and updated_actions['update'] == actions['pull']
+
+
+def test_action_aliases_conflict(actions):
+    actions['actions']['pull']['aliases'] = ['pull']  # alias refers to an existing command
+    with pytest.raises(
+        setup.ConflictingAliasError,
+        message="Expecting failure caused by conflicting alias"
+    ):
+        updated_actions = setup.settings_validate_aliases(actions)
