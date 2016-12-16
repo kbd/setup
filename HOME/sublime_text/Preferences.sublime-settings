@@ -3,6 +3,15 @@
 	"color_scheme": "Packages/User/SublimeLinter/Tomorrow-Night-Keith (Flake8Lint) (SL).tmTheme",
 	"font_face": "Fantasque Sans Mono Regular",
 	"font_size": 13,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"rulers":
+	[
+		80,
+		100
+	],
 	"theme": "Soda Dark 3.sublime-theme",
 	"trim_trailing_white_space_on_save": true
 }
