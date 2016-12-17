@@ -98,6 +98,7 @@ alias ipython3="ipython_func 3 --no-banner --no-confirm-exit"
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
     export EDITOR='open -t'
+    alias subl='open -a "Sublime Text"'
 
     # bsd ls
     alias ls="ls -FG"
