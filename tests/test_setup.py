@@ -9,6 +9,7 @@ from unittest.mock import call, patch
 import utils
 
 utils.add_bin_to_path()
+setup = utils.import_executable('setup')
 
 from lib import symlink
 
@@ -16,15 +17,6 @@ SOURCE_DIR = '~/setup/HOME'
 ABS_SOURCE_DIR = '/Users/user/setup/HOME'
 DEST_DIR = '~'
 ABS_DEST_DIR = '/Users/user'
-
-# "import setup" doesn't work because 'setup' needs a .py extension
-# a few options to test python "executables".
-# 1. put all testable code in a lib so you can import them safely and the exe is
-#    just a thin wrapper (main still not testable, damages your code)
-# 2. just make the 'executable' a symlink to the .py file (clutters ls)
-# 3. do an import like this for the tests on executables
-setup_path = join(expanduser(SOURCE_DIR), 'bin/setup')
-setup = imp.load_source('setup', setup_path)
 
 
 @pytest.fixture
