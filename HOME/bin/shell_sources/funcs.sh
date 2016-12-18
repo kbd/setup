@@ -68,3 +68,22 @@ user_home() {
 my_home() {
     user_home $(logname)
 }
+
+filter() {
+    # take a list of strings (i.e. space-separated string of words)
+    # and a filter expression (like "word" or "word1|word2").
+    # This seems goofy but at least it's a simple one-liner.
+    echo $1 | tr ' ' '\n' | egrep -wv "$2" | tr '\n' ' '
+}
+
+is_remote() {
+    [[ $SSH_TTY || $SSH_CLIENT ]]
+}
+
+is_su() {
+    [[ $USER != "$(logname)" ]]  # if current user != login user
+}
+
+is_root() {
+    [[ $EUID == 0 ]]
+}

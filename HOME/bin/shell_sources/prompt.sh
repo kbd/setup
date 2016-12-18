@@ -1,22 +1,37 @@
+# configuration variables exposed
+#
+# $PROMPT_FULL_HOST
+#   shows the full hostname (\H vs \h in ps1)
+#
+# $PROMPT_SHORT_DISPLAY
+#   don't display things like username@host if you're the main user on localhost
+#   and the date if you have iTerm's timestamp on. i.e. elide unnecessary info.
+#   "use short display" implies "hide date"
+#
+# $PROMPT_HIDE_DATE
+#   don't show date in the prompt. Less necessary thanks to iterm's timestamps
+#
+# $PROMPT_PREFIX
+#   override to control what's displayed at the start of the prompt line
+
 _prompt_date() {
     echo '\[$COLOR_GREY\]\D{%m/%d@%H:%M}\[$COLOR_RESET\]:'
 }
 
 _prompt_user() {
-    if [[ $EUID -eq 0 ]]; then  # if root
-        local user='\[$COLOR_RED\]\u\[$COLOR_RESET\]'
-    elif [[ $USER != "$(logname)" ]]; then  # if current user != login user
-        local user='\[$COLOR_YELLOW\]\[$COLOR_BOLD\]\u\[$COLOR_RESET\]'
-    else
-        local user='\[$COLOR_GREEN\]\u\[$COLOR_RESET\]'
+    local color='\[$COLOR_GREEN\]'
+    if [[ $(is_root) ]]; then
+        color='\[$COLOR_RED\]'
+    elif [[ $(is_su) ]]; then
+        color='\[$COLOR_YELLOW\]\[$COLOR_BOLD\]'
     fi
-    echo "$user"
+    echo "$color"'\u\[$COLOR_RESET\]'
 }
 
 _prompt_at() {
     # show the @ in red if not local
     local at='@'
-    if [[ -n $SSH_TTY ]]; then
+    if [[ $(is_remote) ]]; then
         at='\[$COLOR_RED\]\[$COLOR_BOLD\]'$at'\[$COLOR_RESET\]'
     fi
     echo "$at"
@@ -24,7 +39,7 @@ _prompt_at() {
 
 # a function so that it can do more logic later if desired
 # such as showing the full host by default if you're not local
-_prompt_show_full_host() { [[ -n $PROMPT_SHOW_FULL_HOST ]]; }
+_prompt_show_full_host() { [[ -n $PROMPT_FULL_HOST ]]; }
 
 _prompt_host() {
     local host
@@ -46,8 +61,8 @@ _prompt_screen() {
             local window="$WINDOW"
         fi
         echo -n '[\[$COLOR_ULINE\]\[$COLOR_GREEN\]'"$screen"
-        echo -n '\[$COLOR_BLACK\]:\[$COLOR_BLUE\]'"$name"
-        echo -n '\[$COLOR_BLACK\]:\[$COLOR_PURPLE\]'"$window"
+        echo -n '\[$COLOR_DEFAULT\]:\[$COLOR_BLUE\]'"$name"
+        echo -n '\[$COLOR_DEFAULT\]:\[$COLOR_PURPLE\]'"$window"
         echo '\[$COLOR_RESET\]]'
     fi
 }
@@ -121,16 +136,45 @@ _prompt_char() {
     # prompt char, with info about last return code
     local pchar='\$'
     if [[ $_LAST_RETURN_CODE -eq 0 ]]; then
-        local prompt='\[$COLOR_GREEN\]'"$pchar"'\[$COLOR_RESET\]'
+        local prompt='\[$COLOR_GREEN\]'"$pchar"
     else
-        local prompt='\[$COLOR_RED\]'"$pchar:$_LAST_RETURN_CODE"'\[$COLOR_RESET\]'
+        local prompt='\[$COLOR_RED\]'"$pchar:$_LAST_RETURN_CODE"
     fi
-    echo "$prompt "
+    echo "$prompt"'\[$COLOR_RESET\] '
 }
 
 _prompt_text() {
     # control formatting of what you type. Formatting is reset in trap_debug.
     echo '\[$COLOR_BOLD\]'
+}
+
+_prompt_prefix() {
+    echo "${PROMPT_PREFIX-⚡ }"
+}
+
+_prompt_filter() {
+    local funcs="$1"
+    if [[ $PROMPT_SHORT_DISPLAY ]]; then
+        # if host is localhost, showing the host is unnecessary
+        if [[ ! $(is_remote) ]]; then
+            funcs=$(filter "$funcs" "at|host")
+        fi
+
+        # if the user is your login user, showing it is unnecessary
+        if [[ ! $(is_su) && ! ($is_root) ]]; then
+            funcs=$(filter "$funcs" "user")
+        fi
+
+        # if no user or host, remove sep too
+        if [[ ! $(echo "$funcs" | egrep -w "user|host") ]]; then
+            funcs=$(filter "$funcs" "sep")
+        fi
+    fi
+    if [[ $PROMPT_SHORT_DISPLAY || $PROMPT_HIDE_DATE ]]; then
+        # don't show the date on short mode or if explicitly hidden
+        funcs=$(filter "$funcs" "date")
+    fi
+    echo "$funcs"
 }
 
 _save_last_return_code() {
@@ -145,8 +189,14 @@ trap trap_debug DEBUG
 # PROMPT_COMMAND function
 generate_ps1() {
     _save_last_return_code
+    local funcs="prefix date user at host screen sep path repo jobs char text"
+
+    # filter parts of the prompt
+    funcs=$(_prompt_filter "$funcs")
+
+    # construct ps1
     local ps1=''
-    for f in date user at host screen sep path repo jobs char text; do
+    for f in $funcs; do
         ps1+="\$(_prompt_$f)"
     done
 

@@ -17,6 +17,8 @@ export HISTCONTROL='ignoredups'  # I'd prefer to ignore dups on autocomplete ins
                                  # them from history, but that seems not possible
 export HISTTIMEFORMAT="[%F %T %z] "
 
+# configure prompt
+export PROMPT_SHORT_DISPLAY=1
 
 # SHOPTS
 shopt -s histappend
