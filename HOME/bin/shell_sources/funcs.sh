@@ -25,7 +25,7 @@ ipython_func() {
 }
 
 printv() {  # v for verbatim
-    printf '%s\n' "$1"
+    printf '%q\n' "$1"
 }
 
 # 'less' using vim
