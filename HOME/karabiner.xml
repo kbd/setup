@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<root>
+  <inputsourcedef>
+    <name>DVORAK</name>
+    <inputsourceid_prefix>com.apple.keylayout.Dvorak</inputsourceid_prefix>
+  </inputsourcedef>
+
+<!--
+Keyboard
+    Razer Naga (Razer)
+
+    DeviceVendor::RawValue::0x1532,
+    DeviceProduct::RawValue::0x0015,
+
+    DeviceLocation::RawValue::0xfd132100,
+
+Pointing
+    Razer Naga (Razer)
+
+    DeviceVendor::RawValue::0x1532,
+    DeviceProduct::RawValue::0x0015,
+
+    DeviceLocation::RawValue::0xfd132100,
+-->
+
+  <devicevendordef>
+    <vendorname>RAZER</vendorname>
+    <vendorid>0x1532</vendorid>
+  </devicevendordef>
+
+  <deviceproductdef>
+    <productname>RAZER_NAGA</productname>
+    <productid>0x0015</productid>
+  </deviceproductdef>
+
+  <item>
+    <name>Naga side button 1</name>
+    <identifier>private.naga_side_button_1</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_1,
+      KeyCode::F19 <!-- exposé -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 2</name>
+    <identifier>private.naga_side_button_2</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_2,
+      KeyCode::F18 <!-- application windows -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 3</name>
+    <identifier>private.naga_side_button_3</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_3,
+      KeyCode::F17 <!-- show desktop -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 4</name>
+    <identifier>private.naga_side_button_4</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_4,
+      KeyCode::TAB, ModifierFlag::COMMAND_L <!-- alt tab -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 5</name>
+    <identifier>private.naga_side_button_5</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_5,
+      KeyCode::MINUS, ModifierFlag::COMMAND_L, ModifierFlag::SHIFT_L <!-- minus is 'bracket_left' in dvorak. Prev tab -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 6</name>
+    <identifier>private.naga_side_button_6</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_6,
+      KeyCode::EQUAL, ModifierFlag::COMMAND_L, ModifierFlag::SHIFT_L <!-- equal is 'bracket_right' in dvorak. Next tab -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 7</name>
+    <identifier>private.naga_side_button_7</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_7,
+      KeyCode::COMMA, ModifierFlag::COMMAND_L <!-- comma is 'w' in dvorak --> <!-- cmd+w, close file/window/tab -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 8</name>
+    <identifier>private.naga_side_button_8</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_8,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L <!-- next application window -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 9</name>
+    <identifier>private.naga_side_button_9</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_9,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- prev application window -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 10</name>
+    <identifier>private.naga_side_button_10</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_0, <!-- 10 -->
+      KeyCode::X, ModifierFlag::COMMAND_L <!-- x is 'q' in dvorak --> <!-- cmd+q -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 11</name>
+    <identifier>private.naga_side_button_11</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_MINUS, <!-- 11 -->
+      KeyCode::COMMA, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- comma is 'w' in dvorak --> <!-- cmd+shift+w, close whole window -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga side button 12</name>
+    <identifier>private.naga_side_button_12</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEYPAD_PLUS, <!-- 12 -->
+      KeyCode::J, ModifierFlag::COMMAND_L <!-- j is 'h' in dvorak --> <!-- cmd+h, hide window -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga back button</name>
+    <identifier>private.naga_back_button</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      PointingButton::BUTTON4,
+      KeyCode::MINUS, ModifierFlag::COMMAND_L <!-- minus is 'bracket_left' in dvorak -->
+    </autogen>
+  </item>
+
+  <item>
+    <name>Naga forward button</name>
+    <identifier>private.naga_forward_button</identifier>
+    <device_only>DeviceVendor::RAZER,DeviceProduct::RAZER_NAGA</device_only>
+
+    <autogen>
+      __KeyToKey__
+      PointingButton::BUTTON5,
+      KeyCode::EQUAL, ModifierFlag::COMMAND_L <!-- equal is 'bracket_right' in dvorak -->
+    </autogen>
+  </item>
+
+</root>

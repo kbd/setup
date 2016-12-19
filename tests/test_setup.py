@@ -23,7 +23,8 @@ ABS_DEST_DIR = '/Users/user'
 def symlink_settings():
     return {
         'pointers': {
-            'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User'
+            'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User',
+            'karabiner.xml': 'Library/Application Support/Karabiner/private.xml',
         },
         'partials': [
             '~/.config'
@@ -211,7 +212,7 @@ class TestCreateSymlinks(object):
         back_up_existing_file.assert_called_with('/Users/user/.config')
 
 
-def test_follow_pointer(symlink_settings):
+def test_follow_pointer_no_pointer(symlink_settings):
     pointers = symlink_settings['pointers']
     dest_dir = '/Users/test'
 
@@ -220,9 +221,24 @@ def test_follow_pointer(symlink_settings):
     actual = symlink.follow_pointer(pointers, dest_dir, 'myfile')
     assert actual == expected
 
+
+def test_follow_pointer(symlink_settings):
+    pointers = symlink_settings['pointers']
+    dest_dir = '/Users/test'
+
     # pointer follow
     expected = os_module.path.join(dest_dir, pointers['sublime_text'])
     actual = symlink.follow_pointer(pointers, dest_dir, 'sublime_text')
+    assert actual == expected
+
+
+def test_follow_pointer_file(symlink_settings):
+    pointers = symlink_settings['pointers']
+    dest_dir = '/Users/test'
+
+    # pointer follow
+    expected = os_module.path.join(dest_dir, pointers['karabiner.xml'])
+    actual = symlink.follow_pointer(pointers, dest_dir, 'karabiner.xml')
     assert actual == expected
 
 

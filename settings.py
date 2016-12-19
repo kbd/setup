@@ -68,9 +68,10 @@
     },
     'symlinks': {
         'pointers': {
-            # pointers should not have slashes at the end even though it's a directory
-            # because it refers to the symlink that's created
-            'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User'
+            # pointers to directories should not have slashes at the end because the value
+            # refers to the symlink that's created
+            'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User',
+            'karabiner.xml': 'Library/Application Support/Karabiner/private.xml',
         },
         'partials': [
             # partials refer to directories that won't be symlinked directly, but will have their
