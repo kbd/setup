@@ -1,3 +1,4 @@
 #https://packagecontrol.io/docs/syncing
 Package Control.*
 !Package Control.sublime-settings
+*.crt
