@@ -39,7 +39,7 @@ def get_requested_clips(all_clips, requested_clips):
     result = []
     for clip in requested_clips:
         if clip not in all_clips:
-            print("No clip named {!r}".format(clip), file=sys.stderr)
+            print(f"No clip named {clip!r}", file=sys.stderr)
             continue
 
         result.append(all_clips[clip])
@@ -48,8 +48,9 @@ def get_requested_clips(all_clips, requested_clips):
 
 
 def copy_to_clipboard(output):
-    # todo: replace this with pyperclip
-    cmd = "echo -n '{}' | pbcopy".format(' '.join(output).replace("'", "'\\''"))
+    # todo: replace this with pyperclip or xerox
+    escaped_output = ' '.join(output).replace("'", "'\\''")
+    cmd = f"echo -n '{escaped_output}' | pbcopy"
     subprocess.check_call(cmd, shell=True, executable='/bin/bash')
 
 

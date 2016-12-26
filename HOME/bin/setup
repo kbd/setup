@@ -48,7 +48,7 @@ def create_command_line_parser(actions):
 
 def repo(action, settings, *args, **kwargs):
     cmd = ['git'] + action['cmd']
-    log.debug("cmd is {!r} and kwargs is: {!r}".format(cmd, kwargs))
+    log.debug(f"cmd is {cmd!r} and kwargs is: {kwargs!r}")
     cmd = [c.format(**kwargs) for c in cmd]
     subprocess.check_call(cmd)
 
@@ -56,9 +56,9 @@ def repo(action, settings, *args, **kwargs):
 def packages(action, settings, *args, **kwargs):
     log.info("Installing/upgrading language-specific packages")
     for language, params in sorted(settings['packages'].items()):
-        log.info("Installing/upgrading packages for: {}".format(language))
+        log.info(f"Installing/upgrading packages for: {language}")
         for package in params['packages']:
-            log.info("Installing/upgrading package: {}".format(package))
+            log.info(f"Installing/upgrading package: {package}")
             cmd = [c.format(package=package) for c in params['cmd']]
             subprocess.check_call(cmd)
 
@@ -66,14 +66,14 @@ def packages(action, settings, *args, **kwargs):
 def addons(action, settings, *args, **kwargs):
     log.info("Installing addons")
     for type, params in settings['addons'].items():
-        log.info("Installing addons for {!r}".format(type))
+        log.info(f"Installing addons for {type!r}")
         for addon in params['addons']:
-            log.info("Downloading addon {!r}".format(addon))
+            log.info(f"Downloading addon {addon!r}")
             result = addon_install(type, addon, params['installation_path'])
             if result:
-                log.info("Successfully installed {!r}".format(addon))
+                log.info(f"Successfully installed {addon!r}")
             else:
-                log.warning("Couldn't install {!r}".format(addon))
+                log.warning(f"Couldn't install {addon!r}")
 
     log.info("Finished installing addons")
 
@@ -84,10 +84,10 @@ def addon_install(type, name, installation_path):
     uri_pattern = 'http://www.curse.com/addons/wow/{}/download'
 
     # get the download page
-    log.debug("Requesting download page for {!r}".format(name))
+    log.debug(f"Requesting download page for {name!r}")
     response = requests.get(uri_pattern.format(name))
     if response.status_code != 200:
-        log.warning("Error getting download page for {}".format(name))
+        log.warning(f"Error getting download page for {name}")
         return False
 
     # parse out the download link
@@ -99,18 +99,18 @@ def addon_install(type, name, installation_path):
     download_uri = match.group(1)
 
     # download the addon
-    log.debug("Downloading from {!r}".format(download_uri))
+    log.debug(f"Downloading from {download_uri!r}")
     response = requests.get(download_uri)
     if response.status_code != 200:
         return False
 
-    log.debug("Extracting zip content to {!r}".format(installation_path))
+    log.debug(f"Extracting zip content to {installation_path!r}")
     try:
         file = io.BytesIO(response.content)
         zfile = zipfile.ZipFile(file)
         zfile.extractall(installation_path)
     except:
-        log.exception("Couldn't extract files for {!r}".format(name))
+        log.exception(f"Couldn't extract files for {name!r}")
         return False
 
     return True
@@ -159,7 +159,7 @@ def settings_validate_aliases(settings):
     dups = [item for item, count in counter.items() if count > 1]
 
     if dups:
-        raise ConflictingAliasError("Conflicting command aliases: {!r}".format(dups))
+        raise ConflictingAliasError(f"Conflicting command aliases: {dups!r}")
 
 
 def load_settings():
@@ -176,7 +176,7 @@ def main():
     # get the root of the repository. Use realpath to resolve symbolic links
     repo_root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '../..'))
     repo_home_dir = os.path.join(repo_root_dir, 'HOME')
-    log.debug("repo_home_dir is {!r}".format(repo_home_dir))
+    log.debug(f"repo_home_dir is {repo_home_dir!r}")
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
     home_dir = os.path.expanduser('~')
 
@@ -193,8 +193,8 @@ def main():
     # set requests loglevel
     logging.getLogger('requests').setLevel(logging.WARNING)
 
-    log.debug("Set cwd to {!r}".format(repo_root_dir))
-    log.debug("Command line arguments were: {!r}".format(args))
+    log.debug(f"Set cwd to {repo_root_dir!r}")
+    log.debug(f"Command line arguments were: {args!r}")
 
     # actually do stuff
     argsdict = copy(vars(args))

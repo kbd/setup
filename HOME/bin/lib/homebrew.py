@@ -47,7 +47,7 @@ def get_installed_taps():
 
 
 def install_formula(formula):
-    log.info("Installing formula: {}".format(formula))
+    log.info(f"Installing formula: {formula}")
     _execute(['brew', 'install', formula])
 
 
@@ -55,12 +55,12 @@ def install_cask(cask):
     # note: brew cask doesn't support upgrade yet:
     # https://github.com/caskroom/homebrew-cask/issues/4678
 
-    log.info("Installing cask: {}".format(cask))
+    log.info(f"Installing cask: {cask}")
     _execute(['brew', 'cask', 'install', cask])
 
 
 def install_tap(tap):
-    log.info("Installing tap: {}".format(tap))
+    log.info(f"Installing tap: {tap}")
     _execute(['brew', 'tap', tap])
 
 
@@ -92,20 +92,20 @@ def upgrade():
 
 def install_missing(type, expected):
     assert type in ('formula', 'cask', 'tap')
-    get_installed = globals()['get_installed_{}s'.format(type)]
-    install = globals()['install_{}'.format(type)]
+    get_installed = globals()[f'get_installed_{type}s']
+    install = globals()[f'install_{type}']
 
-    log.info("Expected {}s are: {}".format(type, ', '.join(sorted(expected))))
+    log.info(f"Expected {type}s are: {', '.join(sorted(expected))}")
     installed = get_installed()
-    log.info("Currently installed {}s are: {}".format(type, ', '.join(installed)))
+    log.info(f"Currently installed {type}s are: {', '.join(installed)}")
 
     missing = sorted(set(expected) - set(installed))
     if missing:
-        log.info("Missing {}s are: {}".format(type, ', '.join(missing)))
+        log.info(f"Missing {type}s are: {', '.join(missing)}")
         for item in missing:
             install(item)
     else:
-        log.info("No missing {}s".format(type))
+        log.info(f"No missing {type}s")
 
 
 def update_formulas(formulas):
@@ -146,8 +146,7 @@ def ensure_correct_permissions(*args, **kwargs):
     uid = os.stat('/usr/local').st_uid
     local_owner = pwd.getpwuid(uid).pw_name
 
-    log.debug("Currently logged in user is {!r}, owner of /usr/local is {!r}".format(
-        user, local_owner))
+    log.debug(f"Currently logged in user is {user!r}, owner of /usr/local is {local_owner!r}")
 
     if user != local_owner:
         log.info("Fixing permissions on /usr/local before running Homebrew")
@@ -195,10 +194,10 @@ def _get_command_output(cmd):
     # bytes.decode defaults to utf-8, which *should* also be the default system encoding
     # but I suppose to really do this correctly I should check that. However, pretty sure
     # all Homebrew package names should be ascii anyway so it's fine
-    log.debug("Executing: {}".format(cmd))
+    log.debug(f"Executing: {cmd!r}")
     return subprocess.check_output(cmd).decode().split()
 
 
 def _execute(cmd, shell=False):
-    log.debug("Executing: {}".format(cmd))
+    log.debug(f"Executing: {cmd!r}")
     subprocess.check_call(cmd, shell=isinstance(cmd, str))

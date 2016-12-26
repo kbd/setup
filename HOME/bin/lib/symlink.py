@@ -37,13 +37,13 @@ def get_backup_path(path):
 
 
 def create_symlink(source_path, dest_path):
-    log.info("Creating symlink of {!r} to {!r}".format(source_path, dest_path))
+    log.info(f"Creating symlink of {source_path!r} to {dest_path!r}")
     os.symlink(source_path, dest_path)
 
 
 def back_up_existing_file(dest_path):
     backup_path = get_backup_path(dest_path)
-    log.info("Backing up {!r} to {!r}".format(dest_path, backup_path))
+    log.info(f"Backing up {dest_path!r} to {backup_path!r}")
     os.rename(dest_path, backup_path)
 
 
@@ -55,7 +55,7 @@ def follow_pointer(pointers, dest_dir, file):
 
     # if a pointer, should still be within the dest_dir
     dest = os.path.join(dest_dir, pointers[file])
-    log.debug("Overridden destination for file {!r} is {!r}".format(file, dest))
+    log.debug(f"Overridden destination for file {file!r} is {dest!r}")
     return dest
 
 
@@ -75,16 +75,16 @@ def is_a_partial_directory(partials, file):
     ['~/.config'], the destination is '~/.config/myconfig', expanduser on everything to be safe,
 
     """
-    log.debug("Checking if dest path {!r} is in partials: {!r}".format(file, partials))
+    log.debug(f"Checking if dest path {file!r} is in partials: {partials!r}")
     return os.path.isdir(file) and file in partials
 
 
 def handle_partials(symlink_settings, repo_path, dest_path):
     """Create symlinks for partial directories"""
-    log.debug("{!r} is a partial location, not overwriting".format(dest_path))
+    log.debug(f"{dest_path!r} is a partial location, not overwriting")
     # ensure directory exists
     if not os.path.lexists(dest_path):
-        log.debug("Partial directory {!r} doesn't exist, creating it".format(dest_path))
+        log.debug(f"Partial directory {dest_path!r} doesn't exist, creating it")
         os.mkdir(dest_path)
 
     # recurse into it and only create symlinks for files that exist in repo
@@ -100,22 +100,21 @@ def handle_existing_symlink(repo_path, dest_path):
     """
     prior_symlink = os.readlink(dest_path)
     if prior_symlink == repo_path:
-        log.debug("{!r} already points where we want, making no changes".format(dest_path))
+        log.debug(f"{dest_path!r} already points where we want, making no changes")
         return True
     else:
-        log.info("Symlink at {!r} points to {!r}. Removing existing symlink".format(
-            dest_path, prior_symlink))
+        log.info(f"Symlink at {dest_path!r} points to {prior_symlink!r}. Removing existing symlink")
         os.remove(dest_path)
 
 
 def handle_existing_path(partials, repo_path, dest_path):
     "Handle existing symlink, return True if there's nothing left to do."
     if os.path.lexists(dest_path):
-        log.debug("Path {!r} already exists".format(dest_path))
+        log.debug(f"Path {dest_path!r} already exists")
         if os.path.islink(dest_path):
             return handle_existing_symlink(repo_path, dest_path)
         elif is_a_partial_directory(partials, dest_path):
-            log.debug("{!r} is a partial, not backing up".format(dest_path))
+            log.debug(f"{dest_path!r} is a partial, not backing up")
         else:
             back_up_existing_file(dest_path)
 
@@ -136,16 +135,16 @@ def create(symlink_settings, source_dir, dest_dir):
     partials = list(map(os.path.expanduser, partials))
 
     files = os.listdir(source_dir)
-    log.debug("source_dir is: {!r}, dest_dir is: {!r}".format(source_dir, dest_dir))
+    log.debug(f"source_dir is: {source_dir!r}, dest_dir is: {dest_dir!r}")
     for file in files:
         if is_file_ignored(ignores, file):
-            log.debug("{!r} is ignored".format(file))
+            log.debug(f"{file!r} is ignored")
             continue
 
         repo_path = os.path.join(source_dir, file)
         dest_path = follow_pointer(pointers, dest_dir, file)
 
-        log.debug("Linking {!r} to {!r}".format(repo_path, dest_path))
+        log.debug(f"Linking {repo_path!r} to {dest_path!r}")
         if handle_existing_path(partials, repo_path, dest_path):
             # existing symlink pointed where we wanted, or was a partial, nothing to do
             continue

@@ -34,16 +34,16 @@ def create_ssh_key():
     key_path = os.path.join(ssh_dir, KEY_FILE)
     public_key_path = key_path + '.pub'
     if os.path.exists(public_key_path):
-        log.info("Key exists at: {}".format(public_key_path))
+        log.info(f"Key exists at: {public_key_path}")
     else:
         log.info("No existing ssh key")
 
         user = getpass.getuser()
         host = socket.gethostname()
-        comment = '{}@{}'.format(user, host)
+        comment = f'{user}@{host}'
         cmd = KEYGEN_CMD.format(type=KEY_TYPE, bits=KEY_BITS, file=key_path, comment=comment)
 
-        log.info("Executing command: {!r}".format(cmd))
+        log.info(f"Executing command: {cmd!r}")
         subprocess.check_call(cmd, shell=True)
         log.info("Created key")
 
@@ -75,9 +75,9 @@ def upload_ssh_key(key_path, dest_path, host, user=None, port=None):
         cmd.extend(['-p', port])
 
     remote_cmd_str = '; '.join(remote_cmd).format(path=DEST_PATH, dir=os.path.dirname(DEST_PATH))
-    cmd_str = "{} '{}'".format(' '.join(cmd), remote_cmd_str)
+    cmd_str = f"{' '.join(cmd)} '{remote_cmd_str}'"
 
-    log.info("Executing: {!r}".format(cmd_str))
+    log.info(f"Executing: {cmd_str!r}")
     ret = subprocess.call(cmd_str, shell=True)
 
     if ret == 0:
@@ -87,7 +87,7 @@ def upload_ssh_key(key_path, dest_path, host, user=None, port=None):
         # http://tldp.org/LDP/abs/html/exitcodes.html
         log.info("Successfully copied key to the server")
     else:
-        log.warning("Error: code {}".format(ret))
+        log.warning(f"Error: code {ret}")
 
 
 def username(s):

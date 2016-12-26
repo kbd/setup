@@ -140,8 +140,8 @@
         ],
     },
     'packages': {
-        **{'python{}'.format(version): {
-            'cmd': ['pip{}'.format(version), 'install', '--upgrade', '{package}'],
+        **{f'python{version}': {
+            'cmd': [f'pip{version}', 'install', '--upgrade', '{package}'],
             'packages': [
                 'pip',
                 'setuptools',

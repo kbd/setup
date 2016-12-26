@@ -44,31 +44,31 @@ DEFAULTS_TO_PYTHON_TYPE = OrderedDict((
 
 def defaults_read(domain, key, missing_ok=False):
     cmd = ['defaults', 'read-type', domain, key]
-    log.debug("Executing command: {!r}".format(cmd))
+    log.debug(f"Executing command: {cmd!r}")
     try:
         result = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         output = e.output.decode()  # bytes -> string
-        log.warning("Error reading setting {}:{}. Return code {}, output was: {}".format(
-            domain, key, e.returncode, output))
+        log.warning(f"Error reading setting {domain}:{key}. "
+                    f"Return code {e.returncode}, output was: {output}")
 
         if 'does not exist' in output:
-            log.warning("Prior value for {}:{} doesn't exist".format(domain, key))
+            log.warning(f"Prior value for {domain}:{key} doesn't exist")
             if missing_ok:
                 return None
 
         raise
 
-    log.debug("Result was: {!r}".format(result))
+    log.debug(f"Result was: {result!r}")
 
     result_type = re.match('Type is (\w+)', result.decode()).group(1)
     type = DEFAULTS_TO_PYTHON_TYPE[result_type]
 
     cmd = ['defaults', 'read', domain, key]
-    log.debug("Executing command: {!r}".format(cmd))
+    log.debug(f"Executing command: {cmd!r}")
     result = subprocess.check_output(cmd)
     typed_result = type(result.decode().rstrip('\n'))
-    log.debug("Result was: {!r}, typed_result was {!r}".format(result, typed_result))
+    log.debug(f"Result was: {result!r}, typed_result was {typed_result!r}")
     return typed_result
 
 
@@ -79,11 +79,11 @@ def defaults_write(domain, key, value):
         if isinstance(value, type):
             break
     else:
-        raise Exception("Unsupported value type provided to defaults_write: {!r}".format(value))
+        raise Exception(f"Unsupported value type provided to defaults_write: {value!r}")
 
-    cmd.extend(['-{}'.format(type_str), str(value)])
+    cmd.extend([f'-{type_str}', str(value)])
 
-    log.debug("Executing command: {!r}".format(cmd))
+    log.debug(f"Executing command: {cmd!r}")
     subprocess.check_call(cmd)
 
 
@@ -101,8 +101,8 @@ def update_os_settings(settings):
             old_value = defaults_read(domain, key, missing_ok=True)
 
             if old_value != value:
-                log.info("Setting new value for {}:{}. Old value: {!r}, new value: {!r}.".format(
-                    domain, key, old_value, value))
+                log.info(f"Setting new value for {domain}:{key}. "
+                         f"Old value: {old_value!r}, new value: {value!r}.")
 
                 defaults_write(domain, key, value)
                 settings_changed = True
@@ -115,5 +115,5 @@ def update_os_settings(settings):
 def restart_os_functions(*args, **kwargs):
     for item in ('Finder', 'Dock', 'SystemUIServer'):
         cmd = ['killall', item]
-        log.info("Executing command: {!r}".format(cmd))
+        log.info(f"Executing command: {cmd!r}")
         subprocess.check_call(cmd)
