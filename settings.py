@@ -124,7 +124,7 @@
         'casks': [
             'atom',
             'caffeine',
-            'fluid',
+            'epichrome',
             'iterm2',
             'kdiff3',
             'kindle',
