@@ -100,6 +100,7 @@
             'bash',
             'bash-completion',
             'diff-so-fancy',
+            'fasd',
             'git',
             'go',
             'jq',
@@ -119,7 +120,6 @@
             'vim',
             'wget',
             'youtube-dl',
-            'z',
         ],
         'casks': [
             'atom',

@@ -126,6 +126,7 @@ complete -cf sudo  # allow autocompletions after sudo.
 
 # 3rd party software config
 eval "$(thefuck --alias)"
+eval "$(fasd --init auto)"
 
 # machine-specific bash config
 _source .config/machine_specific/.bash_profile
