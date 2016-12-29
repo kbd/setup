@@ -27,6 +27,7 @@ CLIPS = {
     'kirby': "<(^.^<) (>^.^)>",
     'fu': "凸(`д´)凸",
     'fine': "🔥☕️🐶💬🔥",
+    'keyboard': "⌘⌃⌥⇧↵→←↑↓",  # http://apple.stackexchange.com/questions/55727/where-can-i-find-the-unicode-symbols-for-mac-functional-keys-command-shift-e
 }
 
 def print_clips(CLIPS):
