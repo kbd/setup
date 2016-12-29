@@ -7,6 +7,7 @@
 	[
 		"Better CoffeeScript",
 		"Elm Language Support",
+		"ExpandRegion",
 		"Fix Mac Path",
 		"GitGutter",
 		"Package Control",

@@ -9,5 +9,10 @@
 	{ "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/User/convert-indentation-to-4-spaces.sublime-macro"} },
 
 	// dunno why there's no built-in shortcut for this
-	{ "keys": ["alt+w"], "command": "toggle_setting", "args": {"setting": "word_wrap"} }
+	{ "keys": ["alt+w"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
+
+	{ "keys": ["super+shift+space"], "command": "expand_region" },
+	{ "keys": ["super+u"], "command": "expand_region",
+	  "args": {"undo": true}, "context": [{ "key": "expand_region_soft_undo" }]
+	},
 ]
