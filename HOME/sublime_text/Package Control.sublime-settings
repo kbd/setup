@@ -13,6 +13,7 @@
 		"Package Control",
 		"Python Flake8 Lint",
 		"Python PEP8 Autoformat",
+		"SublimeCodeIntel",
 		"SublimeLinter",
 		"SublimeLinter-shellcheck",
 		"SublimeREPL",
