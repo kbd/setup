@@ -2,3 +2,4 @@
 Package Control.*
 !Package Control.sublime-settings
 *.crt
+*.tmTheme

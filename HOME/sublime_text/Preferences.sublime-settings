@@ -1,6 +1,6 @@
 {
 	"always_show_minimap_viewport": true,
-	"color_scheme": "Packages/User/SublimeLinter/Tomorrow-Night-Keith (Flake8Lint) (SL).tmTheme",
+	"color_scheme": "Packages/User/SublimeLinter/base16-eighties.dark (Flake8Lint) (SL).tmTheme",
 	"font_face": "Fantasque Sans Mono Regular",
 	"font_size": 13,
 	"ignored_packages":
@@ -12,6 +12,6 @@
 		80,
 		100
 	],
-	"theme": "Soda Dark 3.sublime-theme",
+	"theme": "Spacegray.sublime-theme",
 	"trim_trailing_white_space_on_save": true
 }
