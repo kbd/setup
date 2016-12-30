@@ -15,4 +15,6 @@
 	{ "keys": ["super+u"], "command": "expand_region",
 	  "args": {"undo": true}, "context": [{ "key": "expand_region_soft_undo" }]
 	},
+
+	{ "keys": ["super+shift+r"], "command": "reindent" , "args": { "single_line": false } }
 ]
