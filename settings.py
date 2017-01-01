@@ -114,6 +114,7 @@
             'ruby',
             'rust',
             'selecta',
+            'switchaudio-osx',
             'thefuck',
             'tmux',
             'tree',

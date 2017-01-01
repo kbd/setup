@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+import subprocess
+
+
+def get_outputs():
+    # SwitchAudioSource unhelpfully puts this string at the end of the audio
+    # source names even if you only ask for type 'output'
+    output_str = ' (output)'
+
+    outputs = subprocess.check_output(['SwitchAudioSource', '-a', '-toutput'])
+    outputs = outputs.decode().strip().split('\n')
+    outputs = [o[:-len(output_str)] for o in outputs]
+    return outputs
+
+
+def get_current_output():
+    return subprocess.check_output(['SwitchAudioSource', '-c']).decode().strip()
+
+
+def get_new_output(options, current):
+    # treat the list of options as a ring and switch to the next one
+    index = -1
+    try:
+        index = options.index(current)
+    except:
+        print(f"Error: Current value of '{current}' not found in options")
+
+    return options[(index + 1) % len(options)]
+
+
+def switch_output(name):
+    subprocess.check_call(['SwitchAudioSource', '-s', name])
+
+
+def main():
+    outputs = get_outputs()
+    print(f"Available output devices: {', '.join(outputs)}")
+
+    current = get_current_output()
+    print(f"Current audio output is: {current}")
+
+    new = get_new_output(outputs, current)
+    print(f"Setting audio output to: {new}")
+    switch_output(new)
+
+
+if __name__ == '__main__':
+    main()
