@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import subprocess
+import argparse
 
 
 def get_outputs():
@@ -33,12 +34,15 @@ def switch_output(name):
     subprocess.check_call(['SwitchAudioSource', '-s', name])
 
 
-def main():
+def main(args):
     outputs = get_outputs()
     print(f"Available output devices: {', '.join(outputs)}")
 
     current = get_current_output()
     print(f"Current audio output is: {current}")
+
+    if args.show:
+        return
 
     new = get_new_output(outputs, current)
     print(f"Setting audio output to: {new}")
@@ -46,4 +50,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Utility to switch audio output')
+    parser.add_argument('-s', '--show', action='store_true',
+                        help="Just show current audio output, don't change")
+    args = parser.parse_args()
+
+    main(args)
