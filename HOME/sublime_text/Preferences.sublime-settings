@@ -12,6 +12,7 @@
 		80,
 		100
 	],
-	"theme": "Spacegray.sublime-theme",
+	"spacegray_fileicons": true,
+	"theme": "Spacegray Eighties.sublime-theme",
 	"trim_trailing_white_space_on_save": true
 }
