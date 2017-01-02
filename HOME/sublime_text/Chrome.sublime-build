@@ -1,0 +1,3 @@
+{
+	"shell_cmd": "open -a 'Google Chrome' $file"
+}
