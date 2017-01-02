@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"Better CoffeeScript",
+		"Color Highlighter",
 		"Elm Language Support",
 		"ExpandRegion",
 		"Fix Mac Path",
@@ -17,6 +18,7 @@
 		"SublimeLinter",
 		"SublimeLinter-shellcheck",
 		"SublimeREPL",
+		"Theme - Centurion",
 		"Theme - Soda",
 		"Theme - Spacegray",
 		"TypeScript"

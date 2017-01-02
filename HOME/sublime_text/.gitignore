@@ -3,3 +3,5 @@ Package Control.*
 !Package Control.sublime-settings
 *.crt
 *.tmTheme
+#ignore all subdirectories
+*/*
