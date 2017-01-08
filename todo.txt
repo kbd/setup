@@ -48,3 +48,17 @@ https://github.com/donnemartin/dev-setup/blob/master/osx.sh
 * Maybe allow profiles somehow like "work" and "home" so you don't install Sonos at work?
 
 * switch selecta->heatseeker? (https://github.com/rschmitt/heatseeker)
+* see if you like fzf
+
+* switch to gnu coreutils so you don't depend on any of the Mac built-in BSD-flavor cmdline utils.
+
+* make symlinks/pointers clearer and get the files out of HOME.
+  - Make HOME a dumb symlink source. If somehow pointers/symlinks weren't taken into account, setup would symlink into HOME, which isn't correct. So, HOME is semantically overloaded, and is the wrong place for those types of things.
+  - There should be a separate 'pointers' directory (LINKS?)
+    - the destination should be configured with a .config.json file. That way, where it corresponds to is clear from looking at the directory instead of requiring looking at the global setup file. Also, .config.json should probably be *outside* of the directory that's a pointer so that you don't pollute the contents of a directory owned by another app with config from your app.
+    - the json should be a dictionary with at least {'destination': 'path'}
+  - Also see if you can unify symlink/pointer semantics?
+
+* get the *app* config (like command line options) out of settings.py.
+
+* be cool and switch to zsh
