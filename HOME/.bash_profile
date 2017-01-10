@@ -69,9 +69,6 @@ alias wintitle='printf "\e]2;%s\a"'
 alias getwintitle='printf "\e[21t"'
 alias gettabtitle='printf "\e[20t"'
 
-# ipython_func is in funcs.sh
-alias ipython="ipython_func '' --no-banner --no-confirm-exit"
-alias ipython3="ipython_func 3 --no-banner --no-confirm-exit"
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then

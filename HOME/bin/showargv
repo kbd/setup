@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+
+"""Show arguments provided in argv
+
+Some examples of why this is handy:
+
+Show how arguments are sent by the shell:
+$ var="hello world"
+$ ./showargv $var
+['./showargv', 'hello', 'world']
+$ ./showargv "$var"
+['./showargv', 'hello world']
+
+Show how subprocess.call sends arguments:
+$ python3
+...
+>>> import subprocess
+>>> subprocess.call(['./showargv', 'hello world'])
+['./showargv', 'hello world']
+0
+>>> subprocess.call(['./showargv', 'hello world'], shell=True)  # wrong
+['./showargv']
+0
+>>> subprocess.call('./showargv hello world', shell=True)
+['./showargv', 'hello', 'world']
+0
+
+Show how 'python' and 'ipython' process arguments differently:
+~$ python -i bin/showargv -i
+['bin/showargv', '-i']
+...
+~$ ipython -i bin/showargv -i
+['.../bin/showargv']
+...
+
+
+"""
+
+import sys
+
+print(sys.argv)
