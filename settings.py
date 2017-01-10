@@ -99,9 +99,13 @@
         'formulas': [
             'bash',
             'bash-completion',
+            'coreutils',
             'diff-so-fancy',
             'fasd',
+            'gawk',
             'git',
+            'gnu-sed',
+            'gnu-tar',
             'go',
             'jq',
             'meld',
