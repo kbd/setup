@@ -48,7 +48,9 @@ def get_installed_taps():
 
 def install_formula(formula):
     log.info(f"Installing formula: {formula}")
-    _execute(['brew', 'install', formula])
+    if isinstance(formula, str):
+        formula = [formula]
+    _execute(['brew', 'install', *formula])
 
 
 def install_cask(cask):
