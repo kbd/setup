@@ -126,7 +126,7 @@ _prompt_precmd() {
 
     # set tab title to the current directory
     # http://tldp.org/HOWTO/Xterm-Title-4.html
-    tabtitle '\w'
+    echo "\[$(tabtitle '\w')\]"
 }
 
 # source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
