@@ -148,6 +148,11 @@ _prompt_text() {
     echo '\[$COLOR_BOLD\]'
 }
 
+_prompt_precmd() {
+    # do nothing and allow this to be overridden in clients
+    echo ''
+}
+
 _prompt_prefix() {
     echo "${PROMPT_PREFIX-⚡ }"
 }
@@ -189,7 +194,7 @@ trap trap_debug DEBUG
 # PROMPT_COMMAND function
 generate_ps1() {
     _save_last_return_code
-    local funcs="prefix date user at host screen sep path repo jobs char text"
+    local funcs="precmd prefix date user at host screen sep path repo jobs char text"
 
     # filter parts of the prompt
     funcs=$(_prompt_filter "$funcs")
@@ -204,7 +209,7 @@ generate_ps1() {
     if [[ -z $1 ]]; then
         eval "PS1=$ps1"
     else
-        echo $ps1
+        echo "$ps1"
     fi
 }
 

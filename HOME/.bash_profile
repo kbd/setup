@@ -117,10 +117,17 @@ if [[ $USER != "$(logname)" ]]; then
     bind -f "$(my_home)/.inputrc"
 fi
 
-# append to history after each command. You can get other consoles' histories
-# with history -r, and a new console immediately has the history you were just
-# using, but each maintains its independence otherwise
-PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+# override prompt precmd (see prompt.sh)
+_prompt_precmd() {
+    # append to history after each command. You can get other consoles'
+    # histories with history -n, and a new console immediately has the history
+    # you were just using, but each maintains its independence otherwise
+    history -a
+
+    # set tab title to the current directory
+    # http://tldp.org/HOWTO/Xterm-Title-4.html
+    tabtitle '\w'
+}
 
 # source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
 # note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
