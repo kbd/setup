@@ -11,9 +11,9 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='auto'
 # ls colors I expect: exe=red, dir=blue, symlink=pink, pipe=yellow
 export LS_COLORS="ex=31:di=34:ln=35:pi=33"
-export HISTCONTROL='ignoredups'  # I'd prefer to ignore dups on autocomplete instead of eliminating
-                                 # them from history, but that seems not possible
+export HISTCONTROL='ignoredups'
 export HISTTIMEFORMAT="[%F %T %z] "
+export HISTSIZE=100000
 
 # configure prompt
 export PROMPT_SHORT_DISPLAY=1
@@ -116,6 +116,11 @@ _source "$HOME/bin/shell_sources"
 if [[ $USER != "$(logname)" ]]; then
     bind -f "$(my_home)/.inputrc"
 fi
+
+# append to history after each command. You can get other consoles' histories
+# with history -r, and a new console immediately has the history you were just
+# using, but each maintains its independence otherwise
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
 # note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
