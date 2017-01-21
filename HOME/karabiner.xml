@@ -21,6 +21,33 @@ Pointing
     DeviceProduct::RawValue::0x0015,
 
     DeviceLocation::RawValue::0xfd132100,
+
+
+A common problem is when I want to perform a mapped action on the window under
+my mouse cursor, but another window (say on another monitor) has the focus and
+I don't realize, so I wind up (eg.) closing the wrong app.
+
+So, for certain actions that are performed on a specific app, first activate
+the window under the mouse cursor without actually clicking it.
+
+From http://stackoverflow.com/a/35820182
+⌃⌥-click (control-option-click) - switches focus without raising window
+⌘-click (command-click) - clicks in window without switching focus
+
+In Karabiner, that looks like the following:
+PointingButton::LEFT, ModifierFlag::CONTROL_L | ModifierFlag::OPTION_L,
+
+So, this maps mouse button 12 to ⌃⌥-click, then ⌘h (in Dvorak...)
+
+  <autogen>
+    __KeyToKey__
+    KeyCode::KEYPAD_PLUS,
+    PointingButton::LEFT, ModifierFlag::CONTROL_L | ModifierFlag::OPTION_L,
+    KeyCode::J, ModifierFlag::COMMAND_L
+  </autogen>
+
+Only problem is, if it's the active window, ⌃⌥-click acts as a right-click!
+So, disabled for now, but maybe I'll figure out how to make this work someday.
 -->
 
   <devicevendordef>
@@ -41,7 +68,7 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_1,
-      KeyCode::F19 <!-- exposé -->
+      KeyCode::F19 <!-- mission control -->
     </autogen>
   </item>
 
@@ -77,7 +104,7 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_4,
-      KeyCode::TAB, ModifierFlag::COMMAND_L <!-- alt tab -->
+      KeyCode::TAB, ModifierFlag::COMMAND_L <!-- ⌘tab -->
     </autogen>
   </item>
 
@@ -89,7 +116,7 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_5,
-      KeyCode::MINUS, ModifierFlag::COMMAND_L, ModifierFlag::SHIFT_L <!-- minus is 'bracket_left' in dvorak. Prev tab -->
+      KeyCode::MINUS, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- ⌘⇧[ -->
     </autogen>
   </item>
 
@@ -101,7 +128,7 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_6,
-      KeyCode::EQUAL, ModifierFlag::COMMAND_L, ModifierFlag::SHIFT_L <!-- equal is 'bracket_right' in dvorak. Next tab -->
+      KeyCode::EQUAL, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- ⌘⇧] -->
     </autogen>
   </item>
 
@@ -113,7 +140,8 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_7,
-      KeyCode::COMMA, ModifierFlag::COMMAND_L <!-- comma is 'w' in dvorak --> <!-- cmd+w, close file/window/tab -->
+      <!-- PointingButton::LEFT, ModifierFlag::CONTROL_L | ModifierFlag::OPTION_L, -->
+      KeyCode::COMMA, ModifierFlag::COMMAND_L <!-- ⌘w -->
     </autogen>
   </item>
 
@@ -125,7 +153,7 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_8,
-      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L <!-- next application window -->
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L <!-- ⌘~ -->
     </autogen>
   </item>
 
@@ -137,7 +165,7 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_9,
-      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- prev application window -->
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- ⌘⇧~ -->
     </autogen>
   </item>
 
@@ -149,7 +177,8 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_0, <!-- 10 -->
-      KeyCode::X, ModifierFlag::COMMAND_L <!-- x is 'q' in dvorak --> <!-- cmd+q -->
+      <!-- PointingButton::LEFT, ModifierFlag::CONTROL_L | ModifierFlag::OPTION_L, -->
+      KeyCode::X, ModifierFlag::COMMAND_L <!-- ⌘q -->
     </autogen>
   </item>
 
@@ -161,7 +190,8 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_MINUS, <!-- 11 -->
-      KeyCode::COMMA, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- comma is 'w' in dvorak --> <!-- cmd+shift+w, close whole window -->
+      <!-- PointingButton::LEFT, ModifierFlag::CONTROL_L | ModifierFlag::OPTION_L, -->
+      KeyCode::COMMA, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L <!-- ⌘⇧w -->
     </autogen>
   </item>
 
@@ -173,7 +203,8 @@ Pointing
     <autogen>
       __KeyToKey__
       KeyCode::KEYPAD_PLUS, <!-- 12 -->
-      KeyCode::J, ModifierFlag::COMMAND_L <!-- j is 'h' in dvorak --> <!-- cmd+h, hide window -->
+      <!-- PointingButton::LEFT, ModifierFlag::CONTROL_L | ModifierFlag::OPTION_L, -->
+      KeyCode::J, ModifierFlag::COMMAND_L <!-- ⌘h -->
     </autogen>
   </item>
 
@@ -185,7 +216,7 @@ Pointing
     <autogen>
       __KeyToKey__
       PointingButton::BUTTON4,
-      KeyCode::MINUS, ModifierFlag::COMMAND_L <!-- minus is 'bracket_left' in dvorak -->
+      KeyCode::MINUS, ModifierFlag::COMMAND_L <!-- ⌘[ -->
     </autogen>
   </item>
 
@@ -197,7 +228,7 @@ Pointing
     <autogen>
       __KeyToKey__
       PointingButton::BUTTON5,
-      KeyCode::EQUAL, ModifierFlag::COMMAND_L <!-- equal is 'bracket_right' in dvorak -->
+      KeyCode::EQUAL, ModifierFlag::COMMAND_L <!-- ⌘] -->
     </autogen>
   </item>
 
