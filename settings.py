@@ -148,6 +148,7 @@
                 'pip',
                 'setuptools',
                 'ipython[notebook]',
+                'nose',
                 'pytest',
                 'pytest-catchlog',
                 'pipdeptree',
