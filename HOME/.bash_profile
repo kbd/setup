@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 export PLATFORM=$(uname)
 export PATH="$HOME/bin:$PATH"
-export EDITOR=vi
-export SVN_EDITOR=vi
-export GIT_EDITOR=vi
+export EDITOR=vim
+export SVN_EDITOR=vim
+export GIT_EDITOR=vim
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
