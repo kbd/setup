@@ -110,6 +110,7 @@
             'jq',
             'meld',
             'node',
+            'progress',
             'pypy',
             'python',
             'python3',
