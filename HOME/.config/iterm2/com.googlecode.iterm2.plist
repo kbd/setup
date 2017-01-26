@@ -492,17 +492,17 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>949 303 606 456 0 0 2048 1129 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>7 140 796 473 0 0 2048 1129 </string>
+	<string>583 411 770 381 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>29 130 781 930 0 0 2048 1129 </string>
+	<string>1128 330 872 650 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1211 575 585 377 0 0 2048 1129 </string>
+	<string>805 239 585 377 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>28 741 585 377 0 0 2048 1129 </string>
+	<string>184 670 585 377 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>12 537 585 377 0 0 2048 1129 </string>
+	<string>706 211 585 377 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>392 403 634 601 0 0 2048 1129 </string>
+	<string>933 665 585 377 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
 	<string>371 441 585 377 0 0 2048 1129 </string>
 	<key>New Bookmarks</key>
@@ -1908,11 +1908,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-12-29T04:51:36Z</date>
+	<date>2017-01-26T03:55:41Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>TabStyle</key>
 	<integer>0</integer>
 	<key>Window Arrangements</key>
