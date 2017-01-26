@@ -134,7 +134,7 @@ _prompt_precmd() {
 alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAND' && su"
 
 # COMPLETIONS
-_source /usr/local/etc/bash_completion.d
+_source /usr/local/etc/bash_completion
 complete -cf sudo  # allow autocompletions after sudo.
 
 # 3rd party software config
