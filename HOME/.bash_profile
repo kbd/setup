@@ -67,6 +67,35 @@ alias wintitle='printf "\e]2;%s\a"'
 alias getwintitle='printf "\e[21t"'
 alias gettabtitle='printf "\e[20t"'
 
+# FUNCTIONS
+# source a file or a directory of files
+_source() {
+    if [[ -d "$1" ]]; then
+        # if it's a directory, source everything in the directory
+        local file
+        for file in "$1"/*; do
+            source "$file" 2>/dev/null
+        done
+    elif [[ -f "$1" ]]; then
+        # else source the file if it exists
+        source "$1" 2>/dev/null
+    fi
+}
+
+su_hacks(){
+    # source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
+    # note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
+    alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAND' && su"
+
+    # bind my keyboard shortcuts even when su-d
+    if [[ $USER != "$(logname)" ]]; then
+        bind -f "$(my_home)/.inputrc"
+    fi
+}
+
+# COMPLETIONS
+_source /usr/local/etc/bash_completion
+complete -cf sudo  # allow autocompletions after sudo.
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
@@ -94,28 +123,12 @@ else
     alias lld="ll -d --indicator-style=none -- */"
 fi
 
-# FUNCTIONS
-# source a file or a directory of files
-_source() {
-    if [[ -d "$1" ]]; then
-        # if it's a directory, source everything in the directory
-        local file
-        for file in "$1"/*; do
-            source "$file" 2>/dev/null
-        done
-    elif [[ -f "$1" ]]; then
-        # else source the file if it exists
-        source "$1" 2>/dev/null
-    fi
-}
+# 3rd party software config
+eval "$(thefuck --alias)"
+eval "$(fasd --init auto)"
 
 # SOURCES
 _source "$HOME/bin/shell_sources"
-
-# bind my keyboard shortcuts even when su-d
-if [[ $USER != "$(logname)" ]]; then
-    bind -f "$(my_home)/.inputrc"
-fi
 
 # override prompt precmd (see prompt.sh)
 _prompt_precmd() {
@@ -129,20 +142,11 @@ _prompt_precmd() {
     echo "\[$(tabtitle '\w')\]"
 }
 
-# COMPLETIONS
-_source /usr/local/etc/bash_completion
-complete -cf sudo  # allow autocompletions after sudo.
-
-# 3rd party software config
-eval "$(thefuck --alias)"
-eval "$(fasd --init auto)"
-
-# register my command prompt (prompt.sh)
+# register command prompt (prompt.sh)
 register_prompt
 
-# source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
-# note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
-alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAND' && su"
+# must be run after prompt is registered
+su_hacks
 
 # machine-specific bash config
 _source .config/machine_specific/.bash_profile
