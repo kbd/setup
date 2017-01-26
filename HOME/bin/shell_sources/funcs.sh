@@ -30,7 +30,12 @@ cl() {
 dl() {
     local url="$(cb)"  # get from clipboard
     echo "${COLOR_BOLD}${COLOR_BLUE}Downloading: ${COLOR_YELLOW}$url${COLOR_RESET}"
-    youtube-dl "$@" "$url"
+
+    if [[ $url == magnet:* ]] || [[ $url == *.torrent ]]; then
+        aria2c "$@" "$url"
+    else
+        youtube-dl "$@" "$url"
+    fi
 }
 
 # get the homedir of another user. Be careful cause of eval.
