@@ -97,6 +97,7 @@
             "caskroom/versions",  # different versions, like iterm2-beta
         ],
         'formulas': [
+            'aria2',
             'bash',
             'bash-completion',
             'coreutils',
