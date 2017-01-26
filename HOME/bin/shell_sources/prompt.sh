@@ -220,10 +220,13 @@ prompt_command_is_readonly() {
     readonly -p | awk -F' |=' '{print $3}' | fgrep -qx 'PROMPT_COMMAND'
 }
 
-# work around the PROMPT_COMMAND being read-only. At least you'll get a basic prompt.
-if prompt_command_is_readonly; then
-    echo "PROMPT_COMMAND is readonly"
-    eval "PS1=$(generate_ps1 1)"
-else
-    PROMPT_COMMAND=generate_ps1
-fi
+register_prompt(){
+    # work around the PROMPT_COMMAND being read-only. At least you'll get a basic prompt.
+    if prompt_command_is_readonly; then
+        echo "PROMPT_COMMAND is readonly"
+        eval "PS1=$(generate_ps1 1)"
+    else
+        # prompt must run first or can't capture $?
+        PROMPT_COMMAND="generate_ps1;$PROMPT_COMMAND"
+    fi
+}

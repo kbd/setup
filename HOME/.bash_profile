@@ -129,10 +129,6 @@ _prompt_precmd() {
     echo "\[$(tabtitle '\w')\]"
 }
 
-# source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
-# note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
-alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAND' && su"
-
 # COMPLETIONS
 _source /usr/local/etc/bash_completion
 complete -cf sudo  # allow autocompletions after sudo.
@@ -140,6 +136,13 @@ complete -cf sudo  # allow autocompletions after sudo.
 # 3rd party software config
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
+
+# register my command prompt (prompt.sh)
+register_prompt
+
+# source my bash_profile even when su-ing, derived from http://superuser.com/a/636475
+# note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
+alias su="export PROMPT_COMMAND='source $(my_home)/.bash_profile; $PROMPT_COMMAND' && su"
 
 # machine-specific bash config
 _source .config/machine_specific/.bash_profile
