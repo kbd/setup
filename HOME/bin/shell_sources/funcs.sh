@@ -28,7 +28,13 @@ cl() {
 
 # download
 dl() {
-    local url="$(cb)"  # get from clipboard
+    if [[ -n "$1" ]] && [[ ! $1 == -* ]]; then
+        # an argument provided that doesn't start with dash
+        local url="$1"; shift
+    else
+        local url="$(cb)"  # get from clipboard
+    fi
+
     echo "${COLOR_BOLD}${COLOR_BLUE}Downloading: ${COLOR_YELLOW}$url${COLOR_RESET}"
 
     if [[ $url == magnet:* ]] || [[ $url == *.torrent ]]; then
