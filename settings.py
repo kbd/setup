@@ -111,6 +111,7 @@
             'jq',
             'node',
             'progress',
+            'pup',
             'pypy',
             'python',
             'python3',
