@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# dl = download
+if [[ -n "$1" ]] && [[ ! $1 == -* ]]; then
+    # an argument provided that doesn't start with dash
+    url="$1"; shift
+else
+    url="$(cb)"  # get from clipboard
+fi
+
+echo "${COLOR_BOLD}${COLOR_BLUE}Downloading: ${COLOR_YELLOW}$url${COLOR_RESET}"
+
+if [[ $url == magnet:* ]] || [[ $url == *.torrent ]]; then
+    aria2c "$@" "$url"
+else
+    youtube-dl "$@" "$url"
+fi

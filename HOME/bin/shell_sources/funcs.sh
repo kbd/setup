@@ -26,24 +26,6 @@ cl() {
     cd "$1" && ls "${@:2}"
 }
 
-# download
-dl() {
-    if [[ -n "$1" ]] && [[ ! $1 == -* ]]; then
-        # an argument provided that doesn't start with dash
-        local url="$1"; shift
-    else
-        local url="$(cb)"  # get from clipboard
-    fi
-
-    echo "${COLOR_BOLD}${COLOR_BLUE}Downloading: ${COLOR_YELLOW}$url${COLOR_RESET}"
-
-    if [[ $url == magnet:* ]] || [[ $url == *.torrent ]]; then
-        aria2c "$@" "$url"
-    else
-        youtube-dl "$@" "$url"
-    fi
-}
-
 # get the homedir of another user. Be careful cause of eval.
 # http://stackoverflow.com/a/20506895
 user_home() {
