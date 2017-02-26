@@ -14,6 +14,7 @@ export LS_COLORS="ex=31:di=34:ln=35:pi=33"
 export HISTCONTROL='ignoredups'
 export HISTTIMEFORMAT="[%F %T %z] "
 export HISTSIZE=100000
+export HISTIGNORE="[ \t]*"
 
 # configure prompt
 export PROMPT_SHORT_DISPLAY=1
