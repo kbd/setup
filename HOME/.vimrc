@@ -1,5 +1,5 @@
-filetype on
-syntax on
+filetype plugin on
+syntax enable
 
 set nu
 set autoindent
