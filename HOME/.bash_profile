@@ -22,8 +22,8 @@ export PROMPT_SHORT_DISPLAY=1
 # SHOPTS
 shopt -s histappend
 shopt -s dotglob
-shopt -s globstar 2>/dev/null  # not supported in bash 3
-shopt -s autocd 2>/dev/null  # not supported in bash 3
+shopt -s globstar
+shopt -s autocd
 
 # ALIASES
 alias   -- -="cd -"
@@ -72,13 +72,13 @@ alias gettabtitle='printf "\e[20t"'
 # source a file or a directory of files
 _source() {
     if [[ -d "$1" ]]; then
-        # if it's a directory, source everything in the directory
+        # if it's a directory, source everything in the directory, recursively
         local file
-        for file in "$1"/*; do
+        for file in "$1"/**/*.sh; do  # requires bash 4 and shopt -s globstar
             source "$file" 2>/dev/null
         done
     elif [[ -f "$1" ]]; then
-        # else source the file if it exists
+        # If it's a file, source it
         source "$1" 2>/dev/null
     fi
 }
