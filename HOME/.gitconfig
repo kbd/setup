@@ -32,6 +32,7 @@
 	dt = difftool
 	ds = diff --staged
 	dts = difftool --staged
+	dst = difftool --staged
 	st = status
 	co = checkout
 	cob = checkout -b
