@@ -93,8 +93,6 @@
     },
     'homebrew': {
         'taps': [
-            "neovim/neovim",
-            "caskroom/versions",  # different versions, like iterm2-beta
         ],
         'formulas': [
             'aria2',
