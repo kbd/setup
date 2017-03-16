@@ -115,6 +115,7 @@
             'pypy',
             'python',
             'python3',
+            'racket',
             'readline',
             'ripgrep',
             'ruby',
