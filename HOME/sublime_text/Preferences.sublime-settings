@@ -1,6 +1,7 @@
 {
 	"always_show_minimap_viewport": true,
 	"color_scheme": "Packages/User/SublimeLinter/base16-eighties.dark (Flake8Lint) (SL).tmTheme",
+	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Fantasque Sans Mono Regular",
 	"font_size": 13,
 	"ignored_packages":
@@ -14,6 +15,5 @@
 	],
 	"spacegray_fileicons": true,
 	"theme": "Spacegray Eighties.sublime-theme",
-	"trim_trailing_white_space_on_save": true,
-	"ensure_newline_at_eof_on_save": true,
+	"trim_trailing_white_space_on_save": true
 }
