@@ -6,6 +6,7 @@ import os
 import pwd
 import shutil
 import subprocess
+from itertools import chain
 
 log = logging.getLogger(__name__)
 
@@ -189,6 +190,39 @@ def fix_repository():
     # http://stackoverflow.com/questions/14113427/brew-update-failed
     log.info("Fixing Homebrew repository")
     _execute('cd `brew --prefix`; git reset --hard origin/master')
+
+
+def get_formula_uses(formula, installed=True):
+    """Get the formulas that depend on the specified formula."""
+    log.info(
+        f"Getting {'installed' if installed else 'all'} formulas that depend on formula: {formula}")
+    cmd = ['brew', 'uses']
+    if installed:
+        cmd += ['--installed']
+    cmd += [formula]
+    return _get_command_output(cmd)
+
+
+def get_formula_dependencies(formula):
+    """Get dependencies for the specified formula."""
+    log.info(f"Getting dependencies for formula: {formula}")
+    return _get_command_output(['brew', 'deps', formula])
+
+
+def get_installed_formulas_with_dependencies():
+    """Get a dictionary mapping formulas to their dependencies."""
+    return {
+        formula: get_formula_dependencies(formula)
+        for formula in get_installed_formulas()
+    }
+
+
+def get_leaf_formulas():
+    """Get the formulas that are not the dependencies of other formulas."""
+    formulas_with_deps = get_installed_formulas_with_dependencies()
+    all_deps = set(chain.from_iterable(deps for deps in formulas_with_deps.values()))
+    all_formulas = set(formulas_with_deps.keys())
+    return all_formulas - all_deps
 
 
 def _get_command_output(cmd):
