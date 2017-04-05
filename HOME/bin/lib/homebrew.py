@@ -231,7 +231,7 @@ def _get_command_output(cmd):
     # but I suppose to really do this correctly I should check that. However, pretty sure
     # all Homebrew package names should be ascii anyway so it's fine
     log.debug(f"Executing: {cmd!r}")
-    return subprocess.check_output(cmd).decode().split()
+    return subprocess.check_output(cmd).decode().splitlines()
 
 
 def _execute(cmd, shell=False):
