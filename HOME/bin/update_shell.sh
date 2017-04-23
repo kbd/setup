@@ -4,7 +4,7 @@ set -e
 shell=$1
 shellfile=${2-'/etc/shells'}
 
-if [[ -z $shell ]]; then
+if [[ -z "$shell" ]]; then
 	echo >&2 "missing shell argument"
 	exit 1
 fi

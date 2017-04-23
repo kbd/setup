@@ -39,7 +39,7 @@ _prompt_at() {
 
 # a function so that it can do more logic later if desired
 # such as showing the full host by default if you're not local
-_prompt_show_full_host() { [[ -n $PROMPT_FULL_HOST ]]; }
+_prompt_show_full_host() { [[ -n "$PROMPT_FULL_HOST" ]]; }
 
 _prompt_host() {
     local host
@@ -206,7 +206,7 @@ generate_ps1() {
     done
 
     # if provided no argument, set PS1 yourself, else echo it to be used elsewhere
-    if [[ -z $1 ]]; then
+    if [[ -z "$1" ]]; then
         eval "PS1=$ps1"
     else
         echo "$ps1"
