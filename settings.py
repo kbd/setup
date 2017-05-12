@@ -119,6 +119,7 @@
             'python3',
             'readline',
             'ripgrep',
+            'rlwrap',
             'ruby',
             'rust',
             'selecta',

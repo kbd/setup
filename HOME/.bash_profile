@@ -54,6 +54,8 @@ alias h=history
 alias v=vim
 alias vi=vim
 
+alias tcl="rlwrap tclsh"
+
 alias ercho='>&2 echo'  # echo to stderr
 
 # http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
