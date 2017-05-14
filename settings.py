@@ -150,7 +150,7 @@
     'packages': {
         **{f'python{version}': {
             'cmd': [f'pip{version}', 'install', '--upgrade', '{package}'],
-            'packages': [
+            'packages': list(filter(None, [
                 'pip',
                 'setuptools',
                 'ipython[notebook]',
@@ -162,11 +162,11 @@
                 'autopep8',  # after flake8 as autopep8 installs newer versions of dependencies
                 'pylint',
                 'requests',
-                'ftfy',
+                ('ftfy' if version == 3 else ''),  # current version of ftfy is Py3 only
                 'pudb',
                 'pandas',
                 'pygments',
-            ],
+            ])),
         } for version in ('', '3')},
         **{
         'node': {
