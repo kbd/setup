@@ -69,7 +69,7 @@ def install_tap(tap):
 
 def cleanup_formulas():
     log.info("Running cleanup: formulas")
-    _execute(['brew', 'cleanup'])
+    _execute(['brew', 'cleanup', '-s'])
 
 
 def cleanup_casks():
