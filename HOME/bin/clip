@@ -33,6 +33,8 @@ CLIPS = {
     'fire': '🔥',
     'fine': "🔥☕️🐶💬🔥",
     'keyboard': "⌘⌃⌥⇧↵→←↑↓",  # http://apple.stackexchange.com/questions/55727/where-can-i-find-the-unicode-symbols-for-mac-functional-keys-command-shift-e
+    'cry': '😭',
+    'summon': '༼ つ ◕_◕ ༽つ',
 }
 
 def print_clips(CLIPS):
