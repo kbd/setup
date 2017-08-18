@@ -26,7 +26,6 @@ This should be created as 'ipython' but symlinked to 'ipython2' and 'ipython3'
 """
 
 import os
-import shutil
 import subprocess
 import sys
 
