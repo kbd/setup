@@ -10,6 +10,7 @@
 
 	// dunno why there's no built-in shortcut for this
 	{ "keys": ["alt+w"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
+	{ "keys": ["shift+alt+w"], "command": "wrap_lines" },
 
 	{ "keys": ["super+shift+space"], "command": "expand_region" },
 	{ "keys": ["super+u"], "command": "expand_region",
