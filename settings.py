@@ -167,6 +167,8 @@
                 'pudb',
                 'pandas',
                 'pygments',
+                'flask',
+                'rethinkdb',
             ])),
         } for version in ('', '3')},
         **{
