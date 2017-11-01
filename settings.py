@@ -117,6 +117,7 @@
             'python',
             'python3',
             'readline',
+            'rethinkdb',
             'ripgrep',
             'rlwrap',
             'ruby',
