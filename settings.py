@@ -178,7 +178,7 @@
             # this gets a list of outdated packages:
             # npm outdated --parseable --depth=0 | cut -d: -f2 | cut -d@ -f1
             # could update outdated and install uninstalled but too much work here
-            'cmd': ['npm', 'install', '-g', '{package}'],
+            'cmd': ['npm', 'update', '-g', '{package}'],
             'packages': [
                 'coffee-script',
                 'typescript',
