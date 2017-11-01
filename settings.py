@@ -170,7 +170,7 @@
                 'flask',
                 'rethinkdb',
             ])),
-        } for version in ('', '3')},
+        } for version in (2, 3)},
         **{
         'node': {
             # this will reinstall packages that are already installed and up-to-date
