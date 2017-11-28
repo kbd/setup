@@ -157,7 +157,6 @@
                 'ipython[notebook]',
                 'nose',
                 'pytest',
-                'pytest-catchlog',
                 'pipdeptree',
                 'flake8',
                 'autopep8',  # after flake8 as autopep8 installs newer versions of dependencies
