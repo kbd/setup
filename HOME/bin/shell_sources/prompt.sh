@@ -142,11 +142,6 @@ _prompt_char() {
     echo "$prompt"'\[$COLOR_RESET\] '
 }
 
-_prompt_text() {
-    # control formatting of what you type. Formatting is reset in trap_debug.
-    echo '\[$COLOR_BOLD\]'
-}
-
 _prompt_precmd() {
     # do nothing and allow this to be overridden in clients
     echo ''
@@ -185,15 +180,10 @@ _save_last_return_code() {
     export _LAST_RETURN_CODE=$?  # save away last command result
 }
 
-trap_debug() {
-    printf "$COLOR_RESET"
-}
-trap trap_debug DEBUG
-
 # PROMPT_COMMAND function
 generate_ps1() {
     _save_last_return_code
-    local funcs="precmd prefix date user at host screen sep path repo jobs char text"
+    local funcs="precmd prefix date user at host screen sep path repo jobs char"
 
     # filter parts of the prompt
     funcs=$(_prompt_filter "$funcs")
