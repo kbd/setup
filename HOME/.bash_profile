@@ -54,6 +54,8 @@ alias h=history
 alias v=vim
 alias vi=vim
 
+alias py=ipython
+
 alias tcl="rlwrap tclsh"
 
 alias ercho='>&2 echo'  # echo to stderr
