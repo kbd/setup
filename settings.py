@@ -190,7 +190,13 @@
                 'coffeescript',
                 'typescript',
             ],
-        }
+        },
+        'ruby': {
+            'cmd': ['gem', 'install', '{package}'],
+            'packages': [
+                'tmuxinator',
+            ]
+        },
     },
     'addons': {
         'wow': {
