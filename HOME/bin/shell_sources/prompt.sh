@@ -164,8 +164,8 @@ _prompt_filter() {
             funcs=$(filter "$funcs" "at|host")
         fi
 
-        # if the user is your login user, showing it is unnecessary
-        if [[ ! $(is_su) && ! $(is_root) ]]; then
+        # if the user is your login user (except root), showing it is unnecessary
+        if [[ ! ($(is_su) || $(is_root)) ]]; then
             funcs=$(filter "$funcs" "user")
         fi
 
