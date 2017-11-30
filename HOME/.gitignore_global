@@ -3,3 +3,7 @@
 *.pyc
 *.cache
 __pycache__
+rethinkdb_data
+node_modules
+.meteor
+old
