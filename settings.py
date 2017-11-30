@@ -187,7 +187,7 @@
             # could update outdated and install uninstalled but too much work here
             'cmd': ['npm', 'update', '-g', '{package}'],
             'packages': [
-                'coffee-script',
+                'coffeescript',
                 'typescript',
             ],
         }
