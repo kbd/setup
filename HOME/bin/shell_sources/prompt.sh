@@ -60,10 +60,9 @@ _prompt_screen() {
             local name="$STY"
             local window="$WINDOW"
         fi
-        echo -n '[\[$COLOR_ULINE\]\[$COLOR_GREEN\]'"$screen"
-        echo -n '\[$COLOR_DEFAULT\]:\[$COLOR_BLUE\]'"$name"
-        echo -n '\[$COLOR_DEFAULT\]:\[$COLOR_PURPLE\]'"$window"
-        echo '\[$COLOR_RESET\]]'
+        echo -n '[\[$COLOR_GREEN\]'"$screen"'\[$COLOR_DEFAULT\]'
+        echo -n ':\[$COLOR_BLUE\]'"$name"'\[$COLOR_DEFAULT\]'
+        echo -n ':\[$COLOR_PURPLE\]'"$window"'\[$COLOR_RESET\]]'
     fi
 }
 
