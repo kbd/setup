@@ -154,9 +154,9 @@
         ],
     },
     'packages': {
-        **{f'python{version}': {
-            'cmd': [f'pip{version}', 'install', '--upgrade', '{package}'],
-            'packages': list(filter(None, [
+        'python': {
+            'cmd': ['pip3', 'install', '--upgrade', '{package}'],
+            'packages': [
                 'pip',
                 'setuptools',
                 'ipython[notebook]',
@@ -167,7 +167,7 @@
                 'autopep8',  # after flake8 as autopep8 installs newer versions of dependencies
                 'pylint',
                 'requests',
-                ('ftfy' if version == 3 else ''),  # current version of ftfy is Py3 only
+                'ftfy',
                 'pudb',
                 'pandas',
                 'pygments',
@@ -177,9 +177,8 @@
                 'rethinkdb',
                 'attrs',
                 'fire',
-            ])),
-        } for version in (2, 3)},
-        **{
+            ],
+        },
         'node': {
             # this will reinstall packages that are already installed and up-to-date
             # there's no easy way to do the equivalent of pip install --upgrade package
@@ -191,7 +190,7 @@
                 'coffee-script',
                 'typescript',
             ],
-        }}
+        }
     },
     'addons': {
         'wow': {
