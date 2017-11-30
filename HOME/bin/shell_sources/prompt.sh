@@ -76,7 +76,7 @@ _prompt_sep() {
 }
 
 _prompt_path() {
-    echo '\[$COLOR_PURPLE\]\w\[$COLOR_RESET\]'
+    echo '\[$COLOR_PURPLE\]\[$COLOR_BOLD\]\w\[$COLOR_RESET\]'
 }
 
 # source control information in prompt
