@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 export PLATFORM=$(uname)
 export PATH="$HOME/bin:$PATH"
+export PAGER=less
 export EDITOR=vim
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
