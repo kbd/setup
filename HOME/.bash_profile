@@ -34,6 +34,7 @@ alias   ....="cd ../../.."
 alias  .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
+alias ls="ls -h"
 alias l=ls
 alias la="ls -a"
 alias ll="ls -l"
@@ -51,6 +52,8 @@ alias fgrep="grep -F"
 alias g=grep
 
 alias h=history
+
+alias du="du -h"
 
 alias v=vim
 alias vi=vim
@@ -118,7 +121,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     alias ls="ls -FG"
     # escape ls to ignore -F so you don't get directories with // at the end
     alias lsd="\ls -dG */"
-    alias lld="\ls -ldG */"
+    alias lld="\ls -hldG */"
 else
     # gnu ls
     alias ls="ls -F --color"
