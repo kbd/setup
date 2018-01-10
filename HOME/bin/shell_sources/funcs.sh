@@ -55,3 +55,9 @@ is_su() {
 is_root() {
     [[ $EUID == 0 ]]
 }
+
+# "reload shell"
+rls() {
+    # make it easier to reload shell config
+    . ~/.bash_profile
+}
