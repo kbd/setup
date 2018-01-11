@@ -6,10 +6,10 @@ import unittest.mock as mock
 from os.path import join, expanduser
 from unittest.mock import call, patch
 
-import utils
+import _utils
 
-utils.add_bin_to_path()
-setup = utils.import_executable('setup')
+_utils.add_bin_to_path()
+setup = _utils.import_executable('setup')
 
 from lib import symlink
 

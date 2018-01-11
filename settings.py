@@ -29,10 +29,6 @@
             'cmd': ['push'],
             'help': 'Push repository to server'
         },
-        'fix_usrlocal': {
-            'func': 'ensure_correct_permissions',
-            'help': 'Ensure /usr/local is owned by the current user'
-        },
         'brew': {
             'func': 'brew',
             'args': [

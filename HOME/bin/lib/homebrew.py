@@ -1,12 +1,14 @@
 """A library for controlling Homebrew through Python."""
-
 import getpass
 import logging
 import os
 import pwd
+import re
 import shutil
 import subprocess
 from itertools import chain
+
+from .utils import run
 
 log = logging.getLogger(__name__)
 
@@ -20,7 +22,6 @@ def workflow(settings, fix_repo=False):
     if fix_repo:
         fix_repository()
 
-    ensure_correct_permissions()
     ensure_command_line_tools_installed()
 
     update()
@@ -28,6 +29,8 @@ def workflow(settings, fix_repo=False):
     update_taps(settings.get('taps', []))
     update_formulas(settings.get('formulas', []))
     update_casks(settings.get('casks', []))
+
+    prune()
 
     run_post_install(settings['post_install'])
 
@@ -51,7 +54,7 @@ def install_formula(formula):
     log.info(f"Installing formula: {formula}")
     if isinstance(formula, str):
         formula = [formula]
-    _execute(['brew', 'install', *formula])
+    run(['brew', 'install', *formula])
 
 
 def install_cask(cask):
@@ -59,33 +62,68 @@ def install_cask(cask):
     # https://github.com/caskroom/homebrew-cask/issues/4678
 
     log.info(f"Installing cask: {cask}")
-    _execute(['brew', 'cask', 'install', cask])
+    run(['brew', 'cask', 'install', cask])
 
 
 def install_tap(tap):
     log.info(f"Installing tap: {tap}")
-    _execute(['brew', 'tap', tap])
+    run(['brew', 'tap', tap])
 
 
 def cleanup_formulas():
     log.info("Running cleanup: formulas")
     # from 'brew cleanup --help':
     # If -s is passed, scrub the cache, removing downloads for even the latest
-    # versions of formulae. Note downloads for any installed formulae will still not be
-    # deleted. If you want to delete those too: rm -rf $(brew --cache)
-    _execute(['brew', 'cleanup', '-s'])
+    # versions of formulae. Note downloads for any installed formulae will still
+    # not be deleted. If you want to delete those too: rm -rf $(brew --cache)
+    run(['brew', 'cleanup', '-s'])
+
+    # I'm super uncomfortable with running rm -rf on the output of a command
+    # I don't control without interactively checking what $brew --cache outputs
+    #     would call: run('rm -rf "$(brew --cache)"')
+    # so at least verify basic things about the cache location, that it's
+    # under /Users/{username}/Library/Caches/Homebrew
     log.info("Deleting brew cache")
-    _execute('rm -rf "$(brew --cache)"')
+    pathspec = r'/Users/\w+/Library/Caches/Homebrew'
+    cachedir = brew_cache()
+    if not re.match(pathspec, cachedir):
+        raise Exception(f"Cache location {cachedir!r} doesn't match pattern '{pathspec}'")
+
+    space = get_space_used(cachedir)
+    log.info(f"Deleting cache at {cachedir!r}. Will free {space} space.")
+    delete_dir(cachedir)
+
+
+def brew_cache():
+    return run("echo -n $(brew --cache)", cap=True)
+
+
+def brew_prefix():
+    return run("echo -n $(brew --prefix)", cap=True)
+
+
+def get_space_used(dir):
+    # output looks like "3.6G   /directory" so just get the first column
+    return run(f'du -hd0 "{dir}"', cap=True).split()[0]
+
+
+def delete_dir(dir):
+    run(f"rm -rf '{dir}'")
 
 
 def cleanup_casks():
     log.info("Running cleanup: casks")
-    _execute(['brew', 'cask', 'cleanup'])
+    run(['brew', 'cask', 'cleanup'])
 
 
 def update():
     log.info("Updating Homebrew")
-    _execute(['brew', 'update'])
+    run(['brew', 'update'])
+
+
+def prune():
+    log.info("Running prune")
+    run(['brew', 'prune'])
 
 
 def upgrade():
@@ -94,7 +132,7 @@ def upgrade():
     # https://github.com/Homebrew/homebrew/issues/27048
     # so, catch any error here and make sure to inspect the output for problems
     try:
-        _execute(['brew', 'upgrade'])
+        run(['brew', 'upgrade'])
     except:
         pass
 
@@ -141,27 +179,12 @@ def ensure_command_line_tools_installed():
     """Ensure command line tools are installed."""
     log.info("Ensuring command line tools are installed")
     try:
-        _execute(['xcode-select', '--install'])
+        run(['xcode-select', '--install'])
     except subprocess.CalledProcessError as error:
         if error.returncode == 1:
             log.info("Command line tools already installed")
         else:
             raise
-
-
-def ensure_correct_permissions(*args, **kwargs):
-    """Ensure that the Homebrew formula installation directory has correct permissions."""
-    user = getpass.getuser()
-    uid = os.stat('/usr/local').st_uid
-    local_owner = pwd.getpwuid(uid).pw_name
-
-    log.debug(f"Currently logged in user is {user!r}, owner of /usr/local is {local_owner!r}")
-
-    if user != local_owner:
-        log.info("Fixing permissions on /usr/local before running Homebrew")
-        # stupid that there's a shutil.chown but no shutil.chown -R
-        cmd = ['sudo', 'chown', '-R', user, '/usr/local']
-        _execute(cmd)
 
 
 def is_installed():
@@ -189,13 +212,13 @@ def run_post_install(post_install):
 
     log.info("Running post-install operations")
     for cmd in post_install:
-        _execute(cmd)
+        run(cmd)
 
 
 def fix_repository():
     # http://stackoverflow.com/questions/14113427/brew-update-failed
     log.info("Fixing Homebrew repository")
-    _execute('cd `brew --prefix`; git reset --hard origin/master')
+    run('cd `brew --prefix`; git reset --hard origin/master')
 
 
 def get_formula_uses(formula, installed=True):
@@ -236,10 +259,6 @@ def _get_command_output(cmd):
     # bytes.decode defaults to utf-8, which *should* also be the default system encoding
     # but I suppose to really do this correctly I should check that. However, pretty sure
     # all Homebrew package names should be ascii anyway so it's fine
-    log.debug(f"Executing: {cmd!r}")
-    return subprocess.check_output(cmd).decode().splitlines()
+    return run(cmd, cap=True).splitlines()
 
 
-def _execute(cmd, shell=False):
-    log.debug(f"Executing: {cmd!r}")
-    subprocess.check_call(cmd, shell=isinstance(cmd, str))
