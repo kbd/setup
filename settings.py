@@ -101,6 +101,7 @@
             'diff-so-fancy',
             'entr',
             'fasd',
+            'fd',
             'fzf',
             'gawk',
             'git',

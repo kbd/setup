@@ -135,6 +135,9 @@ fi
 # 3rd party software config
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
+export FZF_DEFAULT_COMMAND='fd --type f --hidden'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+source ~/.fzf.bash
 
 # SOURCES
 _source "$HOME/bin/shell_sources"
