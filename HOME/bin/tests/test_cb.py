@@ -2,7 +2,12 @@
 
 """Test clipboard utility 'cb'.
 
-Run with nose or pytest -s (because 'cb' requires normal system fds).
+Important: Run with pytest -s because 'cb' requires normal system fds.
+
+Would be nice if you could disable capturing within code for the whole module,
+but it's not possible: https://github.com/pytest-dev/pytest/issues/1599
+
+I tried the 'capsys' context manager on each test but that didn't work (?)
 """
 
 import inspect
@@ -19,11 +24,11 @@ def set_clipboard(test_str):
 
 
 def get_clipboard():
-    return co(CB).decode()
+    return co([CB]).decode()
 
 
 def call(cmd):
-    args = {'shell': True, 'executable': 'bash'} if isinstance(cmd, str) else {}
+    args = {'shell': True, 'executable': '/bin/bash'} if isinstance(cmd, str) else {}
     return co(cmd, **args).decode()
 
 
@@ -37,7 +42,7 @@ def test_default():
     """
     test_str = 'foo'
     set_clipboard(test_str)
-    result = call(CB)
+    result = get_clipboard()
     assert result == test_str
 
 
