@@ -37,6 +37,9 @@ CLIPS = {
     'summon': '༼ つ ◕_◕ ༽つ',
     'silly': '😜',
     'popcorn': '🍿',
+    'rofl': '🤣',
+    'v': '✌️',
+    'peace': '☮️',
 }
 
 def print_clips(CLIPS):
