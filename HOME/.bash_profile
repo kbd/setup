@@ -131,15 +131,18 @@ else
     alias lld="ll -d --indicator-style=none -- */"
 fi
 
+# SOURCES
+_source "$HOME/bin/shell_sources"
+
+# register command prompt (prompt.sh)
+register_prompt
+
 # 3rd party software config
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 source ~/.fzf.bash
-
-# SOURCES
-_source "$HOME/bin/shell_sources"
 
 # override prompt precmd (see prompt.sh)
 _prompt_precmd() {
@@ -152,9 +155,6 @@ _prompt_precmd() {
     # http://tldp.org/HOWTO/Xterm-Title-4.html
     echo "\[$(tabtitle '\w')\]"
 }
-
-# register command prompt (prompt.sh)
-register_prompt
 
 # must be run after prompt is registered
 su_hacks

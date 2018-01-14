@@ -215,7 +215,6 @@ register_prompt(){
         echo "PROMPT_COMMAND is readonly"
         eval "PS1=$(generate_ps1 1)"
     else
-        # prompt must run first or can't capture $?
-        PROMPT_COMMAND="generate_ps1;$PROMPT_COMMAND"
+        PROMPT_COMMAND="generate_ps1"
     fi
 }
