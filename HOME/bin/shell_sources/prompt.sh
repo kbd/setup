@@ -165,7 +165,7 @@ _prompt_filter() {
         fi
 
         # if no user or host, remove sep too
-        if [[ ! $(echo "$funcs" | egrep -w "user|host") ]]; then
+        if ! echo "$funcs" | grep -Eqw "user|host"; then
             funcs=$(filter "$funcs" "sep")
         fi
     fi
@@ -206,7 +206,7 @@ generate_ps1() {
 # export PS1="\u@\h:\w$ "
 
 prompt_command_is_readonly() {
-    readonly -p | awk -F' |=' '{print $3}' | fgrep -qx 'PROMPT_COMMAND'
+    readonly -p | awk -F' |=' '{print $3}' | grep -Fqx 'PROMPT_COMMAND'
 }
 
 register_prompt(){

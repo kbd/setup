@@ -119,8 +119,8 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     # bsd ls
     alias ls="ls -FG"
     # escape ls to ignore -F so you don't get directories with // at the end
-    alias lsd="\ls -dG */"
-    alias lld="\ls -hldG */"
+    alias lsd="\\ls -dG */"
+    alias lld="\\ls -hldG */"
 else
     # gnu ls
     alias ls="ls -F --color"
@@ -153,7 +153,7 @@ _prompt_precmd() {
 
     # set tab title to the current directory
     # http://tldp.org/HOWTO/Xterm-Title-4.html
-    echo "\[$(tabtitle '\w')\]"
+    echo "\\[$(tabtitle '\w')\\]"
 }
 
 # must be run after prompt is registered

@@ -33,7 +33,7 @@ user_home() {
 }
 
 my_home() {
-    user_home $(logname)
+    user_home "$(logname)"
 }
 
 filter() {
@@ -41,7 +41,7 @@ filter() {
     # based on a filter expression (like "word" or "word1|word2").
     # This seems goofy but at least it's a simple one-liner.
     # note I *don't* want to quote $1, since this is meant to operate on "words"
-    echo $1 | tr ' ' '\n' | egrep -wv "$2" | tr '\n' ' '
+    echo "$1" | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
 }
 
 is_remote() {
