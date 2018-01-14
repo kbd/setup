@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # configuration variables exposed
 #
 # $PROMPT_FULL_HOST
@@ -20,9 +21,9 @@ _prompt_date() {
 
 _prompt_user() {
     local color='\[$COLOR_GREEN\]'
-    if [[ $(is_root) ]]; then
+    if is_root; then
         color='\[$COLOR_RED\]'
-    elif [[ $(is_su) ]]; then
+    elif is_su; then
         color='\[$COLOR_YELLOW\]\[$COLOR_BOLD\]'
     fi
     echo "$color"'\u\[$COLOR_RESET\]'
@@ -31,7 +32,7 @@ _prompt_user() {
 _prompt_at() {
     # show the @ in red if not local
     local at='@'
-    if [[ $(is_remote) ]]; then
+    if is_remote; then
         at='\[$COLOR_RED\]\[$COLOR_BOLD\]'$at'\[$COLOR_RESET\]'
     fi
     echo "$at"
@@ -133,7 +134,7 @@ _prompt_jobs() {
 
 _prompt_char() {
     # prompt char, with info about last return code
-    local pchar='\$'
+    local pchar='\\$'
     if [[ $_LAST_RETURN_CODE -eq 0 ]]; then
         local prompt='\[$COLOR_GREEN\]'"$pchar"
     else
@@ -176,13 +177,14 @@ _prompt_filter() {
     echo "$funcs"
 }
 
-_save_last_return_code() {
-    export _LAST_RETURN_CODE=$?  # save away last command result
+prompt_ensure_save_return_code() {
+    # run this after all PROMPT_COMMAND modifications have been run to ensure
+    # the previous retun code is recorded and can be displayed in the prompt
+    PROMPT_COMMAND='export _LAST_RETURN_CODE=$?;'"$PROMPT_COMMAND";
 }
 
 # PROMPT_COMMAND function
 generate_ps1() {
-    _save_last_return_code
     local funcs="precmd prefix date user at host screen sep path repo jobs char"
 
     # filter parts of the prompt
@@ -218,3 +220,15 @@ register_prompt(){
         PROMPT_COMMAND="generate_ps1"
     fi
 }
+
+# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
+alias title='printf "\e]0;%s\a"'
+alias tabtitle='printf "\e]1;%s\a"'
+alias wintitle='printf "\e]2;%s\a"'
+
+# http://invisible-island.net/xterm/xterm.faq.html
+# http://www.opensource.apple.com/source/X11apps/X11apps-30.1/xterm/xterm-251/ctlseqs.txt
+# http://stackoverflow.com/questions/4471278/how-to-capture-the-title-of-a-terminal-window-in-bash-using-ansi-escape-sequence
+# I think these only work on linux, can't test atm
+alias getwintitle='printf "\e[21t"'
+alias gettabtitle='printf "\e[20t"'
