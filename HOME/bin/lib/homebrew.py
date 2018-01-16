@@ -15,9 +15,7 @@ log = logging.getLogger(__name__)
 
 def workflow(settings, fix_repo=False):
     """Run an entire Homebrew update workflow."""
-    if not is_installed():
-        # todo: install homebrew if not installed
-        raise Exception("Homebrew must be installed")
+    ensure_homebrew_installed()
 
     if fix_repo:
         fix_repository()
@@ -33,6 +31,23 @@ def workflow(settings, fix_repo=False):
     prune()
 
     run_post_install(settings['post_install'])
+
+
+def ensure_homebrew_installed():
+    """Install Homebrew if it's not installed."""
+    if not is_installed():
+        install_homebrew()
+
+
+def is_installed():
+    """Return True if Homebrew is installed."""
+    return bool(shutil.which('brew'))
+
+
+def install_homebrew():
+    log.warning("Installing Homebrew")
+    # Incantation from https://brew.sh/
+    run('/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"')
 
 
 def get_installed_formulas():
@@ -83,7 +98,6 @@ def cleanup_formulas():
     #     would call: run('rm -rf "$(brew --cache)"')
     # so at least verify basic things about the cache location, that it's
     # under /Users/{username}/Library/Caches/Homebrew
-    log.info("Deleting brew cache")
     pathspec = r'/Users/\w+/Library/Caches/Homebrew'
     cachedir = brew_cache()
     if not re.match(pathspec, cachedir):
@@ -185,18 +199,6 @@ def ensure_command_line_tools_installed():
             log.info("Command line tools already installed")
         else:
             raise
-
-
-def is_installed():
-    """Return True if Homebrew command is installed."""
-    return bool(shutil.which('brew'))
-
-
-def install():
-    """Install Homebrew on a system that doesn't have it."""
-    # http://brew.sh/
-    # ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    pass
 
 
 def run_post_install(post_install):

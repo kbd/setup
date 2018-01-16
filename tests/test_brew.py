@@ -49,3 +49,15 @@ def test_cleanup_formulas_bad_cache_dir():
         ) as patches:
             homebrew.cleanup_formulas()
 
+
+def test_homebrew_not_installed():
+    cmd = '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+    with patch.multiple(homebrew, is_installed=lambda: False, run=DEFAULT) as patches:
+        homebrew.ensure_homebrew_installed()
+    patches['run'].assert_called_once_with(cmd)
+
+
+def test_ensure_homebrew_installed():
+    with patch.multiple(homebrew, is_installed=lambda: True, run=DEFAULT) as patches:
+        homebrew.ensure_homebrew_installed()
+    patches['run'].assert_not_called()
