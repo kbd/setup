@@ -153,14 +153,18 @@ def upgrade():
 
 def install_missing(type, expected):
     assert type in ('formula', 'cask', 'tap')
+
+    # retrieve the functions for the given type
     get_installed = globals()[f'get_installed_{type}s']
     install = globals()[f'install_{type}']
 
-    log.info(f"Expected {type}s are: {', '.join(sorted(expected))}")
+    # compare what's installed to what's expected
     installed = get_installed()
+    log.info(f"Expected {type}s are: {', '.join(sorted(expected))}")
     log.info(f"Currently installed {type}s are: {', '.join(installed)}")
-
     missing = sorted(set(expected) - set(installed))
+
+    # install anything missing
     if missing:
         log.info(f"Missing {type}s are: {', '.join(missing)}")
         for item in missing:
