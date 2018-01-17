@@ -135,6 +135,7 @@
             'wget',
             'xsv',
             'youtube-dl',
+            'zsh',
         ],
         'casks': [
             'atom',
