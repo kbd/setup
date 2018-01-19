@@ -38,7 +38,7 @@ _prompt_precmd() {
 
     # set tab title to the current directory
     # http://tldp.org/HOWTO/Xterm-Title-4.html
-    echo "\\[$(tabtitle '\w')\\]"
+    echo -n "\\[$(tabtitle '\w')\\]"
 }
 
 su_hacks(){

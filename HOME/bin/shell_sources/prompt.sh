@@ -16,26 +16,26 @@
 #   override to control what's displayed at the start of the prompt line
 
 _prompt_date() {
-    echo '\[$COLOR_GREY\]\D{%m/%d@%H:%M}\[$COLOR_RESET\]:'
+    echo -n "\\[$COLOR_GREY\\]\\D{%m/%d@%H:%M}\\[$COLOR_RESET\\]:"
 }
 
 _prompt_user() {
-    local color='\[$COLOR_GREEN\]'
+    local color="\\[$COLOR_GREEN\\]"
     if is_root; then
-        color='\[$COLOR_RED\]'
+        color="\\[$COLOR_RED\\]"
     elif is_su; then
-        color='\[$COLOR_YELLOW\]\[$COLOR_BOLD\]'
+        color="\\[$COLOR_YELLOW\\]\\[$COLOR_BOLD\\]"
     fi
-    echo "$color"'\u\[$COLOR_RESET\]'
+    echo -n "$color\\u\\[$COLOR_RESET\\]"
 }
 
 _prompt_at() {
     # show the @ in red if not local
     local at='@'
     if is_remote; then
-        at='\[$COLOR_RED\]\[$COLOR_BOLD\]'$at'\[$COLOR_RESET\]'
+        at="\\[$COLOR_RED\\]\\[$COLOR_BOLD\\]$at\\[$COLOR_RESET\\]"
     fi
-    echo "$at"
+    echo -n "$at"
 }
 
 # a function so that it can do more logic later if desired
@@ -45,7 +45,7 @@ _prompt_show_full_host() { [[ -n "$PROMPT_FULL_HOST" ]]; }
 _prompt_host() {
     local host
     _prompt_show_full_host && host='\H' || host='\h'
-    echo '\[$COLOR_BLUE\]'$host'\[$COLOR_RESET\]'
+    echo -n "\\[$COLOR_BLUE\\]$host\\[$COLOR_RESET\\]"
 }
 
 # screen/tmux status in prompt
@@ -61,9 +61,9 @@ _prompt_screen() {
             local name="$STY"
             local window="$WINDOW"
         fi
-        echo -n '[\[$COLOR_GREEN\]'"$screen"'\[$COLOR_DEFAULT\]'
-        echo -n ':\[$COLOR_BLUE\]'"$name"'\[$COLOR_DEFAULT\]'
-        echo -n ':\[$COLOR_PURPLE\]'"$window"'\[$COLOR_RESET\]]'
+        echo -n "[\\[$COLOR_GREEN\\]$screen\\[$COLOR_DEFAULT\\]"
+        echo -n ":\\[$COLOR_BLUE\\]$name\\[$COLOR_DEFAULT\\]"
+        echo -n ":\\[$COLOR_PURPLE\\]$window\\[$COLOR_RESET\\]]"
     fi
 }
 
@@ -71,13 +71,13 @@ _prompt_sep() {
     # separator - red if cwd unwritable
     local sep=':';
     if [[ ! -w "${PWD}" ]]; then
-        sep='\[$COLOR_RED\]\[$COLOR_BOLD\]'$sep'\[$COLOR_RESET\]'
+        sep="\\[$COLOR_RED\\]\\[$COLOR_BOLD\\]$sep\\[$COLOR_RESET\\]"
     fi
-    echo "$sep"
+    echo -n "$sep"
 }
 
 _prompt_path() {
-    echo '\[$COLOR_PURPLE\]\[$COLOR_BOLD\]\w\[$COLOR_RESET\]'
+    echo -n "\\[$COLOR_PURPLE\\]\\[$COLOR_BOLD\\]\\w\\[$COLOR_RESET\\]"
 }
 
 # source control information in prompt
@@ -104,9 +104,9 @@ _prompt_repo() {
     fi
     if [[ $vcs ]]; then
         if [[ $branch ]]; then
-            vcs='\[$COLOR_CYAN\]'"$vcs"'\[$COLOR_RESET\]:\[$COLOR_YELLOW\]'"$branch"'\[$COLOR_RESET\]'
+            vcs="\\[$COLOR_CYAN\\]$vcs\\[$COLOR_RESET\\]:\\[$COLOR_YELLOW\\]$branch\\[$COLOR_RESET\\]"
         fi
-        echo "[$vcs]"
+        echo -n "[$vcs]"
     fi
 }
 
@@ -117,18 +117,18 @@ _prompt_jobs() {
 
     local jobs=''
     if [[ $running -ne 0 ]]; then
-        jobs='\[$COLOR_GREEN\]'$running'&\[$COLOR_RESET\]'  # '&' for 'background'
+        jobs="\\[$COLOR_GREEN\\]$running&\\[$COLOR_RESET\\]"  # '&' for 'background'
     fi
 
     if [[ $stopped -ne 0 ]]; then
         if [[ $jobs ]]; then
             jobs="$jobs:"  # separate running and stopped job count with a colon
         fi
-        jobs="$jobs"'\[$COLOR_RED\]'$stopped'z\[$COLOR_RESET\]'  # 'z' for 'ctrl+z' to stop
+        jobs="$jobs\\[$COLOR_RED\\]${stopped}z\\[$COLOR_RESET\\]"  # 'z' for 'ctrl+z' to stop
     fi
 
     if [[ $jobs ]]; then
-        echo "[$jobs]"
+        echo -n "[$jobs]"
     fi
 }
 
@@ -136,27 +136,27 @@ _prompt_char() {
     # prompt char, with info about last return code
     local pchar='\\$'
     if [[ $_LAST_RETURN_CODE -eq 0 ]]; then
-        local prompt='\[$COLOR_GREEN\]'"$pchar"
+        local prompt="\\[$COLOR_GREEN\\]$pchar"
     else
-        local prompt='\[$COLOR_RED\]'"$pchar:$_LAST_RETURN_CODE"
+        local prompt="\\[$COLOR_RED\\]$pchar:$_LAST_RETURN_CODE"
     fi
-    echo "$prompt"'\[$COLOR_RESET\] '
+    echo -n "$prompt\\[$COLOR_RESET\\] "
 }
 
 _prompt_precmd() {
     # do nothing and allow this to be overridden in clients
-    echo ''
+    true
 }
 
 _prompt_prefix() {
-    echo "${PROMPT_PREFIX-⚡ }"
+    echo -n "${PROMPT_PREFIX-⚡ }"
 }
 
 _prompt_filter() {
     local funcs="$1"
     if [[ $PROMPT_SHORT_DISPLAY ]]; then
         # if host is localhost, showing the host is unnecessary
-        if [[ ! $(is_remote) ]]; then
+        if ! is_remote; then
             funcs=$(filter "$funcs" "at|host")
         fi
 
@@ -183,41 +183,24 @@ prompt_ensure_save_return_code() {
     PROMPT_COMMAND='export _LAST_RETURN_CODE=$?;'"$PROMPT_COMMAND";
 }
 
-# PROMPT_COMMAND function
 generate_ps1() {
     local funcs="precmd prefix date user at host screen sep path repo jobs char"
-
-    # filter parts of the prompt
-    funcs=$(_prompt_filter "$funcs")
-
-    # construct ps1
-    local ps1=''
-    for f in $funcs; do
-        ps1+="\$(_prompt_$f)"
+    for f in $(_prompt_filter "$funcs"); do
+        "_prompt_$f"
     done
-
-    # if provided no argument, set PS1 yourself, else echo it to be used elsewhere
-    if [[ -z "$1" ]]; then
-        eval "PS1=$ps1"
-    else
-        echo "$ps1"
-    fi
 }
-
-# basic prompt
-# export PS1="\u@\h:\w$ "
 
 prompt_command_is_readonly() {
     readonly -p | awk -F' |=' '{print $3}' | grep -Fqx 'PROMPT_COMMAND'
 }
 
 register_prompt(){
-    # work around the PROMPT_COMMAND being read-only. At least you'll get a basic prompt.
+    # work around the PROMPT_COMMAND being read-only and use basic prompt
     if prompt_command_is_readonly; then
-        echo "PROMPT_COMMAND is readonly"
-        eval "PS1=$(generate_ps1 1)"
+        ercho "PROMPT_COMMAND is readonly"
+        PS1='\u@\h:\w$ '
     else
-        PROMPT_COMMAND="generate_ps1"
+        PROMPT_COMMAND='PS1=$(generate_ps1)'
     fi
 }
 
