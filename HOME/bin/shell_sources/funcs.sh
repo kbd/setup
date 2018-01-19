@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 alias ercho='>&2 echo'  # echo to stderr
+alias current_shell='ps o command= $$ | sed "s/\\W//g"'
 
 # source a file or a directory of files, ignore if doesn't exist
 _source() {
@@ -76,5 +77,18 @@ is_root() {
 # "reload shell"
 rls() {
     # make it easier to reload shell config
-    . "$HOME/.bash_profile"
+    local s=$(current_shell)
+    case $s in
+        bash)
+            echo "Reloading bash config"
+            source "$HOME/.bash_profile"
+        ;;
+        zsh)
+            echo "Reloading zsh config"
+            source "$HOME/.zshenv"
+        ;;
+        *)
+            echo "Unknown shell '$s', can't reload config"
+        ;;
+    esac
 }
