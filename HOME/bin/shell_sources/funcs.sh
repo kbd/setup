@@ -62,6 +62,15 @@ filter() {
     echo $1 | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
 }
 
+join_by() {
+    # usage: join_by delim list of strings
+    # join_by - a b c de => a-b-c-de
+    local d=$1
+    local f=$2
+    shift 2
+    printf "%s" "$f${@/#/$d}";
+}
+
 is_remote() {
     [[ $SSH_TTY || $SSH_CLIENT ]]
 }
