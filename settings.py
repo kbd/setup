@@ -155,7 +155,7 @@
             'xquartz',
         ],
         'post_install': [
-            'update_shell.sh `brew --prefix`/bin/bash',  # set shell to homebrew'd bash
+            'update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd bash
         ],
     },
     'packages': {

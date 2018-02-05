@@ -16,24 +16,24 @@
 #   override to control what's displayed at the start of the prompt line
 
 _prompt_date() {
-    echo -n "\\[$COLOR_GREY\\]\\D{%m/%d@%H:%M}\\[$COLOR_RESET\\]:"
+    echo -n "$eo${COL[grey]}$dt$eo${COL[reset]}$ec:"
 }
 
 _prompt_user() {
-    local color="\\[$COLOR_GREEN\\]"
+    local color="$eo${COL[green]}$ec"
     if is_root; then
-        color="\\[$COLOR_RED\\]"
+        color="$eo${COL[red]}$ec"
     elif is_su; then
-        color="\\[$COLOR_YELLOW\\]\\[$COLOR_BOLD\\]"
+        color="$eo${COL[yellow]}$ec$eo${COL[bold]}$ec"
     fi
-    echo -n "$color\\u\\[$COLOR_RESET\\]"
+    echo -n "$color$user$eo${COL[reset]}$ec"
 }
 
 _prompt_at() {
     # show the @ in red if not local
     local at='@'
     if is_remote; then
-        at="\\[$COLOR_RED\\]\\[$COLOR_BOLD\\]$at\\[$COLOR_RESET\\]"
+        at="$eo${COL[red]}$ec$eo${COL[bold]}$ec$at$eo${COL[reset]}$ec"
     fi
     echo -n "$at"
 }
@@ -44,8 +44,8 @@ _prompt_show_full_host() { [[ -n "$PROMPT_FULL_HOST" ]]; }
 
 _prompt_host() {
     local host
-    _prompt_show_full_host && host='\H' || host='\h'
-    echo -n "\\[$COLOR_BLUE\\]$host\\[$COLOR_RESET\\]"
+    _prompt_show_full_host && host=$full_host || host=$short_host
+    echo -n "$eo${COL[blue]}$ec$host$eo${COL[reset]}$ec"
 }
 
 # screen/tmux status in prompt
@@ -61,9 +61,9 @@ _prompt_screen() {
             local name="$STY"
             local window="$WINDOW"
         fi
-        echo -n "[\\[$COLOR_GREEN\\]$screen\\[$COLOR_DEFAULT\\]"
-        echo -n ":\\[$COLOR_BLUE\\]$name\\[$COLOR_DEFAULT\\]"
-        echo -n ":\\[$COLOR_PURPLE\\]$window\\[$COLOR_RESET\\]]"
+        echo -n "[$eo${COL[green]}$ec$screen$eo${COL[default]}$ec"
+        echo -n ":$eo${COL[blue]}$ec$name$eo${COL[default]}$ec"
+        echo -n ":$eo${COL[purple]}$ec$window$eo${COL[reset]}$ec]"
     fi
 }
 
@@ -71,20 +71,31 @@ _prompt_sep() {
     # separator - red if cwd unwritable
     local sep=':';
     if [[ ! -w "${PWD}" ]]; then
-        sep="\\[$COLOR_RED\\]\\[$COLOR_BOLD\\]$sep\\[$COLOR_RESET\\]"
+        sep="$eo${COL[red]}$ec$eo${COL[bold]}$ec$sep$eo${COL[reset]}$ec"
     fi
     echo -n "$sep"
 }
 
 _prompt_path() {
-    echo -n "\\[$COLOR_PURPLE\\]\\[$COLOR_BOLD\\]\\w\\[$COLOR_RESET\\]"
+    echo -n "$eo${COL[purple]}$ec$eo${COL[bold]}$ec$ppath$eo${COL[reset]}$ec"
+}
+
+_prompt_setup_vcs_info() {
+    zstyle ':vcs_info:*' enable git svn hg
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' formats "[$eo$COL[cyan]$ec%s$eo$COL[reset]$ec:$eo$COL[yellow]$ec%b$eo$COL[reset]$ec %a%m%u%c]"
 }
 
 # source control information in prompt
 _prompt_repo() {
+    if [[ $(current_shell) == 'zsh' ]]; then
+        echo -n "${vcs_info_msg_0_}"
+        return 0
+    fi
+
     local vcs
     local branch
-    if [[ $(declare -F __git_ps1) ]]; then
+    if [[ $(typeset -F __git_ps1) ]]; then
         branch="$(__git_ps1 '%s')"
     fi
     if [[ $branch ]]; then
@@ -104,7 +115,7 @@ _prompt_repo() {
     fi
     if [[ $vcs ]]; then
         if [[ $branch ]]; then
-            vcs="\\[$COLOR_CYAN\\]$vcs\\[$COLOR_RESET\\]:\\[$COLOR_YELLOW\\]$branch\\[$COLOR_RESET\\]"
+            vcs="$eo${COL[cyan]}$ec$vcs$eo${COL[reset]}$ec:$eo${COL[yellow]}$ec$branch$eo${COL[reset]}$ec"
         fi
         echo -n "[$vcs]"
     fi
@@ -117,14 +128,14 @@ _prompt_jobs() {
 
     local jobs=''
     if [[ $running -ne 0 ]]; then
-        jobs="\\[$COLOR_GREEN\\]$running&\\[$COLOR_RESET\\]"  # '&' for 'background'
+        jobs="$eo${COL[green]}$ec$running&$eo${COL[reset]}$ec"  # '&' for 'background'
     fi
 
     if [[ $stopped -ne 0 ]]; then
         if [[ $jobs ]]; then
             jobs="$jobs:"  # separate running and stopped job count with a colon
         fi
-        jobs="$jobs\\[$COLOR_RED\\]${stopped}z\\[$COLOR_RESET\\]"  # 'z' for 'ctrl+z' to stop
+        jobs="$jobs$eo${COL[red]}$ec${stopped}z$eo${COL[reset]}$ec"  # 'z' for 'ctrl+z' to stop
     fi
 
     if [[ $jobs ]]; then
@@ -134,17 +145,18 @@ _prompt_jobs() {
 
 _prompt_char() {
     # prompt char, with info about last return code
-    local pchar='\\$'
+    # ercho "   Last return code is $_LAST_RETURN_CODE"
     if [[ $_LAST_RETURN_CODE -eq 0 ]]; then
-        local prompt="\\[$COLOR_GREEN\\]$pchar"
+        local prompt="$eo${COL[green]}$ec$pchar"
     else
-        local prompt="\\[$COLOR_RED\\]$pchar:$_LAST_RETURN_CODE"
+        local prompt="$eo${COL[red]}$ec$pchar:$_LAST_RETURN_CODE"
     fi
-    echo -n "$prompt\\[$COLOR_RESET\\] "
+    echo -n "$prompt$eo${COL[reset]}$ec "
 }
 
 _prompt_precmd() {
-    # do nothing and allow this to be overridden in clients
+    # do nothing and allow this to be overridden in clients.
+    # only useful in Bash, in Zsh use 'precmd'
     true
 }
 
@@ -177,10 +189,15 @@ _prompt_filter() {
     echo "$funcs"
 }
 
+prompt_save_return_code() {
+    _LAST_RETURN_CODE=$?
+}
+
 prompt_ensure_save_return_code() {
     # run this after all PROMPT_COMMAND modifications have been run to ensure
     # the previous retun code is recorded and can be displayed in the prompt
-    PROMPT_COMMAND='export _LAST_RETURN_CODE=$?;'"$PROMPT_COMMAND";
+    # only use in Bash. Run 'prompt_save_return_code' in precmd in Zsh.
+    PROMPT_COMMAND="prompt_save_return_code;$PROMPT_COMMAND";
 }
 
 generate_ps1() {
@@ -194,18 +211,63 @@ prompt_command_is_readonly() {
     readonly -p | awk -F' |=' '{print $3}' | grep -Fqx 'PROMPT_COMMAND'
 }
 
+prompt_initialize_vars() {
+    dt='D{%m/%d@%H:%M}'
+    _LAST_RETURN_CODE=0  # initialize
+    case $(current_shell) in  # current_shell defined in funcs.sh
+        bash)
+            eo='\['  # 'escape open'
+            ec='\]'  # 'escape close'
+            dt="\\$dt"
+            user='\u'
+            full_host='\H'
+            short_host='\h'
+            ppath='\w'
+            pchar='\$'
+        ;;
+        zsh)
+            eo="%{"
+            ec="%}"
+            dt="%$dt"
+            user='%n'
+            full_host='%M'
+            short_host='%m'
+            ppath='%~'
+            # pchar='%#'
+            # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Shell-state
+            pchar='%(!.#.$)'  # equivalent to bash's pchar
+        ;;
+    esac
+}
+
 register_prompt(){
+    prompt_initialize_vars
+
     # work around the PROMPT_COMMAND being read-only and use basic prompt
     if prompt_command_is_readonly; then
-        ercho "PROMPT_COMMAND is readonly"
-        PS1='\u@\h:\w$ '
+        ercho "Prompt command is readonly"
+        PS1="$user@$short_host:$ppath$ "
     else
-        PROMPT_COMMAND='PS1=$(generate_ps1)'
+        case $(current_shell) in
+            bash)
+                PROMPT_COMMAND='PS1=$(generate_ps1)'
+            ;;
+            zsh)
+                # configure vcs_info
+                autoload -Uz vcs_info
+                _prompt_setup_vcs_info
+
+                # shellcheck disable=SC2016 disable=SC2034
+                # 2016 = unexpanded in single quotes = intended bc prompt_subst
+                # 2034 = 'PROMPT unused'. Shellcheck doesn't support zsh.
+                PROMPT='$(generate_ps1)'
+            ;;
+        esac
     fi
 }
 
 # http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
-alias title='printf "\e]0;%s\a"'
+alias title='printf "\e]0;%s\a"'  # both window and tab
 alias tabtitle='printf "\e]1;%s\a"'
 alias wintitle='printf "\e]2;%s\a"'
 
