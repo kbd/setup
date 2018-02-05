@@ -40,6 +40,11 @@ CLIPS = {
     'rofl': '🤣',
     'v': '✌️',
     'peace': '☮️',
+    'facepalm': '🤦',
+    'pray': '🙏',
+    'flex': '💪',
+    'wave': '👋',
+    'surrender': '🏳️',
 }
 
 def print_clips(CLIPS):
