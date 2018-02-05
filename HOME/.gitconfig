@@ -46,3 +46,4 @@
 	pretty-log = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%ar) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
 	pl         = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%ar) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
+	most-edited = log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -10
