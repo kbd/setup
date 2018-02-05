@@ -53,7 +53,6 @@ alias tcl="rlwrap tclsh"
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
     export EDITOR='open -t'
-    alias subl='open -a "Sublime Text"'
     # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 

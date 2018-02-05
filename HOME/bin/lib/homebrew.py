@@ -32,6 +32,8 @@ def workflow(settings, fix_repo=False):
 
     run_post_install(settings['post_install'])
 
+    clean_cache()
+
 
 def ensure_homebrew_installed():
     """Install Homebrew if it's not installed."""
@@ -93,6 +95,8 @@ def cleanup_formulas():
     # not be deleted. If you want to delete those too: rm -rf $(brew --cache)
     run(['brew', 'cleanup', '-s'])
 
+
+def clean_cache():
     # I'm super uncomfortable with running rm -rf on the output of a command
     # I don't control without interactively checking what $brew --cache outputs
     #     would call: run('rm -rf "$(brew --cache)"')
@@ -140,8 +144,8 @@ def prune():
     run(['brew', 'prune'])
 
 
-def upgrade():
-    log.info("Running upgrade")
+def upgrade_formulas():
+    log.info("Running upgrade forumlas")
     # Homebrew can return an error code in cases that aren't errors:
     # https://github.com/Homebrew/homebrew/issues/27048
     # so, catch any error here and make sure to inspect the output for problems
@@ -149,6 +153,11 @@ def upgrade():
         run(['brew', 'upgrade'])
     except:
         pass
+
+
+def upgrade_casks():
+    log.info("Running upgrade casks")
+    run(['brew', 'cask', 'upgrade'])
 
 
 def install_missing(type, expected):
@@ -175,7 +184,7 @@ def install_missing(type, expected):
 
 def update_formulas(formulas):
     log.info("Updating formulas")
-    upgrade()
+    upgrade_formulas()
     install_missing('formula', formulas)
     cleanup_formulas()
 
@@ -185,6 +194,8 @@ def update_formulas(formulas):
 
 
 def update_casks(casks):
+    log.info("Updating casks")
+    upgrade_casks()
     install_missing('cask', casks)
     cleanup_casks()
 
