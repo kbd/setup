@@ -4,12 +4,12 @@ import subprocess
 log = logging.getLogger(__name__)
 
 
-def run(cmd, cap=False, input=None, exe='/bin/bash'):
+def run(cmd, check=True, cap=False, input=None, exe='/bin/bash'):
     log.debug(f"Executing: {cmd!r}")
     shell = isinstance(cmd, str)
     result = subprocess.run(
         cmd,
-        check=True,
+        check=check,
         shell=shell,
         stdout=subprocess.PIPE if cap else None,
         executable=exe if shell else None,
