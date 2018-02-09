@@ -83,7 +83,10 @@ _prompt_path() {
 _prompt_setup_vcs_info() {
     zstyle ':vcs_info:*' enable git svn hg
     zstyle ':vcs_info:*' check-for-changes true
-    zstyle ':vcs_info:*' formats "[$eo$COL[cyan]$ec%s$eo$COL[reset]$ec:$eo$COL[yellow]$ec%b$eo$COL[reset]$ec %a%m%u%c]"
+
+    local formatstr="[$eo$COL[cyan]$ec%s$eo$COL[reset]$ec:$eo$COL[yellow]$ec%b$eo$COL[reset]$ec %a%u%c]"
+    zstyle ':vcs_info:*' formats "$formatstr"
+    zstyle ':vcs_info:*' actionformats "$formatstr"
 }
 
 # source control information in prompt
