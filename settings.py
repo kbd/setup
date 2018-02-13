@@ -155,6 +155,7 @@
             'sublime-text',
             'vimr',
             'visual-studio-code',
+            'vlc',
             'xquartz',
         ],
         'post_install': [
