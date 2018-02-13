@@ -29,6 +29,8 @@ alias la="ls -a"
 alias ll="ls -l"
 alias lla="ls -la"
 
+alias wcl='wc -l'
+
 alias edit=\$EDITOR "$@"
 alias e=edit
 alias e.="e ."
