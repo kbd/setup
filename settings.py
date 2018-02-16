@@ -82,7 +82,7 @@
             filter(
                 # ignore comments, negations, and empty lines
                 lambda line: not line.startswith(('#', '!')) and line.strip(),
-                open('HOME/.gitignore_global').read().splitlines()
+                open('HOME/.config/git/ignore').read().splitlines()
             )
         ),
     },

@@ -6,8 +6,6 @@
 [include]
 	# allow machine-specific configuration (eg. work vs home)
 	path = ~/.config/machine_specific/.gitconfig
-[core]
-	excludesfile = ~/.gitignore_global
 
 # diff / merge config
 [diff]
@@ -44,6 +42,6 @@
 	unstage = reset HEAD --
 	undo-commit = reset HEAD~
 	pretty-log = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%ar) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
-	pl         = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%ar) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
+	pl         = !git pretty-log
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
-	most-edited = log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -10
+	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
