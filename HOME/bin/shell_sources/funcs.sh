@@ -22,6 +22,11 @@ _source() {
     fi
 }
 
+exists() {
+    # check if a program exists
+    type "$1" >/dev/null 2>/dev/null
+}
+
 printv() {  # v for verbatim
     printf '%q\n' "$1"
 }
