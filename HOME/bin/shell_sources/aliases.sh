@@ -30,27 +30,32 @@ alias ll='ls -l'
 alias lla='ls -la'
 
 alias wcl='wc -l'
+alias less='less -i'  # always do "smart"-case searches
+alias du='du -h'
+alias grep='grep --color=auto'
+alias g=grep
+alias h=history
 
 alias edit=\$EDITOR "$@"
 alias e=edit
 alias e.='e .'
-
 alias o=open
 alias o.='o .'
 
-alias grep='grep --color=auto'
-alias g=grep
-
-alias h=history
-
-alias du='du -h'
-
+alias pe=path-extractor
 alias v=vim
 alias vi=vim
-
 alias py=ipython
-
 alias tcl='rlwrap tclsh'
+
+alias ercho='>&2 echo'  # echo to stderr
+alias current_shell='ps o command= $$ | sed "s/\\W//g"'
+alias last_command='fc -nl -1'
+alias map='xargs -n1'  # note: doesn't work given values with spaces
+alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
+
+# GLOBAL ALIASES (Zsh)
+alias -g FZF='$(!! | fzf)'
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then

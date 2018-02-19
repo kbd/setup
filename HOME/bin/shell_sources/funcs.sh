@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
-alias ercho='>&2 echo'  # echo to stderr
-alias current_shell='ps o command= $$ | sed "s/\\W//g"'
-# echo_last_command removes itself from the history so it's idempotent
-alias echo_last_command='echo "$(fc -nl -1)"'
-alias map='xargs -n1'  # note: doesn't work given values with spaces
-
-# because bash's history is abominable
-alias history_unique="history | sed 's/.*\\] //' | sort | uniq"
-
 # source a file or a directory of files, ignore if doesn't exist
 _source() {
     if [[ -d "$1" ]]; then
