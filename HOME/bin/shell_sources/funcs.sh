@@ -98,7 +98,7 @@ rls() {
         ;;
         zsh)
             echo "Reloading zsh config"
-            source "$HOME/.zshenv"
+            source "$HOME/.zshrc"  # not perfect, doesn't get all files
         ;;
         *)
             echo "Unknown shell '$s', can't reload config"

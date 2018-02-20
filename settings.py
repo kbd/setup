@@ -136,6 +136,7 @@
             'xsv',
             'youtube-dl',
             'zsh',
+            'zsh-autosuggestions',
         ],
         'casks': [
             'atom',
@@ -160,6 +161,7 @@
         ],
         'post_install': [
             'update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
+            'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh HOME/bin/shell_sources',
         ],
     },
     'packages': {

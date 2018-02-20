@@ -12,8 +12,6 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='auto'
-# ls colors I expect: exe=red, dir=blue, symlink=pink, pipe=yellow
-export LS_COLORS='ex=31:di=34:ln=35:pi=33'
 
 # ALIASES
 alias   -- -='cd -'
