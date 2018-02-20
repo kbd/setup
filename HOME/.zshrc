@@ -83,9 +83,9 @@ bindkey "\e[B" down-line-or-beginning-search
 # bindkey "\e[F": end-of-line
 
 # history search menu
-# autoload -Uz history-beginning-search-menu
-# zle -N history-beginning-search-menu
-# bindkey '\e[Z' history-beginning-search-menu
+autoload -Uz history-beginning-search-menu
+zle -N history-beginning-search-menu
+bindkey "^_" history-beginning-search-menu  # ctrl+/
 
 # 1st party software config
 export PROMPT_SHORT_DISPLAY=1
