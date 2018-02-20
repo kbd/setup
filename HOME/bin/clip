@@ -45,6 +45,8 @@ CLIPS = {
     'flex': '💪',
     'wave': '👋',
     'surrender': '🏳️',
+    'finger': '☝️',
+    'fu': '🖕',
 }
 
 def print_clips(CLIPS):
