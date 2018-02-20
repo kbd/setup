@@ -103,16 +103,21 @@ def clean_cache():
     # so at least verify basic things about the cache location, that it's
     # under /Users/{username}/Library/Caches/Homebrew
     pathspec = r'/Users/\w+/Library/Caches/Homebrew'
-    cachedir = brew_cache()
+    cachedir = brew_cachedir()
     if not re.match(pathspec, cachedir):
         raise Exception(f"Cache location {cachedir!r} doesn't match pattern '{pathspec}'")
 
     space = get_space_used(cachedir)
     log.info(f"Deleting cache at {cachedir!r}. Will free {space} space.")
     delete_dir(cachedir)
+    log.info("Deleted cache")
+
+    path = os.path.join(cachedir, 'Cask')
+    log.info(f"Recreating empty cache dir: {path}")
+    os.makedirs(path)
 
 
-def brew_cache():
+def brew_cachedir():
     return run("echo -n $(brew --cache)", cap=True)
 
 
