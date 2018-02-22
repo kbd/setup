@@ -6,7 +6,6 @@
 	"font_size": 13,
 	"ignored_packages":
 	[
-		"Python Flake8 Lint",
 		"Vintage"
 	],
 	"rulers":

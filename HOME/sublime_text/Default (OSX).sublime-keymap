@@ -17,5 +17,7 @@
 	  "args": {"undo": true}, "context": [{ "key": "expand_region_soft_undo" }]
 	},
 
-	{ "keys": ["super+shift+r"], "command": "reindent" , "args": { "single_line": false } }
+	{ "keys": ["super+shift+r"], "command": "reindent" , "args": { "single_line": false } },
+
+	{ "keys": ["f3"], "command": "goto_definition" },
 ]

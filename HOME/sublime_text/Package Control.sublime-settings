@@ -6,14 +6,10 @@
 	"installed_packages":
 	[
 		"Better CoffeeScript",
-		"Color Highlighter",
-		"Elm Language Support",
 		"ExpandRegion",
 		"Fix Mac Path",
 		"GitGutter",
 		"Package Control",
-		"Python Flake8 Lint",
-		"Python PEP8 Autoformat",
 		"SublimeCodeIntel",
 		"SublimeLinter",
 		"SublimeLinter-shellcheck",
@@ -21,6 +17,7 @@
 		"Theme - Centurion",
 		"Theme - Soda",
 		"Theme - Spacegray",
+		"TOML",
 		"TypeScript"
 	]
 }
