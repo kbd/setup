@@ -160,7 +160,7 @@
             'xquartz',
         ],
         'post_install': [
-            'update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
+            'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
             'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh HOME/bin/shell_sources',
         ],
     },
@@ -171,7 +171,6 @@
                 'pip',
                 'setuptools',
                 'ipython[notebook]',
-                'nose',
                 'pytest',
                 'pipdeptree',
                 'flake8',

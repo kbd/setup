@@ -152,4 +152,9 @@ def create(symlink_settings, source_dir, dest_dir):
         if is_a_partial_directory(partials, dest_path):
             handle_partials(symlink_settings, repo_path, dest_path)
         else:
+            # make sure the parent directory exists for the symlink
+            dest_parent_dir = os.path.dirname(dest_path)
+            log.debug(f"Ensuring parent directory {dest_parent_dir!r} of dest_path {dest_path!r} exists")
+            if not os.path.exists(dest_parent_dir):
+                os.makedirs(dest_parent_dir)
             create_symlink(repo_path, dest_path)
