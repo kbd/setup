@@ -4,6 +4,7 @@
 *.pyc
 *.cache
 __pycache__
+.pytest_cache/
 rethinkdb_data
 node_modules
 .meteor
