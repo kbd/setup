@@ -37,8 +37,11 @@ def workflow(settings, fix_repo=False):
 
 def ensure_homebrew_installed():
     """Install Homebrew if it's not installed."""
+    log.info("Ensuring Homebrew is installed")
     if not is_installed():
         install_homebrew()
+    else:
+        log.info("Homebrew is installed")
 
 
 def is_installed():
