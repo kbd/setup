@@ -8,6 +8,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AppleWindowTabbingMode</key>
+	<string>manual</string>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>AdventureTime</key>
@@ -440,11 +442,13 @@
 	<key>HotKeyTogglesWindow</key>
 	<true/>
 	<key>Hotkey</key>
-	<true/>
+	<false/>
 	<key>HotkeyChar</key>
-	<integer>32</integer>
+	<integer>0</integer>
 	<key>HotkeyCode</key>
-	<integer>49</integer>
+	<integer>0</integer>
+	<key>HotkeyMigratedFromSingleToMulti</key>
+	<true/>
 	<key>HotkeyModifiers</key>
 	<integer>524288</integer>
 	<key>LoadPrefsFromCustomFolder</key>
@@ -452,8 +456,10 @@
 	<key>NSFontPanelSizeSliderParams</key>
 	<string>2 0 100</string>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/setup/HOME/.config/iterm2</string>
+	<string>~/Documents</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
+	<string>{712, 448}</string>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
 	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
@@ -463,23 +469,29 @@
 	<false/>
 	<key>NSScrollViewShouldScrollUnderTitlebar</key>
 	<false/>
-	<key>NSTableView Columns KeyBingingTable</key>
-	<array>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErATCG
-		</data>
-		<string>198</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErATGG
-		</data>
-		<string>307</string>
-	</array>
-	<key>NSTableView Hidden Columns KeyBingingTable</key>
-	<array/>
-	<key>NSTableView Sort Ordering KeyBingingTable</key>
-	<array/>
+	<key>NSTableView Columns v2 KeyBingingTable</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGNjdYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
+	AAGGoK4HCA8aGxwdHh8gJjAxMlUkbnVsbNIJCgsOWk5TLm9iamVjdHNWJGNsYXNzogwN
+	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
+	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
+	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
+	DIAIgAlRMSNAc7AAAAAAANIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
+	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
+	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
+	AAAAADoAAAAAAAAAAAAAAAAAAAFM
+	</data>
+	<key>NSTableView Sort Ordering v2 KeyBingingTable</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGFBVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
+	AAGGoKMHCA1VJG51bGzSCQoLDFpOUy5vYmplY3RzViRjbGFzc6CAAtIODxARWiRjbGFz
+	c25hbWVYJGNsYXNzZXNeTlNNdXRhYmxlQXJyYXmjEBITV05TQXJyYXlYTlNPYmplY3Rf
+	EA9OU0tleWVkQXJjaGl2ZXLRFhdVQXJyYXmAAQgRGiMtMjc7QUZRWFlbYGt0g4ePmKqt
+	swAAAAAAAAEBAAAAAAAAABgAAAAAAAAAAAAAAAAAAAC1
+	</data>
+	<key>NSTableView Supports v2 KeyBingingTable</key>
+	<true/>
 	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
 	<dict>
 		<key>TB Is Shown</key>
@@ -489,28 +501,42 @@
 	<string>701 212 622 258 0 0 2048 1129 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>959 663 606 456 0 0 2048 1129 </string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>1296 737 400 129 0 0 2048 1129 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>674 394 700 622 0 0 2048 1129 </string>
+	<string>674 396 700 622 0 0 2048 1129 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
-	<string>949 303 606 456 0 0 2048 1129 </string>
+	<string>865 270 606 469 0 0 1920 1057 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>820 416 918 495 0 0 2048 1129 </string>
+	<string>586 272 796 473 0 0 1920 1057 </string>
 	<key>NSWindow Frame com.apple.typography_panel_FantasqueSansMono-Regular</key>
 	<string>629 680 260 68 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>191 83 1215 916 0 0 2048 1129 </string>
+	<string>49 158 823 629 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>226 659 585 377 0 0 2048 1129 </string>
+	<string>147 239 781 629 0 0 1920 1057 </string>
+	<key>NSWindow Frame iTerm Window 10</key>
+	<string>623 198 585 377 0 0 2048 1129 </string>
+	<key>NSWindow Frame iTerm Window 11</key>
+	<string>644 175 585 377 0 0 2048 1129 </string>
+	<key>NSWindow Frame iTerm Window 12</key>
+	<string>665 152 585 377 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>1309 542 739 517 0 0 2048 1129 </string>
+	<string>142 120 935 587 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>706 211 585 377 0 0 2048 1129 </string>
+	<string>207 280 655 470 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>933 665 585 377 0 0 2048 1129 </string>
+	<string>795 649 1012 377 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>371 441 585 377 0 0 2048 1129 </string>
+	<string>397 592 585 377 0 0 2048 1129 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>894 437 585 377 0 0 2048 1129 </string>
+	<string>641 394 585 377 0 0 1920 1057 </string>
+	<key>NSWindow Frame iTerm Window 7</key>
+	<string>32 80 585 377 0 0 1920 1057 </string>
+	<key>NSWindow Frame iTerm Window 8</key>
+	<string>530 221 585 377 0 0 1920 1057 </string>
+	<key>NSWindow Frame iTerm Window 9</key>
+	<string>577 668 585 377 0 0 2048 1129 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1098,21 +1124,29 @@
 			<integer>1000</integer>
 			<key>Selected Text Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.70916998386383057</real>
+				<real>0.15686532855033875</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.70916998386383057</real>
+				<real>0.0</real>
 				<key>Red Component</key>
-				<real>0.70916998386383057</real>
+				<real>0.98590713739395142</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.31055498123168945</real>
+				<real>0.047359578311443329</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.20615114271640778</real>
+				<real>0.72274672985076904</real>
 				<key>Red Component</key>
-				<real>0.09597768634557724</real>
+				<real>0.19269794225692749</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
@@ -1403,8 +1437,28 @@
 			</dict>
 			<key>Guid</key>
 			<string>CF119B46-8870-4B4E-B9F3-484ABDCFB725</string>
+			<key>Has Hotkey</key>
+			<true/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
+			<key>HotKey Characters</key>
+			<string> </string>
+			<key>HotKey Characters Ignoring Modifiers</key>
+			<string> </string>
+			<key>HotKey Key Code</key>
+			<integer>49</integer>
+			<key>HotKey Modifier Flags</key>
+			<integer>524288</integer>
+			<key>HotKey Window Animates</key>
+			<true/>
+			<key>HotKey Window AutoHides</key>
+			<true/>
+			<key>HotKey Window Dock Click Action</key>
+			<integer>0</integer>
+			<key>HotKey Window Floats</key>
+			<false/>
+			<key>HotKey Window Reopens On Activation</key>
+			<false/>
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Jobs to Ignore</key>
@@ -1729,7 +1783,7 @@
 			<key>Rows</key>
 			<integer>25</integer>
 			<key>Screen</key>
-			<integer>-1</integer>
+			<integer>0</integer>
 			<key>Scrollback Lines</key>
 			<integer>1000</integer>
 			<key>Selected Text Color</key>
@@ -1864,6 +1918,8 @@
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
 	<false/>
+	<key>OptionIsMetaForSpecialChars</key>
+	<true/>
 	<key>PasteTabToStringTabStopSize</key>
 	<integer>4</integer>
 	<key>PointerActions</key>
@@ -1900,7 +1956,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/keith/setup/HOME/.config/iterm2</string>
+	<string>~/.config/iterm2</string>
 	<key>PromptForPasteWhenNotAtPrompt</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -1914,23 +1970,23 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-03-29T06:19:43Z</date>
+	<date>2018-02-22T16:14:29Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
-	<key>SUSkippedVersion</key>
-	<string>3.0.15</string>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>TabStyle</key>
 	<integer>0</integer>
 	<key>Window Arrangements</key>
 	<dict/>
 	<key>findIgnoreCase_iTerm</key>
 	<true/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.15</string>
+	<string>3.1.5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
