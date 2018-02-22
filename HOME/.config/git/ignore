@@ -3,9 +3,10 @@
 .git
 *.pyc
 *.cache
-__pycache__
+__pycache__/
 .pytest_cache/
-rethinkdb_data
-node_modules
-.meteor
-old
+rethinkdb_data/
+node_modules/
+.meteor/
+old/
+vendor/
