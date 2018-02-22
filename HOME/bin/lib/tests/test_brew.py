@@ -2,10 +2,6 @@ from unittest.mock import patch, DEFAULT
 
 import pytest
 
-import _utils
-
-_utils.add_bin_to_path()
-
 from lib import homebrew
 
 

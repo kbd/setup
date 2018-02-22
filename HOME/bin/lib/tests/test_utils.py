@@ -1,10 +1,6 @@
 import subprocess
 from unittest.mock import patch
 
-import _utils
-
-_utils.add_bin_to_path()
-
 from lib import utils
 
 

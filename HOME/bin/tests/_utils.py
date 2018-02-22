@@ -8,7 +8,7 @@ from os.path import abspath, join, dirname
 
 def get_bin_path():
     """Get the path to the HOME/bin directory."""
-    return abspath(join(dirname(__file__), '../HOME/bin'))
+    return abspath(join(dirname(__file__), '..'))
 
 
 def add_bin_to_path():
