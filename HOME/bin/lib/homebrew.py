@@ -96,6 +96,11 @@ def cleanup_formulas():
     run(['brew', 'cleanup', '-s'])
 
 
+def makedirs(path):
+    """This exists purely because it's easier to mock"""
+    os.makedirs(path)
+
+
 def clean_cache():
     # I'm super uncomfortable with running rm -rf on the output of a command
     # I don't control without interactively checking what $brew --cache outputs
@@ -114,7 +119,7 @@ def clean_cache():
 
     path = os.path.join(cachedir, 'Cask')
     log.info(f"Recreating empty cache dir: {path}")
-    os.makedirs(path)
+    makedirs(path)
 
 
 def brew_cachedir():

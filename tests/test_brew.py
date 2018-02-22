@@ -29,25 +29,26 @@ def test_install_formula_with_arguments():
     )
 
 
-def test_cleanup_formulas():
+def test_clean_cache():
     fake_cache_location = '/Users/test_user/Library/Caches/Homebrew'
     with patch.multiple('lib.homebrew',
-        get_space_used=DEFAULT, run=DEFAULT, delete_dir=DEFAULT, brew_cache=lambda: fake_cache_location
+        get_space_used=DEFAULT, makedirs=DEFAULT, delete_dir=DEFAULT, brew_cachedir=lambda: fake_cache_location
     ) as patches:
-        homebrew.cleanup_formulas()
+        homebrew.clean_cache()
 
     patches['get_space_used'].assert_called_with(fake_cache_location)
     patches['delete_dir'].assert_called_with(fake_cache_location)
+    patches['makedirs'].assert_called_with(fake_cache_location+'/Cask')
 
 
-def test_cleanup_formulas_bad_cache_dir():
+def test_clean_cache_bad_cache_dir():
     fake_cache_location = '/Users/test_user/Library/'
 
     with pytest.raises(Exception, match="doesn't match pattern"):
         with patch.multiple('lib.homebrew',
-            run=DEFAULT, brew_cache=lambda: fake_cache_location
+            get_space_used=DEFAULT, makedirs=DEFAULT, delete_dir=DEFAULT, brew_cachedir=lambda: fake_cache_location
         ) as patches:
-            homebrew.cleanup_formulas()
+            homebrew.clean_cache()
 
 
 def test_homebrew_not_installed():
