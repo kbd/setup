@@ -173,6 +173,7 @@
         'python': {
             'cmd': ['pip3', 'install', '--upgrade', '{package}'],
             'packages': [
+                'ansible',
                 'attrs',
                 'fire',
                 'flask',
