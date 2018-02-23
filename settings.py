@@ -91,6 +91,7 @@
         ],
         'formulas': [
             'aria2',
+            'awscli',
             'bash',
             'bash-completion',
             'coreutils',
@@ -175,6 +176,7 @@
             'packages': [
                 'ansible',
                 'attrs',
+                'boto3',
                 'fire',
                 'flask',
                 'flask-restful',
