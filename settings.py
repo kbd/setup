@@ -140,6 +140,7 @@
         ],
         'casks': [
             'atom',
+            'battle-net',
             'caffeine',
             'epichrome',
             'firefox',
