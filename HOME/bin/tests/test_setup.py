@@ -136,7 +136,7 @@ class TestCreateSymlinks(object):
     def test_get_backup_path(self, os):
         "Test that get_backup_path correctly generates backup paths"
         original_path = '/foo/bar/baz'
-        expected_path = '/foo/bar/baz.bak20150101T010101'
+        expected_path = '/foo/bar/baz.bak.20150101T010101'
         timestamp = datetime.datetime(2015, 1, 1, 1, 1, 1)
 
         exist_check_count = 0
@@ -149,8 +149,9 @@ class TestCreateSymlinks(object):
             return exist_check_count <= 1
 
         os.path.exists.side_effect = exists
-        with patch('lib.symlink.get_current_timestamp', return_value=timestamp):
-            new_path = symlink.get_backup_path(original_path)
+        with patch('lib.backup.os', os):
+            with patch('lib.backup.get_current_timestamp', return_value=timestamp):
+                new_path = symlink.backup.get_backup_path(original_path)
         assert new_path == expected_path
 
     def test_handle_existing_path_no_existing_file(self, os, partials):
@@ -181,7 +182,7 @@ class TestCreateSymlinks(object):
         # the file is renamed and that handle_existing_path returns True
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
-        with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
+        with mock.patch('lib.backup.back_up_existing_file') as back_up_existing_file:
             return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
 
         assert bool(return_value) is False
@@ -192,7 +193,7 @@ class TestCreateSymlinks(object):
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
         os.path.isdir.return_value = True
-        with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
+        with mock.patch('lib.backup.back_up_existing_file') as back_up_existing_file:
             return_value = symlink.handle_existing_path(
                 partials, 'repo/HOME/.config', '/Users/user/.config')
 
@@ -204,7 +205,7 @@ class TestCreateSymlinks(object):
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
         os.path.isdir.return_value = False
-        with mock.patch('lib.symlink.back_up_existing_file') as back_up_existing_file:
+        with mock.patch('lib.backup.back_up_existing_file') as back_up_existing_file:
             return_value = symlink.handle_existing_path(
                 partials, 'repo/HOME/.config', '/Users/user/.config')
 

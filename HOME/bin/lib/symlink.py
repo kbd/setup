@@ -1,50 +1,17 @@
 import datetime
 import fnmatch
+import logging
 import os
 
-import logging
+from lib import backup
+
 
 log = logging.getLogger(__name__)
-
-
-def get_current_timestamp():
-    return datetime.datetime.now()
-
-
-def get_current_timestamp_str():
-    return get_current_timestamp().strftime('%Y%m%dT%H%M%S')
-
-
-def get_backup_path(path):
-    """
-    Create a backup path given path. Use case is that a file exists at path and
-    you want to rename it to (a non-existent) backup path. Obviously there's a
-    small race condition (where a file is created at the backup path you
-    specify before you move the file there but after this determines the backup
-    path), but that's not worth handling.
-
-    """
-    d = get_current_timestamp_str()
-
-    while os.path.exists(path):  # keep adding to filename until you get a non-existent one
-        # strip a trailing slash so you don't create something like foo/.bak...
-        if path[-1] == '/':
-            path = path[:-1]
-
-        path += '.bak' + d
-
-    return path
 
 
 def create_symlink(source_path, dest_path):
     log.info(f"Creating symlink of {source_path!r} to {dest_path!r}")
     os.symlink(source_path, dest_path)
-
-
-def back_up_existing_file(dest_path):
-    backup_path = get_backup_path(dest_path)
-    log.info(f"Backing up {dest_path!r} to {backup_path!r}")
-    os.rename(dest_path, backup_path)
 
 
 def follow_pointer(pointers, dest_dir, file):
@@ -116,7 +83,7 @@ def handle_existing_path(partials, repo_path, dest_path):
         elif is_a_partial_directory(partials, dest_path):
             log.debug(f"{dest_path!r} is a partial, not backing up")
         else:
-            back_up_existing_file(dest_path)
+            backup.back_up_existing_file(dest_path)
 
 
 def create(symlink_settings, source_dir, dest_dir):
