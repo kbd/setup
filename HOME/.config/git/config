@@ -10,9 +10,9 @@
 # diff / merge config
 [diff]
 	# git has built-in knowledge of how to call certain diff tools
-	tool = meld
+	tool = kdiff3
 [merge]
-	tool = meld
+	tool = kdiff3
 [difftool]
 	prompt = false
 [mergetool]
