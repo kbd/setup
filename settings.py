@@ -189,6 +189,7 @@
                 'pipdeptree',
                 'pudb',
                 'pygments',
+                'pyquery',
                 'pytest',
                 'PyYAML',
                 'requests',
