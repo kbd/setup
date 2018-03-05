@@ -117,7 +117,6 @@
             'pv',
             'pypy',
             'python',
-            'python3',
             'rakudo-star',
             'readline',
             'rethinkdb',
@@ -172,7 +171,7 @@
     },
     'packages': {
         'python': {
-            'cmd': ['pip3', 'install', '--upgrade', '{package}'],
+            'cmd': ['pip', 'install', '--upgrade', '{package}'],
             'packages': [
                 'ansible',
                 'attrs',
@@ -185,6 +184,7 @@
                 'ipython[notebook]',
                 'pandas',
                 'pip',
+                'pipenv',
                 'pipdeptree',
                 'pudb',
                 'pygments',
@@ -194,6 +194,7 @@
                 'rethinkdb',
                 'setuptools',
                 'Sphinx',
+                'virtualenv',
             ],
         },
         'node': {
