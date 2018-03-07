@@ -47,6 +47,7 @@ CLIPS = {
     'surrender': '🏳️',
     'finger': '☝️',
     'fu': '🖕',
+    'metal': '🤘',
 }
 
 def print_clips(CLIPS):
