@@ -39,6 +39,11 @@ fi
 autoload -Uz compinit
 zmodload zsh/complist
 compinit
+
+# remove error-causing zsh completion
+# https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
+compdef -d mcd
+
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 bindkey -M menuselect '\e[Z' reverse-menu-complete  # menuselect from complist
@@ -104,5 +109,5 @@ source "$HOME/.fzf.zsh"
 precmd() {
     prompt_save_return_code
     tabtitle "$PWD"
-    vcs_info
+    vcs_info  # module loaded in 'register_prompt'
 }
