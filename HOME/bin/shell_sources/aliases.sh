@@ -47,10 +47,16 @@ alias vi=vim
 alias py=ipython
 alias tcl='rlwrap tclsh'
 
+alias uc="tr '[:lower:]' '[:upper:]'"  # 'uppercase'
+alias lc="tr '[:upper:]' '[:lower:]'"  # 'lowercase'
+
 alias ercho='>&2 echo'  # echo to stderr
-alias current_shell='ps o command= $$ | sed "s/\\W//g"'
+# "ps o command= $$" gives things like '-zsh' or '/usr/local/bin/zsh -l'
+# so get the basename, then get the first 'word' remaining
+alias current_shell="basename -- $(ps o command= $$) | perl -ne '/(\\w+)/; print \$1'"
 alias last_command='fc -nl -1'
-alias map='xargs -n1'  # note: doesn't work given values with spaces
+alias map='xargs -n1'  # splits on spaces
+alias mapl='xargs -L1'  # map by line
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
 
 # GLOBAL ALIASES (Zsh)
