@@ -110,6 +110,7 @@
             'jq',
             'minimal-racket',
             'node',
+            'path-extractor',
             'perl',
             'postgresql',
             'progress',
