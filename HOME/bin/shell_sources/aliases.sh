@@ -46,6 +46,7 @@ alias v=vim
 alias vi=vim
 alias py=ipython
 alias tcl='rlwrap tclsh'
+alias curl='curl -L'  # follow redirects by default
 
 alias uc="tr '[:lower:]' '[:upper:]'"  # 'uppercase'
 alias lc="tr '[:upper:]' '[:lower:]'"  # 'lowercase'
