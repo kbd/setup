@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# turns out you can't export arrays, so source the colors
+source ~/bin/shell_sources/colors.sh
+
 # dl = download
 if [[ -n "$1" ]] && [[ ! $1 == -* ]]; then
     # an argument provided that doesn't start with dash
@@ -7,7 +11,7 @@ else
     url="$(cb)"  # get from clipboard
 fi
 
-echo "${COLOR_BOLD}${COLOR_BLUE}Downloading: ${COLOR_YELLOW}$url${COLOR_RESET}"
+echo "${COL[bold]}${COL[blue]}Downloading: ${COL[yellow]}$url${COL[reset]}"
 
 if [[ $url == magnet:* ]] || [[ $url == *.torrent ]]; then
     aria2c "$@" "$url"
