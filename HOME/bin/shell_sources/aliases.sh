@@ -61,8 +61,18 @@ alias map='xargs -n1'  # splits on spaces
 alias mapl='xargs -L1'  # map by line
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
 
-# GLOBAL ALIASES (Zsh)
-alias -g FZF='$(!! | fzf)'
+case $(current_shell) in
+    zsh)
+        alias history='history -i'  # always include timestamp
+        alias hs='h 0 | rg'  # 'history search'
+
+        # global aliases (zsh-only)
+        alias -g FZF='$(!! | fzf)'
+    ;;
+    bash)
+        alias hs='h | rg'
+    ;;
+esac
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
