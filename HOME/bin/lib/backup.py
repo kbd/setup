@@ -1,5 +1,6 @@
 import datetime
 import logging
+import re
 import os
 import shutil
 
@@ -7,6 +8,7 @@ log = logging.getLogger(__name__)
 
 
 BACKUP_FORMAT = ".{ext}.{ts}"
+EXTENSION = 'bak'
 
 
 def get_current_timestamp():
@@ -36,17 +38,51 @@ def get_backup_path(path, format=BACKUP_FORMAT):
         if path[-1] == '/':
             path = path[:-1]
 
-        path += BACKUP_FORMAT.format(ext='bak', ts=ts)
+        path += BACKUP_FORMAT.format(ext=EXTENSION, ts=ts)
 
     return path
 
 
-def back_up_existing_file(path, keep=False):
-    backup_path = get_backup_path(path)
-    log.info(f"Backing up {path!r} to {backup_path!r}")
-    if keep:
-        shutil.copy2(path, backup_path)
-    else:
-        os.rename(path, backup_path)
+def get_original_file_path(path):
+    bak = BACKUP_FORMAT.format(ext=EXTENSION, ts=r'\d{8}T\d{6}').replace('.', r'\.')
+    regex = rf'^(.*?)(?:{bak})+$'
+    return re.sub(regex, r'\1', path)
 
+
+def find_backup_files(original, files):
+    return [f for f in files if re.match(re.escape(original)+r'(?:\.bak\.\d{8}T\d{6})+$', f)]
+
+
+def get_most_recent_backup_file_for_file(original_path):
+    """Find the path of the most recent backed up file"""
+    files = os.listdir(os.path.dirname(os.path.abspath(original_path)))
+    return get_most_recent_backup_file(original_path, files)
+
+
+def get_most_recent_backup_file(original_path, files):
+    # find files starting with the original path that match the backup pattern
+    # out of those files, pick the most recent timestamp.
+    # The date format sorts properly, so no need to actually parse the dates.
+    backup_files = find_backup_files(original_path, files)
+    if not backup_files:
+        return None
+
+    length_of_timestamp = 8+1+6
+    backup_files.sort(key=lambda x: x[-length_of_timestamp:], reverse=True)
+    return backup_files[0]
+
+
+def move_file(from_path, to_path, keep=False):
+    action = 'Copying' if keep else 'Moving'
+    log.info(f"{action} {from_path!r} to {to_path!r}")
+    if keep:
+        func = shutil.copytree if os.path.isdir(from_path) else shutil.copy2
+        func(from_path, to_path)
+    else:
+        os.rename(from_path, to_path)
+
+
+def backup_file(path, keep=False):
+    backup_path = get_backup_path(path)
+    move_file(path, backup_path, keep)
     return backup_path

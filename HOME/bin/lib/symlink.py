@@ -83,7 +83,7 @@ def handle_existing_path(partials, repo_path, dest_path):
         elif is_a_partial_directory(partials, dest_path):
             log.debug(f"{dest_path!r} is a partial, not backing up")
         else:
-            backup.back_up_existing_file(dest_path)
+            backup.backup_file(dest_path)
 
 
 def create(symlink_settings, source_dir, dest_dir):

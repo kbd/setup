@@ -1,21 +1,58 @@
 #!/usr/bin/env python3
 import argparse
 import logging
+import re
 import os
 import sys
 
-from lib.backup import back_up_existing_file
+from lib import backup
+
+log = logging.getLogger(__name__)
+
+
+def restore_file(path, keep=False):
+    """Restore backed up file to its original location
+
+    If 'path' matches a backup pattern, derive its original location from that
+    and restore it.
+
+    If 'path' doesn't match a backup pattern, assume it's the original and
+    find the most recent backup file in the same directory and restore it.
+    """
+    original_path = backup.get_original_file_path(path)
+    if original_path == path:  # original location provided
+        path = backup.get_most_recent_backup_file_for_file(original_path)
+
+    if not path:
+        log.warning(f"No backup file for {original_path!r} found")
+        return
+
+    if os.path.exists(original_path):
+        log.warning(f"Original file path exists at {original_path!r}. Not restoring.")
+        return
+
+    if not os.path.exists(path):
+        log.warning(f"Path {path!r} doesn't exist, skipping")
+        return
+
+    backup.move_file(path, original_path, keep)
+
 
 def main(args):
     files = args.files
     keep = args.keep
+    restore = args.restore
 
     for file in files:
-        if not os.path.exists(file):
-            print(f"File {file!r} doesn't exist, skipping")
+        if restore:
+            restore_file(file, keep)
             continue
 
-        back_up_existing_file(file, keep)
+        if not os.path.exists(file):
+            log.warning(f"File {file!r} doesn't exist, skipping")
+            continue
+
+        backup.backup_file(file, keep)
 
 
 if __name__ == '__main__':
@@ -23,9 +60,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Back up specified files')
     parser.add_argument('files', nargs='+', help='Files to back up')
-    parser.add_argument('-k', '--keep', action='store_true',
-                        help='Keep existing file')
+    parser.add_argument('-k', '--keep', action='store_true', help='Keep existing file')
+    parser.add_argument('-r', '--restore', action='store_true', help='Restore original file')
 
     args = parser.parse_args()
     main(args)
-

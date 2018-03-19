@@ -182,35 +182,35 @@ class TestCreateSymlinks(object):
         # the file is renamed and that handle_existing_path returns True
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
-        with mock.patch('lib.backup.back_up_existing_file') as back_up_existing_file:
+        with mock.patch('lib.backup.backup_file') as backup_file:
             return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
 
         assert bool(return_value) is False
-        back_up_existing_file.assert_called_with('dest_path')
+        backup_file.assert_called_with('dest_path')
 
     def test_handle_existing_path_partial_not_backed_up(self, os, partials):
         # make sure that it's *not* backed up if it's a partial directory
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
         os.path.isdir.return_value = True
-        with mock.patch('lib.backup.back_up_existing_file') as back_up_existing_file:
+        with mock.patch('lib.backup.backup_file') as backup_file:
             return_value = symlink.handle_existing_path(
                 partials, 'repo/HOME/.config', '/Users/user/.config')
 
         assert bool(return_value) is False
-        assert not back_up_existing_file.called
+        assert not backup_file.called
 
     def test_handle_existing_path_regular_file(self, os, partials):
         # make sure it doesn't consider a regular file a partial and backs it up as normal
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
         os.path.isdir.return_value = False
-        with mock.patch('lib.backup.back_up_existing_file') as back_up_existing_file:
+        with mock.patch('lib.backup.backup_file') as backup_file:
             return_value = symlink.handle_existing_path(
                 partials, 'repo/HOME/.config', '/Users/user/.config')
 
         assert bool(return_value) is False
-        back_up_existing_file.assert_called_with('/Users/user/.config')
+        backup_file.assert_called_with('/Users/user/.config')
 
 
 def test_follow_pointer_no_pointer(symlink_settings):
