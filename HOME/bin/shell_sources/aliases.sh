@@ -54,7 +54,8 @@ alias lc="tr '[:upper:]' '[:lower:]'"  # 'lowercase'
 alias ercho='>&2 echo'  # echo to stderr
 # "ps o command= $$" gives things like '-zsh' or '/usr/local/bin/zsh -l'
 # so get the basename, then get the first 'word' remaining
-alias current_shell="basename -- $(ps o command= $$) | perl -ne '/(\\w+)/; print \$1'"
+alias fw='rg -o \\w+ | head -1'  # fw = 'first word'
+alias current_shell='basename -- $(ps o command= $$) | fw'
 alias last_command='fc -nl -1'
 alias map='xargs -n1'  # splits on spaces
 alias mapl='xargs -L1'  # map by line
