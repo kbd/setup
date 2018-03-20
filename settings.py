@@ -157,6 +157,7 @@
             'rq',
             'slack',
             'spotify',
+            'spotmenu',
             'sublime-text',
             # 'vagrant',  # requires package installer, disable by default
             'vimr',
