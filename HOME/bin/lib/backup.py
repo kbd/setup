@@ -68,7 +68,8 @@ def get_most_recent_backup_file(original_path, files):
         return None
 
     length_of_timestamp = 8+1+6
-    backup_files.sort(key=lambda x: x[-length_of_timestamp:], reverse=True)
+    # include length in sort criteria to handle files with multiple .bak's applied
+    backup_files.sort(key=lambda x: (len(x), x[-length_of_timestamp:]), reverse=True)
     return backup_files[0]
 
 
