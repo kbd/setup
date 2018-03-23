@@ -4,6 +4,7 @@
 export PLATFORM=$(uname)
 export PATH="$HOME/bin:$HOME/bin/scripts:$PATH"
 export PAGER=less
+export LESS='-iM'  # smart-case searches and status bar
 export EDITOR=vim
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
@@ -29,7 +30,6 @@ alias ll='ls -l'
 alias lla='ls -la'
 
 alias wcl='wc -l'
-alias less='less -i'  # always do "smart"-case searches
 alias du='du -h'
 alias grep='grep --color=auto'
 alias g=grep
