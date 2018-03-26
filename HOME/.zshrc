@@ -105,6 +105,7 @@ export FZF_DEFAULT_OPTS="--ansi"
 _fzf_compgen_path() { eval $FZF_DEFAULT_COMMAND "$1"; }
 _fzf_compgen_dir() { fd --type d --hidden --follow --color=always "$1"; }
 source "$HOME/.fzf.zsh"
+source `brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 precmd() {
     prompt_save_return_code

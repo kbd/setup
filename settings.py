@@ -138,6 +138,7 @@
             'youtube-dl',
             'zsh',
             'zsh-autosuggestions',
+            'zsh-syntax-highlighting',
         ],
         'casks': [
             'atom',
@@ -168,7 +169,7 @@
         ],
         'post_install': [
             'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
-            'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh HOME/bin/shell_sources',
+            'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh HOME/bin/shell_sources/3rdparty',
         ],
     },
     'packages': {
