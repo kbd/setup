@@ -75,13 +75,11 @@ zle -N down-line-or-beginning-search
 bindkey "\e[A" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
 
-# can't get zle to recognize these escapes...
-# # control + <- / ->
-# bindkey "\e[1;5D": bash-backward-word
-# bindkey "\e[1;5C": bash-forward-word
-# # and option + <- / ->
-# bindkey "\e\e[D": bash-backward-word
-# bindkey "\e\e[C": bash-forward-word
+# option/alt + <- / ->
+# still can't get ctrl+arrow keys working
+# should I use bash-backward/forward-word here?
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
 
 # make the home and end keys do the right thing
 # bindkey "\e[H": beginning-of-line
