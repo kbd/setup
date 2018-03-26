@@ -5,6 +5,8 @@ export PLATFORM=$(uname)
 export PATH="$HOME/bin:$HOME/bin/scripts:$PATH"
 export PAGER=less
 export LESS='-iM'  # smart-case searches and status bar
+# https://git-scm.com/docs/git-config#git-config-corepager
+export GIT_PAGER='less -FRX'  # must set because LESS is set
 export EDITOR=vim
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
