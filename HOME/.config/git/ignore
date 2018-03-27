@@ -11,3 +11,4 @@ node_modules/
 .meteor/
 old/
 vendor/
+3rdparty/
