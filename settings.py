@@ -175,10 +175,11 @@
     },
     'packages': {
         'python': {
-            'cmd': ['pip', 'install', '--upgrade', '{package}'],
+            'cmd': ['pip3', 'install', '--upgrade', '{package}'],
             'packages': [
                 'ansible',
                 'attrs',
+                'black',
                 'boto3',
                 'fire',
                 'flask',
