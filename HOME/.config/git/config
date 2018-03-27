@@ -41,7 +41,8 @@
 	cam = commit -am
 	unstage = reset HEAD --
 	undo-commit = reset HEAD~
-	pretty-log = log --graph --pretty=format:\"%Cred%h%Creset - %s %Cgreen(%ar) %C(bold blue)<%an>%Creset%C(yellow)%d%Creset\" --abbrev-commit --date=relative
-	pl         = !git pretty-log
+	pl = log --date=short --pretty=format:'%C(124)%ad %C(24)%h %C(34)%<(20,trunc)%an %C(252)%<(70,trunc)%s%C(auto)%d'
+	pl1 = log --date=short --pretty=format:'%C(green)%ad %C(auto)%h %C(blue)%<(20,trunc)%an %C(reset)%<(70,trunc)%s%C(auto)%d'
+	plg = log --graph --pretty=format:'%C(auto)%h%C(reset) %s %C(green)(%ar) %C(bold blue)<%an>%C(reset)%C(auto)%d'
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
