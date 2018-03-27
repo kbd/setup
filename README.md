@@ -20,4 +20,4 @@ You can bootstrap this onto a new system with:
 I use Visual Studio Code, which doesn't make it easy to source control your
 editor settings without [an extension](https://github.com/shanalikhan/code-settings-sync).
 
-Here's [the gist containing my editor settings](https://github.com/shanalikhan/code-settings-sync).
+Here's [the gist containing my editor settings](https://gist.github.com/kbd/9c099110598e09bf6ecb597d7b27f4bd).
