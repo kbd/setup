@@ -212,6 +212,7 @@
             'cmd': ['npm', 'update', '-g', '{package}'],
             'packages': [
                 'coffeescript',
+                'npm',
                 'typescript',
             ],
         },
