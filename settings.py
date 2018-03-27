@@ -128,6 +128,7 @@
             'shellcheck',
             'switchaudio-osx',
             'thefuck',
+            'tig',
             'tmux',
             'tokei',
             'tree',
