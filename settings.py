@@ -34,13 +34,11 @@
             'args': [
                 ('fix_repo', {'help': 'Fix a broken repository', 'optional': True})
             ],
-            # initial space because the beermug takes up two character spaces
-            # and overlaps if you don't pad it with a space afterwards
-            'help': "\U0001F37A Homebrew\U0001F37A"
+            'help': "🍺 Homebrew🍺"
         },
         'packages': {
             'func': 'packages',
-            'help': 'Install/update language-specific packages \U0001F40D'  # snake emoji
+            'help': 'Install/update language-specific packages 🐍'
         },
         'addons': {
             'func': 'addons',
