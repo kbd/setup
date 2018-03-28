@@ -49,6 +49,7 @@ CLIPS = {
     'finger': '☝️',
     'fu': '🖕',
     'metal': '🤘',
+    'fist': '✊',
 }
 
 def print_clips(CLIPS):
