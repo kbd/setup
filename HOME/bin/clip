@@ -53,6 +53,8 @@ CLIPS = {
     'eyeroll': '🙄',
     'skull': '💀',
     'crossbones': '☠️',
+    'stars': '✨',
+    'cake': '🍰',
 }
 
 def print_clips(CLIPS):
