@@ -50,6 +50,9 @@ CLIPS = {
     'fu': '🖕',
     'metal': '🤘',
     'fist': '✊',
+    'eyeroll': '🙄',
+    'skull': '💀',
+    'crossbones': '☠️',
 }
 
 def print_clips(CLIPS):
