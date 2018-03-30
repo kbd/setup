@@ -91,6 +91,8 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     # escape ls to ignore -F so you don't get directories with // at the end
     alias lsd='\ls -dG */'
     alias lld='\ls -hldG */'
+
+    alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
 else
     # gnu ls
     alias ls='ls -F --color'
