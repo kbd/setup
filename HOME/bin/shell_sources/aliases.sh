@@ -45,7 +45,7 @@ alias o=open
 alias o.='o .'
 
 alias pe=path-extractor
-alias v=vim
+alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
 alias vi=vim
 alias py=ipython
 alias tcl='rlwrap tclsh'
