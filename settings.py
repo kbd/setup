@@ -86,6 +86,7 @@
     },
     'homebrew': {
         'taps': [
+            'caskroom/fonts',
         ],
         'formulas': [
             'aria2',
@@ -166,6 +167,9 @@
             'visual-studio-code',
             'vlc',
             'xquartz',
+
+            # caskroom/fonts tap
+            'font-fantasque-sans-mono',
         ],
         'post_install': [
             'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
