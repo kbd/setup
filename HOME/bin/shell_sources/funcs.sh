@@ -87,6 +87,16 @@ is_root() {
     [[ $EUID == 0 ]]
 }
 
+# "reload history"
+rlh() {
+    if [[ "$(current_shell)" == 'zsh' ]]; then
+        fc -R
+    else
+        history -r
+    fi
+    echo "History reloaded"
+}
+
 # "reload shell"
 rls() {
     # make it easier to reload shell config
