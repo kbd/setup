@@ -44,6 +44,9 @@ compinit
 # https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 compdef -d mcd
 
+# this behavior of zsh is annoying: https://superuser.com/a/613817/
+ZLE_REMOVE_SUFFIX_CHARS=''
+
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 bindkey -M menuselect '\e[Z' reverse-menu-complete  # menuselect from complist
