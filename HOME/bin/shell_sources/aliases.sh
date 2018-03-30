@@ -26,7 +26,6 @@ alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
-alias ls='ls -h'
 alias l=ls
 alias la='ls -a'
 alias ll='ls -l'
