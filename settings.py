@@ -117,6 +117,7 @@
             'pypy',
             'python',
             'rakudo-star',
+            'ranger',
             'readline',
             'rethinkdb',
             'ripgrep',
