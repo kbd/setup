@@ -99,6 +99,7 @@
             'exa',
             'fasd',
             'fd',
+            'fpp',
             'fzf',
             'gawk',
             'git',
