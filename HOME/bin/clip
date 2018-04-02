@@ -55,6 +55,7 @@ CLIPS = {
     'crossbones': '☠️',
     'stars': '✨',
     'cake': '🍰',
+    'brofist': '👊',
 }
 
 def print_clips(CLIPS):
