@@ -1,8 +1,8 @@
 {
 	"always_show_minimap_viewport": true,
-	"color_scheme": "Packages/User/SublimeLinter/base16-eighties.dark (Flake8Lint) (SL).tmTheme",
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
-	"font_face": "Fantasque Sans Mono Regular",
+	"font_face": "Fantasque Sans Mono",
 	"font_size": 13,
 	"ignored_packages":
 	[
@@ -14,7 +14,6 @@
 		100
 	],
 	"show_full_path": true,
-	"spacegray_fileicons": true,
-	"theme": "Spacegray Eighties.sublime-theme",
+	"theme": "Default.sublime-theme",
 	"trim_trailing_white_space_on_save": true
 }
