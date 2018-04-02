@@ -25,6 +25,7 @@
 # aliases
 [alias]
 	a = add
+	af = !git add "$(git st | path-extractor | fzf --height 30% --reverse --multi)"
 	ap = add -p
 	d = diff
 	dt = difftool
