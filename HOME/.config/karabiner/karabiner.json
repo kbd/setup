@@ -8,7 +8,10 @@
         {
             "complex_modifications": {
                 "parameters": {
-                    "basic.to_if_alone_timeout_milliseconds": 0
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 0,
+                    "basic.to_if_held_down_threshold_milliseconds": 500
                 },
                 "rules": [
                     {
@@ -292,6 +295,7 @@
                         "vendor_id": 5426
                     },
                     "ignore": false,
+                    "manipulate_caps_lock_led": false,
                     "simple_modifications": [
                         {
                             "from": {
@@ -329,6 +333,7 @@
                         "vendor_id": 1452
                     },
                     "ignore": true,
+                    "manipulate_caps_lock_led": true,
                     "simple_modifications": []
                 },
                 {
@@ -341,6 +346,7 @@
                         "vendor_id": 1452
                     },
                     "ignore": true,
+                    "manipulate_caps_lock_led": true,
                     "simple_modifications": []
                 },
                 {
@@ -353,6 +359,7 @@
                         "vendor_id": 5426
                     },
                     "ignore": false,
+                    "manipulate_caps_lock_led": false,
                     "simple_modifications": []
                 }
             ],
