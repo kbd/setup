@@ -24,18 +24,6 @@ register_prompt
 
 # override prompt precmd (prompt.sh)
 _prompt_precmd() {
-    # append to history after each command. You can get other consoles'
-    # histories with history -n, and a new console immediately has the history
-    # you were just using, but each maintains its independence otherwise
-    #
-    # however, this is actually totally broken because history -a appends all
-    # your history *since the start of your session*, not since the last time
-    # you appended. So your history file quickly grows exponentially.
-    # bash appears to have no sane history management.
-    # I even tried this: https://unix.stackexchange.com/a/18443
-    # finally my first reason to investigate zsh.
-    history -a
-
     # set tab title to the current directory
     # http://tldp.org/HOWTO/Xterm-Title-4.html
     echo -n "\\[$(tabtitle '\w')\\]"
