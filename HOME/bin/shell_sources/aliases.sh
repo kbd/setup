@@ -49,6 +49,7 @@ alias vi=vim
 alias py=ipython
 alias tcl='rlwrap tclsh'
 alias curl='curl -L'  # follow redirects by default
+alias s='git st'
 
 alias uc="tr '[:lower:]' '[:upper:]'"  # 'uppercase'
 alias lc="tr '[:upper:]' '[:lower:]'"  # 'lowercase'

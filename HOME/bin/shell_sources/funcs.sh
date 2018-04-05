@@ -15,7 +15,7 @@ _source() {
 
 exists() {
     # check if a program exists
-    type "$1" >/dev/null 2>/dev/null
+    type "$1" &>/dev/null
 }
 
 printv() {  # v for verbatim

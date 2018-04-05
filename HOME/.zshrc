@@ -18,12 +18,6 @@ export HISTSIZE=50000
 export SAVEHIST=$HISTSIZE
 export HISTFILE="$HOME/.history"
 
-# load shell sources
-for file in "$HOME"/bin/shell_sources/**/*.(z|)sh; do
-    # echo "Sourcing: $file"
-    source "$file";
-done
-
 # LS_COLORS
 # ls colors needs to be early because it apparently needs to precede complist
 # ls colors I expect: exe=red, dir=blue, symlink=pink, pipe=yellow
@@ -31,7 +25,7 @@ export LS_COLORS='ex=31:di=34:ln=35:pi=33'
 # todo: update .LS_COLORS with my preferences and see what you'd lose in BSD ls
 # by switching to GNU ls (which respects LS_COLORS). IIRC GNU ls doesnt't show
 # Mac extended attributes on files.
-if exists gdircolors; then  # gdircolors is dircolors in coreutils
+if type gdircolors &>/dev/null; then  # gdircolors is dircolors in coreutils
     eval $(gdircolors -b $HOME/.LS_COLORS)
 fi
 
@@ -93,10 +87,6 @@ autoload -Uz history-beginning-search-menu
 zle -N history-beginning-search-menu
 bindkey "^_" history-beginning-search-menu  # ctrl+/
 
-# 1st party software config
-export PROMPT_SHORT_DISPLAY=1
-register_prompt
-
 # 3rd party software config
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
@@ -106,10 +96,22 @@ export FZF_DEFAULT_OPTS="--ansi"
 _fzf_compgen_path() { eval $FZF_DEFAULT_COMMAND "$1"; }
 _fzf_compgen_dir() { fd --type d --hidden --follow --color=always "$1"; }
 source "$HOME/.fzf.zsh"
-source `brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# source after 3rd party config so you can override (eg. aliases) if needed
+for file in "$HOME"/bin/shell_sources/**/*.(z|)sh; do
+    # echo "Sourcing: $file"
+    source "$file";
+done
+
+# 1st party software config
+export PROMPT_SHORT_DISPLAY=1
+register_prompt
 
 precmd() {
     prompt_save_return_code
     tabtitle "$PWD"
     vcs_info  # module loaded in 'register_prompt'
 }
+
+# syntax highlighting needs to be sourced last
+source `brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
