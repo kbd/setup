@@ -17,6 +17,7 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='auto'
 export PYTHONDONTWRITEBYTECODE=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+export PIPENV_SHELL_FANCY=1
 
 # ALIASES
 alias   -- -='cd -'

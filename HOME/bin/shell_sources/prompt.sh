@@ -167,6 +167,16 @@ _prompt_prefix() {
     echo -n "${PROMPT_PREFIX-⚡ }"
 }
 
+# virtual env
+_prompt_venv() {
+    # example environment variable set in a venv:
+    # VIRTUAL_ENV=/Users/kbd/.local/share/virtualenvs/pipenvtest-vxNzUMMM
+    if [[ -n $VIRTUAL_ENV ]]; then
+        local venv_id=$(basename "$VIRTUAL_ENV" | rev | cut -d- -f1 | rev)
+        echo -n "[v:$venv_id]"
+    fi
+}
+
 _prompt_filter() {
     local funcs="$1"
     if [[ $PROMPT_SHORT_DISPLAY ]]; then
@@ -204,7 +214,7 @@ prompt_ensure_save_return_code() {
 }
 
 generate_ps1() {
-    local funcs="precmd prefix date user at host screen sep path repo jobs char"
+    local funcs="precmd prefix venv date user at host screen sep path repo jobs char"
     for f in $(_prompt_filter "$funcs"); do
         "_prompt_$f"
     done
