@@ -127,6 +127,7 @@
             'ruby',
             'rust',
             'shellcheck',
+            'sshrc',
             'switchaudio-osx',
             'thefuck',
             'tig',

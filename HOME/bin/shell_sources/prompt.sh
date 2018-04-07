@@ -176,7 +176,7 @@ _prompt_filter() {
         fi
 
         # if the user is your login user (except root), showing it is unnecessary
-        if [[ ! ($(is_su) || $(is_root)) ]]; then
+        if ! (is_su || is_root); then
             funcs=$(filter "$funcs" "user")
         fi
 

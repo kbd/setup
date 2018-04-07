@@ -1,0 +1,1 @@
+../../bin/shell_sources/prompt.sh
