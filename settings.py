@@ -144,8 +144,8 @@
             'zsh-syntax-highlighting',
         ],
         'casks': [
+            'appcleaner',
             'atom',
-            'battle-net',
             'caffeine',
             'epichrome',
             'firefox',
