@@ -30,7 +30,7 @@ CLIPS = {
     'party': '🎉',
     'beer': '🍺',
     'cheers': '🍻',
-    'fu': "凸(`д´)凸",
+    'fuu': "凸(`д´)凸",
     'fire': '🔥',
     'fine': "🔥☕️🐶💬🔥",
     'keyboard': "⌘⌃⌥⇧↵→←↑↓",  # http://apple.stackexchange.com/questions/55727/where-can-i-find-the-unicode-symbols-for-mac-functional-keys-command-shift-e
@@ -56,6 +56,7 @@ CLIPS = {
     'stars': '✨',
     'cake': '🍰',
     'brofist': '👊',
+    'ear': '👂',
 }
 
 def print_clips(CLIPS):
