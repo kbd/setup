@@ -116,6 +116,7 @@
             'node',
             'path-extractor',
             'perl',
+            'pgcli',
             'postgresql',
             'progress',
             'pup',
