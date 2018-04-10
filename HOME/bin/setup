@@ -54,9 +54,19 @@ def repo(action, settings, *args, **kwargs):
 
 def packages(action, settings, *args, **kwargs):
     log.info("Installing/upgrading language-specific packages")
+    language_filter = kwargs['language_filter']
+    package_filter = kwargs['package_filter']
     for language, params in sorted(settings['packages'].items()):
+        if language_filter and not re.search(language_filter, language):
+            log.debug(f"Skipping {language}")
+            continue
+
         log.info(f"Installing/upgrading packages for: {language}")
         for package in params['packages']:
+            if package_filter and not re.search(package_filter, package):
+                log.debug(f"Skipping {package}")
+                continue
+
             log.info(f"Installing/upgrading package: {package}")
             cmd = [c.format(package=package) for c in params['cmd']]
             subprocess.check_call(cmd)

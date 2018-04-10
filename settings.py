@@ -38,6 +38,10 @@
         },
         'packages': {
             'func': 'packages',
+            'args': [
+                ('language_filter', {'help': 'Only update languages matching regex', 'optional': True}),
+                ('package_filter', {'help': 'Only update packages matching regex', 'optional': True}),
+            ],
             'help': 'Install/update language-specific packages 🐍'
         },
         'addons': {
