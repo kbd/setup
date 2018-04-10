@@ -12,6 +12,7 @@ set backspace=indent,eol,start
 set ignorecase
 set smartcase
 set incsearch
+set hlsearch
 
 " STATUSLINE
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
