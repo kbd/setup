@@ -1,2 +1,2 @@
- #!/bin/sh
- rev | cut "$@" | rev
+#!/bin/sh
+rev | cut "$@" | rev
