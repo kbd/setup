@@ -1,0 +1,2 @@
+#!/bin/sh
+awk "BEGIN { print strftime(\"%c\",$1) }"
