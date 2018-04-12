@@ -28,7 +28,7 @@ def main(arg):
 
 if __name__ == '__main__':
     try:
-        main(next(iter(sys.argv[1:]), None))
+        main(' '.join(sys.argv[1:]))
     except Exception as e:
         print(repr(e))
         sys.exit(1)
