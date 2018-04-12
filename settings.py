@@ -203,6 +203,7 @@
                 'pipdeptree',
                 'pipenv',
                 'psycopg2-binary',
+                'python-dateutil',
                 'pudb',
                 'pygments',
                 'pyquery',

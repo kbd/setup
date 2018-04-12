@@ -1,2 +1,34 @@
-#!/bin/sh
-awk "BEGIN { print strftime(\"%c\",$1) }"
+#!/usr/bin/env python3
+# if given nothing, print the time
+# if given the time, print the human time
+# if given the human time, print the time
+
+import sys
+
+def isfloat(arg):
+    """If only there was str.isfloat like str.isdigit"""
+    try:
+        float(arg)
+        return True
+    except ValueError:
+        return False
+
+
+def main(arg):
+    if not arg:
+        import time
+        print(time.time())
+    elif isfloat(arg):
+        from datetime import datetime
+        print(datetime.fromtimestamp(float(arg)).isoformat())
+    else:
+        from dateutil.parser import parse
+        print(parse(arg).timestamp())
+
+
+if __name__ == '__main__':
+    try:
+        main(next(iter(sys.argv[1:]), None))
+    except Exception as e:
+        print(repr(e))
+        sys.exit(1)
