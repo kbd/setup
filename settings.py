@@ -99,6 +99,7 @@
             'bash-completion',
             'coreutils',
             'diff-so-fancy',
+            'elixir',
             'entr',
             'exa',
             'fasd',
