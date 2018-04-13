@@ -153,6 +153,7 @@
             'appcleaner',
             'atom',
             'caffeine',
+            'dbeaver-community',
             'epichrome',
             'firefox',
             'google-chrome',
