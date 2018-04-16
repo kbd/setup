@@ -4,7 +4,7 @@ import subprocess
 log = logging.getLogger(__name__)
 
 
-def run(cmd, check=True, cap=False, input=None, exe='/bin/bash'):
+def run(cmd, check=True, cap=False, input=None, exe='/bin/bash', cwd=None, env=None):
     log.debug(f"Executing: {cmd!r}")
     shell = isinstance(cmd, str)
     result = subprocess.run(
@@ -14,6 +14,8 @@ def run(cmd, check=True, cap=False, input=None, exe='/bin/bash'):
         stdout=subprocess.PIPE if cap else None,
         executable=exe if shell else None,
         input=input.encode() if input else None,
+        cwd=cwd,
+        env=env,
     )
 
     if cap:
