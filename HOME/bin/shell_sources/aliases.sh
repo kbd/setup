@@ -69,6 +69,7 @@ case $(current_shell) in
 
         # global aliases (zsh-only)
         alias -g FZF='$(!! | fzf)'
+        alias -g L='| $PAGER'  # would be nice to map ↑ +this to ⌘l
     ;;
     bash)
         alias hs='h | rg'
