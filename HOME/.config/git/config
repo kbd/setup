@@ -22,7 +22,7 @@
 # below settings for pager + colors suggested by diff-so-fancy
 # https://github.com/so-fancy/diff-so-fancy
 [core]
-	pager = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
+	pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color "diff"]
 	meta = yellow
