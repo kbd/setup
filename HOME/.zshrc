@@ -18,6 +18,9 @@ export HISTSIZE=50000
 export SAVEHIST=$HISTSIZE
 export HISTFILE="$HOME/.history"
 
+# this behavior of zsh is annoying: https://superuser.com/a/613817/
+ZLE_REMOVE_SUFFIX_CHARS=''
+
 # LS_COLORS
 # ls colors needs to be early because it apparently needs to precede complist
 # ls colors I expect: exe=red, dir=blue, symlink=pink, pipe=yellow
@@ -37,9 +40,6 @@ compinit
 # remove error-causing zsh completion
 # https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 compdef -d mcd
-
-# this behavior of zsh is annoying: https://superuser.com/a/613817/
-ZLE_REMOVE_SUFFIX_CHARS=''
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -61,16 +61,18 @@ bindkey " " globalias
 bindkey "^ " magic-space           # control-space to bypass completion
 bindkey -M isearch " " magic-space # normal space during searches
 
-# key binds (zsh doesn't use readline/inputrc)
+# key binds
+bindplugin() {
+    # usage: bindplugin "\e[A" up-line-or-beginning-search
+    autoload -Uz "$2"
+    zle -N "$2"
+    bindkey "$1" "$2"
+}
 
 # up/down-line-or-beginning-search is equivalent to bash's history-search-backward/forward.
 # Zsh's functions of the same name leave you at the beginning of the line instead of the end.
-autoload -Uz up-line-or-beginning-search
-autoload -Uz down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "\e[A" up-line-or-beginning-search
-bindkey "\e[B" down-line-or-beginning-search
+bindplugin "\e[A" up-line-or-beginning-search
+bindplugin "\e[B" down-line-or-beginning-search
 
 # option/alt + <- / ->
 # still can't get ctrl+arrow keys working
@@ -81,11 +83,6 @@ bindkey "\e\e[D" backward-word
 # make the home and end keys do the right thing
 # bindkey "\e[H": beginning-of-line
 # bindkey "\e[F": end-of-line
-
-# history search menu
-autoload -Uz history-beginning-search-menu
-zle -N history-beginning-search-menu
-bindkey "^_" history-beginning-search-menu  # ctrl+/
 
 # 3rd party software config
 eval "$(thefuck --alias)"
@@ -99,7 +96,6 @@ source "$HOME/.fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell_sources/**/*.(z|)sh; do
-    # echo "Sourcing: $file"
     source "$file";
 done
 
