@@ -36,6 +36,7 @@
 	a = add
 	af = !git add "$(gsf)"
 	ap = add -p
+	au = add -u
 	d = diff
 	dt = difftool
 	ds = diff --staged
