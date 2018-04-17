@@ -18,9 +18,18 @@
 [mergetool]
 	prompt = false
 
-[pager]
-	diff = diff-so-fancy | less --tabs=1,5 -RFX
-	show = diff-so-fancy | less --tabs=1,5 -RFX
+
+# below settings for pager + colors suggested by diff-so-fancy
+# https://github.com/so-fancy/diff-so-fancy
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
+
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	whitespace = red reverse
+
 
 # aliases
 [alias]
@@ -42,6 +51,7 @@
 	cam = commit -am
 	unstage = reset HEAD --
 	undo-commit = reset HEAD~
+	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --pretty=format:'%C(blue)%ad %C(cyan)%cn %C(auto)%h%C(auto)%d%n %s%n%w(0,4,4)%+b' --stat
 	pl = log --date=short --pretty=format:'%C(124)%ad %C(24)%h %C(34)%<(20,trunc)%an %C(252)%<(70,trunc)%s%C(auto)%d'
