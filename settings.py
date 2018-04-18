@@ -193,6 +193,7 @@
                 'attrs',
                 'black',
                 'boto3',
+                'Django',
                 'fire',
                 'flask',
                 'flask-restful',
