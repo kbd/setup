@@ -3,7 +3,11 @@
 # if given the time, print the human time
 # if given the human time, print the time
 
+import argparse
 import sys
+from datetime import datetime
+
+from dateutil import parser as dtp, tz
 
 def isfloat(arg):
     """If only there was str.isfloat like str.isdigit"""
@@ -14,21 +18,62 @@ def isfloat(arg):
         return False
 
 
-def main(arg):
+def format_date(dt, fmt, strftime):
+    if fmt in (None, 'timestamp'):
+        return dt.timestamp()
+    elif fmt == 'full_iso':
+        return dt.isoformat()
+    elif fmt == 'iso':
+        return dt.strftime('%Y-%m-%d %H:%M:%S')
+    elif fmt == 'rfc2822':
+        from email import utils
+        return utils.format_datetime(dt)
+    elif fmt == 'locale':
+        return dt.strftime('%c')
+    elif fmt == 'strftime':
+        return dt.strftime(strftime)
+
+    raise Exception(f"Unknown format option: {fmt}")
+
+
+def main(arg, opts, utc):
+    fmt = next((k for k, v in opts.items() if v), None)
     if not arg:
-        import time
-        print(time.time())
+        dt = datetime.now(tz.tzutc() if utc else tz.tzlocal())
     elif isfloat(arg):
-        from datetime import datetime
-        print(datetime.fromtimestamp(float(arg)).isoformat())
+        dt = datetime.fromtimestamp(float(arg), tz.tzutc() if utc else tz.tzlocal())
+        if not fmt:
+            fmt = 'full_iso'
     else:
-        from dateutil.parser import parse
-        print(parse(arg).timestamp())
+        dt = dtp.parse(arg)
+        if dt.tzinfo is None:
+            dt = dt.astimezone(tz.tzutc() if utc else tz.tzlocal())
+
+    return format_date(dt, fmt, opts['strftime'])
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Show/convert timestamp')
+    parser.add_argument('arg', nargs='*', help='Timestamp')
+    parser.add_argument('-u', '--utc', action='store_true', help='use UTC')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-t', '--timestamp', action='store_true',
+        help='unix timestamp (default if no arg or human arg)')
+    group.add_argument('-i', '--iso', action='store_true', help='short iso')
+    group.add_argument('-I', '--full_iso', action='store_true',
+        help='full iso (default if timestamp arg)')
+    group.add_argument('-r', '--rfc2822', action='store_true', help='rfc2822 (email)')
+    group.add_argument('-l', '-c', '--locale', action='store_true', help='locale')
+    group.add_argument('-s', '--strftime', metavar="S", help='Use strftime format string')
+    args = vars(parser.parse_args())
+
+    # pick out primary arguments and pass format options
+    arg = ' '.join(args.pop('arg'))
+    utc = args.pop('utc')
+
     try:
-        main(' '.join(sys.argv[1:]))
+        result = main(arg, args, utc)
+        print(result)
     except Exception as e:
         print(repr(e))
         sys.exit(1)
