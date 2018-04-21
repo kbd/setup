@@ -57,6 +57,7 @@ CLIPS = {
     'cake': '🍰',
     'brofist': '👊',
     'ear': '👂',
+    'fingerscrossed': '🤞',
 }
 
 def print_clips(CLIPS):
