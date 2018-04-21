@@ -191,7 +191,7 @@ _prompt_filter() {
         fi
 
         # if no user or host, remove sep too
-        if ! echo "$funcs" | grep -Eqw "user|host"; then
+        if ! echo -n "$funcs" | grep -Eqw "user|host"; then
             funcs=$(filter "$funcs" "sep")
         fi
     fi
@@ -199,7 +199,7 @@ _prompt_filter() {
         # don't show the date on short mode or if explicitly hidden
         funcs=$(filter "$funcs" "date")
     fi
-    echo "$funcs"
+    echo -n "$funcs"
 }
 
 prompt_save_return_code() {
@@ -229,7 +229,7 @@ prompt_initialize_vars() {
     _LAST_RETURN_CODE=0  # initialize
     case $(current_shell) in  # current_shell defined in funcs.sh
         bash)
-            eo='\['  # 'escape open'
+            eo='\[\e['  # 'escape open'
             ec='\]'  # 'escape close'
             dt="\\$dt"
             user='\u'
@@ -263,7 +263,7 @@ register_prompt(){
     else
         case $(current_shell) in
             bash)
-                PROMPT_COMMAND='PS1=$(generate_ps1)'
+                PROMPT_COMMAND='PS1="$(generate_ps1)"'
             ;;
             zsh)
                 # configure vcs_info

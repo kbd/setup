@@ -19,6 +19,9 @@ if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
 
     # bind my keyboard shortcuts
     bind -f "$SSHHOME/.sshrc.d/.inputrc"
+
+    # '⚡' causing problems on EC2 bash, which seems confused about how much space it takes
+    export PROMPT_PREFIX=''
 else
     SOURCE_DIR="$HOME/bin/shell_sources/"
     SELF="$HOME/.bashrc"
@@ -60,7 +63,7 @@ alias sudosu="export PROMPT_COMMAND='source $SELF; $PROMPT_COMMAND' && sudo -E s
 _prompt_precmd() {
     # set tab title to the current directory
     # http://tldp.org/HOWTO/Xterm-Title-4.html
-    echo -n "\\[$(tabtitle '\w')\\]"
+    echo -n "$eo$(tabtitle '\w')$ec"
 }
 
 prompt_ensure_save_return_code  # (prompt.sh)
