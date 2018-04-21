@@ -16,6 +16,7 @@ export GIT_PS1_SHOWUPSTREAM='auto'
 export PYTHONDONTWRITEBYTECODE=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export PIPENV_SHELL_FANCY=1
+export ERL_AFLAGS="-kernel shell_history enabled"  # remember Elixir iex history across sessions
 
 # ALIASES
 alias   -- -='cd -'
