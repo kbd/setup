@@ -58,6 +58,7 @@ CLIPS = {
     'brofist': '👊',
     'ear': '👂',
     'fingerscrossed': '🤞',
+    'clap': '👏',
 }
 
 def print_clips(CLIPS):
