@@ -59,6 +59,7 @@ CLIPS = {
     'ear': '👂',
     'fingerscrossed': '🤞',
     'clap': '👏',
+    'deal': '(•_•)\n( •_•)>⌐■-■\n(⌐■_■)\n',
 }
 
 def print_clips(CLIPS):
