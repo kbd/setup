@@ -163,8 +163,21 @@ _prompt_precmd() {
     true
 }
 
+_prompt_repeat() {
+    # https://stackoverflow.com/a/5349842/837424
+    printf "$1%.0s" {1..$2}
+}
+
+_prompt_pad_unicode_width() {
+    # https://stackoverflow.com/a/7123564/837424
+    # $1 = string $2 = width
+    local space="$(_prompt_repeat ' ' $2)"
+    echo -n "$eo$(tput sc)$ec$space$eo$(tput rc)$1$ec"
+}
+
 _prompt_prefix() {
-    echo -n "${PROMPT_PREFIX-⚡ }"
+    local c="$(_prompt_pad_unicode_width $'\u26a1' 2)"  # lightning bolt, width of 2
+    echo -n "${PROMPT_PREFIX-$c}"  # user-specified prefix, or default of $c
 }
 
 # virtual env

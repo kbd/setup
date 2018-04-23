@@ -19,9 +19,6 @@ if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
 
     # bind my keyboard shortcuts
     bind -f "$SSHHOME/.sshrc.d/.inputrc"
-
-    # '⚡' causing problems on EC2 bash, which seems confused about how much space it takes
-    export PROMPT_PREFIX=''
 else
     SOURCE_DIR="$HOME/bin/shell_sources/"
     SELF="$HOME/.bashrc"
