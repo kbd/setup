@@ -165,7 +165,7 @@ _prompt_precmd() {
 
 _prompt_repeat() {
     # https://stackoverflow.com/a/5349842/837424
-    printf "$1%.0s" {1..$2}
+    printf -- "$1%.s" $(seq 1 $2)
 }
 
 _prompt_pad_unicode_width() {
