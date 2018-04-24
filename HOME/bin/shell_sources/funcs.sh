@@ -48,6 +48,12 @@ cl() {
     cd "$1" && ls "${@:2}"
 }
 
+# repeat
+rep() {
+    # https://stackoverflow.com/a/5349842/837424
+    printf -- "$1%.s" $(seq 1 ${2-$(tput cols)})
+}
+
 # get the homedir of another user. Be careful cause of eval.
 # http://stackoverflow.com/a/20506895
 user_home() {

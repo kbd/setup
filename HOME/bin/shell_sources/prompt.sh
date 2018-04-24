@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# configuration variables exposed
+# configuration variables exposed:
 #
 # $PROMPT_FULL_HOST
 #   shows the full hostname (\H vs \h in ps1)
@@ -14,7 +14,9 @@
 #
 # $PROMPT_PREFIX
 #   override to control what's displayed at the start of the prompt line
-
+#
+# note: this code depends on colors.sh and funcs.sh already being loaded.
+# they only happen to be becase c < f < p alphabetically, but ¯\_(ツ)_/¯
 _prompt_date() {
     echo -n "$eo${COL[grey]}$dt$eo${COL[reset]}$ec:"
 }
@@ -163,16 +165,10 @@ _prompt_precmd() {
     true
 }
 
-_prompt_repeat() {
-    # https://stackoverflow.com/a/5349842/837424
-    printf -- "$1%.s" $(seq 1 $2)
-}
-
 _prompt_pad_unicode_width() {
     # https://stackoverflow.com/a/7123564/837424
     # $1 = string $2 = width
-    local space="$(_prompt_repeat ' ' $2)"
-    echo -n "$eo$(tput sc)$ec$space$eo$(tput rc)$1$ec"
+    echo -n "$eo$(tput sc)$ec$(rep ' ' $2)$eo$(tput rc)$1$ec"
 }
 
 _prompt_prefix() {
