@@ -36,7 +36,7 @@ def main():
 
     print("Installing git and Python 3")
     subprocess.check_call(['brew', 'install', 'git'])
-    subprocess.check_call(['brew', 'install', 'python3'])
+    subprocess.check_call(['brew', 'install', 'python'])
 
     setup_path = os.path.expanduser('~/setup')
     if os.path.exists(setup_path):
