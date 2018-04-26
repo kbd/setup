@@ -154,6 +154,7 @@
             'atom',
             'caffeine',
             'dbeaver-community',
+            'docker',
             'epichrome',
             'firefox',
             'google-chrome',
@@ -183,6 +184,14 @@
         'post_install': [
             'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
             'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh HOME/bin/shell_sources/3rdparty',
+            # https://docs.docker.com/docker-for-mac/#zsh
+            """
+                etc=/Applications/Docker.app/Contents/Resources/etc;
+                sf=`brew --prefix`/share/zsh/site-functions;
+                ln -sf $etc/docker.zsh-completion $sf/_docker;
+                ln -sf $etc/docker-machine.zsh-completion $sf/_docker-machine;
+                ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose;
+            """,
         ],
     },
     'packages': {
