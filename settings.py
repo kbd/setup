@@ -141,6 +141,7 @@
             'tokei',
             'tree',
             'vim',
+            'vimpager',
             'wget',
             'xsv',
             'yarn',

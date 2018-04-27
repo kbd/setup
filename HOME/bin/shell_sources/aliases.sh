@@ -46,6 +46,7 @@ alias o.='o .'
 alias pe=path-extractor
 alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
 alias vi=vim
+alias vless=vimpager
 alias py=ipython
 alias tcl='rlwrap tclsh'
 alias curl='curl -L'  # follow redirects by default
