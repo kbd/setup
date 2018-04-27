@@ -114,6 +114,8 @@
             'httpie',
             'jq',
             'minimal-racket',
+            'osquery',
+            'ncdu',
             'node',
             'path-extractor',
             'perl',
