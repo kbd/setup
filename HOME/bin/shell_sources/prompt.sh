@@ -86,15 +86,15 @@ _prompt_setup_vcs_info() {
     zstyle ':vcs_info:*' enable git svn hg
     zstyle ':vcs_info:*' check-for-changes true
 
-    local formatstr="[$eo$COL[cyan]$ec%s$eo$COL[reset]$ec:$eo$COL[yellow]$ec%b$eo$COL[reset]$ec %a%u%c]"
+    local formatstr="[$eo$COL[cyan]$ec%s$eo$COL[reset]$ec:$eo$COL[yellow]$ec%b$eo$COL[reset]$ec %a%m%u%c]"
     zstyle ':vcs_info:*' formats "$formatstr"
     zstyle ':vcs_info:*' actionformats "$formatstr"
 }
 
 # source control information in prompt
 _prompt_repo() {
-    if [[ $(current_shell) == 'zsh' ]]; then
-        echo -n "${vcs_info_msg_0_}"
+    if [[ -n "$vcs_info_msg_0_" ]]; then
+        echo -n "$vcs_info_msg_0_"
         return 0
     fi
 
