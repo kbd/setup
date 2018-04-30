@@ -111,6 +111,7 @@
             'gnu-sed',
             'gnu-tar',
             'go',
+            'googler',
             'httpie',
             'jq',
             'minimal-racket',
