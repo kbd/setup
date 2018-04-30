@@ -1,0 +1,8 @@
+#!/bin/sh
+file=~/bin/osquery/$1.sql
+if [ ! -f "$file" ]; then
+    echo "$file not found"
+    exit 1
+fi
+shift
+osqueryi <"$file" "$@"
