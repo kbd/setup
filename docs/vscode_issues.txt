@@ -1,0 +1,11 @@
+Can't ctrl+delete to delete a portion of word.
+Whitespace changes don't display in git diff
+Changing comment color in editor:
+    "editor.tokenColorCustomizations":...
+  doesn't change the comment character!
+cmd+p and nothing should go to previous file
+changing editor.selectionBackground also changes the color of the whitespace!
+dragging a (unsaved?) tab to a new window *copies* the tab instead of moving it. That's absurd. It also loses word wrap settings (and what else?)
+doesn't show file preview when selecting different files in quick open. Too much slower than Sublime to be feasible I guess...
+can't have the same directory opened in multiple VSCode windows? Always bumps you back to the main window.
+* should name untitled windows with the text of the first line like sublime

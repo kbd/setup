@@ -1,0 +1,18 @@
+things to change on new mac
+
+* default association of text files
+* function keys
+* ctrl+zoomi
+* font in meld apparently.
+* mission control shortcut keys default to ctrl+down... maybe they didn't work with the high F-keys because you don't have that keyboard attached? Investigate... Set all to nothing for now, depend on hot corners (which were totally right with my config btw).
+* show date in menubar (date and time preferences, "show date")
+* disable "add period with double space", "capitalize words automatically", "correct spelling automatically", "use smart quotes", remove "on my way" shortcut.
+* disable "automatically adjust brightness" on main display.
+* show volume in menu bar
+* show bluetooth in menu bar
+* set file-type associations - mp4 = vlc, text = vscode, etc.
+* change the main monitor by going into displays and dragging menu bar to the main display. This affects things like your volume control showing up only on your laptop screen even when you have an external display connected.
+* System Preferences -> General -> uncheck "close windows when quitting an app"
+* no itunes notification on song change
+* "Show mirroring options in the menu bar" in Display preferences should be off
+* for finder, "always show file extensions", and "don't warn when changing a file extension"
