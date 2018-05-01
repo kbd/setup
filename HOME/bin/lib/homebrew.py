@@ -286,9 +286,8 @@ def get_leaf_formulas():
 
 def _get_command_output(cmd):
     """Execute the specified command, parse its output, and return a list of items in the output."""
-    # bytes.decode defaults to utf-8, which *should* also be the default system encoding
-    # but I suppose to really do this correctly I should check that. However, pretty sure
-    # all Homebrew package names should be ascii anyway so it's fine
+    # bytes.decode (that 'run' uses) defaults to utf-8, which *should* also be
+    # the default system encoding, but I suppose to really do this correctly I
+    # should check that. However, pretty sure all Homebrew package names should
+    # be ascii anyway so it's fine
     return run(cmd, cap=True).splitlines()
-
-
