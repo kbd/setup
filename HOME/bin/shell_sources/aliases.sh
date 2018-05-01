@@ -53,9 +53,6 @@ alias curl='curl -L'  # follow redirects by default
 alias s='git st'
 alias goog='googler -n3 --np'
 
-alias uc="tr '[:lower:]' '[:upper:]'"  # 'uppercase'
-alias lc="tr '[:upper:]' '[:lower:]'"  # 'lowercase'
-
 alias ercho='>&2 echo'  # echo to stderr
 # "ps -p $$ -ocomm=" gives things like '-zsh', 'zsh', or '/usr/local/bin/zsh'
 # so get the basename, then strip non-alphanumeric characters

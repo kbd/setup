@@ -1,0 +1,3 @@
+#!/bin/sh
+set -- ${@:-$(</dev/stdin)}
+echo "$@" | awk '{print tolower($0)}'

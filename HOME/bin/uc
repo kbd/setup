@@ -1,0 +1,3 @@
+#!/bin/sh
+set -- ${@:-$(</dev/stdin)}
+echo "$@" | awk '{print toupper($0)}'
