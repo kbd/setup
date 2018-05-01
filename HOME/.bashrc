@@ -16,6 +16,7 @@ if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
     SELF="$SSHHOME/.sshrc"
 
     export PATH="$SSHHOME/.sshrc.d/bin:$PATH"
+    export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/.vimrc' | source \$MYVIMRC"
 
     # bind my keyboard shortcuts
     bind -f "$SSHHOME/.sshrc.d/.inputrc"
