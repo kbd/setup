@@ -1,2 +1,2 @@
 #!/bin/sh
-path-extractor | fzf --height 30% --reverse --multi
+path-extractor | fzi
