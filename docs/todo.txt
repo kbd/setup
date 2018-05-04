@@ -103,3 +103,6 @@ http://superuser.com/questions/212446/binding-backward-kill-word-to-ctrlw
   * back up file
   * ls to show that it was moved
   * up arrow + as few keystrokes as possible to add -r to the original file to restore it.
+
+* figure out how to fill the built in Mac keyboard shortcuts with the values in 'clips'.
+  That way you can get automatic shortcuts in most forms *and* it syncs to iphone.
