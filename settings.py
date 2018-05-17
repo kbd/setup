@@ -161,6 +161,7 @@
             'docker',
             'epichrome',
             'firefox',
+            'flycut',
             'google-chrome',
             'grandperspective',
             'iterm2',
