@@ -17,6 +17,8 @@ export PYTHONDONTWRITEBYTECODE=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export PIPENV_SHELL_FANCY=1
 export ERL_AFLAGS="-kernel shell_history enabled"  # remember Elixir iex history across sessions
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # ALIASES
 alias   -- -='cd -'
