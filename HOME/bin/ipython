@@ -29,10 +29,7 @@ import os
 import subprocess
 import sys
 
-DEFAULT_ARGS = [
-    '--no-banner', '--no-confirm-exit',
-    '--ext=autoreload', '-ic "%autoreload 2"'  # automatically autoreload :D
-]
+DEFAULT_ARGS = ['--no-banner', '--no-confirm-exit', '--ext=autoreload']
 
 cmd = '/usr/local/bin/ipython'
 if sys.argv[0][-1] in '23456789':
