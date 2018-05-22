@@ -18,6 +18,13 @@
 [mergetool]
 	prompt = false
 
+# Sourcetree
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 # below settings for pager + colors suggested by diff-so-fancy
 # https://github.com/so-fancy/diff-so-fancy

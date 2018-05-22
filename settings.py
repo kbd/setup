@@ -173,6 +173,7 @@
             'meld',
             'rq',
             'slack',
+            'sourcetree',
             'spotify',
             'spotmenu',
             'sublime-text',
