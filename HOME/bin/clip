@@ -64,6 +64,8 @@ CLIPS = {
     'monkeys': '🙈🙉🙊',
     'bolt': '⚡',
     'tear': '😢',
+    'nerd': '🤓',
+    'cool': '😎',
 }
 
 def print_clips(CLIPS):
