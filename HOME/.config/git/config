@@ -42,8 +42,9 @@
 [alias]
 	a = add
 	af = !git add "$(gsf)"
-	ap = add -p
+	aa = add -A
 	au = add -u
+	ap = add -p
 	d = diff
 	dt = difftool
 	ds = diff --staged
