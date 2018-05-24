@@ -235,6 +235,7 @@
                 'setuptools',
                 'Sphinx',
                 'sqlalchemy',
+                'tmuxp',
                 'virtualenv',
             ],
         },
@@ -254,7 +255,6 @@
         'ruby': {
             'cmd': ['gem', 'install', '{package}'],
             'packages': [
-                'tmuxinator',
             ]
         },
     },
