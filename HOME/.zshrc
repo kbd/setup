@@ -106,7 +106,6 @@ register_prompt
 precmd() {
     prompt_save_return_code
     tabtitle "$PWD"
-    vcs_info  # module loaded in 'register_prompt'
 }
 
 # syntax highlighting needs to be sourced last

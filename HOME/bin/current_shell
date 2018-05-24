@@ -1,0 +1,3 @@
+#!/bin/sh
+pid=${1:-$PPID}  # so it can be used in scripts that can pass their parent
+basename -- $(ps -p $pid -ocomm=) | sed "s/[^[:alnum:]]//g"

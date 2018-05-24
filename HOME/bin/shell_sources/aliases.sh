@@ -58,7 +58,6 @@ alias goog='googler -n3 --np'
 alias ercho='>&2 echo'  # echo to stderr
 # "ps -p $$ -ocomm=" gives things like '-zsh', 'zsh', or '/usr/local/bin/zsh'
 # so get the basename, then strip non-alphanumeric characters
-alias current_shell='basename -- $(ps -p $$ -ocomm=) | sed "s/[^[:alnum:]]//g"'
 alias last_command='fc -nl -1'
 alias map='xargs -n1'  # splits on spaces
 alias mapl='xargs -L1'  # map by line

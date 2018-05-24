@@ -82,47 +82,15 @@ _prompt_path() {
     echo -n "$eo${COL[purple]}$ec$eo${COL[bold]}$ec$ppath$eo${COL[reset]}$ec"
 }
 
-_prompt_setup_vcs_info() {
-    zstyle ':vcs_info:*' enable git svn hg
-    zstyle ':vcs_info:*' check-for-changes true
-
-    local formatstr="[$eo$COL[cyan]$ec%s$eo$COL[reset]$ec:$eo$COL[yellow]$ec%b$eo$COL[reset]$ec %a%m%u%c]"
-    zstyle ':vcs_info:*' formats "$formatstr"
-    zstyle ':vcs_info:*' actionformats "$formatstr"
-}
-
 # source control information in prompt
 _prompt_repo() {
-    if [[ -n "$vcs_info_msg_0_" ]]; then
-        echo -n "$vcs_info_msg_0_"
+    if [[ -n "$SSHHOME" ]]; then
+        # skip repo support over ssh(rc) because repo.py won't be able to run
         return 0
     fi
-
-    local vcs
-    local branch
-    if [[ $(typeset -F __git_ps1) ]]; then
-        branch="$(__git_ps1 '%s')"
-    fi
-    if [[ $branch ]]; then
-        # this is what to use if __git_ps1 is not sourced
-        # branch=$(type -P git &>/dev/null && git branch 2>/dev/null)
-        vcs=git
-    else
-        # would be nice to replace with hg_prompt and get dirty information etc.
-        branch=$(type -P hg &>/dev/null && hg branch 2>/dev/null)
-        if [[ $branch ]]; then
-            vcs=hg
-        elif [[ -e .bzr ]]; then
-            vcs=bzr
-        elif [[ -e .svn ]]; then
-            vcs=svn
-        fi
-    fi
-    if [[ $vcs ]]; then
-        if [[ $branch ]]; then
-            vcs="$eo${COL[cyan]}$ec$vcs$eo${COL[reset]}$ec:$eo${COL[yellow]}$ec$branch$eo${COL[reset]}$ec"
-        fi
-        echo -n "[$vcs]"
+    local repostr="$(repo.py)"
+    if [[ -n "$repostr" ]]; then
+        echo -n "[$repostr]"
     fi
 }
 
@@ -275,10 +243,6 @@ register_prompt(){
                 PROMPT_COMMAND='PS1="$(generate_ps1)"'
             ;;
             zsh)
-                # configure vcs_info
-                autoload -Uz vcs_info
-                _prompt_setup_vcs_info
-
                 # shellcheck disable=SC2016 disable=SC2034
                 # 2016 = unexpanded in single quotes = intended bc prompt_subst
                 # 2034 = 'PROMPT unused'. Shellcheck doesn't support zsh.
