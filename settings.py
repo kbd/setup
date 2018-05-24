@@ -155,6 +155,7 @@
             'zsh-syntax-highlighting',
         ],
         'casks': [
+            'alfred',
             'appcleaner',
             'atom',
             'caffeine',
