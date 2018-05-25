@@ -124,7 +124,7 @@ def get_repo_status(repo):
 
 
 def get_ahead_behind(repo):
-    if repo.head_is_unborn:
+    if repo.head_is_unborn or repo.head_is_detached:
         return 0, 0
 
     local = repo.head
