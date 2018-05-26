@@ -97,6 +97,7 @@
             'awscli',
             'bash',
             'bash-completion',
+            'cmake',
             'coreutils',
             'diff-so-fancy',
             'elixir',
@@ -115,6 +116,7 @@
             'httpie',
             'jq',
             'libgit2',
+            'mas',
             'minimal-racket',
             'osquery',
             'ncdu',
@@ -202,6 +204,12 @@
         ],
     },
     'packages': {
+        'macos': {
+            'cmd': ['mas', 'install', '{package}'],
+            'packages': [
+                '497799835',  # xcode
+            ],
+        },
         'python': {
             'cmd': ['pip3', 'install', '--upgrade', '{package}'],
             'packages': [
