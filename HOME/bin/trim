@@ -1,2 +1,32 @@
 #!/bin/sh
-perl -pe 's/^\s+|\s+$//g'
+l_pat='^\s+'
+r_pat='\s+$'
+
+while getopts ":lr" opt; do
+    case $opt in
+    l)
+        l=$l_pat
+        ;;
+    r)
+        r=$r_pat
+        ;;
+    \?)
+        echo "Invalid option: -$OPTARG" >&2
+        cat
+        exit 1
+        ;;
+    esac
+done
+
+if [ -z "$l$r" ]; then
+    # if neither is set, default to both
+    l=$l_pat
+    r=$r_pat
+fi
+
+if [ -n "$l" ] && [ -n "$r" ]; then
+    # if both set, remember the pipe
+    p='|'
+fi
+
+perl -pe "s/$l$p$r//g"
