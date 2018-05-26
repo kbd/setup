@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 # VARS
+if [[ -z "$PATH_SET" ]]; then
+    export PATH="$HOME/bin:$HOME/bin/scripts:$PATH"
+    export PATH_SET=1
+fi
 export PLATFORM=$(uname)
-export PATH="$HOME/bin:$HOME/bin/scripts:$PATH"
 export PAGER=less
 export LESS='-iM'  # smart-case searches and status bar
 export EDITOR=vim
