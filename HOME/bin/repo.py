@@ -49,7 +49,7 @@ def get_git_statuses():
     return statuses
 
 
-def get_icons():
+def get_templates():
     # this script's parent is the shell
     shell = check_output(['current_shell', str(os.getppid())]).decode().strip()
     if shell not in ('bash', 'zsh'):
@@ -60,11 +60,11 @@ def get_icons():
         'ahead': f'{o}{fg.green}{c}↑{{}}{o}{s.reset}{c}',
         'behind': f'{o}{fg.red}{c}↓{{}}{o}{s.reset}{c}',
         'branch': f'{o}{fg.yellow}{c}{{}}{o}{s.reset}{c}',
-        'staged': f'{o}{fg.blue}{c}●{{}}{o}{s.reset}{c}',
-        'modified': f'{o}{fg.yellow}{c}✚\u200A{{}}{o}{s.reset}{c}',
-        'untracked': f'{o}{fg.cyan}{c}…{{}}{o}{s.reset}{c}',
         'conflicted': f'{o}{fg.red}{c}✖{{}}{o}{s.reset}{c}',
+        'modified': f'{o}{fg.yellow}{c}✚\u200A{{}}{o}{s.reset}{c}',
+        'staged': f'{o}{fg.blue}{c}●{{}}{o}{s.reset}{c}',
         'stashed': f'{o}{fg.blue}{c}⚑{{}}{o}{s.reset}{c}',
+        'untracked': f'{o}{fg.cyan}{c}…{{}}{o}{s.reset}{c}',
     }
 
 
@@ -153,8 +153,8 @@ def get_repo_info(repo):
     }
 
 
-def print_repo_info(repo_info, icons):
-    results = [icons[i].format(repo_info[i]) for i in repo_info if repo_info[i]]
+def print_repo_info(repo_info, templates):
+    results = [templates[i].format(repo_info[i]) for i in repo_info if repo_info[i]]
     if len(results) > 1:
         # if more than branch, add space after branch (req. 3.6 dict ordering)
         results.insert(1, ' ')
@@ -167,8 +167,8 @@ def main():
     else:
         path = os.getcwd()
 
-    icons = get_icons()
-    if not icons:
+    templates = get_templates()
+    if not templates:
         return 1
 
     repo = get_repo(path)
@@ -176,7 +176,7 @@ def main():
         return 1
 
     info = get_repo_info(repo)
-    print_repo_info(info, icons)
+    print_repo_info(info, templates)
     return 0
 
 
