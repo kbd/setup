@@ -76,15 +76,16 @@ bindplugin() {
 bindplugin "\e[A" up-line-or-beginning-search
 bindplugin "\e[B" down-line-or-beginning-search
 
-# option/alt + <- / ->
-# still can't get ctrl+arrow keys working
-# should I use bash-backward/forward-word here?
-bindkey "\e\e[C" forward-word
+# control + <- / ->
+bindkey "\e[1;5D" backward-word
+bindkey "\e[1;5C" forward-word
+# and option + <- / ->
 bindkey "\e\e[D" backward-word
+bindkey "\e\e[C" forward-word
 
 # make the home and end keys do the right thing
-# bindkey "\e[H": beginning-of-line
-# bindkey "\e[F": end-of-line
+bindkey "\e[H": beginning-of-line
+bindkey "\e[F": end-of-line
 
 # 3rd party software config
 eval "$(thefuck --alias)"
