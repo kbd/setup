@@ -67,6 +67,7 @@ CLIPS = {
     'nerd': '🤓',
     'cool': '😎',
     'ghost': '👻',
+    'hands': '🙌',
 }
 
 def print_clips(CLIPS):
