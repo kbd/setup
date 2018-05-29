@@ -6,10 +6,13 @@ shopt -s globstar
 shopt -s autocd
 shopt -s expand_aliases
 
-#history
+# history
 export HISTCONTROL='ignoreboth'
 export HISTTIMEFORMAT="[%F %T %z] "
 export HISTSIZE=100000
+
+# key binds
+stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
 
 if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
     SOURCE_DIR="$SSHHOME/.sshrc.d/sources/"

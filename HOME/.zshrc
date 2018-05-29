@@ -62,6 +62,8 @@ bindkey "^ " magic-space           # control-space to bypass completion
 bindkey -M isearch " " magic-space # normal space during searches
 
 # key binds
+stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
+
 bindplugin() {
     # usage: bindplugin "\e[A" up-line-or-beginning-search
     autoload -Uz "$2"

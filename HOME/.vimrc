@@ -14,6 +14,15 @@ set smartcase
 set incsearch
 set hlsearch
 
+" keyboard shortcuts
+inoremap <C-s> <esc>:w<cr>    " save
+nnoremap <C-s> :w<cr>
+inoremap <C-q> <esc>:x<cr>    " exit and write if changes were made
+nnoremap <C-q> :x<cr>
+inoremap <C-d> <esc>:qa!<cr>  " exit and discard all changes
+nnoremap <C-d> :qa!<cr>
+" end keyboard shortcuts
+
 " STATUSLINE
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
 " http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
