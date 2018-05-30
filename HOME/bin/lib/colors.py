@@ -45,4 +45,8 @@ e = D(  # e = escapes for use within prompt
         o='\\[\x1b[',
         c='\\]',
     ),
+    interactive=D(
+        o='',
+        c='',
+    ),
 )

@@ -13,6 +13,7 @@ todo:
 * support other vcs
 * rewrite in C using libgit2 directly?
 """
+import argparse
 import os
 import re
 import sys
@@ -49,12 +50,12 @@ def get_git_statuses():
     return statuses
 
 
-def get_templates():
+def get_shell():
     # this script's parent is the shell
-    shell = check_output(['current_shell', str(os.getppid())]).decode().strip()
-    if shell not in ('bash', 'zsh'):
-        return None
+    return check_output(['current_shell', str(os.getppid())]).decode().strip()
 
+
+def get_templates(shell):
     o, c = e[shell].o.replace('{', '{{'), e[shell].c.replace('}', '}}')
     return {
         'ahead': f'{o}{fg.green}{c}↑{{}}{o}{s.reset}{c}',
@@ -141,7 +142,7 @@ def get_repo_info(repo):
     status = get_repo_status(repo)
     # count anything in the index as staged
     staged = sum(v for k, v in status.items() if k.startswith('GIT_STATUS_INDEX'))
-    return {  # this order is how we want things displayed (req. 3.6 dict ordering)
+    result = {  # this order is how we want things displayed (req. 3.6 dict ordering)
         'branch': get_repo_branch(repo),
         'ahead': ahead,
         'behind': behind,
@@ -151,6 +152,7 @@ def get_repo_info(repo):
         'conflicted': status['GIT_STATUS_CONFLICTED'],
         'stashed': get_stash_count(repo)[1],  # just for the branch
     }
+    return result
 
 
 def print_repo_info(repo_info, templates):
@@ -161,24 +163,32 @@ def print_repo_info(repo_info, templates):
     print(''.join(results))
 
 
-def main():
-    if len(sys.argv) > 1:
-        path = sys.argv[1]
-    else:
-        path = os.getcwd()
-
-    templates = get_templates()
-    if not templates:
-        return 1
-
-    repo = get_repo(path)
+def main(args):
+    repo = get_repo(args.path)
     if not repo:
         return 1
 
     info = get_repo_info(repo)
+    if args.fake:
+        info.update({k: 2 for k in info if k != 'branch'})
+
+    shell = get_shell()
+    if args.interactive or shell not in ('bash', 'zsh'):
+        shell = 'interactive'
+
+    templates = get_templates(shell)
     print_repo_info(info, templates)
     return 0
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Print repo status')
+    parser.add_argument('path', nargs='?', default='.', help='Path to repository')
+    parser.add_argument('-f', '--fake', action='store_true', help='Show fake status')
+    parser.add_argument('-i', '--interactive', action='store_true', help="Don't output prompt escapes")
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
-    sys.exit(main())
+    args = parse_args()
+    sys.exit(main(args))
