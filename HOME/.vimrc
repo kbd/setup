@@ -21,6 +21,8 @@ inoremap <C-q> <esc>:x<cr>    " exit and write if changes were made
 nnoremap <C-q> :x<cr>
 inoremap <C-d> <esc>:qa!<cr>  " exit and discard all changes
 nnoremap <C-d> :qa!<cr>
+" clear search highlight: https://stackoverflow.com/q/99161/837424
+nnoremap <C-l> :noh<cr><C-l>
 " end keyboard shortcuts
 
 " STATUSLINE
