@@ -4,8 +4,8 @@ import subprocess
 import sys
 
 CLIPS = {
-    'shrug': "¯\_(ツ)_/¯",
-    'shrug2': "¯\(°_o)/¯",
+    'shrug': r"¯\_(ツ)_/¯",
+    'shrug2': r"¯\(°_o)/¯",
     'check': "✓",
     'chbox': "☑",
     'nochbox': "☐",
@@ -68,6 +68,7 @@ CLIPS = {
     'cool': '😎',
     'ghost': '👻',
     'hands': '🙌',
+    'devil': '😈',
 }
 
 def print_clips(CLIPS):
