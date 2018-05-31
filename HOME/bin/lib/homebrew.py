@@ -15,6 +15,7 @@ log = logging.getLogger(__name__)
 
 def workflow(settings, fix_repo=False):
     """Run an entire Homebrew update workflow."""
+    # prereqs
     ensure_homebrew_installed()
 
     if fix_repo:
@@ -24,15 +25,24 @@ def workflow(settings, fix_repo=False):
 
     update()
 
+    # taps
     update_taps(settings.get('taps', []))
-    update_formulas(settings.get('formulas', []))
+
+    # formulas
+    formulas = settings.get('formulas', [])
+    update_formulas(formulas)
+    leaves = get_leaves()
+    show_unexpected_formulas(formulas, leaves)
+
+    # casks
     update_casks(settings.get('casks', []))
 
+    # cleanup
     prune()
-
-    run_post_install(settings['post_install'])
-
     clean_cache()
+
+    # post-install
+    run_post_install(settings['post_install'])
 
 
 def ensure_homebrew_installed():
@@ -201,10 +211,6 @@ def update_formulas(formulas):
     install_missing('formula', formulas)
     cleanup_formulas()
 
-    # possible todo: remove things not in settings, but that'd delete things you installed manually
-    # maybe provide option to list things that "shouldn't" be installed so they can be
-    # removed manually
-
 
 def update_casks(casks):
     log.info("Updating casks")
@@ -282,6 +288,20 @@ def get_leaf_formulas():
     all_deps = set(chain.from_iterable(deps for deps in formulas_with_deps.values()))
     all_formulas = set(formulas_with_deps.keys())
     return all_formulas - all_deps
+
+
+def get_leaves():
+    """Get leaf formulas.
+
+    Turns out Homebrew has a function to do (basically) what 'get_leaf_formulas' does.
+    """
+    return _get_command_output(['brew', 'leaves'])
+
+
+def show_unexpected_formulas(formulas, leaves):
+    """Show installed formulas that "shouldn't be" (aren't specified in settings)"""
+    unexpected = set(leaves) - set(formulas)
+    log.info(f"Installed formulas not specified in settings: {', '.join(sorted(unexpected))}")
 
 
 def _get_command_output(cmd):
