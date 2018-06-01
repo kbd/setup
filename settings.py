@@ -90,7 +90,7 @@
     },
     'homebrew': {
         'taps': [
-            'caskroom/fonts',
+            'homebrew/cask-fonts',
         ],
         'formulas': [
             'aria2',
