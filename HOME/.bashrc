@@ -33,8 +33,6 @@ else
 
     # 3rd party software config (only local)
     eval "$(thefuck --alias)"
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     source "$HOME/.fzf.bash"
 fi
 

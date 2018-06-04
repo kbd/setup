@@ -90,11 +90,6 @@ bindkey "\e[F": end-of-line
 # 3rd party software config
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
-export FZF_DEFAULT_COMMAND='fd -tf -tl --hidden --color=always'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--ansi"
-_fzf_compgen_path() { eval $FZF_DEFAULT_COMMAND "$1"; }
-_fzf_compgen_dir() { fd --type d --hidden --follow --color=always "$1"; }
 source "$HOME/.fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed
