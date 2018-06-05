@@ -148,9 +148,9 @@ _prompt_prefix() {
 _prompt_venv() {
     # example environment variable set in a venv:
     # VIRTUAL_ENV=/Users/kbd/.local/share/virtualenvs/pipenvtest-vxNzUMMM
-    if [[ -n $VIRTUAL_ENV ]]; then
-        local venv_id=$(basename "$VIRTUAL_ENV" | rev | cut -d- -f1 | rev)
-        echo -n "[v:$venv_id]"
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        local venv_id=$(basename -- "$VIRTUAL_ENV" | rev | cut -d- -f1 | rev)
+        echo -n "[$venv_id]"
     fi
 }
 
