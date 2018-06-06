@@ -45,6 +45,13 @@
 	aa = add -A
 	au = add -u
 	ap = add -p
+	br = branch
+	ci = commit
+	cim = commit -m
+	ca = commit -a
+	cam = commit -am
+	co = checkout
+	cob = checkout -b
 	d = diff
 	dt = difftool
 	ds = diff --staged
@@ -52,13 +59,6 @@
 	dst = difftool --staged
 	s = status
 	st = status
-	co = checkout
-	cob = checkout -b
-	br = branch
-	ci = commit
-	cim = commit -m
-	ca = commit -a
-	cam = commit -am
 	unstage = reset HEAD --
 	undo-commit = reset HEAD~
 	patch = !git --no-pager diff --no-color
