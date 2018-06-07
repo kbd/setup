@@ -70,11 +70,11 @@ def get_templates(shell):
 
 
 def get_repo(dir):
-    try:
-        path = git.discover_repository(dir)
-        return git.Repository(path)
-    except KeyError:  # this is what pygit2 does if it doesn't find a repo!
+    path = git.discover_repository(dir)
+    if not path:
         return None
+
+    return git.Repository(path)
 
 
 def get_repo_branch(repo):
