@@ -158,7 +158,6 @@
         'casks': [
             'alfred',
             'appcleaner',
-            'atom',
             'caffeine',
             'dbeaver-community',
             'docker',
