@@ -166,6 +166,7 @@
             'flycut',
             'google-chrome',
             'grandperspective',
+            'iina',
             'iterm2',
             'karabiner-elements',
             'kdiff3',
