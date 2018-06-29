@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""Run set operations on the lines of two files"""
+import sys
+
+if len(sys.argv) != 4:
+    print("Usage: file1 op file2")
+    sys.exit(1)
+
+file1, file2 = (set(open(sys.argv[i]).read().splitlines()) for i in (1, 3))
+op = sys.argv[2]
+if hasattr(file1, op):  # intersection, issubset, union, etc.
+    result = getattr(file1, op)(file2)
+else:  # &, <, |, etc.
+    try:
+        result = eval(f'file1 {op} file2')
+    except:
+        print(f"Invalid operator: {op}", file=sys.stderr)
+        sys.exit(1)
+
+if isinstance(result, bool):
+    sys.exit(int(not result))
+
+for i in sorted(result):
+    print(i)
