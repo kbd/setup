@@ -172,7 +172,6 @@
             'kdiff3',
             'kindle',
             'libreoffice',
-            'macvim',
             'meld',
             'rq',
             'slack',
@@ -181,7 +180,6 @@
             'spotmenu',
             'sublime-text',
             # 'vagrant',  # requires package installer, disable by default
-            'vimr',
             # 'virtualbox',  # requires kernel extensions, disable by default
             'visual-studio-code',
             'vlc',
