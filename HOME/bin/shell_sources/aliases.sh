@@ -38,6 +38,7 @@ alias lla='ls -la'
 
 alias wcl='wc -l'
 alias du='du -h'
+alias dud='du -d0 .'
 alias grep='grep --color=auto'
 alias g=grep
 alias h=history
