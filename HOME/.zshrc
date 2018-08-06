@@ -90,6 +90,7 @@ bindkey "\e[F": end-of-line
 # 3rd party software config
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
+eval "$(pyenv init -)"
 source "$HOME/.fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed

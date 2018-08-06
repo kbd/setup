@@ -127,6 +127,7 @@
             'progress',
             'pup',
             'pv',
+            'pyenv',
             'pypy',
             'python',
             'rakudo-star',
