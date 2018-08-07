@@ -74,6 +74,7 @@ CLIPS = {
     'vomit': '🤮',
     'angry': '😠',
     'ib': '‽',
+    'mindblown': '🤯',
 }
 
 def print_clips(CLIPS):
