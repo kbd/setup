@@ -39,6 +39,7 @@ def workflow(settings, fix_repo=False):
 
     # cleanup
     prune()
+    cleanup()
     clean_cache()
 
     # post-install
@@ -100,12 +101,12 @@ def install_tap(tap):
     run(['brew', 'tap', tap])
 
 
-def cleanup_formulas():
-    log.info("Running cleanup: formulas")
+def cleanup():
+    log.info("Running cleanup")
     # from 'brew cleanup --help':
-    # If -s is passed, scrub the cache, removing downloads for even the latest
-    # versions of formulae. Note downloads for any installed formulae will still
-    # not be deleted. If you want to delete those too: rm -rf $(brew --cache)
+    # If -s is passed, scrub the cache, including downloads for even the latest
+    # versions. Note downloads for any installed formula or cask will still not
+    # be deleted. If you want to delete those too: rm -rf $(brew --cache)
     run(['brew', 'cleanup', '-s'])
 
 
@@ -150,11 +151,6 @@ def get_space_used(dir):
 
 def delete_dir(dir):
     run(f"rm -rf '{dir}'")
-
-
-def cleanup_casks():
-    log.info("Running cleanup: casks")
-    run(['brew', 'cask', 'cleanup'])
 
 
 def update():
@@ -209,14 +205,12 @@ def update_formulas(formulas):
     log.info("Updating formulas")
     upgrade_formulas()
     install_missing('formula', formulas)
-    cleanup_formulas()
 
 
 def update_casks(casks):
     log.info("Updating casks")
     upgrade_casks()
     install_missing('cask', casks)
-    cleanup_casks()
 
 
 def update_taps(taps):
