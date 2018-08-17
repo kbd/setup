@@ -37,7 +37,7 @@
             'help': "🍺 Homebrew🍺"
         },
         'packages': {
-            'func': 'packages',
+            'func': 'install_packages',
             'args': [
                 ('language_filter', {'help': 'Only update languages matching regex', 'optional': True}),
                 ('package_filter', {'help': 'Only update packages matching regex', 'optional': True}),
@@ -211,6 +211,7 @@
         },
         'python': {
             'cmd': ['pip3', 'install', '--upgrade', '{package}'],
+            'cmd_all': ['pip3', 'install', '-r', '{packages}'],
             'packages': [
                 'ansible',
                 'attrs',

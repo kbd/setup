@@ -8,6 +8,7 @@ import logging
 import os
 import re
 import subprocess
+import tempfile
 import zipfile
 from copy import copy
 from functools import partial
@@ -52,23 +53,42 @@ def repo(action, settings, *args, **kwargs):
     subprocess.check_call(cmd)
 
 
-def packages(action, settings, *args, **kwargs):
+def install_packages(action, settings, *args, **kwargs):
     log.info("Installing/upgrading language-specific packages")
     language_filter = kwargs['language_filter']
-    package_filter = kwargs['package_filter']
     for language, params in sorted(settings['packages'].items()):
         if language_filter and not re.search(language_filter, language):
             log.debug(f"Skipping {language}")
             continue
 
-        log.info(f"Installing/upgrading packages for: {language}")
-        for package in params['packages']:
-            if package_filter and not re.search(package_filter, package):
-                log.debug(f"Skipping {package}")
-                continue
+        install_lang_packages(language, params['packages'], kwargs['package_filter'], params)
 
-            log.info(f"Installing/upgrading package: {package}")
+
+def install_lang_packages(language, packages, package_filter, params):
+    log.info(f"Installing/upgrading packages for: {language}")
+
+    if package_filter:
+        filtered = [p for p in packages if re.search(package_filter, p)]
+        skipped = sorted(set(packages)-set(filtered))
+        if skipped:
+            log.debug(f"Skipping: {', '.join(skipped)}")
+
+        packages = filtered
+
+    if 'cmd_all' in params:  # install all packages at once if possible
+        log.info(f"Installing packages: {', '.join(sorted(packages))}")
+        with tempfile.NamedTemporaryFile() as t:
+            for p in packages:
+                t.write(p.encode('utf8'))
+                t.write(b'\n')
+            cmd = [c.format(packages=t.name) for c in params['cmd_all']]
+            log.debug(f"Executing: {cmd}")
+            subprocess.check_call(cmd)
+    else:
+        for package in packages:
+            log.info(f"Installing package: {package}")
             cmd = [c.format(package=package) for c in params['cmd']]
+            log.debug(f"Executing: {cmd}")
             subprocess.check_call(cmd)
 
 
