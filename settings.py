@@ -97,6 +97,7 @@
             'awscli',
             'bash',
             'bash-completion',
+            'bat',
             'cmake',
             'coreutils',
             'diff-so-fancy',
