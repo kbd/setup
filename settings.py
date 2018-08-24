@@ -361,6 +361,13 @@
                 # set key repeat rate and initial repeat delay
                 'KeyRepeat': 2,
                 'InitialKeyRepeat': 10,
+                # 'com.apple.keyboard.fnState': False,
+            },
+            'com.apple.universalaccess': {
+                'closeViewScrollWheelToggle': True,  # ctrl+mouse wheel to zoom screen (req reboot)
+            },
+            'com.apple.menuextra.clock': {
+                'DateFormat': "EEE MMM d  h:mm a",  # date format in menubar clock
             }
         }
     }

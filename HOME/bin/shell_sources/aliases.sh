@@ -94,6 +94,11 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     # bsd ls
     alias ls='ls -FG'
     # escape ls to ignore -F so you don't get directories with // at the end
+    # lsd() {
+    #     \ls -dG "${@%/:-*/}"
+    # }
+    # lsd() { set -- "${@%/:-*/}"; ls -d "$@"; }
+    # lld() { local p; p="${@:-*/}"; \ls -dlG -- "$~p"; }
     alias lsd='\ls -dG */'
     alias lld='\ls -hldG */'
 
@@ -106,4 +111,7 @@ else
     # indicator-style=none so you don't get directories with // at the end
     alias lsd='ls -d --indicator-style=none -- */'
     alias lld='ll -d --indicator-style=none -- */'
+
+    # lsd() { ls -d --indicator-style=none "${@:-*/}"; }
+    # lld() { ll -d --indicator-style=none "${@:-*/}"; }
 fi
