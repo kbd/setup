@@ -13,7 +13,7 @@ existing files and create symlinks pointing to the repository.
 
 You can bootstrap this onto a new system with:
 
-```python -c "$(curl -s https://raw.githubusercontent.com/kbd/setup/master/bootstrap.py)"```
+```python -c "$(curl -fsSL https://raw.githubusercontent.com/kbd/setup/master/bootstrap.py)"```
 
 ## Editor settings
 
