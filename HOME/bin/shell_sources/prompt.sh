@@ -96,8 +96,8 @@ _prompt_repo() {
 
 # running and stopped jobs
 _prompt_jobs() {
-    local running=$(( $(jobs -rp | wc -l) ))  # convert to numeric
-    local stopped=$(( $(jobs -sp | wc -l) ))  # convert to numeric
+    local running=$(( $( (jobs -rp) | wc -l) ))  # convert to numeric
+    local stopped=$(( $( (jobs -sp) | wc -l) ))  # convert to numeric
 
     local jobs=''
     if [[ $running -ne 0 ]]; then
