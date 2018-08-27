@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import code
-import collections
 import io
-import itertools
 import logging
 import os
 import re
@@ -13,7 +11,7 @@ import zipfile
 from copy import copy
 from functools import partial
 
-from lib import symlink
+from lib import config, symlink
 from lib.osx import brew, restart_os_functions, update_os_settings
 
 SETTINGS_FILE_LOCATION = 'settings.py'
@@ -153,53 +151,6 @@ def edit(*args, **kwargs):
     subprocess.call('$EDITOR .', shell=True)  # works because cwd is set
 
 
-class ConflictingAliasError(Exception):
-    pass
-
-
-def resolve_action_aliases(actions):
-    """Handle aliases within actions.
-
-    Configured as follows:
-    {
-        'actions': {
-            'pull': {
-                'func': 'repo',
-                'cmd': ['pull'],
-                'help': 'Pull repository from server',
-                'aliases': ['update'],
-            },
-            ...
-        }
-        ...
-    }
-
-    """
-    return {**actions, **{alias: a for a in actions.values() for alias in a.get('aliases', ())}}
-
-
-def settings_validate_aliases(settings):
-    actions = settings['actions']
-    # an alias is just another name for a command. It can't share a name with an existing command,
-    # nor can two commands share an alias.
-    # in short, the set of all top-level commands and their aliases must be disjoint from each other
-    counter = collections.Counter(
-        itertools.chain(actions.keys(), *(v.get('aliases', ()) for v in actions.values())))
-    dups = [item for item, count in counter.items() if count > 1]
-
-    if dups:
-        raise ConflictingAliasError(f"Conflicting command aliases: {dups!r}")
-
-
-def load_settings():
-    settings = eval(open(SETTINGS_FILE_LOCATION).read())
-
-    # validation
-    settings_validate_aliases(settings)
-
-    return settings
-
-
 def main():
     # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
     # get the root of the repository. Use realpath to resolve symbolic links
@@ -210,7 +161,7 @@ def main():
     home_dir = os.path.expanduser('~')
 
     # get settings and set up command line parser
-    settings = load_settings()
+    settings = config.load_file(SETTINGS_FILE_LOCATION)
     actions = settings['actions']
     parser = create_command_line_parser(actions)
     args = parser.parse_args()
@@ -229,7 +180,7 @@ def main():
     argsdict = copy(vars(args))
     if 'func' in argsdict:
         del argsdict['action']
-        actions = resolve_action_aliases(actions)
+        actions = config.resolve_action_aliases(actions)
         args.func(actions[args.action], settings, **argsdict)
     else:
         symlink.create(settings['symlinks'], repo_home_dir, home_dir)
