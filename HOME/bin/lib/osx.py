@@ -61,7 +61,7 @@ def defaults_read(domain, key, missing_ok=False):
 
     log.debug(f"Result was: {result!r}")
 
-    result_type = re.match('Type is (\w+)', result.decode()).group(1)
+    result_type = re.match(r'Type is (\w+)', result.decode()).group(1)
     type = DEFAULTS_TO_PYTHON_TYPE[result_type]
 
     cmd = ['defaults', 'read', domain, key]
