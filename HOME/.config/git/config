@@ -69,3 +69,4 @@
 	plg = log --graph --pretty=format:'%C(auto)%h%d%C(reset) %s %C(green)(%ar) %C(bold blue)<%an>%C(reset)'
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
+	authors = shortlog -sne
