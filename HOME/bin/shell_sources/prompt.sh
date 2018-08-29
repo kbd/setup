@@ -144,6 +144,13 @@ _prompt_prefix() {
     echo -n "${PROMPT_PREFIX-$c}"  # user-specified prefix, or default of $c
 }
 
+_prompt_script() {
+    # report if the session is being recorded
+    if [[ -n "$SCRIPT" ]]; then
+        echo -n "$eo${COL[grey]}$ec{$SCRIPT}$eo${COL[reset]}$ec"
+    fi
+}
+
 # virtual env
 _prompt_venv() {
     # example environment variable set in a venv:
@@ -191,7 +198,7 @@ prompt_ensure_save_return_code() {
 }
 
 generate_ps1() {
-    local funcs="precmd prefix venv date user at host screen sep path repo jobs char"
+    local funcs="precmd prefix script venv date user at host screen sep path repo jobs char"
     for f in $(_prompt_filter "$funcs"); do
         "_prompt_$f"
     done
