@@ -40,7 +40,6 @@
             'func': 'install_packages',
             'args': [
                 ('language_filter', {'help': 'Only update languages matching regex', 'optional': True}),
-                ('package_filter', {'help': 'Only update packages matching regex', 'optional': True}),
             ],
             'help': 'Install/update language-specific packages 🐍'
         },
@@ -105,53 +104,10 @@
     },
     'packages': {
         'python': {
-            'cmd': ['pip3', 'install', '--upgrade', '{package}'],
-            'cmd_all': ['pip3', 'install', '-r', '{packages}'],
-            'packages': [
-                'ansible',
-                'attrs',
-                'black',
-                'boto3',
-                'Django',
-                'fire',
-                'flask',
-                'flask-restful',
-                'flask-socketio',
-                'ftfy',
-                'ipdb',
-                'jupyter',
-                'pandas',
-                'pip',
-                'pipdeptree',
-                'pipenv',
-                'psycopg2-binary',
-                'pygit2',
-                'python-dateutil',
-                'pudb',
-                'pygments',
-                'pyquery',
-                'pytest',
-                'PyYAML',
-                'requests',
-                'rethinkdb',
-                'setuptools',
-                'Sphinx',
-                'sqlalchemy',
-                'tmuxp',
-                'virtualenv',
-            ],
+            'cmd': ['pip3', 'install', '-r', 'conf/requirements.txt'],
         },
         'node': {
-            'cmd': ['yarn', 'global', 'add', '{package}'],
-            'packages': [
-                'coffeescript',
-                'typescript',
-            ],
-        },
-        'ruby': {
-            'cmd': ['gem', 'install', '{package}'],
-            'packages': [
-            ]
+            'cmd': ['yarn', 'global', 'add', 'coffeescript', 'typescript'],
         },
     },
     'addons': {
