@@ -79,13 +79,11 @@
         ],
         # 'ignores_file': '.gitignore_global',  # piggyback off of gitignore_global
         # the relative path should be correct because 'setup' sets the cwd to the root of the repo
-        'ignores': list(
-            filter(
-                # ignore comments, negations, and empty lines
-                lambda line: not line.startswith(('#', '!')) and line.strip(),
-                open('HOME/.config/git/ignore').read().splitlines()
-            )
-        ),
+        'ignores': [
+            line for line in open('HOME/.config/git/ignore').read().splitlines()
+            # ignore comments, negations, and empty lines
+            if not line.startswith(('#', '!')) and line.strip()
+        ]
     },
     'homebrew': {
         'bundle': 'conf/Brewfile',
