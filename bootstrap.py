@@ -23,16 +23,14 @@ import os
 import subprocess
 
 REPO_URL = 'https://github.com/kbd/setup.git'
+HOMEBREW_INSTALL_CMD = '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
 
 def main():
     print("Installing Homebrew")
     if not bool(subprocess.call(['which', 'brew'])):
         print("Homebrew is installed")
     else:
-        subprocess.check_call(
-            '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"',
-            shell=True, executable='/bin/bash'
-        )
+        subprocess.check_call(HOMEBREW_INSTALL_CMD, shell=True, executable='/bin/bash')
 
     print("Installing git and Python 3")
     subprocess.check_call(['brew', 'install', 'git'])
