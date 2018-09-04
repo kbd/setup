@@ -94,6 +94,7 @@ def create(symlink_settings, source_dir, dest_dir):
     unless it's overridden in symlink_settings['pointers'].
 
     """
+    log.info(f"Creating symlinks: {source_dir} -> {dest_dir}")
     source_dir = os.path.expanduser(source_dir)
     dest_dir = os.path.expanduser(dest_dir)
     pointers = symlink_settings.get('pointers', {})

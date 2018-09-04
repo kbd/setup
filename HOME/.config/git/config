@@ -60,7 +60,7 @@
 	s = status
 	st = status
 	unstage = reset HEAD --
-	undo-commit = reset HEAD~
+	uncommit = reset HEAD~
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --pretty=format:'%C(blue)%ad %C(cyan)%cn %C(auto)%h%C(auto)%d%n %s%n%w(0,4,4)%+b' --stat
@@ -70,3 +70,8 @@
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
 	authors = shortlog -sne
+	# fl = "fix last", sl = "squash last"
+	fl = commit --amend -C HEAD
+	sl = commit --amend -c HEAD
+	fixup = !sh -c 'git commit --fixup $1 && GIT_EDITOR=true git rebase -i --autosquash $1~' -
+	squash = !sh -c 'git commit -C $1 --squash $1 && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $1~' -

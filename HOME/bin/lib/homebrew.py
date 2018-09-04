@@ -1,8 +1,6 @@
 """A library for controlling Homebrew through Python."""
-import getpass
 import logging
 import os
-import pwd
 import re
 import shutil
 import subprocess
@@ -23,19 +21,11 @@ def workflow(settings, fix_repo=False):
 
     ensure_command_line_tools_installed()
 
+    # update
     update()
 
-    # taps
-    update_taps(settings.get('taps', []))
-
-    # formulas
-    formulas = settings.get('formulas', [])
-    update_formulas(formulas)
-    leaves = get_leaves()
-    show_unexpected_formulas(formulas, leaves)
-
-    # casks
-    update_casks(settings.get('casks', []))
+    # install
+    bundle_install(settings['bundle'])
 
     # cleanup
     prune()
@@ -44,6 +34,13 @@ def workflow(settings, fix_repo=False):
 
     # post-install
     run_post_install(settings['post_install'])
+
+
+def bundle_install(path):
+    log.info("Running bundle install")
+    # if relative path, will be relative to root of repo
+    run(['brew', 'bundle', '-v', f"--file={path}"])
+    # it doesn't accept ('--file', path) or ('--file=', path)
 
 
 def ensure_homebrew_installed():
