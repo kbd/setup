@@ -6,13 +6,12 @@ import logging
 import os
 import re
 import subprocess
-import tempfile
 import zipfile
 from copy import copy
 from functools import partial
 
 from lib import config, symlink
-from lib.osx import brew, restart_os_functions, update_os_settings
+from lib.mac import brew, restart_os_functions, update_os_settings
 
 SETTINGS_FILE_LOCATION = 'conf/settings.py'
 
