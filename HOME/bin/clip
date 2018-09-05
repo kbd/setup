@@ -76,6 +76,7 @@ CLIPS = {
     'ib': '‽',
     'mindblown': '🤯',
     'scream': '😱',
+    'pizza': '🍕',
 }
 
 def print_clips(CLIPS):
