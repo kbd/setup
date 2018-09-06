@@ -30,6 +30,7 @@ brew "minimal-racket"
 cask "java"  #required for osquery
 brew "osquery"
 brew "ncdu"
+brew "parallel"
 brew "path-extractor"
 brew "perl"
 brew "pgcli"

@@ -39,11 +39,11 @@ def is_a_partial_directory(partials, file):
 
     This needs to check if the given destination path is within the partial directory.
     For example, if the file to symlink is '~/setup/HOME/.config/myconfig' and partials is
-    ['~/.config'], the destination is '~/.config/myconfig', expanduser on everything to be safe,
+    ['~/.config'], the destination is '~/.config/myconfig', expanduser on everything to be safe.
 
     """
     log.debug(f"Checking if dest path {file!r} is in partials: {partials!r}")
-    return os.path.isdir(file) and file in partials
+    return file in partials and (os.path.isdir(file) or not os.path.exists(file))
 
 
 def handle_partials(symlink_settings, repo_path, dest_path):
@@ -51,8 +51,8 @@ def handle_partials(symlink_settings, repo_path, dest_path):
     log.debug(f"{dest_path!r} is a partial location, not overwriting")
     # ensure directory exists
     if not os.path.lexists(dest_path):
-        log.debug(f"Partial directory {dest_path!r} doesn't exist, creating it")
-        os.mkdir(dest_path)
+        log.info(f"Partial directory {dest_path!r} doesn't exist, creating it")
+        os.makedirs(dest_path)
 
     # recurse into it and only create symlinks for files that exist in repo
     create(symlink_settings, repo_path, dest_path)

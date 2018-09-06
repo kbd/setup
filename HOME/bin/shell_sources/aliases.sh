@@ -63,8 +63,7 @@ alias ercho='>&2 echo'  # echo to stderr
 # "ps -p $$ -ocomm=" gives things like '-zsh', 'zsh', or '/usr/local/bin/zsh'
 # so get the basename, then strip non-alphanumeric characters
 alias last_command='fc -nl -1'
-alias map='xargs -n1'  # splits on spaces
-alias mapl='xargs -L1'  # map by line
+alias map='parallel'
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
 
 case $(current_shell) in

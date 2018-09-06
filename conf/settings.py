@@ -75,7 +75,8 @@
             # leave in place and not alter. Pointer directories can be partials, and partials can
             # be nested, otherwise subdirs within the partial will still be treated normally
             # partials should be an absolute path, possibly with the home directory
-            '~/.config'
+            '~/.config',
+            '~/.parallel',
         ],
         # 'ignores_file': '.gitignore_global',  # piggyback off of gitignore_global
         # the relative path should be correct because 'setup' sets the cwd to the root of the repo
