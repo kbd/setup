@@ -110,6 +110,7 @@
                 'npm', 'install', '-g',
                 'coffeescript',
                 'typescript',
+                'ts-node',
             ],
         },
     },
