@@ -106,7 +106,11 @@
             'cmd': ['pip3', 'install', '-r', 'conf/requirements.txt'],
         },
         'node': {
-            'cmd': ['yarn', 'global', 'add', 'coffeescript', 'typescript'],
+            'cmd': [
+                'npm', 'install', '-g',
+                'coffeescript',
+                'typescript',
+            ],
         },
     },
     'addons': {
