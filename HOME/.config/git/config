@@ -41,7 +41,7 @@
 # aliases
 [alias]
 	a = add
-	af = !git add "$(gsf)"
+	af = !git a "$(gsf)"
 	aa = add -A
 	au = add -u
 	ap = add -p
@@ -51,9 +51,12 @@
 	ca = commit -a
 	cam = commit -am
 	co = checkout
+	cof = !git co "$(gsf)"
 	cob = checkout -b
 	d = diff
+	df = !git d "$(gsf)"
 	dt = difftool
+	dtf = !git dt "$(gsf)"
 	ds = diff --staged
 	dts = difftool --staged
 	dst = difftool --staged
