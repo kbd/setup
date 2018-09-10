@@ -111,6 +111,7 @@
                 'coffeescript',
                 'typescript',
                 'ts-node',
+                'jest',
             ],
         },
     },
