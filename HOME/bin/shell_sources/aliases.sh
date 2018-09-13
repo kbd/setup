@@ -55,6 +55,7 @@ alias vi=vim
 alias vless=vimpager
 alias py=ipython
 alias tcl='rlwrap tclsh'
+alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias curl='curl -L'  # follow redirects by default
 alias s='git st'
 alias goog='googler -n3 --np'
