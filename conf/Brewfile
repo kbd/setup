@@ -26,6 +26,7 @@ brew "htop"
 brew "jq"
 brew "libgit2"
 brew "mas"
+brew "micro"
 brew "minimal-racket"
 cask "java"  #required for osquery
 brew "osquery"
