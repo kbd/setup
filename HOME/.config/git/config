@@ -52,6 +52,7 @@
 	cam = commit -am
 	co = checkout
 	cof = !git co "$(gsf)"
+	cf = !git cof
 	cob = checkout -b
 	d = diff
 	df = !git d "$(gsf)"
