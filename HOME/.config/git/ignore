@@ -12,3 +12,4 @@ node_modules/
 old/
 vendor/
 3rdparty/
+/scratch.*
