@@ -78,6 +78,8 @@ CLIPS = {
     'scream': '😱',
     'pizza': '🍕',
     'drool': '🤤',
+    'sleep': '😴',
+    'sleepy': '😪',
 }
 
 def print_clips(CLIPS):
