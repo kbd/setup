@@ -46,6 +46,8 @@
 	au = add -u
 	ap = add -p
 	br = branch
+	c = commit
+	cm = commit -m
 	ci = commit
 	cim = commit -m
 	ca = commit -a
@@ -59,10 +61,17 @@
 	dt = difftool
 	dtf = !git dt "$(gsf)"
 	ds = diff --staged
+	dl = diff @~..@
 	dts = difftool --staged
 	dst = difftool --staged
+	dtl = difftool @~..@
+	f = fetch
+	p = push
+	pf = push --force
+	pr = pull --rebase
 	s = status
 	st = status
+	sp = stash pop
 	unstage = reset HEAD --
 	uncommit = reset HEAD~
 	patch = !git --no-pager diff --no-color
