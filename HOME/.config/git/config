@@ -74,6 +74,7 @@
 	sp = stash pop
 	unstage = reset HEAD --
 	uncommit = reset HEAD~
+	info = remote show origin
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --pretty=format:'%C(blue)%ad %C(cyan)%cn %C(auto)%h%C(auto)%d%n %s%n%w(0,4,4)%+b' --stat
