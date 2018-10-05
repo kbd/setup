@@ -62,7 +62,8 @@ def get_templates(shell):
         'behind': f'{o}{fg.red}{c}↓{{}}{o}{s.reset}{c}',
         'branch': f'{o}{fg.yellow}{c}{{}}{o}{s.reset}{c}',
         'conflicted': f'{o}{fg.red}{c}✖{{}}{o}{s.reset}{c}',
-        'modified': f'{o}{fg.yellow}{c}✚\u200A{{}}{o}{s.reset}{c}',
+        'modified': f'{o}{fg.yellow}{c}+{{}}{o}{s.reset}{c}',
+        'deleted': f'{o}{fg.red}{c}-{{}}{o}{s.reset}{c}',
         'staged': f'{o}{fg.blue}{c}●{{}}{o}{s.reset}{c}',
         'stashed': f'{o}{fg.blue}{c}⚑{{}}{o}{s.reset}{c}',
         'untracked': f'{o}{fg.cyan}{c}…{{}}{o}{s.reset}{c}',
@@ -148,6 +149,7 @@ def get_repo_info(repo):
         'behind': behind,
         'staged': staged,
         'modified': status['GIT_STATUS_WT_MODIFIED'],
+        'deleted': status['GIT_STATUS_WT_DELETED'],
         'untracked': status['GIT_STATUS_WT_NEW'],
         'conflicted': status['GIT_STATUS_CONFLICTED'],
         'stashed': get_stash_count(repo)[1],  # just for the branch
