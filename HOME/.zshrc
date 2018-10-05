@@ -21,16 +21,8 @@ export HISTFILE="$HOME/.history"
 # this behavior of zsh is annoying: https://superuser.com/a/613817/
 ZLE_REMOVE_SUFFIX_CHARS=''
 
-# LS_COLORS
-# ls colors needs to be early because it apparently needs to precede complist
-# ls colors I expect: exe=red, dir=blue, symlink=pink, pipe=yellow
-export LS_COLORS='ex=31:di=34:ln=35:pi=33'
-# todo: update .LS_COLORS with my preferences and see what you'd lose in BSD ls
-# by switching to GNU ls (which respects LS_COLORS). IIRC GNU ls doesnt't show
-# Mac extended attributes on files.
-if type gdircolors &>/dev/null; then  # gdircolors is dircolors in coreutils
-    eval $(gdircolors -b $HOME/.LS_COLORS)
-fi
+# load LS_COLORS. Needs to precede zsh completion so it can use the same colors.
+eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
 
 # completion
 autoload -Uz compinit
