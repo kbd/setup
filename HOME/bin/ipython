@@ -29,11 +29,8 @@ import os
 import subprocess
 import sys
 
+CMD = '/usr/local/bin/ipython'
 DEFAULT_ARGS = ['--no-banner', '--no-confirm-exit', '--ext=autoreload']
-
-cmd = '/usr/local/bin/ipython'
-if sys.argv[0][-1] in '23456789':
-    cmd += sys.argv[0][-1]
 
 args = sys.argv[1:]
 for i, arg in enumerate(args):
@@ -47,4 +44,4 @@ else:
 
 args = DEFAULT_ARGS + args[:i] + ['--'] + args[i:]
 
-subprocess.call([cmd, *args])
+subprocess.call([CMD, *args])
