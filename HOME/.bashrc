@@ -33,7 +33,7 @@ else
 
     # 3rd party software config (only local)
     eval "$(thefuck --alias)"
-    source "$HOME/.fzf.bash"
+    source "$HOME/.config/fzf/fzf.bash"
 fi
 
 # 3rd party software config

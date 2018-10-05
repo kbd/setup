@@ -84,7 +84,7 @@ bindkey "\e[3~" delete-char
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
 eval "$(pyenv init -)"
-source "$HOME/.fzf.zsh"
+source "$HOME/.config/fzf/fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell_sources/**/*.(z|)sh; do
