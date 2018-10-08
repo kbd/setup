@@ -42,6 +42,13 @@ alias dud='du -d0 .'
 alias grep='grep --color=auto'
 alias g=grep
 alias h=history
+alias curl='curl -L'  # follow redirects by default
+alias map='parallel'
+alias vi=vim
+alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
+alias vless=vimpager
+alias py=ipython
+alias pe=path-extractor
 
 alias edit=\$EDITOR "$@"
 alias e=edit
@@ -49,24 +56,16 @@ alias e.='e .'
 alias o=open
 alias o.='o .'
 
-alias pe=path-extractor
-alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
-alias vi=vim
-alias vless=vimpager
-alias py=ipython
+alias s='git st'
+alias gl='git l'
+
 alias tcl='rlwrap tclsh'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias ts-node="ts-node -D6133"  # disable 'declared but not used' errors
-alias curl='curl -L'  # follow redirects by default
-alias s='git st'
-alias gl='git l'
 alias goog='googler -n3 --np'
 
 alias ercho='>&2 echo'  # echo to stderr
-# "ps -p $$ -ocomm=" gives things like '-zsh', 'zsh', or '/usr/local/bin/zsh'
-# so get the basename, then strip non-alphanumeric characters
 alias last_command='fc -nl -1'
-alias map='parallel'
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
 
 case $(current_shell) in

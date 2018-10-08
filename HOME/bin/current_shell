@@ -1,3 +1,5 @@
 #!/bin/sh
 pid=${1:-$PPID}  # so it can be used in scripts that can pass their parent
+# "ps -p $pid -ocomm=" gives things like '-zsh', 'zsh', or '/usr/local/bin/zsh'
+# so get the basename, then strip non-alphanumeric characters
 basename -- $(ps -p $pid -ocomm=) | sed "s/[^[:alnum:]]//g"
