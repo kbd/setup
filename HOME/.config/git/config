@@ -68,6 +68,7 @@
 	f = fetch
 	pf = push --force
 	pr = pull --rebase
+	ri = rebase -i
 	s = status
 	st = status
 	sp = stash pop
