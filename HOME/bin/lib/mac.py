@@ -6,7 +6,7 @@ from . import homebrew
 log = logging.getLogger(__name__)
 
 
-def brew(action, settings, *args, **kwargs):
+def brew(settings, *args, **kwargs):
     # filter for valid args to workflow
     kwargs = {k: v for k, v in kwargs.items() if k in ['fix_repo']}
     homebrew.workflow(settings['homebrew'], **kwargs)
