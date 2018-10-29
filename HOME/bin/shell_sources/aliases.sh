@@ -49,6 +49,8 @@ alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
 alias vless=vimpager
 alias py=ipython
 alias pe=path-extractor
+alias c=cat
+alias cat=bat
 
 alias edit=\$EDITOR "$@"
 alias e=edit
