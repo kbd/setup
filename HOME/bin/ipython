@@ -30,7 +30,7 @@ import subprocess
 import sys
 
 CMD = '/usr/local/bin/ipython'
-DEFAULT_ARGS = ['--no-banner', '--no-confirm-exit', '--ext=autoreload']
+DEFAULT_ARGS = ['--no-banner', '--no-confirm-exit', '--no-term-title', '--ext=autoreload']
 
 args = sys.argv[1:]
 for i, arg in enumerate(args):
