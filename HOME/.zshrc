@@ -88,7 +88,6 @@ if [[ -z "$PYENV_SHELL" ]]; then
     # the path multiple times on repeated initializations.
     eval "$(pyenv init -)"
 fi
-
 source "$HOME/.config/fzf/fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed
