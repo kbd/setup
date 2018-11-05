@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
-
 """Fix 'ipython' to handle arguments more like 'python'.
 
 https://twitter.com/keithdevens/status/595294880533876736
-this is an imperfect hack because you could do "-c 'command'" and have command
+This is an imperfect hack because you could do "-c 'command'" and have command
 be a file in contrived cases, but this shouldn't cause problems normally
 
 To show why this is necessary, compare:
-~$ python -i bin/showargv -i
-['bin/showargv', '-i']
+⚡~$ python -i bin/argv -i
+['bin/argv', '-i']
+
+⚡~$ ipython -i bin/argv -i
 ...
+['/.../bin/argv']
 
-~$ ipython -i bin/showargv -i
-['.../bin/showargv']
+The right way is to use '--' to tell ipython that its arguments are finished:
+
+⚡~$ ipython -i bin/argv -- -i
 ...
+['/.../bin/argv', '-i']
 
-the right way is to use -- to tell ipython that its arguments are finished
-$ ipython -i bin/showargv -- -i
-['.../bin/showargv', '-i']
-
-This makes that unnecessary, so 'ipython' is interchangeable with 'python'.
-
-This should be created as 'ipython' but symlinked to 'ipython2' and 'ipython3'
+This shim makes that unnecessary, so 'ipython' is interchangeable with 'python'.
 
 """
 
