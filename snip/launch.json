@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+    {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach to Process",
+        "port": 9229,
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug TypeScript",
+        "env": {"TS_NODE_FILES": "true"},
+        "runtimeArgs": ["-r", "ts-node/register"],
+        "args": ["${relativeFile}"],
+    },
+    ]
+}
