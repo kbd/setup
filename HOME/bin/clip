@@ -81,6 +81,7 @@ CLIPS = {
     'drool': '🤤',
     'sleep': '😴',
     'sleepy': '😪',
+    'el': '…',
 }
 
 def print_clips(CLIPS):
