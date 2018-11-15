@@ -82,6 +82,7 @@ CLIPS = {
     'sleep': '😴',
     'sleepy': '😪',
     'el': '…',
+    'cent': '¢',
 }
 
 def print_clips(CLIPS):
