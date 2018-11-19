@@ -44,12 +44,11 @@ t() {
     fi
 
     for f in "$@"; do
-        if [[ "$f" == */ ]]; then  # enable 'touch' to work with directories
-            mkdir -p -- "$f"
-        else
-            mkdir -p -- "$(dirname -- "$f")"
+        local d="$f"
+        if [[ "$f" != */ ]]; then  # enable with directories (end in /)
+            d="$(dirname -- "$f")"
         fi
-        touch -- "$f"
+        mkdir -p -- "$d" && touch -- "$f"
     done
 }
 
@@ -61,8 +60,7 @@ td() {
     fi
 
     for d in "$@"; do
-        mkdir -p -- "$d"
-        touch -- "$d"
+        mkdir -p -- "$d" && touch -- "$d"
     done
 }
 
