@@ -38,7 +38,7 @@ cl() {
 
 # repeat
 rep() {
-    # https://stackoverflow.com/a/5349842/837424
+    # https://stackoverflow.com/a/5349842
     printf -- "$1%.s" $(seq 1 ${2-$(tput cols)})
 }
 

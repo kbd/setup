@@ -134,7 +134,7 @@ _prompt_precmd() {
 }
 
 _prompt_pad_unicode_width() {
-    # https://stackoverflow.com/a/7123564/837424
+    # https://stackoverflow.com/a/7123564
     # $1 = string $2 = width
     echo -n "$eo$(tput sc)$ec$(rep ' ' $2)$eo$(tput rc)$1$ec"
 }
