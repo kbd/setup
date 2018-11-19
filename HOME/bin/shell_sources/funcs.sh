@@ -28,12 +28,42 @@ mcd() {
         ercho "missing argument"
         return 1
     fi
-    mkdir -p "$1" && cd "$1";
+    mkdir -p -- "$1" && cd -- "$1"
 }
 
 # cd + ls
 cl() {
-    cd "$1" && ls "${@:2}"
+    cd -- "$1" && ls "${@:2}"
+}
+
+# touch, creating intermediate directories
+t() {
+    if [[ -z "$1" ]]; then
+        ercho "missing argument"
+        return 1
+    fi
+
+    for f in "$@"; do
+        if [[ "$f" == */ ]]; then  # enable 'touch' to work with directories
+            mkdir -p -- "$f"
+        else
+            mkdir -p -- "$(dirname -- "$f")"
+        fi
+        touch -- "$f"
+    done
+}
+
+# touch directory
+td() {
+    if [[ -z "$1" ]]; then
+        ercho "missing argument"
+        return 1
+    fi
+
+    for d in "$@"; do
+        mkdir -p -- "$d"
+        touch -- "$d"
+    done
 }
 
 # repeat
