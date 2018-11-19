@@ -66,6 +66,7 @@
 	dst = difftool --staged
 	dtl = difftool @~..@
 	f = fetch
+	lu = ls-files --others --exclude-standard # "list untracked"
 	pf = push --force
 	pr = pull --rebase
 	ri = rebase -i
