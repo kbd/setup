@@ -14,6 +14,11 @@
         "env": {"TS_NODE_FILES": "true"},
         "runtimeArgs": ["-r", "ts-node/register"],
         "args": ["${relativeFile}"],
+        // https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_skipping-uninteresting-code-node-chrome
+        "skipFiles": [
+            "${workspaceFolder}/node_modules/**/*.js",
+            "<node_internals>/**/*.js"
+        ]
     },
     ]
 }
