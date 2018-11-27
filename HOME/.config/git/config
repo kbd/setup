@@ -65,6 +65,7 @@
 	dts = difftool --staged
 	dst = difftool --staged
 	dtl = difftool @~..@
+	email = config user.email
 	f = fetch
 	lu = ls-files --others --exclude-standard # "list untracked"
 	pf = push --force
