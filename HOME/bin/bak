@@ -1,15 +1,95 @@
 #!/usr/bin/env python3
 import argparse
-import logging
+import datetime
 import os
+import re
+import shutil
+import sys
 
-from lib import backup
+BACKUP_FORMAT = ".{ext}.{ts}"
+EXTENSION = 'bak'
+TIMESTAMP_FORMAT = '%Y%m%dT%H%M%S'
+TIMESTAMP_REGEX = r'\d{8}T\d{6}'
+TIMESTAMP_LENGTH = 8+1+6
 
-log = logging.getLogger(__name__)
+
+NUM_ERRORS = 0
+
+def printerr(*args, **kwargs):
+    global NUM_ERRORS
+    print("Error:", *args, **kwargs, file=sys.stderr)
+    NUM_ERRORS += 1
+
+
+def current_timestamp():
+    return datetime.datetime.now()
+
+
+def current_timestamp_str():
+    return current_timestamp().strftime(TIMESTAMP_FORMAT)
+
+
+def backup_path(path, format=BACKUP_FORMAT):
+    """
+    Create a backup path given path. Use case is that a file exists at path and
+    you want to rename it to (a non-existent) backup path. Obviously there's a
+    small race condition (where a file is created at the backup path you
+    specify before you move the file there but after this determines the backup
+    path), but that's not worth handling.
+
+    'format' is a string that will be formatted, filling in the
+    'ext' (extension) and 'ts' (timestamp) values.
+    """
+    ts = current_timestamp_str()
+    while os.path.exists(path):  # keep adding to filename until it doesn't exist
+        # strip trailing slash in case of directory
+        path = path.rstrip('/') + BACKUP_FORMAT.format(ext=EXTENSION, ts=ts)
+
+    return path
+
+
+def original_file_path(path):
+    """
+    Given a backup path, get the original file path by stripping off
+    backup filename componenents.
+    """
+    bak = BACKUP_FORMAT.format(ext=EXTENSION, ts=TIMESTAMP_REGEX).replace('.', r'\.')
+    regex = rf'^(.*?)(?:{bak})+$'
+    return re.sub(regex, r'\1', path)
+
+
+def find_backup_files(original, files):
+    """Filter the provided 'files' list to find backup files of the 'original' filename"""
+    extension_regex = rf'(?:\.{EXTENSION}\.{TIMESTAMP_REGEX})+$'
+    pattern = re.escape(original) + extension_regex
+    regex = re.compile(pattern)
+    return [f for f in files if regex.match(f)]
+
+
+def most_recent_backup_file(original_path):
+    """Find the most recent backup file for the 'original_path'"""
+    # The date format sorts properly, so no need to actually parse the dates.
+    files = os.listdir(os.path.dirname(os.path.abspath(original_path)))
+    backup_files = find_backup_files(original_path, files)
+    if not backup_files:
+        return None
+
+    # in case of a file that needed repeated timestamps added, use length as tiebreaker
+    backup_files.sort(key=lambda x: (x[-TIMESTAMP_LENGTH:], len(x)), reverse=True)
+    return backup_files[0]
+
+
+def move_file(from_path, to_path, keep=False):
+    print(f"{'Copying' if keep else 'Moving'} {from_path!r} to {to_path!r}")
+    if keep:
+        func = shutil.copytree if os.path.isdir(from_path) else shutil.copy2
+        func(from_path, to_path)
+    else:
+        os.rename(from_path, to_path)
 
 
 def restore_file(path, keep=False):
-    """Restore backed up file to its original location
+    """Restore backed up file to its original location.
 
     If 'path' matches a backup pattern, derive its original location from that
     and restore it.
@@ -17,23 +97,27 @@ def restore_file(path, keep=False):
     If 'path' doesn't match a backup pattern, assume it's the original and
     find the most recent backup file in the same directory and restore it.
     """
-    original_path = backup.get_original_file_path(path)
+    original_path = original_file_path(path)
     if original_path == path:  # original location provided
-        path = backup.get_most_recent_backup_file_for_file(original_path)
+        path = most_recent_backup_file(original_path)
 
     if not path:
-        log.warning(f"No backup file for {original_path!r} found")
+        printerr(f"No backup file for {original_path!r} found")
         return
 
     if os.path.exists(original_path):
-        log.warning(f"Original file path exists at {original_path!r}. Not restoring.")
+        printerr(f"Original file exists at {original_path!r}. Not restoring.")
         return
 
     if not os.path.exists(path):
-        log.warning(f"Path {path!r} doesn't exist, skipping")
+        printerr(f"Path {path!r} doesn't exist, skipping")
         return
 
-    backup.move_file(path, original_path, keep)
+    move_file(path, original_path, keep)
+
+
+def backup_file(path, keep=False):
+    move_file(path, backup_path(path), keep)
 
 
 def main(args):
@@ -47,19 +131,19 @@ def main(args):
             continue
 
         if not os.path.exists(file):
-            log.warning(f"File {file!r} doesn't exist, skipping")
+            printerr(f"File {file!r} doesn't exist, skipping")
             continue
 
-        backup.backup_file(file, keep)
+        backup_file(file, keep)
+
+    return NUM_ERRORS > 0
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-
     parser = argparse.ArgumentParser(description='Back up specified files')
     parser.add_argument('files', nargs='+', help='Files to back up')
     parser.add_argument('-k', '--keep', action='store_true', help='Keep existing file')
     parser.add_argument('-r', '--restore', action='store_true', help='Restore original file')
 
     args = parser.parse_args()
-    main(args)
+    sys.exit(main(args))

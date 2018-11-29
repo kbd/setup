@@ -12,7 +12,10 @@ def test_run_call_cmd():
     with patch('lib.utils.subprocess.run') as run:
         utils.run(cmd)
 
-    run.assert_called_with(cmd, check=True, shell=False, executable=None, stdout=None, input=None)
+    run.assert_called_with(
+        cmd, check=True, shell=False, stdout=None,
+        executable=None, input=None, cwd=None, env=None
+    )
 
 
 def test_run_call_shell_cmd():
@@ -20,7 +23,10 @@ def test_run_call_shell_cmd():
     with patch('lib.utils.subprocess.run') as run:
         utils.run(cmd)
 
-    run.assert_called_with(cmd, check=True, shell=True, executable=EXECUTABLE, stdout=None, input=None)
+    run.assert_called_with(
+        cmd, check=True, shell=True, stdout=None,
+        executable=EXECUTABLE, input=None, cwd=None, env=None
+    )
 
 
 def test_run_call_shell_output():
@@ -28,7 +34,10 @@ def test_run_call_shell_output():
     with patch('lib.utils.subprocess.run') as run:
         utils.run(cmd, cap=True)
 
-    run.assert_called_with(cmd, check=True, shell=True, executable=EXECUTABLE, stdout=subprocess.PIPE, input=None)
+    run.assert_called_with(
+        cmd, check=True, shell=True, stdout=subprocess.PIPE,
+        executable=EXECUTABLE, input=None, cwd=None, env=None
+    )
 
 
 def test_run_call_shell_input():
@@ -37,7 +46,10 @@ def test_run_call_shell_input():
     with patch('lib.utils.subprocess.run') as run:
         utils.run(cmd, input=input)
 
-    run.assert_called_with(cmd, check=True, shell=True, executable=EXECUTABLE, stdout=None, input=input.encode())
+    run.assert_called_with(
+        cmd, check=True, shell=True, stdout=None,
+        executable=EXECUTABLE, input=input.encode(), cwd=None, env=None
+    )
 
 
 def test_run_call_cmd_cap_input():
@@ -46,7 +58,10 @@ def test_run_call_cmd_cap_input():
     with patch('lib.utils.subprocess.run') as run:
         utils.run(cmd, cap=True, input=input)
 
-    run.assert_called_with(cmd, check=True, shell=False, executable=None, stdout=subprocess.PIPE, input=input.encode())
+    run.assert_called_with(
+        cmd, check=True, shell=False, stdout=subprocess.PIPE,
+        executable=None, input=input.encode(), cwd=None, env=None
+    )
 
 
 def test_run_shell_output():
@@ -59,4 +74,3 @@ def test_run_shell_input():
     output = utils.run(['cat'], cap=True, input='hello')
     expected_output = 'hello'
     assert output == expected_output
-

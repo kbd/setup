@@ -3,9 +3,6 @@ import fnmatch
 import logging
 import os
 
-from lib import backup
-
-
 log = logging.getLogger(__name__)
 
 
@@ -74,6 +71,17 @@ def handle_existing_symlink(repo_path, dest_path):
         os.remove(dest_path)
 
 
+def backup_file(path):
+    backup_path = path
+    ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
+    while os.path.exists(backup_path):  # keep adding to filename until it doesn't exist
+        # strip trailing slash in case of directory
+        backup_path = backup_path.rstrip('/') + '.bak.' + ts
+
+    os.rename(path, backup_path)
+    return backup_path
+
+
 def handle_existing_path(partials, repo_path, dest_path):
     "Handle existing symlink, return True if there's nothing left to do."
     if os.path.lexists(dest_path):
@@ -83,7 +91,7 @@ def handle_existing_path(partials, repo_path, dest_path):
         elif is_a_partial_directory(partials, dest_path):
             log.debug(f"{dest_path!r} is a partial, not backing up")
         else:
-            backup.backup_file(dest_path)
+            backup_file(dest_path)
 
 
 def create(symlink_settings, source_dir, dest_dir):

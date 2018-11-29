@@ -1,9 +1,8 @@
 import datetime
-import imp
 import os as os_module
 import pytest
 import unittest.mock as mock
-from os.path import join, expanduser
+from os.path import join
 from unittest.mock import call, patch
 
 import _utils
@@ -54,6 +53,7 @@ def actions():
 # mock everything in 'os', except use the real os.path.join and fake expanduser
 @patch('lib.symlink.os', **{
     'path.join': os_module.path.join,
+    'path.dirname': os_module.path.dirname,
     'path.expanduser': lambda x: x.replace('~', '/Users/user'),
 })
 class TestCreateSymlinks(object):
@@ -111,7 +111,7 @@ class TestCreateSymlinks(object):
         with patch('lib.symlink.create_symlink') as create_symlink:
             symlink.create(symlink_settings, SOURCE_DIR, DEST_DIR)
 
-        os.mkdir.assert_called_with('/Users/user/.config')
+        os.makedirs.assert_called_with('/Users/user/.config')
 
         expected_calls = []
         for file in files_within_config:
@@ -149,9 +149,10 @@ class TestCreateSymlinks(object):
             return exist_check_count <= 1
 
         os.path.exists.side_effect = exists
-        with patch('lib.backup.os', os):
-            with patch('lib.backup.get_current_timestamp', return_value=timestamp):
-                new_path = symlink.backup.get_backup_path(original_path)
+        with patch('lib.symlink.os', os):
+            with patch('lib.symlink.datetime') as dt:
+                dt.datetime.now.return_value = timestamp
+                new_path = symlink.backup_file(original_path)
         assert new_path == expected_path
 
     def test_handle_existing_path_no_existing_file(self, os, partials):
@@ -182,7 +183,7 @@ class TestCreateSymlinks(object):
         # the file is renamed and that handle_existing_path returns True
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
-        with mock.patch('lib.backup.backup_file') as backup_file:
+        with mock.patch('lib.symlink.backup_file') as backup_file:
             return_value = symlink.handle_existing_path(partials, 'repo_path', 'dest_path')
 
         assert bool(return_value) is False
@@ -193,7 +194,7 @@ class TestCreateSymlinks(object):
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
         os.path.isdir.return_value = True
-        with mock.patch('lib.backup.backup_file') as backup_file:
+        with mock.patch('lib.symlink.backup_file') as backup_file:
             return_value = symlink.handle_existing_path(
                 partials, 'repo/HOME/.config', '/Users/user/.config')
 
@@ -205,7 +206,7 @@ class TestCreateSymlinks(object):
         os.path.lexists.return_value = True
         os.path.islink.return_value = False
         os.path.isdir.return_value = False
-        with mock.patch('lib.backup.backup_file') as backup_file:
+        with mock.patch('lib.symlink.backup_file') as backup_file:
             return_value = symlink.handle_existing_path(
                 partials, 'repo/HOME/.config', '/Users/user/.config')
 
@@ -241,20 +242,3 @@ def test_follow_pointer_file(symlink_settings):
     expected = os_module.path.join(dest_dir, pointers['karabiner.xml'])
     actual = symlink.follow_pointer(pointers, dest_dir, 'karabiner.xml')
     assert actual == expected
-
-
-def test_resolve_action_aliases(actions):
-    actions = actions['actions']
-    assert 'pull' in actions
-    assert 'update' not in actions
-    updated_actions = setup.resolve_action_aliases(actions)
-    assert 'update' in updated_actions and updated_actions['update'] == actions['pull']
-
-
-def test_action_aliases_conflict(actions):
-    actions['actions']['pull']['aliases'] = ['pull']  # alias refers to an existing command
-    with pytest.raises(
-        setup.ConflictingAliasError,
-        message="Expecting failure caused by conflicting alias"
-    ):
-        updated_actions = setup.settings_validate_aliases(actions)
