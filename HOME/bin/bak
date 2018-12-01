@@ -69,16 +69,16 @@ def find_backup_files(original, files):
 def most_recent_backup_file(original_path):
     """Find the most recent backup file for the 'original_path'"""
     path = original_path.rstrip('/')  # strip trailing slash in case of directory
-    dir = os.path.dirname(path)
-    files = [os.path.join(dir, f) for f in os.listdir(dir)]
-    backup_files = find_backup_files(path, files)
+    dir, filename = os.path.split(path)
+    files = os.listdir(dir)
+    backup_files = find_backup_files(filename, files)
     if not backup_files:
         return None
 
     # The date format sorts properly, so no need to actually parse the dates.
     # in case of a file that needed repeated timestamps added, use length as tiebreaker
     backup_files.sort(key=lambda x: (x[-TIMESTAMP_LENGTH:], len(x)), reverse=True)
-    return backup_files[0]
+    return os.path.join(dir, backup_files[0])
 
 
 def move_file(from_path, to_path, keep=False):
