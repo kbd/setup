@@ -72,11 +72,10 @@ def handle_existing_symlink(repo_path, dest_path):
 
 
 def backup_file(path):
-    backup_path = path
+    backup_path = path.rstrip('/')  # strip trailing slash in case of directory
     ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
     while os.path.exists(backup_path):  # keep adding to filename until it doesn't exist
-        # strip trailing slash in case of directory
-        backup_path = backup_path.rstrip('/') + '.bak.' + ts
+        backup_path = backup_path + '.bak.' + ts
 
     os.rename(path, backup_path)
     return backup_path
