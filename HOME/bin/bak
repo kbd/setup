@@ -70,7 +70,7 @@ def most_recent_backup_file(original_path):
     """Find the most recent backup file for the 'original_path'"""
     path = original_path.rstrip('/')  # strip trailing slash in case of directory
     dir, filename = os.path.split(path)
-    files = os.listdir(dir)
+    files = os.listdir(dir or '.')
     backup_files = find_backup_files(filename, files)
     if not backup_files:
         return None
