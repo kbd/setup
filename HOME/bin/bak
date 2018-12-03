@@ -83,11 +83,11 @@ def most_recent_backup_file(original_path):
 
 def move_file(from_path, to_path, keep=False):
     print(f"{'Copying' if keep else 'Moving'} {from_path!r} to {to_path!r}")
+    func = os.rename
     if keep:
         func = shutil.copytree if os.path.isdir(from_path) else shutil.copy2
-        func(from_path, to_path)
-    else:
-        os.rename(from_path, to_path)
+
+    func(from_path, to_path)
 
 
 def restore_file(path, keep=False):
