@@ -34,6 +34,12 @@ alias l=ls
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
+# gnu ls
+# '--' necessary to correctly handle filenames beginning with -
+# bsd ls handles this correctly by default and doesn't allow --
+# indicator-style=none so you don't get directories with // at the end
+alias lsd='ls -d --indicator-style=none -- */'
+alias lld='ll -d --indicator-style=none -- */'
 
 alias wcl='wc -l'
 alias du='du -h'
@@ -71,6 +77,7 @@ alias ercho='>&2 echo'  # echo to stderr
 alias last_command='fc -nl -1'
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
 
+# SHELL SPECIFIC
 case $(current_shell) in
     zsh)
         alias history='history -i'  # always include timestamp
@@ -94,20 +101,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     alias awk=gawk
     alias sed=gsed
     alias tar=gtar
-
-    # bsd ls
-    alias ls='ls -FG'
-    # escape ls to ignore -F so you don't get directories with // at the end
-    alias lsd='\ls -dG */'
-    alias lld='\ls -hldG */'
+    alias ls='gls -F --color'
 
     alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
-else
-    # gnu ls
-    alias ls='ls -F --color'
-    # '--' necessary to correctly handle filenames beginning with -
-    # bsd ls handles this correctly by default and doesn't allow --
-    # indicator-style=none so you don't get directories with // at the end
-    alias lsd='ls -d --indicator-style=none -- */'
-    alias lld='ll -d --indicator-style=none -- */'
 fi
