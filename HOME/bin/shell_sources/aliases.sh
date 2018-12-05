@@ -42,6 +42,7 @@ alias lld='ll -d --indicator-style=none -- */'
 alias wcl='wc -l'
 alias du='du -h'
 alias dud='du -d0 .'
+alias ncdu='ncdu --color=dark'
 alias grep='grep --color=auto'
 alias g=grep
 alias h=history
