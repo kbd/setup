@@ -36,6 +36,21 @@ cl() {
     cd -- "$1" && ls "${@:2}"
 }
 
+# cp, creating directories if necessary
+cpm() {
+    # ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to cp.
+    local d="${@: -1}"
+    if [[ "$d" != */ ]]; then
+        # enable giving a directory that ends in /, inheriting normal cp behavior
+        d="$(dirname -- "$d")"
+    fi
+    if [[ ! -d "$d" ]]; then
+        echo "Creating '$d'"  # -v on Mac's mkdir -p does nothing
+        mkdir -p -- "$d"
+    fi
+    cp "$@"
+}
+
 # touch, creating intermediate directories
 t() {
     if [[ -z "$1" ]]; then
