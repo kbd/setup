@@ -36,14 +36,19 @@ cl() {
     cd -- "$1" && ls "${@:2}"
 }
 
+# dirname, but treat paths that end in slash as a directory
+dirnameslash(){
+    if [[ "$1" == */ ]]; then
+        echo "$1"
+    else
+        dirname -- "$1"
+    fi
+}
+
 # cp, creating directories if necessary
 cpm() {
     # ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to cp.
-    local d="${@: -1}"
-    if [[ "$d" != */ ]]; then
-        # enable giving a directory that ends in /, inheriting normal cp behavior
-        d="$(dirname -- "$d")"
-    fi
+    local d="$(dirnameslash "${@: -1}")"
     if [[ ! -d "$d" ]]; then
         echo "Creating '$d'"  # -v on Mac's mkdir -p does nothing
         mkdir -p -- "$d"
@@ -59,11 +64,7 @@ t() {
     fi
 
     for f in "$@"; do
-        local d="$f"
-        if [[ "$f" != */ ]]; then  # enable with directories (end in /)
-            d="$(dirname -- "$f")"
-        fi
-        mkdir -p -- "$d" && touch -- "$f"
+        mkdir -p -- "$(dirnameslash "$f")" && touch -- "$f"
     done
 }
 
