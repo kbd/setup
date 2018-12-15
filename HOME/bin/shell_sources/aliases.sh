@@ -9,6 +9,7 @@ export PLATFORM=$(uname)
 export PAGER=less
 export LESS='-iM'  # smart-case searches and status bar
 export EDITOR=vim
+export GIT_EDITOR=vim
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PYTHONDONTWRITEBYTECODE=1
