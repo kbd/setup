@@ -37,7 +37,7 @@ cl() {
 }
 
 # dirname, but treat paths that end in slash as a directory
-dirnameslash(){
+dirnameslash() {
     if [[ "$1" == */ ]]; then
         echo "$1"
     else
