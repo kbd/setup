@@ -16,6 +16,7 @@ pipdeptree
 pipenv
 psycopg2-binary
 pygit2
+pymongo
 python-dateutil
 pudb
 pygments
