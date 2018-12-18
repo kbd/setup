@@ -9,7 +9,6 @@
 
 # diff / merge config
 [diff]
-	# git has built-in knowledge of how to call certain diff tools
 	tool = kdiff3
 [merge]
 	tool = kdiff3
@@ -18,13 +17,14 @@
 [mergetool]
 	prompt = false
 
-# Sourcetree
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[difftool "vscode"]
+    cmd = code -n --wait --diff $LOCAL $REMOTE
 
 # below settings for pager + colors suggested by diff-so-fancy
 # https://github.com/so-fancy/diff-so-fancy
@@ -37,7 +37,6 @@
 	frag = magenta bold
 	commit = yellow bold
 	whitespace = red reverse
-
 
 # aliases
 [alias]
