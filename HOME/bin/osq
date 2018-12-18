@@ -1,5 +1,5 @@
 #!/bin/sh
-file=~/bin/osquery/$1.sql
+file="$HOME/bin/osquery/$1.sql"
 if [ ! -f "$file" ]; then
     # if there's an argument that starts with "select",
     # consider it a query and pass through to osqueryi
@@ -9,7 +9,7 @@ if [ ! -f "$file" ]; then
         fi
     done
 
-    echo "$file not found"
+    echo >&2 "$file not found"
     exit 1
 fi
 shift

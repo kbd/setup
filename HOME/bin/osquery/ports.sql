@@ -7,4 +7,6 @@ FROM processes AS process
 JOIN listening_ports AS listening
     ON process.pid = listening.pid
 WHERE listening.address IS NOT null
-    AND listening.address <> '';
+    AND listening.address <> ''
+ORDER BY listening.port
+;
