@@ -74,8 +74,8 @@
 	s = status
 	st = status
 	sp = stash pop
-	unstage = reset HEAD --
-	uncommit = reset HEAD~
+	unstage = reset
+	uncommit = reset @~
 	info = remote show origin
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
@@ -87,7 +87,7 @@
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
 	authors = shortlog -sne
 	# fl = "fix last", sl = "squash last"
-	fl = commit --amend -C HEAD
-	sl = commit --amend -c HEAD
+	fl = commit --amend -C@
+	sl = commit --amend -c@
 	fixup = !sh -c 'git commit --fixup $1 && GIT_EDITOR=true git rebase -i --autosquash $1~' -
 	squash = !sh -c 'git commit -C $1 --squash $1 && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $1~' -
