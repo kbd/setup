@@ -30,6 +30,7 @@
 # https://github.com/so-fancy/diff-so-fancy
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
+	editor = code -n --wait
 
 [color "diff"]
 	meta = yellow
