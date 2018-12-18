@@ -28,7 +28,7 @@ mcd() {
         ercho "missing argument"
         return 1
     fi
-    mkdir -p -- "$1" && cd -- "$1"
+    mkdir -p -- "$1" && cl "$@"
 }
 
 # cd + ls
