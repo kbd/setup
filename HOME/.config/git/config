@@ -74,8 +74,8 @@
 	s = status
 	st = status
 	sp = stash pop
-	unstage = reset
-	uncommit = reset @~
+	unstage = reset --
+	uncommit = reset @~ --
 	info = remote show origin
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
