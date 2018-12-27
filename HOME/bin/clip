@@ -7,6 +7,7 @@ from lib.utils import run
 CLIPS = {
     'shrug': r"¯\_(ツ)_/¯",
     'shrug2': r"¯\(°_o)/¯",
+    'shruge': '🤷‍♂️',
     'check': "✓",
     'chbox': "☑",
     'nochbox': "☐",
