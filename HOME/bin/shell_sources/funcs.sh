@@ -68,18 +68,6 @@ t() {
     done
 }
 
-# touch directory
-td() {
-    if [[ -z "$1" ]]; then
-        ercho "missing argument"
-        return 1
-    fi
-
-    for d in "$@"; do
-        mkdir -p -- "$d" && touch -- "$d"
-    done
-}
-
 # repeat
 rep() {
     # https://stackoverflow.com/a/5349842
