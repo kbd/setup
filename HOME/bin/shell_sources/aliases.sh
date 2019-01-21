@@ -57,6 +57,7 @@ alias c=cat
 alias cat=bat
 alias bat='bat --italic-text=always'
 alias x='chmod +x'
+alias hex='hexyl'
 
 alias edit=\$EDITOR "$@"
 alias e=edit
