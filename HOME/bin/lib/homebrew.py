@@ -28,7 +28,6 @@ def workflow(settings, fix_repo=False):
     bundle_install(settings['bundle'])
 
     # cleanup
-    prune()
     cleanup()
     clean_cache()
 
@@ -153,11 +152,6 @@ def delete_dir(dir):
 def update():
     log.info("Updating Homebrew")
     run(['brew', 'update'])
-
-
-def prune():
-    log.info("Running prune")
-    run(['brew', 'prune'])
 
 
 def upgrade_formulas():
