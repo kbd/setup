@@ -39,7 +39,7 @@
     },
     'packages': {
         'python': {
-            'cmd': ['pip3', 'install', '-r', 'conf/requirements.txt'],
+            'cmd': ['pip3', 'install', '--upgrade', '-r', 'conf/requirements.txt'],
         },
         'node': {
             'cmd': [
