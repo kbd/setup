@@ -86,6 +86,7 @@ CLIPS = {
     'cent': '¢',
     'crab': '🦀',
     'baller': '🏀',
+    'ok': '👌',
 }
 
 def print_clips(CLIPS):
