@@ -71,6 +71,8 @@
 	lu = ls-files --others --exclude-standard # "list untracked"
 	pf = push --force
 	pr = pull --rebase
+	r = rebase
+	rc = rebase --continue
 	ri = rebase -i
 	s = status
 	st = status
