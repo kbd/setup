@@ -45,7 +45,7 @@
 	aa = add -A
 	au = add -u
 	ap = add -p
-	br = branch
+	b = branch
 	c = commit
 	cm = commit -m
 	ci = commit
