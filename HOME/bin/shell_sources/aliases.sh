@@ -67,7 +67,7 @@ alias e.='e .'
 alias o=open
 alias o.='o .'
 
-alias s='git st'
+alias s='git s'
 alias gl='git l'
 
 alias tcl='rlwrap tclsh'

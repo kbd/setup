@@ -75,7 +75,7 @@
 	rc = rebase --continue
 	ri = rebase -i
 	s = status
-	st = status
+	st = stash
 	sp = stash pop
 	unstage = reset --
 	uncommit = reset @~ --
