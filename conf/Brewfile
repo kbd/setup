@@ -35,6 +35,7 @@ brew "mongodb"
 cask "java"  #required for osquery
 brew "osquery"
 brew "ncdu"
+brew "nim"
 brew "parallel"
 brew "path-extractor"
 brew "perl"
