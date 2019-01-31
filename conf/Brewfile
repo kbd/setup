@@ -77,6 +77,7 @@ brew "zsh-syntax-highlighting"
 
 cask "appcleaner"
 cask "caffeine"
+cask "coconutbattery"
 cask "cyberduck"
 cask "dbeaver-community"
 cask "docker"
