@@ -103,7 +103,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     alias awk=gawk
     alias sed=gsed
     alias tar=gtar
-    alias ls='gls -F --color'
+    alias ls='gls -F --color=auto'
 
     alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
 fi
