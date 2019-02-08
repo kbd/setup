@@ -48,6 +48,7 @@
                 'typescript',
                 'ts-node',
                 'jest',
+                'git-open',
             ],
         },
     },
