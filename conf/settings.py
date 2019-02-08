@@ -49,6 +49,7 @@
                 'ts-node',
                 'jest',
                 'git-open',
+                'npx',
             ],
         },
     },
