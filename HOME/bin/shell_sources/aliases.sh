@@ -86,7 +86,7 @@ case $(current_shell) in
         alias hs='h 0 | rg'  # 'history search'
 
         # global aliases (zsh-only)
-        alias -g FZF='$(!! | fzf)'
+        alias -g FZF='$(`last_command` | fzi)'
         alias -g L='| $PAGER'  # would be nice to map ↑ +this to ⌘l
     ;;
     bash)
