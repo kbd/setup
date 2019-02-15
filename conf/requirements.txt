@@ -3,6 +3,7 @@ attrs
 black
 boto3
 Django
+fabric
 fire
 flask
 flask-restful
