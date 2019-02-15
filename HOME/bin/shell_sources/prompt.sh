@@ -156,7 +156,7 @@ _prompt_venv() {
     # example environment variable set in a venv:
     # VIRTUAL_ENV=/Users/kbd/.local/share/virtualenvs/pipenvtest-vxNzUMMM
     if [[ -n "$VIRTUAL_ENV" ]]; then
-        local venv_id=$(basename -- "$VIRTUAL_ENV" | rev | cut -d- -f1 | rev)
+        local venv_id=$(basename -- "$VIRTUAL_ENV")
         echo -n "[$venv_id]"
     fi
 }
