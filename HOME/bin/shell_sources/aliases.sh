@@ -54,6 +54,7 @@ alias map='parallel'
 alias vi=vim
 alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
 alias vless=vimpager
+alias p=python3
 alias py=ipython
 alias pe=path-extractor
 alias c=cat
