@@ -5,7 +5,7 @@ if [[ -z "$PATH_SET" ]]; then
     export PATH="$HOME/bin:$HOME/bin/scripts:$PATH:$HOME/.cargo/bin"
     export PATH_SET=1
 fi
-export PLATFORM=$(uname)
+export PLATFORM="$(uname)"
 export PAGER=less
 export LESS='-iM'  # smart-case searches and status bar
 export EDITOR=vim
