@@ -79,6 +79,7 @@
 	sp = stash pop
 	unstage = reset --
 	uncommit = reset @~ --
+	url = remote get-url origin
 	info = remote show origin
 	rao = remote add origin
 	patch = !git --no-pager diff --no-color
