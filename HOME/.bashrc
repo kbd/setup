@@ -15,7 +15,7 @@ export HISTSIZE=100000
 stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
 
 if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
-    SOURCE_DIR="$SSHHOME/.sshrc.d/sources/"
+    SOURCE_DIR="$SSHHOME/.sshrc.d/sources"
     SELF="$SSHHOME/.sshrc"
 
     export PATH="$SSHHOME/.sshrc.d/bin:$PATH"
@@ -24,7 +24,7 @@ if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
     # bind my keyboard shortcuts
     bind -f "$SSHHOME/.sshrc.d/.inputrc"
 else
-    SOURCE_DIR="$HOME/bin/shell_sources/"
+    SOURCE_DIR="$HOME/bin/shell_sources"
     SELF="$HOME/.bashrc"
 
     # COMPLETIONS
@@ -41,7 +41,7 @@ eval "$(fasd --init auto)"
 
 # SOURCES
 for file in "$SOURCE_DIR"/**/*.sh; do
-    source "$file";
+    source "$file"
 done
 
 # configure prompt
