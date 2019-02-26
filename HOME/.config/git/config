@@ -87,6 +87,7 @@
 	pl1 = log --date=short --pretty=format:'%C(green)%ad %C(auto)%h %C(blue)%<(20,trunc)%an %C(reset)%<(70,trunc)%s%C(auto)%d'
 	plg = log --graph --pretty=format:'%C(auto)%h%d%C(reset) %s %C(green)(%ar) %C(bold blue)<%an>%C(reset)'
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
+	prune-remote = remote prune origin # prune branches deleted from remote
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
 	authors = shortlog -sne
 	# fl = "fix last", sl = "squash last"
