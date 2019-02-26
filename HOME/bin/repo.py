@@ -102,7 +102,7 @@ def get_stash_count(repo):
         return 0, 0  # can't stash on new repo
 
     stashes = check_output(['git', 'stash', 'list'], cwd=repo.workdir).decode().splitlines()
-    getbranch = re.compile(r'^.*?: WIP on (.*?):')
+    getbranch = re.compile(r'^[^:]+:[^:]+?(\S+):')
     counter = Counter(getbranch.match(s)[1] for s in stashes)
     return len(stashes), counter[repo.head.shorthand]
 
