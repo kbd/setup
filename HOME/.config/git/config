@@ -49,6 +49,7 @@
 	br = branch -r
 	c = commit
 	cm = commit -m
+	cmp = "!f() { git cm \"$@\" && git push; }; f"
 	ci = commit
 	cim = commit -m
 	ca = commit -a
