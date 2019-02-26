@@ -76,7 +76,6 @@ alias tcl='rlwrap tclsh'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias ts-node="ts-node -D6133"  # disable 'declared but not used' errors
 alias goog='googler -n3 --np'
-alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc' # make sshrc use gnu-tar
 
 alias ercho='>&2 echo'  # echo to stderr
 alias last_command='fc -nl -1'
@@ -107,6 +106,11 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     alias sed=gsed
     alias tar=gtar
     alias ls='gls -F --color=auto'
+
+    # have sshrc use GNU tar because tar-ing on Mac (with BSD tar) makes GNU tar
+    # spit out a bunch of warnings on the server from extended stuff it doesn't
+    # understand - https://github.com/Russell91/sshrc/pull/76
+    alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
 
     alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
 fi
