@@ -5,10 +5,10 @@ Enable password-less login to remote host using SSH keys
 """
 import argparse
 import getpass
-import logging
 import os
 import socket
 import subprocess
+import sys
 
 # todo: allow type and bit-length to be customizable?
 KEY_TYPE = 'rsa'
@@ -18,34 +18,32 @@ KEY_FILE = 'id_rsa'
 SSH_DIR = '~/.ssh'
 DEST_PATH = '~/.ssh/authorized_keys'
 
-KEYGEN_CMD = 'ssh-keygen -t {type} -b {bits} -C {comment} -f {file}'
-
-log = logging.getLogger()
+KEYGEN_CMD = 'ssh-keygen -t {type} -b {bits} -C \'{comment}\' -f "{file}"'
 
 
 def create_ssh_key():
     """Create the SSH key if necessary and return the path to the public key"""
     ssh_dir = os.path.expanduser(SSH_DIR)
     if not os.path.exists(ssh_dir):
-        log.info(".ssh dir doesn't exist, creating it")
+        print(".ssh dir doesn't exist, creating it")
         os.mkdir(ssh_dir)
-        log.info("Created ssh directory")
+        print("Created ssh directory")
 
     key_path = os.path.join(ssh_dir, KEY_FILE)
     public_key_path = key_path + '.pub'
     if os.path.exists(public_key_path):
-        log.info(f"Key exists at: {public_key_path}")
+        print(f"Key exists at: {public_key_path}")
     else:
-        log.info("No existing ssh key")
+        print("No existing ssh key")
 
         user = getpass.getuser()
         host = socket.gethostname()
         comment = f'{user}@{host}'
         cmd = KEYGEN_CMD.format(type=KEY_TYPE, bits=KEY_BITS, file=key_path, comment=comment)
 
-        log.info(f"Executing command: {cmd!r}")
+        print(f"Executing command: {cmd!r}")
         subprocess.check_call(cmd, shell=True)
-        log.info("Created key")
+        print("Created key")
 
     return public_key_path
 
@@ -53,17 +51,17 @@ def create_ssh_key():
 def upload_ssh_key(key_path, dest_path, host, user=None, port=None):
     """Copy the public key to the remote host"""
     remote_cmd = [
-        'key=$(cat)',        # save your key in an env var
-        'mkdir -p {dir}',    # ensure the directory exists
-        'touch {path}',      # ensure the file exists
-        'chmod go-w {dir}',  # ensure correct permissions
-        'chmod 600 {path}',  # http://www.openssh.com/faq.html#3.14
+        'key="$(cat)"',        # save your key in an env var
+        'mkdir -p "{dir}"',    # ensure the directory exists
+        'touch "{path}"',      # ensure the file exists
+        'chmod go-w "{dir}"',  # ensure correct permissions,
+        'chmod 600 "{path}"',  # https://www.complang.tuwien.ac.at/doc/openssh-server/faq.html#3.14
 
         # base command without being particular about error codes:
         # 'grep -qx "$key" {path} || echo $key >> {path}'  # write key if it doesn't exist
-        'key_exists=$(grep -qx -- "$key" {path}; echo $?)',
+        'key_exists=$(grep -qx -- "$key" "{path}"; echo $?)',
         'if [[ $key_exists == 1 ]]',
-        'then echo "$key" >> {path} && exit 99',
+        'then echo "$key" >> "{path}" && exit 99',
         'else exit $key_exists',
         'fi'
     ]
@@ -72,22 +70,23 @@ def upload_ssh_key(key_path, dest_path, host, user=None, port=None):
     if user:
         cmd.extend(['-l', user])
     if port:
-        cmd.extend(['-p', port])
+        cmd.extend(['-p', str(port)])
 
-    remote_cmd_str = '; '.join(remote_cmd).format(path=DEST_PATH, dir=os.path.dirname(DEST_PATH))
+    remote_cmd_str = '; '.join(remote_cmd).format(path=dest_path, dir=os.path.dirname(dest_path))
     cmd_str = f"{' '.join(cmd)} '{remote_cmd_str}'"
 
-    log.info(f"Executing: {cmd_str!r}")
+    print(f"Executing: {cmd_str!r}")
     ret = subprocess.call(cmd_str, shell=True)
 
     if ret == 0:
-        log.info("Key already exists on host")
+        print("Key already exists on host")
     elif ret == 99:
         # note, 99 should be within the user-defined return code range
         # http://tldp.org/LDP/abs/html/exitcodes.html
-        log.info("Successfully copied key to the server")
+        print("Successfully copied key to the server")
     else:
-        log.warning(f"Error: code {ret}")
+        print(f"Error: code {ret}", file=sys.stderr)
+        return ret
 
 
 def username(s):
@@ -105,7 +104,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.DEBUG)
-
     public_key_path = create_ssh_key()
-    upload_ssh_key(public_key_path, DEST_PATH, args.host, args.user, args.port)
+    ret = upload_ssh_key(public_key_path, DEST_PATH, args.host, args.user, args.port)
+    if ret:
+        sys.exit(ret)
