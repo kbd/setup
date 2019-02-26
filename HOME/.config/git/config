@@ -78,6 +78,7 @@
 	ri = rebase -i
 	s = status
 	st = stash
+	stl = stash list
 	sp = stash pop
 	unstage = reset --
 	uncommit = reset @~ --
