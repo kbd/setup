@@ -54,6 +54,7 @@
 	cim = commit -m
 	ca = commit -a
 	cam = commit -am
+	camp = "!f() { git cam \"$@\" && git push; }; f"
 	co = checkout
 	cof = !git co "$(gsf)"
 	cf = !git cof
