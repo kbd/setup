@@ -12,7 +12,7 @@ def run(cmd, check=True, cap=False, input=None, exe='/bin/bash', cwd=None, env=N
         cmd,
         check=check,
         shell=shell,
-        stdout=subprocess.PIPE if cap else None,
+        capture_output=cap,
         executable=exe if shell else None,
         input=input.encode() if input else None,
         cwd=cwd,

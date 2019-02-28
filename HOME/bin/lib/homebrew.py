@@ -4,6 +4,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 from itertools import chain
 
 from .utils import run
@@ -212,12 +213,16 @@ def ensure_command_line_tools_installed():
     """Ensure command line tools are installed."""
     log.info("Ensuring command line tools are installed")
     try:
-        run(['xcode-select', '--install'])
+        run(['xcode-select', '--install'], cap=True)
+        input("Hit enter when installer is finished, or ctrl+c to quit ")
     except subprocess.CalledProcessError as error:
         if error.returncode == 1:
-            log.info("Command line tools already installed")
+            log.info("Command line tools are installed")
         else:
             raise
+    except KeyboardInterrupt:
+        print("\nExiting")
+        sys.exit(1)
 
 
 def run_post_install(post_install):
