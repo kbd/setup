@@ -79,7 +79,7 @@
 	s = status
 	st = stash
 	stl = stash list
-	sp = stash pop
+	stp = stash pop
 	unstage = reset --
 	uncommit = reset @~ --
 	url = remote get-url origin
