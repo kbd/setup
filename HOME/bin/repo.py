@@ -108,7 +108,7 @@ def get_stash_count(repo):
 
 
 def get_repo_status(repo):
-    status = repo.status()
+    status = {} if repo.is_bare else repo.status()
     counts = Counter(status.values())
     final_counts = Counter()
     statuses = get_git_statuses()
