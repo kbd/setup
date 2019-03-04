@@ -47,6 +47,8 @@
 	ap = add -p
 	b = branch
 	br = branch -r
+	current-branch = symbolic-ref --short HEAD
+	current-tags = tag --list --points-at HEAD
 	c = commit
 	cm = commit -m
 	cmp = "!f() { git cm \"$@\" && git push; }; f"
@@ -70,6 +72,7 @@
 	dtl = difftool @~..@
 	email = config user.email
 	f = fetch
+	hash = rev-parse
 	lu = ls-files --others --exclude-standard # "list untracked"
 	pf = push --force
 	pr = pull --rebase
