@@ -186,18 +186,8 @@ _prompt_filter() {
     echo -n "$funcs"
 }
 
-prompt_save_return_code() {
-    _LAST_RETURN_CODE=$?
-}
-
-prompt_ensure_save_return_code() {
-    # run this after all PROMPT_COMMAND modifications have been run to ensure
-    # the previous retun code is recorded and can be displayed in the prompt
-    # only use in Bash. Run 'prompt_save_return_code' in precmd in Zsh.
-    PROMPT_COMMAND="prompt_save_return_code;$PROMPT_COMMAND";
-}
-
 generate_ps1() {
+    _LAST_RETURN_CODE=$?
     local funcs="precmd prefix script venv date user at host screen sep path repo jobs char"
     for f in $(_prompt_filter "$funcs"); do
         "_prompt_$f"

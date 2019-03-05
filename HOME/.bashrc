@@ -65,8 +65,6 @@ _prompt_precmd() {
     echo -n "$eo$(tabtitle '\w')$ec"
 }
 
-prompt_ensure_save_return_code  # (prompt.sh)
-
 if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
     if alias | grep -qE '^(alias )?cat='; then unalias cat; fi  # locally aliased to bat
 fi

@@ -84,7 +84,6 @@ export PROMPT_SHORT_DISPLAY=1
 register_prompt
 
 precmd() {
-    prompt_save_return_code
     tabtitle "$PWD"
 }
 
