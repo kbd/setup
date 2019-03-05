@@ -10,6 +10,7 @@ shopt -s expand_aliases
 export HISTCONTROL='ignoreboth'
 export HISTTIMEFORMAT="[%F %T %z] "
 export HISTSIZE=100000
+export HISTFILE=~/.bash_history
 
 # key binds
 stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
