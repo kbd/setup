@@ -12,6 +12,7 @@ export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PYTHONDONTWRITEBYTECODE=1
+export PYTHONBREAKPOINT=pudb.set_trace
 export PIPENV_SHELL_FANCY=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export GOPATH="$HOME/go"
