@@ -48,7 +48,6 @@ alias du='du -h'
 alias dud='du -d0 .'
 alias ncdu='ncdu --color=dark'
 alias grep='grep --color=auto'
-alias g=grep
 alias h=history
 alias curl='curl -L'  # follow redirects by default
 alias map='parallel'
@@ -70,6 +69,7 @@ alias e.='e .'
 alias o=open
 alias o.='o .'
 
+alias g=git
 alias s='git s'
 alias gl='git l'
 
