@@ -1,3 +1,4 @@
-HOME/.config/machine_specific/*
+/HOME/.config/machine_specific/*
+/priv/
 3rdparty/
 .pytest_cache/
