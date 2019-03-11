@@ -58,9 +58,11 @@ def get_shell():
 def get_templates(shell):
     o, c = e[shell].o.replace('{', '{{'), e[shell].c.replace('}', '}}')
     return {
+        'parent': f'{o}{fg.yellow}{s.bold}{c}>{o}{s.reset}{c}',
+        'branch': f'{o}{fg.yellow}{c}{{}}{o}{s.reset}{c}',
+        'space': ' ',
         'ahead': f'{o}{fg.green}{c}↑{{}}{o}{s.reset}{c}',
         'behind': f'{o}{fg.red}{c}↓{{}}{o}{s.reset}{c}',
-        'branch': f'{o}{fg.yellow}{c}{{}}{o}{s.reset}{c}',
         'conflicted': f'{o}{fg.red}{c}✖{{}}{o}{s.reset}{c}',
         'modified': f'{o}{fg.yellow}{c}+{{}}{o}{s.reset}{c}',
         'deleted': f'{o}{fg.red}{c}-{{}}{o}{s.reset}{c}',
@@ -80,16 +82,18 @@ def get_repo(dir):
 
 def get_repo_branch(repo):
     if repo.head_is_detached:
-        # this is rare and I don't see a good way to get this info out of pygit2
-        ret = run(
-            ['git', 'describe', '--all', '--exact-match', 'HEAD'],
-            stdout=PIPE, stderr=PIPE, cwd=repo.path
-        )
-        if not ret.returncode: #  if success
+        # I don't see a good way to get any of this info out of pygit2
+
+        # gives things like 'tags/tag_name' or 'heads/branch_name' if head
+        # is detached but there's a tag or branch pointing to the current commit
+        ret = run(['git', 'describe', '--all', '--exact-match', 'HEAD'],
+            capture_output=True, cwd=repo.workdir)
+        if not ret.returncode:  # if success
             return ret.stdout.decode().strip()
 
-        # just return the short commit hash
-        out = check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=repo.workdir)
+        # gives 'master~2' if detached two commits behind master
+        # alternative would be "git rev-parse --short HEAD" to give the commit hash
+        out = check_output(['git', 'describe', '--contains', '--all', 'HEAD'], cwd=repo.workdir)
         return out.decode().strip()
     elif repo.head_is_unborn:  # brand new empty repo
         return 'master'
@@ -143,7 +147,10 @@ def get_repo_info(repo):
     status = get_repo_status(repo)
     # count anything in the index as staged
     staged = sum(v for k, v in status.items() if k.startswith('GIT_STATUS_INDEX'))
+    parent_repo = check_output(['git', 'rev-parse', '--show-superproject-working-tree'],
+        cwd=repo.workdir)
     result = {  # this order is how we want things displayed (req. 3.6 dict ordering)
+        'parent': parent_repo,
         'branch': get_repo_branch(repo),
         'ahead': ahead,
         'behind': behind,
@@ -158,11 +165,15 @@ def get_repo_info(repo):
 
 
 def print_repo_info(repo_info, templates):
-    results = [templates[i].format(repo_info[i]) for i in repo_info if repo_info[i]]
-    if len(results) > 1:
-        # if more than branch, add space after branch (req. 3.6 dict ordering)
-        results.insert(1, ' ')
-    print(''.join(results))
+    results = []
+    for k, v in repo_info.items():
+        if v:
+            results.append(templates[k].format(v))
+        if k == 'branch':
+            # insert a space after branch, stripped later if it's trailing
+            results.append(templates['space'])
+
+    print(''.join(results).strip())
 
 
 def main(args):
