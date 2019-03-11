@@ -6,6 +6,8 @@
 [include]
 	# allow machine-specific configuration (eg. work vs home)
 	path = ~/.config/machine_specific/.gitconfig
+[pull]
+	rebase = preserve
 
 # diff / merge config
 [diff]
@@ -71,9 +73,11 @@
 	dst = difftool --staged
 	dtl = difftool @~..@
 	email = config user.email
+	exec = "!exec " # git aliases run from repo root, so can exec something from root
 	f = fetch
 	hash = rev-parse
 	lu = ls-files --others --exclude-standard # "list untracked"
+	p = "!f() { if git upstream; then git push; else git push -u; fi }; f" # push, set upstream if necessary
 	pf = push --force
 	pr = pull --rebase
 	r = rebase
@@ -86,10 +90,13 @@
 	stpu = stash push
 	unstage = reset --
 	uncommit = reset @~ --
+	upstream = name-rev @{upstream}
 	url = remote get-url origin
 	info = remote show origin
 	rao = remote add origin
 	rso = remote set-url origin
+	repo-root = rev-parse --show-toplevel
+	repo-parent = rev-parse --show-superproject-working-tree  # for submodules
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --pretty=format:'%C(blue)%ad %C(cyan)%cn %C(auto)%h%C(auto)%d%n %s%n%w(0,4,4)%+b' --stat
