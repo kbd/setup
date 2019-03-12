@@ -8,6 +8,8 @@
 	path = ~/.config/machine_specific/.gitconfig
 [pull]
 	rebase = preserve
+[rebase]
+	autoStash = true
 
 # diff / merge config
 [diff]
