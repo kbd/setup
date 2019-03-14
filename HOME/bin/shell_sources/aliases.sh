@@ -34,8 +34,11 @@ alias ......='cd ../../../../..'
 
 alias l=ls
 alias la='ls -a'
+alias lt='ls -t'
 alias ll='ls -l'
 alias lla='ls -la'
+alias llt='ls -lt'
+alias llat='ls -lat'
 # gnu ls
 # '--' necessary to correctly handle filenames beginning with -
 # bsd ls handles this correctly by default and doesn't allow --
