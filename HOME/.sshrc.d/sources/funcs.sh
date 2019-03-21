@@ -1,1 +1,0 @@
-../../bin/shell_sources/funcs.sh
