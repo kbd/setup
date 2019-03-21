@@ -76,6 +76,7 @@
 	dtl = difftool @~..@
 	email = config user.email
 	exec = "!exec " # git aliases run from repo root, so can exec something from root
+	edit = "!exec $EDITOR ."
 	f = fetch
 	hash = rev-parse
 	lu = ls-files --others --exclude-standard # "list untracked"
