@@ -47,7 +47,7 @@
 # aliases
 [alias]
 	a = add
-	af = !git a "$(gsf)"
+	af = !git a -- "$(gsf)"
 	aa = add -A
 	au = add -u
 	ap = add -p
@@ -62,14 +62,14 @@
 	cam = commit -am
 	camp = "!f() { git cam \"$@\" && git p; }; f"
 	co = checkout
-	cof = !git co "$(gsf)"
+	cof = !git co -- "$(gsf)"
 	cf = !git cof
 	cob = checkout -b
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
-	df = !git d "$(gsf)"
+	df = !git d -- "$(gsf)"
 	dt = difftool
-	dtf = !git dt "$(gsf)"
+	dtf = !git dt -- "$(gsf)"
 	ds = diff --staged
 	dl = diff @~..@
 	dts = difftool --staged
