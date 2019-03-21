@@ -130,14 +130,38 @@ def get_repo_branch(repo):
     return repo.head.shorthand
 
 
-def get_stash_count(repo):
+def get_stash_counts(repo):
     if repo.head_is_unborn:
         return 0, 0  # can't stash on new repo
 
     stashes = check_output(['git', 'stash', 'list'], cwd=repo.workdir).decode().splitlines()
     getbranch = re.compile(r'^[^:]+:[^:]+?(\S+):')
-    counter = Counter(getbranch.match(s)[1] for s in stashes)
-    return len(stashes), counter[repo.head.shorthand]
+    counter = Counter()
+    for stash in stashes:
+        match = getbranch.match(stash)
+        if match:
+            # count the branch name
+            counter.update([match[1]])
+        elif stash.split(':')[1].strip() == 'autostash':
+            # count autostash
+            counter.update(['-autostash'])
+
+    return counter
+
+
+def get_stash_stats(repo, counter):
+    """Return a tuple of counts, (total, branch, autostash)"""
+    return len(counter), counter[repo.head.shorthand], counter['-autostash']
+
+
+def get_stash_string(repo):
+    """Return a string like 1A for one stash on a branch and one autostash.
+
+    If a count is zero, indicate by leaving it out.
+    """
+    counter = get_stash_counts(repo)
+    _total, branch, autostash = get_stash_stats(repo, counter)
+    return f"{branch or ''}{'A' if autostash else ''}"
 
 
 def get_repo_status(repo):
@@ -189,7 +213,7 @@ def get_repo_info(repo):
         'deleted': status['GIT_STATUS_WT_DELETED'],
         'untracked': status['GIT_STATUS_WT_NEW'],
         'conflicted': status['GIT_STATUS_CONFLICTED'],
-        'stashed': get_stash_count(repo)[1],  # just for the branch
+        'stashed': get_stash_string(repo),
     }
     return result
 
