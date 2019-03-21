@@ -62,3 +62,6 @@ defaults write com.apple.menuextra.battery ShowPercent -boolean True
 # key repeat rate and delay
 defaults write NSGlobalDomain InitialKeyRepeat -integer 10
 defaults write NSGlobalDomain KeyRepeat -integer 2
+
+# set default text file association to vscode
+duti -s com.microsoft.vscode public.plain-text all

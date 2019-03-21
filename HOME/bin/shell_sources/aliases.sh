@@ -246,7 +246,7 @@ esac
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
-    export EDITOR='open -t'
+    export EDITOR='open -t'  # use default text file association
     # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
@@ -261,4 +261,18 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
 
     alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
+
+    # bundleid/uti funcs from https://superuser.com/a/341429/
+    # useful with 'duti' to set file associations
+    bundleid() {
+        osascript -e "id of app \"$*\""
+    }
+
+    uti() {
+        local f="/tmp/me.lri.getuti.${1##*.}"
+        touch "$f"
+        mdimport "$f"
+        mdls -name kMDItemContentTypeTree "$f"
+        rm "$f"
+    }
 fi
