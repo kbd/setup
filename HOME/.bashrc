@@ -24,6 +24,10 @@ if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
 
     # bind my keyboard shortcuts
     bind -f "$SSHHOME/.sshrc.d/.inputrc"
+
+    # unicode character prompt prefix works fine locally but
+    # always seems to cause problems on servers, so disable it
+    export PROMPT_PREFIX=''
 else
     SOURCE_DIR="$HOME/bin/shell_sources"
     SELF="$HOME/.bashrc"
