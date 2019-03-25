@@ -203,7 +203,7 @@ prompt_initialize_vars() {
     _LAST_RETURN_CODE=0  # initialize
     case $(current_shell) in  # current_shell defined in funcs.sh
         bash)
-            eo='\[\e['  # 'escape open'
+            eo='\['  # 'escape open'
             ec='\]'  # 'escape close'
             dt="\\$dt"
             user='\u'
