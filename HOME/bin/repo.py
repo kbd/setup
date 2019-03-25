@@ -18,6 +18,7 @@ import os
 import re
 import sys
 from collections import Counter
+from pathlib import Path
 from subprocess import check_output, run, SubprocessError, DEVNULL
 
 import pygit2 as git
@@ -87,7 +88,7 @@ def repo_state(repo):
     for path in ['rebase-merge', 'rebase-apply']:
         cmd = ['git', 'rev-parse', '--git-path', path]
         dir = check_output(cmd, cwd=repo.workdir).decode().strip()
-        if os.path.exists(os.path.join(repo.workdir, dir)):
+        if Path(repo.workdir, dir).exists():
             return 'R'
 
     return ''
