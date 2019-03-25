@@ -18,7 +18,7 @@ import os
 import re
 import sys
 from collections import Counter
-from subprocess import check_output, run, PIPE
+from subprocess import check_output, run, SubprocessError, DEVNULL
 
 import pygit2 as git
 
@@ -58,6 +58,7 @@ def get_shell():
 def get_templates(shell):
     o, c = e[shell].o.replace('{', '{{'), e[shell].c.replace('}', '}}')
     return {
+        'state': f'{o}{fg.magenta}{c}{{}}{o}{s.reset}{c}',
         'parent': f'{o}{fg.yellow}{s.bold}{c}>{o}{s.reset}{c}',
         'branch': f'{o}{fg.yellow}{c}{{}}{o}{s.reset}{c}',
         'space': ' ',
@@ -70,6 +71,26 @@ def get_templates(shell):
         'stashed': f'{o}{fg.blue}{c}⚑{{}}{o}{s.reset}{c}',
         'untracked': f'{o}{fg.cyan}{c}…{{}}{o}{s.reset}{c}',
     }
+
+
+def repo_state(repo):
+    """Return a code for the current repo state. 'R' if in rebase or '' if normal.
+
+    Potentially support more states in the future.
+    """
+    # this is ridiculous that this is how you check for rebase
+    # https://stackoverflow.com/a/3921928
+    #
+    # apparently there are all kinds of extra tests you can do:
+    # https://stackoverflow.com/a/3922581
+    # but leave it at just "rebase or not" for now.
+    for path in ['rebase-merge', 'rebase-apply']:
+        cmd = ['git', 'rev-parse', '--git-path', path]
+        dir = check_output(cmd, cwd=repo.workdir).decode().strip()
+        if os.path.exists(os.path.join(repo.workdir, dir)):
+            return 'R'
+
+    return ''
 
 
 def get_repo(dir):
@@ -91,10 +112,17 @@ def get_repo_branch(repo):
         if not ret.returncode:  # if success
             return ret.stdout.decode().strip()
 
-        # gives 'master~2' if detached two commits behind master
-        # alternative would be "git rev-parse --short HEAD" to give the commit hash
-        out = check_output(['git', 'describe', '--contains', '--all', 'HEAD'], cwd=repo.workdir)
-        return out.decode().strip()
+        try:
+            # gives 'master~2' if detached two commits behind master
+            cmd = ['git', 'describe', '--contains', '--all', 'HEAD']
+            out = check_output(cmd, cwd=repo.workdir, stderr=DEVNULL)
+            return out.decode().strip()
+        except SubprocessError:
+            # if that's not available (like during an interactive rebase),
+            # gives the short commit hash
+            cmd = ['git', 'rev-parse', '--short', 'HEAD']
+            out = check_output(cmd, cwd=repo.workdir)
+            return out.decode().strip()
     elif repo.head_is_unborn:  # brand new empty repo
         return 'master'
 
@@ -150,6 +178,7 @@ def get_repo_info(repo):
     parent_repo = check_output(['git', 'rev-parse', '--show-superproject-working-tree'],
         cwd=repo.workdir)
     result = {  # this order is how we want things displayed (req. 3.6 dict ordering)
+        'state': repo_state(repo),
         'parent': parent_repo,
         'branch': get_repo_branch(repo),
         'ahead': ahead,
@@ -169,8 +198,8 @@ def print_repo_info(repo_info, templates):
     for k, v in repo_info.items():
         if v:
             results.append(templates[k].format(v))
-        if k == 'branch':
-            # insert a space after branch, stripped later if it's trailing
+        if k == 'branch' or (k == 'state' and v):
+            # insert a space after branch or state
             results.append(templates['space'])
 
     print(''.join(results).strip())
