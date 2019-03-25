@@ -84,6 +84,7 @@
 	pf = push --force
 	pr = pull --rebase
 	r = rebase
+	ra = rebase --abort
 	rc = rebase --continue
 	ri = rebase -i
 	s = status
