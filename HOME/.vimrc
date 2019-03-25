@@ -25,6 +25,19 @@ nnoremap <C-d> :qa!<cr>
 nnoremap <C-l> :noh<cr><C-l>
 " end keyboard shortcuts
 
+" automatically turn on paste mode when pasting
+" https://stackoverflow.com/a/38258720
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
 " STATUSLINE
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
 " http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
