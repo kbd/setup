@@ -10,6 +10,8 @@
 	rebase = preserve
 [rebase]
 	autoStash = true
+[status]
+	showUntrackedFiles = all
 
 # diff / merge config
 [diff]
