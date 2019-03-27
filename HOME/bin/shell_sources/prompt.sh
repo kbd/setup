@@ -164,14 +164,13 @@ _prompt_venv() {
 _prompt_filter() {
     local funcs="$1"
     if [[ $PROMPT_SHORT_DISPLAY ]]; then
-        # if host is localhost, showing the host is unnecessary
+        # showing the host (and user, if not su/root) is unnecessary if local
         if ! is_remote; then
             funcs=$(filter "$funcs" "at|host")
-        fi
 
-        # if the user is your login user (except root), showing it is unnecessary
-        if ! (is_su || is_root); then
-            funcs=$(filter "$funcs" "user")
+            if ! (is_su || is_root); then
+                funcs=$(filter "$funcs" "user")
+            fi
         fi
 
         # if no user or host, remove sep too
