@@ -65,6 +65,7 @@
 	cof = !git co "$(gsf)"
 	cf = !git cof
 	cob = checkout -b
+	clone-insecure = clone -c http.sslVerify=false
 	d = diff
 	df = !git d "$(gsf)"
 	dt = difftool
