@@ -91,6 +91,7 @@ CLIPS = {
     'ok': '👌',
     'trophy': '🏆',
     'wine': '🍷',
+    'flowers': '💐',
 }
 
 def print_clips(CLIPS):
