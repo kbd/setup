@@ -24,6 +24,54 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 _fzf_compgen_path() { $FZF_DEFAULT_COMMAND "$1"; }
 _fzf_compgen_dir() { fd -td -HL "$1"; }
 
+# SHELL SPECIFIC
+case $(current_shell) in
+    zsh)
+        alias history='history -i'  # always include timestamp
+        alias hs='h 0 | rg'  # 'history search'
+
+        # global aliases (zsh-only)
+        alias -g FZF='$(`last_command` | fzi)'
+        alias -g L='| $PAGER'  # would be nice to map ↑ +this to ⌘l
+    ;;
+    bash)
+        alias hs='h | rg'
+    ;;
+esac
+
+# PLATFORM SPECIFIC
+if [[ $PLATFORM == 'Darwin' ]]; then
+    export EDITOR='open -t'  # use default text file association
+    # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+    alias awk=gawk
+    alias sed=gsed
+    alias tar=gtar
+    alias ls='gls -F --color=auto'
+
+    # have sshrc use GNU tar because tar-ing on Mac (with BSD tar) makes GNU tar
+    # spit out a bunch of warnings on the server from extended stuff it doesn't
+    # understand - https://github.com/Russell91/sshrc/pull/76
+    alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
+
+    alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
+
+    # bundleid/uti funcs from https://superuser.com/a/341429/
+    # useful with 'duti' to set file associations
+    bundleid() {
+        osascript -e "id of app \"$*\""
+    }
+
+    uti() {
+        local f="/tmp/me.lri.getuti.${1##*.}"
+        touch "$f"
+        mdimport "$f"
+        mdls -name kMDItemContentTypeTree "$f"
+        rm "$f"
+    }
+fi
+
 # ALIASES
 alias   -- -='cd -'
 alias     ..='cd ..'
@@ -228,51 +276,3 @@ rls() {
         ;;
     esac
 }
-
-# SHELL SPECIFIC
-case $(current_shell) in
-    zsh)
-        alias history='history -i'  # always include timestamp
-        alias hs='h 0 | rg'  # 'history search'
-
-        # global aliases (zsh-only)
-        alias -g FZF='$(`last_command` | fzi)'
-        alias -g L='| $PAGER'  # would be nice to map ↑ +this to ⌘l
-    ;;
-    bash)
-        alias hs='h | rg'
-    ;;
-esac
-
-# PLATFORM SPECIFIC
-if [[ $PLATFORM == 'Darwin' ]]; then
-    export EDITOR='open -t'  # use default text file association
-    # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-    # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-    alias awk=gawk
-    alias sed=gsed
-    alias tar=gtar
-    alias ls='gls -F --color=auto'
-
-    # have sshrc use GNU tar because tar-ing on Mac (with BSD tar) makes GNU tar
-    # spit out a bunch of warnings on the server from extended stuff it doesn't
-    # understand - https://github.com/Russell91/sshrc/pull/76
-    alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
-
-    alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
-
-    # bundleid/uti funcs from https://superuser.com/a/341429/
-    # useful with 'duti' to set file associations
-    bundleid() {
-        osascript -e "id of app \"$*\""
-    }
-
-    uti() {
-        local f="/tmp/me.lri.getuti.${1##*.}"
-        touch "$f"
-        mdimport "$f"
-        mdls -name kMDItemContentTypeTree "$f"
-        rm "$f"
-    }
-fi
