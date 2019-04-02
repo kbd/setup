@@ -171,6 +171,10 @@ cl() {
     cd -- "$1" && ls "${@:2}"
 }
 
+cll() {
+    cd -- "$1" && ll "${@:2}"
+}
+
 # dirname, but treat paths that end in slash as a directory
 dirnameslash() {
     if [[ "$1" == */ ]]; then
