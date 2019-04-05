@@ -73,6 +73,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
 fi
 
 # ALIASES
+# directory/navigation
 alias   -- -='cd -'
 alias     ..='cd ..'
 alias    ...='cd ../..'
@@ -80,6 +81,7 @@ alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
+# ls
 alias l=ls
 alias la='ls -a'
 alias lt='ls -t'
@@ -94,41 +96,43 @@ alias llat='ls -lat'
 alias lsd='ls -d --indicator-style=none -- */'
 alias lld='ll -d --indicator-style=none -- */'
 
-alias wcl='wc -l'
-alias du='du -h'
-alias dud='du -d0 .'
-alias ncdu='ncdu --color=dark'
-alias grep='grep --color=auto'
-alias h=history
-alias curl='curl -L'  # follow redirects by default
-alias map='parallel'
-alias vi=vim
-alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
-alias vless=vimpager
-alias p=python3
-alias py=ipython
-alias pe=path-extractor
-alias c=cat
-alias cat=bat
-alias bat='bat --italic-text=always'
-alias x='chmod +x'
-alias hex='hexyl'
-
+# edit/open
 alias edit=\$EDITOR "$@"
 alias e=edit
 alias e.='e .'
 alias o=open
 alias o.='o .'
 
-alias g=git
-alias s='git s'
-alias gl='git l'
+alias wcl='wc -l'
+alias du='du -h'
+alias dud='du -d0 .'
+alias ncdu='ncdu --color=dark'
+alias grep='grep --color=auto'
+alias curl='curl -L'  # follow redirects by default
+alias map='parallel'
+alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
+alias vi=vim
+alias vless=vimpager
+alias c=cat
+alias cat=bat
+alias h=history
+alias p=python3
+alias py=ipython
+alias x='chmod +x'
+alias hex='hexyl'
 
 alias tcl='rlwrap tclsh'
+alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias ts-node="ts-node -D6133"  # disable 'declared but not used' errors
 alias goog='googler -n3 --np'
 
+# git
+alias g=git
+alias s='git s'
+alias gl='git l'
+
+# "system"
 alias ercho='>&2 echo'  # echo to stderr
 alias last_command='fc -nl -1'
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
