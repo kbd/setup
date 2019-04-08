@@ -67,16 +67,16 @@
 	cob = checkout -b
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
-	df = !git d -- "$(gsf)"
 	dt = difftool
+	df = !git d -- "$(gsf)"
 	dtf = !git dt -- "$(gsf)"
 	# https://stackoverflow.com/a/42956594/
 	d1  = "!f () { rev=$(git rev-parse \"${*:-HEAD}\"); git d $rev~1 $rev; }; f"
 	dt1 = "!f () { rev=$(git rev-parse \"${*:-HEAD}\"); git dt $rev~1 $rev; }; f"
 	ds = diff --staged
-	dl = diff @~..@
 	dts = difftool --staged
 	dst = difftool --staged
+	dl = diff @~..@
 	dtl = difftool @~..@
 	email = config user.email
 	exec = "!exec " # git aliases run from repo root, so can exec something from root
