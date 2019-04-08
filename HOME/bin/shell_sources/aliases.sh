@@ -15,6 +15,7 @@ export PYTHONDONTWRITEBYTECODE=1
 export PYTHONBREAKPOINT=pudb.set_trace
 export PIPENV_SHELL_FANCY=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
