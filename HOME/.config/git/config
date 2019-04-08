@@ -70,6 +70,9 @@
 	df = !git d -- "$(gsf)"
 	dt = difftool
 	dtf = !git dt -- "$(gsf)"
+	# https://stackoverflow.com/a/42956594/
+	d1  = "!f () { rev=$(git rev-parse \"${*:-HEAD}\"); git d $rev~1 $rev; }; f"
+	dt1 = "!f () { rev=$(git rev-parse \"${*:-HEAD}\"); git dt $rev~1 $rev; }; f"
 	ds = diff --staged
 	dl = diff @~..@
 	dts = difftool --staged
