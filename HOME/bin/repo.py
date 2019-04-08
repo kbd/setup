@@ -131,22 +131,23 @@ def get_repo_branch(repo):
 
 
 def get_stash_counts(repo):
+    stash_counts = Counter()
+
     if repo.head_is_unborn:
-        return 0, 0  # can't stash on new repo
+        return stash_counts  # can't stash on new repo
 
     stashes = check_output(['git', 'stash', 'list'], cwd=repo.workdir).decode().splitlines()
     getbranch = re.compile(r'^[^:]+:[^:]+?(\S+):')
-    counter = Counter()
     for stash in stashes:
         match = getbranch.match(stash)
         if match:
             # count the branch name
-            counter.update([match[1]])
+            stash_counts.update([match[1]])
         elif stash.split(':')[1].strip() == 'autostash':
             # count autostash
-            counter.update(['-autostash'])
+            stash_counts.update(['-autostash'])
 
-    return counter
+    return stash_counts
 
 
 def get_stash_stats(repo, counter):
@@ -160,8 +161,11 @@ def get_stash_string(repo):
     If a count is zero, indicate by leaving it out.
     """
     counter = get_stash_counts(repo)
-    _total, branch, autostash = get_stash_stats(repo, counter)
-    return f"{branch or ''}{'A' if autostash else ''}"
+    if not counter:  # if no stashes, don't get stats
+        return ''
+    else:
+        _total, branch_count, autostash = get_stash_stats(repo, counter)
+        return f"{branch_count or ''}{'A' if autostash else ''}"
 
 
 def get_repo_status(repo):
