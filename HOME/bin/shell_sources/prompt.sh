@@ -94,10 +94,16 @@ _prompt_repo() {
     fi
 }
 
+running_suspended() {
+    jobs | perl -ne 'BEGIN{%c=qw(r 0 s 0)}$c{lc $1}++ if /^\[\d+\]\s*[+-]?\s*(\w)/i;END{print "@c{qw(r s)}"}'
+}
+
 # running and stopped jobs
 _prompt_jobs() {
-    local running=$(jobs -r | wc -l | tr -d ' ')
-    local stopped=$(jobs -s | wc -l | tr -d ' ')
+    # shellcheck disable=SC2046
+    set -- $(running_suspended)
+    local running=$1
+    local stopped=$2
 
     local jobs=''
     if [[ $running -ne 0 ]]; then
