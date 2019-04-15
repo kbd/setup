@@ -100,10 +100,7 @@ running_suspended() {
 
 # running and stopped jobs
 _prompt_jobs() {
-    # shellcheck disable=SC2046
-    set -- $(running_suspended)
-    local running=$1
-    local stopped=$2
+    read -r running stopped <<<"$(running_suspended)"
 
     local jobs=''
     if [[ $running -ne 0 ]]; then
