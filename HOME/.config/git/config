@@ -57,9 +57,9 @@
 	current-tags = tag --list --points-at HEAD
 	c = commit
 	cm = commit -m
-	cmp = "!f() { git cm \"$@\" && git p; }; f"
 	ca = commit -a
 	cam = commit -am
+	cmp  = "!f() { git cm \"$@\" && git p; }; f"
 	camp = "!f() { git cam \"$@\" && git p; }; f"
 	co = checkout
 	cof = !git co -- "$(gsf)"
