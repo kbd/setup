@@ -27,7 +27,7 @@ HOMEBREW_INSTALL_CMD = '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercon
 
 def main():
     print("Installing Homebrew")
-    if not bool(subprocess.call(['which', 'brew'])):
+    if not subprocess.call(['which', 'brew']):
         print("Homebrew is installed")
     else:
         subprocess.check_call(HOMEBREW_INSTALL_CMD, shell=True, executable='/bin/bash')
