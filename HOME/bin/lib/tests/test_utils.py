@@ -13,7 +13,7 @@ def test_run_call_cmd():
         utils.run(cmd)
 
     run.assert_called_with(
-        cmd, check=True, shell=False, stdout=None,
+        cmd, check=True, shell=False, stdout=None, stderr=None,
         executable=None, input=None, cwd=None, env=None
     )
 
@@ -24,7 +24,7 @@ def test_run_call_shell_cmd():
         utils.run(cmd)
 
     run.assert_called_with(
-        cmd, check=True, shell=True, stdout=None,
+        cmd, check=True, shell=True, stdout=None, stderr=None,
         executable=EXECUTABLE, input=None, cwd=None, env=None
     )
 
@@ -35,7 +35,7 @@ def test_run_call_shell_output():
         utils.run(cmd, cap=True)
 
     run.assert_called_with(
-        cmd, check=True, shell=True, stdout=subprocess.PIPE,
+        cmd, check=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         executable=EXECUTABLE, input=None, cwd=None, env=None
     )
 
@@ -47,7 +47,7 @@ def test_run_call_shell_input():
         utils.run(cmd, input=input)
 
     run.assert_called_with(
-        cmd, check=True, shell=True, stdout=None,
+        cmd, check=True, shell=True, stdout=None, stderr=None,
         executable=EXECUTABLE, input=input.encode(), cwd=None, env=None
     )
 
@@ -59,7 +59,7 @@ def test_run_call_cmd_cap_input():
         utils.run(cmd, cap=True, input=input)
 
     run.assert_called_with(
-        cmd, check=True, shell=False, stdout=subprocess.PIPE,
+        cmd, check=True, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         executable=None, input=input.encode(), cwd=None, env=None
     )
 
