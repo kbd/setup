@@ -136,15 +136,8 @@ _prompt_precmd() {
     true
 }
 
-_prompt_pad_unicode_width() {
-    # https://stackoverflow.com/a/7123564
-    # $1 = string $2 = width
-    echo -n "$eo$(tput sc)$ec$(rep ' ' $2)$eo$(tput rc)$1$ec"
-}
-
 _prompt_prefix() {
-    local c="$(_prompt_pad_unicode_width $'\u26a1' 2)"  # lightning bolt, width of 2
-    echo -n "${PROMPT_PREFIX-$c}"  # user-specified prefix, or default of $c
+    echo -n "${PROMPT_PREFIX-⚡}"
 }
 
 _prompt_script() {
