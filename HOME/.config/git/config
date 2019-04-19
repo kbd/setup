@@ -109,7 +109,7 @@
 	rao = remote add origin
 	rso = remote set-url origin
 	repo-root = rev-parse --show-toplevel
-	repo-parent = rev-parse --show-superproject-working-tree  # for submodules
+	repo-parent = rev-parse --show-superproject-working-tree # for submodules
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --pretty=format:'%C(blue)%ad %C(cyan)%cn %C(auto)%h%C(auto)%d%n %s%n%w(0,4,4)%+b' --stat
