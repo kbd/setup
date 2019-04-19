@@ -51,6 +51,7 @@
 	aa = add -A
 	au = add -u
 	ap = add -p
+	rp = reset -p # reset --patch is the opposite of add --patch
 	b = branch
 	br = branch -r
 	current-branch = symbolic-ref --short HEAD
