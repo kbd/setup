@@ -31,4 +31,3 @@ Sphinx
 sqlalchemy
 tmuxp
 virtualenv
-xonsh
