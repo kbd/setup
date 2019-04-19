@@ -4,6 +4,7 @@ import code
 import logging
 import os
 import subprocess
+from pathlib import Path
 
 from lib import config, symlink
 from lib.mac import brew, restart_os_functions, update_os_settings
@@ -90,13 +91,14 @@ def edit(*args, **kwargs):
 
 
 def main():
-    # this setup program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
-    # get the root of the repository. Use realpath to resolve symbolic links
-    repo_root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '../..'))
-    repo_home_dir = os.path.join(repo_root_dir, 'HOME')
+    # this program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
+    # get the root of the repository. Use resolve() to resolve symlink since
+    # this is symlinked into and run from ~/bin.
+    repo_root_dir = Path(__file__).resolve().parents[2]
+    repo_home_dir = repo_root_dir / 'HOME'
     log.debug(f"repo_home_dir is {repo_home_dir!r}")
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
-    home_dir = os.path.expanduser('~')
+    home_dir = Path.home()
 
     # get settings and set up command line parser
     settings = config.load_file(SETTINGS_FILE_LOCATION)
