@@ -1,7 +1,0 @@
-#https://packagecontrol.io/docs/syncing
-Package Control.*
-!Package Control.sublime-settings
-*.crt
-*.tmTheme
-#ignore all subdirectories
-*/*

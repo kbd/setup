@@ -1,10 +1,5 @@
 {
     'symlinks': {
-        'pointers': {
-            # pointers to directories should not have slashes at the end because the value
-            # refers to the symlink that's created
-            'sublime_text': 'Library/Application Support/Sublime Text 3/Packages/User',
-        },
         'partials': [
             # partials refer to directories that won't be symlinked directly, but will have their
             # contents symlinked. This avoids overwriting a directory that has files we want to
@@ -13,6 +8,7 @@
             # partials should be an absolute path, possibly with the home directory
             '~/.config',
             '~/.parallel',
+            '~/Library/Application Support/Sublime Text 3/Packages/User',
         ],
         # 'ignores_file': '.gitignore_global',  # piggyback off of gitignore_global
         # the relative path should be correct because 'setup' sets the cwd to the root of the repo
