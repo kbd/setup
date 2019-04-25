@@ -1,2 +1,2 @@
 #!/bin/sh
-git status -s | awk '{$1=""; print $0}' | fzi
+git status --porcelain=2 | cut -d' ' -f9- | fzi --print0 | xargs -0o "$@"
