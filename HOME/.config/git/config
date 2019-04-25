@@ -72,8 +72,8 @@
 	df = !gsf git d
 	dtf = !gsf git dt
 	# https://stackoverflow.com/a/42956594/
-	d1  = "!f () { rev=$(git rev-parse \"${*:-HEAD}\"); git d $rev~1 $rev; }; f"
-	dt1 = "!f () { rev=$(git rev-parse \"${*:-HEAD}\"); git dt $rev~1 $rev; }; f"
+	d1  = "!f() { rev=$(git rev-parse \"${*:-HEAD}\"); git d $rev~1 $rev; }; f"
+	dt1 = "!f() { rev=$(git rev-parse \"${*:-HEAD}\"); git dt $rev~1 $rev; }; f"
 	ds = diff --staged
 	dts = difftool --staged
 	dst = difftool --staged
