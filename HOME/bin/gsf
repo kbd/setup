@@ -1,2 +1,2 @@
 #!/bin/sh
-git status --porcelain=2 | cut -d' ' -f9- | fzi --print0 | xargs -0o "$@"
+git status -s | cut -c4- | fzi --print0 | xargs -0o "$@"
