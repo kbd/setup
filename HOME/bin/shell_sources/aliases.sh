@@ -131,8 +131,14 @@ alias goog='googler -n3 --np'
 
 # git
 alias g=git
-alias s='git s'
-alias gl='git l'
+alias s='g s'
+alias gl='g l'
+alias gp='g p'
+alias gpl='g pl'
+alias gf='g af'
+alias gd='g d'
+alias gdf='g df'
+alias gds='g ds'
 
 # "system"
 alias ercho='>&2 echo'  # echo to stderr
