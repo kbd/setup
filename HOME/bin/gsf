@@ -1,2 +1,2 @@
 #!/bin/sh
-git status -s | cut -c4- | fzi --print0 | xargs -0o "$@"
+git status -z | xargs -0n1 | cut -c4- | fzi --print0 | xargs -0o "$@"
