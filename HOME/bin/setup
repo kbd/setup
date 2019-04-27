@@ -43,7 +43,7 @@ def create_command_line_parser():
 
     # packages
     subparser = subparsers.add_parser(
-        'packages', help="Install/update language-specific packages 🐍"
+        'packages', help="Install/update language/app-specific packages 🐍"
     )
     subparser.add_argument(
         'language_filter', help="Only update languages matching regex", nargs='?'

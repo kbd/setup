@@ -1,0 +1,195 @@
+{
+    "editor.fontFamily": "Fantasque Sans Mono",
+    "editor.lineHeight": 15,
+    "editor.fontSize": 13,
+    "editor.fontLigatures": true,
+    "editor.rulers": [80, 100],
+    "editor.renderWhitespace": "all",
+
+    "breadcrumbs.enabled": true,
+
+    "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
+    "window.restoreWindows": "all",
+    "window.closeWhenEmpty": true,
+    "window.zoomLevel": 0,
+
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    "workbench.colorTheme": "Spacegray Eighties Dark",
+    "workbench.statusBar.feedback.visible": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.quickOpen.closeOnFocusLost": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.activityBar.visible": true,
+    "workbench.statusBar.visible": true,
+
+    "editor.tokenColorCustomizations": {
+        "comments": "#27bd2f",
+        "textMateRules": [
+            {
+                "scope": [
+                    "keyword.control",
+                    "storage"
+                ],
+                "settings": {
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope": [
+                    "variable"
+                ],
+                "settings": {
+                    "foreground": "#ffaa00",
+                }
+            },
+            // {
+            //     "scope": [
+            //         "string"
+            //     ],
+            //     "settings": {
+            //         "foreground": "#ffcccc",
+            //     }
+            // }
+        ]
+    },
+
+    "workbench.colorCustomizations": {
+        "editor.selectionBackground": "#888",
+        "editor.selectionHighlightBackground": "#555",
+        "editor.findMatchHighlightBackground": "#2cdd1c65",
+        "titleBar.activeBackground": "#777",
+        "titleBar.inactiveBackground": "#696969",
+        "editorIndentGuide.activeBackground": "#888"
+    },
+
+    "sync.gist": "9c099110598e09bf6ecb597d7b27f4bd",
+    "sync.autoDownload": false,
+    "sync.autoUpload": false,
+    "sync.forceDownload": false,
+    "sync.quietSync": false,
+    "sync.askGistName": false,
+    "sync.removeExtensions": true,
+    "sync.syncExtensions": true,
+
+    "gitlens.codeLens.enabled": false,
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true
+    },
+    "gitlens.codeLens.scopes": [
+        "document",
+        "containers"
+    ],
+
+    "python.pythonPath": "/usr/local/bin/python3",
+    "python.autoComplete.addBrackets": true,
+    // "python.formatting.provider": "black",
+    // "python.formatting.blackArgs": ["-S"],
+    // "python.linting.pylintArgs": [
+    //     // https://code.visualstudio.com/docs/python/linting
+    //     // had to override all settings to add unused-imports
+    //     "--disable=all",
+    //     "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode,unused-import"
+    // ],
+
+    "[typescript]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+    },
+
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true
+    },
+
+    "[shellscript]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+    },
+
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+    },
+
+    "editor.tabCompletion": "on",
+    "editor.suggest.localityBonus": true,
+    "editor.minimap.enabled": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "workbench.editor.highlightModifiedTabs": true,
+    "debug.node.autoAttach": "on",
+
+    "search.showLineNumbers": true,
+    "go.useLanguageServer": true,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "python.globalModuleInstallation": true,
+    "editor.multiCursorModifier": "ctrlCmd",
+
+    "peacock.surpriseMeOnStartup": true,
+    "peacock.favoriteColors": [
+        {
+            "name": "Angular Red",
+            "value": "#b52e31"
+        },
+        {
+            "name": "Auth0 Orange",
+            "value": "#eb5424"
+        },
+        {
+            "name": "Azure Blue",
+            "value": "#007fff"
+        },
+        {
+            "name": "C# Purple",
+            "value": "#68217A"
+        },
+        {
+            "name": "Gatsby Purple",
+            "value": "#639"
+        },
+        {
+            "name": "JavaScript Yellow",
+            "value": "#f9e64f"
+        },
+        {
+            "name": "Mandalorian Blue",
+            "value": "#1857a4"
+        },
+        {
+            "name": "Node Green",
+            "value": "#215732"
+        },
+        {
+            "name": "React Blue",
+            "value": "#00b3e6"
+        },
+        {
+            "name": "Something Different",
+            "value": "#832561"
+        },
+        {
+            "name": "Vue Green",
+            "value": "#42b883"
+        },
+        {
+            "name": "Salesforce Blue",
+            "value": "#00A1E0"
+        },
+        {
+            "name": "Slate Blue",
+            "value": "#7fa1c1"
+        }
+    ],
+
+    "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home",
+    "workbench.editor.showTabs": true,
+}

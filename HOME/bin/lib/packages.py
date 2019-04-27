@@ -4,11 +4,14 @@ import re
 import subprocess
 import zipfile
 
+from lib.utils import run
+
 log = logging.getLogger()
 
 
 def install_packages(settings, *args, **kwargs):
-    log.info("Installing/upgrading language-specific packages")
+    log.info("Installing/upgrading packages")
+    module = globals()
     language_filter = kwargs['language_filter']
     for language, params in settings['packages'].items():
         if language_filter and not re.search(language_filter, language):
@@ -16,9 +19,18 @@ def install_packages(settings, *args, **kwargs):
             continue
 
         log.info(f"Installing/upgrading packages for: {language}")
-        cmd = params['cmd']
-        log.debug(f"Executing: {cmd}")
-        subprocess.check_call(cmd)
+
+        # if the name of the "language" matches a function in this module, call
+        # the function and pass it a reference to the settings for that "language"
+        if language in module:
+            # the function does whatever it wants with its settings
+            log.debug(f"Found package function for {language}")
+            module[language](params)
+        else:
+            # allow specific commands
+            cmd = params['cmd']
+            log.debug(f"Executing: {cmd}")
+            run(cmd)
 
 
 def addons(settings, *args, **kwargs):
@@ -72,3 +84,29 @@ def addon_install(type, name, installation_path):
         return False
 
     return True
+
+
+def vscode(package_settings):
+    EXTENSIONS_CONFIG_PATH = 'conf/vscode.txt'
+    log.info("Updating Visual Studio Code extensions")
+
+    # show currently installed extensions
+    cmd = ['code', '--list-extensions']
+    current_extensions = set(s.strip() for s in run(cmd, cap='stdout').splitlines())
+    expected_extensions = set(s.strip() for s in open(EXTENSIONS_CONFIG_PATH).readlines())
+
+    fmt = lambda s: ', '.join(sorted(s, key=str.lower))
+
+    log.debug(f"Current extensions are: {fmt(current_extensions)}")
+    log.debug(f"Expected extensions are: {fmt(expected_extensions)}")
+
+    # install any missing extensions
+    missing = expected_extensions - current_extensions
+    for package in sorted(missing):
+        log.info(f"Installing missing package: {package}")
+        run(['code', '--install-extension', package])
+
+    # report any extensions that are installed that aren't in source control
+    unexpected = current_extensions - expected_extensions
+    if unexpected:
+        log.info(f"The following extensions are installed but not in source control: {fmt(unexpected)}")

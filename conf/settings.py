@@ -9,6 +9,7 @@
             '~/.config',
             '~/.parallel',
             '~/Library/Application Support/Sublime Text 3/Packages/User',
+            '~/Library/Application Support/Code/User',
         ],
         # 'ignores_file': '.gitignore_global',  # piggyback off of gitignore_global
         # the relative path should be correct because 'setup' sets the cwd to the root of the repo
@@ -48,6 +49,7 @@
                 'npx',
             ],
         },
+        'vscode': True,
     },
     'addons': {
         'wow': {
