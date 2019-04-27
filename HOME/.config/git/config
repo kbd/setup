@@ -102,6 +102,8 @@
 	stl = stash list
 	stp = stash pop
 	stpu = stash push
+	sts = stash show
+	stsp = stash show -p
 	unstage = reset --
 	uncommit = reset @~ --
 	upstream = name-rev @{upstream}
