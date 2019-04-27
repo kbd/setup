@@ -39,15 +39,7 @@
             'cmd': ['pip3', 'install', '--upgrade', '-r', 'conf/requirements.txt'],
         },
         'node': {
-            'cmd': [
-                'npm', 'install', '-g',
-                'coffeescript',
-                'typescript',
-                'ts-node',
-                'jest',
-                'git-open',
-                'npx',
-            ],
+            'cmd': "cat conf/npm.txt | xargs -t npm install -g",
         },
         'vscode': {
             'extensions': 'conf/vscode.txt',
