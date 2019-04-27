@@ -4,10 +4,11 @@ import code
 import logging
 import os
 import subprocess
+from functools import partial
 from pathlib import Path
 
 from lib import config, symlink
-from lib.mac import brew, restart_os_functions, update_os_settings
+from lib.mac import restart_os_functions, update_os_settings
 from lib.packages import install_packages, addons
 
 SETTINGS_FILE_LOCATION = 'conf/settings.py'
@@ -15,7 +16,7 @@ SETTINGS_FILE_LOCATION = 'conf/settings.py'
 log = logging.getLogger()
 
 
-def create_command_line_parser():
+def create_command_line_parser(settings):
     """Create and return the command line parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--debug', action='store_true', help='enable debug logging')
@@ -36,11 +37,6 @@ def create_command_line_parser():
     subparser = subparsers.add_parser('push', help="Push repository to server")
     subparser.set_defaults(func=repo, cmd=['push'])
 
-    # brew
-    subparser = subparsers.add_parser('brew', help="🍺 Homebrew🍺")
-    subparser.add_argument('fix_repo', help="Fix a broken repository", nargs='?')
-    subparser.set_defaults(func=brew)
-
     # packages
     subparser = subparsers.add_parser(
         'packages', help="Install/update language/app-specific packages 🐍"
@@ -49,6 +45,11 @@ def create_command_line_parser():
         'language_filter', help="Only update languages matching regex", nargs='?'
     )
     subparser.set_defaults(func=install_packages)
+
+    # export every "setup packages foo" as "setup foo"
+    for package_type in settings['packages']:
+        subparser = subparsers.add_parser(package_type, help=f"Update packages for {package_type}")
+        subparser.set_defaults(func=partial(install_packages, language_filter=f'^{package_type}$'))
 
     # addons
     subparser = subparsers.add_parser(
@@ -102,7 +103,7 @@ def main():
 
     # get settings and set up command line parser
     settings = config.load_file(SETTINGS_FILE_LOCATION)
-    parser = create_command_line_parser()
+    parser = create_command_line_parser(settings)
     args = parser.parse_args()
 
     # set up logging

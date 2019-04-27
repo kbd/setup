@@ -12,28 +12,24 @@ from .utils import run
 log = logging.getLogger(__name__)
 
 
-def workflow(settings, fix_repo=False):
+def workflow(bundle, post_install):
     """Run an entire Homebrew update workflow."""
     # prereqs
     ensure_homebrew_installed()
-
-    if fix_repo:
-        fix_repository()
-
     ensure_command_line_tools_installed()
 
     # update
     update()
 
     # install
-    bundle_install(settings['bundle'])
+    bundle_install(bundle)
 
     # cleanup
     cleanup()
     clean_cache()
 
     # post-install
-    run_post_install(settings['post_install'])
+    run_post_install(post_install)
 
 
 def bundle_install(path):
@@ -239,12 +235,6 @@ def run_post_install(post_install):
     log.info("Running post-install operations")
     for cmd in post_install:
         run(cmd)
-
-
-def fix_repository():
-    # http://stackoverflow.com/questions/14113427/brew-update-failed
-    log.info("Fixing Homebrew repository")
-    run('cd `brew --prefix`; git reset --hard origin/master')
 
 
 def get_formula_uses(formula, installed=True):

@@ -4,6 +4,7 @@ import re
 import subprocess
 import zipfile
 
+from lib import homebrew
 from lib.utils import run
 
 log = logging.getLogger()
@@ -110,3 +111,7 @@ def vscode(package_settings):
     unexpected = current_extensions - expected_extensions
     if unexpected:
         log.info(f"The following extensions are installed but not in source control: {fmt(unexpected)}")
+
+
+def brew(package_settings):
+    homebrew.workflow(package_settings['bundle'], package_settings['post_install'])

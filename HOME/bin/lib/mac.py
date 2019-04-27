@@ -6,12 +6,6 @@ from . import homebrew
 log = logging.getLogger(__name__)
 
 
-def brew(settings, *args, **kwargs):
-    # filter for valid args to workflow
-    kwargs = {k: v for k, v in kwargs.items() if k in ['fix_repo']}
-    homebrew.workflow(settings['homebrew'], **kwargs)
-
-
 def update_os_settings(settings):
     # defaults read | pbcopy to get a list of all current settings
     # execute mac.sh in conf as a shell script
