@@ -49,7 +49,9 @@
                 'npx',
             ],
         },
-        'vscode': True,
+        'vscode': {
+            'extensions': 'conf/vscode.txt',
+        }
     },
     'addons': {
         'wow': {
