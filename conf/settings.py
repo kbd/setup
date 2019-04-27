@@ -43,9 +43,7 @@
         },
         'vscode': {
             'extensions': 'conf/vscode.txt',
-        }
-    },
-    'addons': {
+        },
         'wow': {
             'installation_path': '/Applications/World of Warcraft/Interface/AddOns/',
             'addons': [
@@ -64,7 +62,7 @@
 
                 # other addons I've used in the past:
                 # elkano's buff bars, monkeyquest, prat, auctioneer
-            ]
-        }
+            ],
+        },
     },
 }

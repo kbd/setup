@@ -26,7 +26,7 @@ def install_packages(settings, *args, **kwargs):
         if language in module:
             # the function does whatever it wants with its settings
             log.debug(f"Found package function for {language}")
-            module[language](params)
+            module[language](params, language_filter)
         else:
             # allow specific commands
             cmd = params['cmd']
@@ -34,17 +34,19 @@ def install_packages(settings, *args, **kwargs):
             run(cmd)
 
 
-def addons(settings, *args, **kwargs):
-    log.info("Installing addons")
-    for type, params in settings['addons'].items():
-        log.info(f"Installing addons for {type!r}")
-        for addon in params['addons']:
-            log.info(f"Downloading addon {addon!r}")
-            result = addon_install(type, addon, params['installation_path'])
-            if result:
-                log.info(f"Successfully installed {addon!r}")
-            else:
-                log.warning(f"Couldn't install {addon!r}")
+def wow(params, language_filter):
+    log.info("Installing addons for World of Warcraft")
+    if not re.fullmatch(language_filter, 'wow'):
+        log.info("Skipping addons because not specifically requested")
+        return True
+
+    for addon in params['addons']:
+        log.info(f"Downloading addon {addon!r}")
+        result = addon_install(type, addon, params['installation_path'])
+        if result:
+            log.info(f"Successfully installed {addon!r}")
+        else:
+            log.warning(f"Couldn't install {addon!r}")
 
     log.info("Finished installing addons")
 
@@ -87,7 +89,7 @@ def addon_install(type, name, installation_path):
     return True
 
 
-def vscode(package_settings):
+def vscode(package_settings, language_filter):
     config_path = package_settings['extensions']
     log.info("Updating Visual Studio Code extensions")
 
@@ -113,5 +115,5 @@ def vscode(package_settings):
         log.info(f"The following extensions are installed but not in source control: {fmt(unexpected)}")
 
 
-def brew(package_settings):
+def brew(package_settings, language_filter):
     homebrew.workflow(package_settings['bundle'], package_settings['post_install'])
