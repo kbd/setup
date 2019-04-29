@@ -7,7 +7,7 @@ import subprocess
 from functools import partial
 from pathlib import Path
 
-from lib import config, symlink
+from lib import config, symlink, setup
 from lib.mac import restart_os_functions, update_os_settings
 from lib.packages import install_packages
 
@@ -86,12 +86,8 @@ def edit(*args, **kwargs):
 
 
 def main():
-    # this program lives in $repo/HOME/bin/, so $repo/HOME/bin/../.. will
-    # get the root of the repository. Use resolve() to resolve symlink since
-    # this is symlinked into and run from ~/bin.
-    repo_root_dir = Path(__file__).resolve().parents[2]
-    repo_home_dir = repo_root_dir / 'HOME'
-    log.debug(f"repo_home_dir is {repo_home_dir!r}")
+    repo_root_dir = setup.root()
+    repo_home_dir = setup.home()
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
     home_dir = Path.home()
 
