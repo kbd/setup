@@ -65,3 +65,9 @@ defaults write NSGlobalDomain KeyRepeat -integer 2
 
 # set default text file association to vscode
 duti -s com.microsoft.vscode public.plain-text all
+
+# make tab move between "All Controls" (System Prefs -> Keyboard -> Shortcuts)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# show the date in the clock
+defaults write com.apple.menuextra.clock DateFormat "EEE MMM d  h:mm a"
