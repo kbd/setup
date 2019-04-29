@@ -3,6 +3,8 @@ import fnmatch
 import logging
 import os
 from pathlib import Path
+from subprocess import run
+
 
 log = logging.getLogger(__name__)
 
@@ -12,9 +14,9 @@ def create_symlink(source_path, dest_path):
     os.symlink(source_path, dest_path)
 
 
-def is_file_ignored(ignores, file):
-    """Check if the specified file is in the ignore list"""
-    return any(fnmatch.fnmatch(file, ignore) for ignore in ignores)
+def is_file_ignored(path):
+    """Check if the specified path is in the ignore list"""
+    return run(['git', 'check-ignore', '-q', path]).returncode == 0
 
 
 def is_a_partial_directory(partials, file):
@@ -115,17 +117,16 @@ def create(symlink_settings, source_dir, dest_dir):
     log.info(f"Creating symlinks: {source_dir} -> {dest_dir}")
     source_dir = os.path.expanduser(source_dir)
     dest_dir = os.path.expanduser(dest_dir)
-    ignores = symlink_settings.get('ignores', [])
     partials = preprocess_partials(symlink_settings.get('partials', []))
 
     files = os.listdir(source_dir)
     log.debug(f"source_dir is: {source_dir!r}, dest_dir is: {dest_dir!r}")
     for file in files:
-        if is_file_ignored(ignores, file):
-            log.debug(f"{file!r} is ignored")
+        repo_path = os.path.join(source_dir, file)
+        if is_file_ignored(repo_path):
+            log.debug(f"{repo_path!r} is ignored")
             continue
 
-        repo_path = os.path.join(source_dir, file)
         dest_path = os.path.join(dest_dir, file)
 
         log.debug(f"Linking {repo_path!r} to {dest_path!r}")

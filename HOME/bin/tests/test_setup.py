@@ -91,18 +91,6 @@ class TestCreateSymlinks(object):
             join(ABS_SOURCE_DIR, 'sublime_text'), join(ABS_DEST_DIR, pointers['sublime_text'])
         )
 
-    def test_ignores(self, os):
-        "Test that an ignored file is not symlinked"
-        symlink_settings = {'ignores': ['.DS_Store']}
-        os.listdir.return_value = ['.DS_Store', 'hello']
-        os.path.lexists.return_value = True
-
-        with patch('lib.symlink.create_symlink') as create_symlink:
-            symlink.create(symlink_settings, SOURCE_DIR, DEST_DIR)
-
-        create_symlink.assert_called_once_with(
-            join(ABS_SOURCE_DIR, 'hello'), join(ABS_DEST_DIR, 'hello'))
-
     def test_create_symlinks_partials_none_existing(self, os, symlink_settings):
         "Test that symlink creation creates the intermediate directory and then symlinks the file"
         files_within_config = sorted(['myconfig', 'anotherconfig'])
