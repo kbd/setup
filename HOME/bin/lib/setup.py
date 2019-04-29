@@ -17,3 +17,11 @@ def root():
 
 def home():
     return root() / 'HOME'
+
+
+def home_path(path):
+    """Get the path within setup's HOME for the given path
+
+    Note: no valid setup path for anything outside of $HOME, so throws exception
+    """
+    return home() / Path(path).resolve().relative_to(Path.home())
