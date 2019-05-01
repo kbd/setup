@@ -1,5 +1,9 @@
 {
     "editor.fontFamily": "Fantasque Sans Mono",
+
+    "terminal.integrated.fontFamily": "Fantasque Sans Mono",
+    "terminal.integrated.fontSize": 12,
+
     "editor.lineHeight": 15,
     "editor.fontSize": 13,
     "editor.fontLigatures": true,
