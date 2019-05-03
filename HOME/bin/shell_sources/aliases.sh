@@ -120,6 +120,7 @@ alias cat=bat
 alias h=history
 alias p=python3
 alias py=ipython
+alias pyc='py -c'
 alias x='chmod +x'
 alias hex='hexyl'
 
