@@ -90,7 +90,7 @@ def move_file(from_path, to_path, keep=False):
     func(from_path, to_path)
 
 
-def restore_file(path, keep=False):
+def restore_file(path, keep=False, flip=False):
     """Restore backed up file to its original location.
 
     If 'path' matches a backup pattern, derive its original location from that
@@ -107,13 +107,17 @@ def restore_file(path, keep=False):
         printerr(f"No backup file for {original_path!r} found")
         return
 
-    if os.path.exists(original_path):
-        printerr(f"Original file exists at {original_path!r}. Not restoring.")
-        return
-
     if not os.path.exists(path):
         printerr(f"Path {path!r} doesn't exist, skipping")
         return
+
+    if os.path.exists(original_path):
+        if flip:
+            # bak up the original file first
+            backup_file(original_path)
+        else:
+            printerr(f"Original file exists at {original_path!r}. Not restoring.")
+            return
 
     move_file(path, original_path, keep)
 
@@ -125,11 +129,12 @@ def backup_file(path, keep=False):
 def main(args):
     files = args.files
     keep = args.keep
-    restore = args.restore
+    restore = args.restore or args.flip
+    flip = args.flip
 
     for file in files:
         if restore:
-            restore_file(file, keep)
+            restore_file(file, keep, flip)
             continue
 
         if not os.path.exists(file):
@@ -146,6 +151,9 @@ if __name__ == '__main__':
     parser.add_argument('files', nargs='+', help='Files to back up')
     parser.add_argument('-k', '--keep', action='store_true', help='Keep existing file')
     parser.add_argument('-r', '--restore', action='store_true', help='Restore original file')
-
+    parser.add_argument('-f', '--flip', action='store_true',
+        help='"Flip" w/ the specified backup. Read "-r --force", but backs up the existing first. ' + \
+            '-f implies -r or can be spelled -rf'
+    )
     args = parser.parse_args()
     sys.exit(main(args))
