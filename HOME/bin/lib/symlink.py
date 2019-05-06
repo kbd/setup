@@ -34,7 +34,7 @@ def is_a_partial_directory(partials, file):
     return file in partials and (os.path.isdir(file) or not os.path.exists(file))
 
 
-def handle_partials(symlink_settings, repo_path, dest_path):
+def handle_partials(repo_path, dest_path, partials):
     """Create symlinks for partial directories"""
     log.debug(f"{dest_path!r} is a partial location, not overwriting")
     # ensure directory exists
@@ -44,7 +44,7 @@ def handle_partials(symlink_settings, repo_path, dest_path):
 
     # recurse into it and only create symlinks for files that exist in repo
     # todo: this recursion is wasteful, try to clean up later
-    create(symlink_settings, repo_path, dest_path)
+    create(repo_path, dest_path, partials)
 
 
 def handle_existing_symlink(repo_path, dest_path):
@@ -110,14 +110,14 @@ def preprocess_partials(partials):
     return partials
 
 
-def create(symlink_settings, source_dir, dest_dir):
+def create(source_dir, dest_dir, partials):
     """
     For all files and directories within source_dir, symlink them into dest_dir.
     """
     log.info(f"Creating symlinks: {source_dir} -> {dest_dir}")
     source_dir = os.path.expanduser(source_dir)
     dest_dir = os.path.expanduser(dest_dir)
-    partials = preprocess_partials(symlink_settings.get('partials', []))
+    partials = preprocess_partials(partials)
 
     files = os.listdir(source_dir)
     log.debug(f"source_dir is: {source_dir!r}, dest_dir is: {dest_dir!r}")
@@ -135,11 +135,12 @@ def create(symlink_settings, source_dir, dest_dir):
             continue
 
         if is_a_partial_directory(partials, dest_path):
-            handle_partials(symlink_settings, repo_path, dest_path)
+            handle_partials(repo_path, dest_path, partials)
         else:
             # make sure the parent directory exists for the symlink
             dest_parent_dir = os.path.dirname(dest_path)
             log.debug(f"Ensuring parent directory {dest_parent_dir!r} of dest_path {dest_path!r} exists")
             if not os.path.exists(dest_parent_dir):
                 os.makedirs(dest_parent_dir)
+
             create_symlink(repo_path, dest_path)
