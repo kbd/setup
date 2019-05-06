@@ -108,7 +108,8 @@ def main():
     if hasattr(args, 'func'):
         args.func(settings, **vars(args))
     else:
-        symlink.create(settings['symlinks'], repo_home_dir, home_dir)
+        partials = list(map(str.strip, open(setup.PARTIALS_PATH)))
+        symlink.create(repo_home_dir, home_dir, partials)
         update_os_settings(settings)
 
 
