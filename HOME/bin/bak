@@ -41,7 +41,7 @@ def backup_path(path, format=BACKUP_FORMAT):
     'ext' (extension) and 'ts' (timestamp) values.
     """
     ts = current_timestamp_str()
-    while os.path.exists(path):  # keep adding to filename until it doesn't exist
+    while os.path.lexists(path):  # keep adding to filename until it doesn't exist
         # strip trailing slash in case of directory
         path = path.rstrip('/') + BACKUP_FORMAT.format(ext=EXTENSION, ts=ts)
 
@@ -107,11 +107,11 @@ def restore_file(path, keep=False, flip=False):
         printerr(f"No backup file for {original_path!r} found")
         return
 
-    if not os.path.exists(path):
+    if not os.path.lexists(path):
         printerr(f"Path {path!r} doesn't exist, skipping")
         return
 
-    if os.path.exists(original_path):
+    if os.path.lexists(original_path):
         if flip:
             # bak up the original file first
             backup_file(original_path)
@@ -137,7 +137,7 @@ def main(args):
             restore_file(file, keep, flip)
             continue
 
-        if not os.path.exists(file):
+        if not os.path.lexists(file):
             printerr(f"File {file!r} doesn't exist, skipping")
             continue
 
