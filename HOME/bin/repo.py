@@ -166,7 +166,7 @@ def get_stash_string(repo):
     else:
         _total, branch_count, autostash = get_stash_stats(repo, counter)
         branch_str = str(branch_count or '')
-        autostash_str = "A{autostash if autostash > 1 else ''}" if autostash else ''
+        autostash_str = f"A{autostash if autostash > 1 else ''}" if autostash else ''
         return f"{branch_str}{autostash_str}"
 
 
