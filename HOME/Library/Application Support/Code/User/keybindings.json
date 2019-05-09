@@ -149,18 +149,18 @@
     "when": "textInputFocus"
   },
   {
+    "key": "ctrl+left",
+    "command": "cursorWordPartLeft",
+    "when": "textInputFocus"
+  },
+  {
     "key": "ctrl+shift+right",
     "command": "cursorWordPartRightSelect",
     "when": "textInputFocus"
   },
   {
-    "key": "ctrl+left",
-    "command": "cursorWordPartStartLeft",
-    "when": "textInputFocus"
-  },
-  {
     "key": "ctrl+shift+left",
-    "command": "cursorWordPartStartLeftSelect",
+    "command": "cursorWordPartLeftSelect",
     "when": "textInputFocus"
   },
   {
