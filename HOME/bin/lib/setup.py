@@ -1,6 +1,7 @@
 from pathlib import Path
 
 SETTINGS_PATH = 'conf/settings.py'
+PARTIALS_PATH = 'conf/partials.txt'
 
 
 def load_config(path=SETTINGS_PATH):

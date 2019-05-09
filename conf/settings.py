@@ -1,17 +1,4 @@
 {
-    'symlinks': {
-        'partials': [
-            # partials refer to directories that won't be symlinked directly, but will have their
-            # contents symlinked. This avoids overwriting a directory that has files we want to
-            # leave in place and not alter. Pointer directories can be partials, and partials can
-            # be nested, otherwise subdirs within the partial will still be treated normally
-            # partials should be an absolute path, possibly with the home directory
-            '~/.config',
-            '~/.parallel',
-            '~/Library/Application Support/Sublime Text 3/Packages/User',
-            '~/Library/Application Support/Code/User',
-        ],
-    },
     'packages': {
         'brew': {
             'bundle': 'conf/Brewfile',
