@@ -9,21 +9,26 @@ from subprocess import run
 log = logging.getLogger(__name__)
 
 
-def is_file_ignored(path):
-    """Check if the specified path is in the ignore list"""
-    return run(['git', 'check-ignore', '-q', path]).returncode == 0
+class MyPath(type(Path())):  # https://stackoverflow.com/a/34116756
+    def current_link_path(self):
+        return self.__class__(os.readlink(self))
 
+    def is_ignored(self):
+        """Check if the specified path is in the ignore list"""
+        return run(['git', 'check-ignore', '-q', str(self)]).returncode == 0
 
-def backup_file(path):
-    ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
-    suffix = '.bak.' + ts
-    backup_path = path.with_suffix(suffix)
-    while backup_path.exists():  # keep adding to filename until it doesn't exist
-        suffix += suffix
-        backup_path = backup_path.with_suffix(suffix)
+    def backup(self):
+        ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
+        suffix = '.bak.' + ts
+        i = 1
+        while True:  # keep adding to filename until a path is free
+            backup_path = self.with_suffix(suffix * i)
+            if not backup_path.exists():
+                break
+            i += 1
 
-    path.rename(backup_path)
-    return backup_path
+        self.rename(backup_path)
+        return backup_path
 
 
 def preprocess_partials(partial_paths):
@@ -48,7 +53,7 @@ def preprocess_partials(partial_paths):
     directory. That way it's a simple set membership test to determine whether a
     given path is a partial.
     """
-    original_partials = {Path(p).expanduser() for p in partial_paths}
+    original_partials = {MyPath(p).expanduser() for p in partial_paths}
     all_partials = original_partials.copy()
     for p in original_partials:
         all_partials |= set(p.parents)
@@ -56,55 +61,73 @@ def preprocess_partials(partial_paths):
     return all_partials
 
 
-def create(source_dir, dest_dir, partials):
-    """
-    For all files and directories within source_dir, symlink them into dest_dir.
-    """
-    source_dir = Path(source_dir).expanduser()
-    dest_dir = Path(dest_dir).expanduser()
+def create_links(source_dir, dest_dir, partials):
+    """Symlink all files and directories within source_dir into dest_dir."""
+    source_dir = MyPath(source_dir).expanduser()
+    dest_dir = MyPath(dest_dir).expanduser()
     log.info(f"Creating symlinks: {source_dir} -> {dest_dir}")
     partials = preprocess_partials(partials)
 
+    _ready_create_links(source_dir, dest_dir, partials)
+
+
+def _ready_create_links(source_dir, dest_dir, partials):
+    """Does the work of create_links. Assumes partials have been pre-processed
+    and user dirs expanded.
+    """
     log.debug(f"source_dir is: {source_dir!r}, dest_dir is: {dest_dir!r}")
-    breakpoint()
     for file in source_dir.iterdir():
-        repo_path = source_dir / file
-        dest_path = dest_dir / file
-        if is_file_ignored(repo_path):
-            log.debug(f"{repo_path!r} is ignored")
-            continue
+        name = file.name
+        repo_path = source_dir / name
+        dest_path = dest_dir / name
+        create_link(repo_path, dest_path, partials)
 
-        # if the file exists...
-        if os.path.lexists(dest_path):
-            log.debug(f"Path {dest_path!r} already exists")
-            # and it's already a symlink
-            if dest_path.is_symlink():
-                curr_link_path = Path(os.readlink(dest_path))
-                # and the link points where we want
-                if curr_link_path == repo_path:
-                    # leave it alone
-                    log.debug(f"{dest_path!r} already points where we want, making no changes")
-                    continue
-                else:
-                    # otherwise remove the wrong-pointing symlink
-                    log.info(f"Symlink at {dest_path!r} points to {curr_link_path!r}. Removing existing symlink")
-                    dest_path.unlink()
-            # if it's not a symlink and not in partials, back up existing file
-            elif dest_path not in partials:
-                log.debug(f"Backing up existing file at {dest_path}")
-                backup_file(dest_path)
 
-        # at this point there should be nothing at the destination
-        log.debug(f"Linking {repo_path!r} to {dest_path!r}")
-        if dest_path in partials:
-            log.debug(f"{dest_path!r} is a partial, ensuring it exists")
-            dest_path.mkdir(parents=True, exist_ok=True)
-            # since this is for a partial, recurse into it and continue linking
-            create(repo_path, dest_path, partials)
+def create_link(repo_path, dest_path, partials):
+    log.debug(f"Creating link from {dest_path} to {repo_path}.")
+    # respect ignored files
+    if repo_path.is_ignored():
+        log.debug(f"{repo_path} is ignored.")
+        return
+
+    # handle existing symlink
+    if dest_path.is_symlink():
+        log.debug(f"{dest_path} is an existing symlink.")
+        curr_link_path = dest_path.current_link_path()
+        if curr_link_path == repo_path:
+            # if the link points where we want, leave it alone
+            log.debug(f"{dest_path} already points to {repo_path}, making no changes.")
+            return True  # return of True makes it easier to test this case
         else:
-            # not necessary for us to ensure parent directory exists because
-            # if we got here we're either at the root of where we're creating
-            # i.e. $HOME, or the directory will have been created while
-            # recursing through the prior branch
-            log.info(f"Creating symlink of {repo_path!r} to {dest_path!r}")
-            dest_path.symlink_to(repo_path)
+            # otherwise remove the wrong-pointing symlink
+            log.info(f"{dest_path} points to {curr_link_path}. Removing.")
+            dest_path.unlink()
+
+    exists_msg = f"Existing file at {dest_path}. Backing up."
+    # handle partial directories
+    if dest_path in partials:
+        if not repo_path.is_dir():
+            # sanity check
+            msg = f"Error in config: {dest_path} is specified as a partial but {repo_path} is a file"
+            log.error(msg)
+            raise Exception(msg)
+
+        log.debug(f"{dest_path} is a partial directory")
+        # if it's a file, back it up. Otherwise, ensure the dir exists
+        if dest_path.is_file():
+            log.info(exists_msg)
+            dest_path.backup()
+
+        if not dest_path.exists():
+            log.info(f"Creating {dest_path}")
+            dest_path.mkdir(parents=True)
+
+        return _ready_create_links(repo_path, dest_path, partials)
+
+    # everything else is a file or dir that should be symlinked
+    if dest_path.exists():
+        log.info(exists_msg)
+        dest_path.backup()
+
+    log.info(f"Creating symlink to {repo_path} at {dest_path}")
+    dest_path.symlink_to(repo_path)
