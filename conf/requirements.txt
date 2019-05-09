@@ -23,6 +23,7 @@ pudb
 pygments
 pyquery
 pytest
+pytest-cov
 PyYAML
 requests
 rethinkdb
