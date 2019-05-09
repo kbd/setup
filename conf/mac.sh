@@ -71,3 +71,9 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # show the date in the clock
 defaults write com.apple.menuextra.clock DateFormat "EEE MMM d  h:mm a"
+
+# use function keys as function keys
+defaults write -g com.apple.keyboard.fnState true
+
+# change spaces shortcuts away from ctrl + <- etc.
+# todo
