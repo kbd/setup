@@ -117,9 +117,8 @@
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --pretty=format:'%C(blue)%ad %C(cyan)%cn %C(auto)%h%C(auto)%d%n %s%n%w(0,4,4)%+b' --stat
-	plog = log --date=short --pretty=format:'%C(124)%ad %C(24)%h %C(34)%<(20,trunc)%an %C(252)%<(70,trunc)%s%C(auto)%d'
-	pl1 = log --date=short --pretty=format:'%C(green)%ad %C(auto)%h %C(blue)%<(20,trunc)%an %C(reset)%<(70,trunc)%s%C(auto)%d'
-	plg = log --graph --pretty=format:'%C(auto)%h%d%C(reset) %s %C(green)(%ar) %C(bold blue)<%an>%C(reset)'
+	lg = !git log --color=always --graph --pretty=format:'%C(auto)%h %C(auto,green)(%ar)%C(auto)%d%C(reset) %s %C(auto,bold blue)<%an>%C(reset)' | perl -pe 's/([^(]+\\()(\\d+)\\s+(\\w)\\w+[^)]+\\)/$1.sprintf(\"%02d\", $2).$3.\")\"/e' | less -RFX
+	l1 = log --date=short --pretty=format:'%C(auto,green)%ad %C(auto)%h %C(blue)%<(20,trunc)%an %C(reset)%<(70,trunc)%s%C(auto)%d'
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
 	prune-remote = remote prune origin # prune branches deleted from remote
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
