@@ -65,6 +65,7 @@ def create_links(source_dir, dest_dir, partials):
     """Symlink all files and directories within source_dir into dest_dir."""
     source_dir = MyPath(source_dir).expanduser()
     dest_dir = MyPath(dest_dir).expanduser()
+    assert source_dir != dest_dir
     log.info(f"Creating symlinks: {source_dir} -> {dest_dir}")
     partials = preprocess_partials(partials)
 
