@@ -1,20 +1,39 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-# turns out you can't export arrays, so source the colors
-source ~/bin/shell_sources/colors.sh
+"""dl = download"""
 
-# dl = download
-if [[ -n "$1" ]] && [[ ! $1 == -* ]]; then
-    # an argument provided that doesn't start with dash
-    url="$1"; shift
-else
-    url="$(cb)"  # get from clipboard
-fi
+import argparse
+import sys
 
-echo "${COL[bold]}${COL[blue]}Downloading: ${COL[yellow]}$url${COL[reset]}"
+from lib import utils, colors as c
+import shlex
 
-if [[ $url == magnet:* ]] || [[ $url == *.torrent ]]; then
-    aria2c "$@" "$url"
-else
-    youtube-dl "$@" "$url"
-fi
+BINARY_EXTENSIONS = ('.zip', '.tar.gz')
+
+
+def run(*args):
+    fprint('Executing', ' '.join(shlex.quote(a) for a in args), bold=False)
+    sys.exit(utils.run(args, check=False).returncode)
+
+
+def fprint(action, text, bold=True):
+    print(f"{c.s.bold if bold else ''}{c.fg.blue}{action}: {c.fg.yellow}{text}{c.s.reset}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-r', '--raw', action='store_true', help='raw download')
+    parser.add_argument('url', nargs='?', help='URL to download')
+    args, rest = parser.parse_known_args()
+
+    raw = args.raw
+    url = args.url or utils.run(['cb'], cap=True)
+
+    fprint("Downloading", url)
+
+    if raw or url.endswith(BINARY_EXTENSIONS):
+        run('wget', *rest, url)
+    elif url.startswith('magnet:') or url.endswith('.torrent'):
+        run('aria2c', *rest, url)
+    else:
+        run('youtube-dl', *rest, url)
