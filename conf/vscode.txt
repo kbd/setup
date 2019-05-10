@@ -15,6 +15,7 @@ ms-vscode.vscode-typescript-tslint-plugin
 PeterJausovec.vscode-docker
 pnp.polacode
 rust-lang.rust
+ryanluker.vscode-coverage-gutters
 stkb.rewrap
 timonwong.shellcheck
 wholroyd.jinja
