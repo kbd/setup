@@ -142,6 +142,8 @@ alias gap='g ap'
 alias gd='g d'
 alias gdf='g df'
 alias gds='g ds'
+alias gc='g c'
+alias gcm='g cm'
 
 # "system"
 alias ercho='>&2 echo'  # echo to stderr
