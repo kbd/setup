@@ -21,7 +21,7 @@
 # note: this code depends on colors.sh and funcs.sh already being loaded.
 # they only happen to be becase c < f < p alphabetically, but ¯\_(ツ)_/¯
 _prompt_date() {
-    echo -n "$eo${COL[grey]}$dt$eo${COL[reset]}$ec:"
+    echo -n "$eo${COL[grey]}$ec$dt$eo${COL[reset]}$ec:"
 }
 
 _prompt_user() {
