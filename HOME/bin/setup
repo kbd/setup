@@ -75,8 +75,8 @@ def repo(settings, *args, **kwargs):
     subprocess.check_call(cmd)
 
 
-def debug(*args, **kwargs):
-    code.interact(local=globals()),
+def debug(settings, *args, **kwargs):
+    code.interact(local={'settings': settings, **globals()})
 
 
 def edit(*args, **kwargs):
