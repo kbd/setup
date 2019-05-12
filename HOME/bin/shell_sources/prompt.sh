@@ -15,6 +15,9 @@
 # $PROMPT_PREFIX
 #   override to control what's displayed at the start of the prompt line
 #
+# $PROMPT_BARE
+#   set to enable a very minimal prompt, useful for copying exmaples
+#
 # note: this code depends on colors.sh and funcs.sh already being loaded.
 # they only happen to be becase c < f < p alphabetically, but ¯\_(ツ)_/¯
 _prompt_date() {
@@ -177,6 +180,9 @@ _prompt_filter() {
     if [[ $PROMPT_SHORT_DISPLAY || $PROMPT_HIDE_DATE ]]; then
         # don't show the date on short mode or if explicitly hidden
         funcs=$(filter "$funcs" "date")
+    fi
+    if [[ $PROMPT_BARE ]]; then
+        funcs=$(filter "$funcs" "prefix|script|venv|user|at|host|screen|sep|path|repo|jobs")
     fi
     echo -n "$funcs"
 }
