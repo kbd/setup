@@ -77,3 +77,18 @@ defaults write -g com.apple.keyboard.fnState true
 
 # change spaces shortcuts away from ctrl + <- etc.
 # todo
+
+# zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
+defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+
+# flycut preferences
+# shortcut to ctrl+cmd v
+defaults write com.generalarcade.flycut "ShortcutRecorder mainHotkey" -dict keyCode -int 47 modifierFlags -int 1310720
+defaults write com.generalarcade.flycut loadOnStartup -int 1
+defaults write com.generalarcade.flycut pasteMovesToTop -int 1
+defaults write com.generalarcade.flycut removeDuplicates -int 1
+
+# startup items - https://apple.stackexchange.com/a/310502/
+for app in Flycut SpotMenu Flux iTerm; do
+  osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/'$app'.app", hidden:false}' > /dev/null
+done
