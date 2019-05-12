@@ -1,11 +1,36 @@
 import pytest
-from unittest.mock import create_autospec
+from unittest.mock import create_autospec, patch, call
 
 from lib import symlink
 
 
 def MockPath(value):
     return create_autospec(symlink.MyPath, name=value, value=value)
+
+
+def test_create_links():
+    source_dir = MockPath('source')
+    dest_dir = MockPath('dest')
+    partials = {'one'}
+    source_dir.iterdir.return_value = [
+        source_dir / 'one',
+        source_dir / 'two',
+        source_dir / 'three',
+    ]
+
+    with patch('lib.symlink.create_link') as create_link:
+        symlink._ready_create_links(source_dir, dest_dir, partials)
+
+    # note it's not actually checking the correct values, since mock -op- value
+    # just returns an instance of the mock which compares equal to itself. not
+    # sure the right way to do that with mocks, but the test is still useful for
+    # now in that it checks some aspects of the calls done.
+    calls = [
+        call(source_dir / 'one', dest_dir / 'one', partials),
+        call(source_dir / 'two', dest_dir / 'two', partials),
+        call(source_dir / 'three', dest_dir / 'three', partials),
+    ]
+    create_link.assert_has_calls(calls)
 
 
 def test_create_symlink():
