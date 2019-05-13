@@ -88,10 +88,10 @@ _prompt_path() {
 # source control information in prompt
 _prompt_repo() {
     if [[ -n "$SSHHOME" ]]; then
-        # skip repo support over ssh(rc) because repo.py won't be able to run
+        # skip repo support over ssh(rc) because repo status won't be able to run
         return 0
     fi
-    local repostr="$(repo.py)"
+    local repostr="$(repo)"
     if [[ -n "$repostr" ]]; then
         echo -n "[$repostr]"
     fi
