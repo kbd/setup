@@ -87,7 +87,8 @@
 	hide = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
 	unhide-all = update-index --really-refresh
-	list-hidden = !git ls-files -v | grep '^h' | cut -c3-
+	list-hidden = !git ls-files -v | grep '^[a-z]' | cut -c3-
+	list-ignored = !git status -s --ignored | grep '^!!' | cut -c4-
 	lu = ls-files --others --exclude-standard # "list untracked"
 	p = "!f() { if git upstream; then git push; else git push -u; fi }; f" # push, set upstream if necessary
 	pf = push --force
