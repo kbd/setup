@@ -246,7 +246,7 @@ def main(args):
         info.update({k: 2 for k in info if k != 'branch'})
 
     shell = get_shell()
-    if args.interactive or shell not in ('bash', 'zsh'):
+    if os.isatty(1) or shell not in ('bash', 'zsh'):
         shell = 'interactive'
 
     templates = get_templates(shell)
@@ -258,7 +258,6 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Print repo status')
     parser.add_argument('path', nargs='?', default='.', help='Path to repository')
     parser.add_argument('-f', '--fake', action='store_true', help='Show fake status')
-    parser.add_argument('-i', '--interactive', action='store_true', help="Don't output prompt escapes")
     return parser.parse_args()
 
 
