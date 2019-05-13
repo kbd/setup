@@ -24,11 +24,17 @@ This shim makes that unnecessary, so 'ipython' is interchangeable with 'python'.
 """
 
 import os
-import subprocess
 import sys
 
 CMD = '/usr/local/bin/ipython'
-DEFAULT_ARGS = ['--no-banner', '--no-confirm-exit', '--no-term-title', '--ext=autoreload']
+DEFAULT_ARGS = [
+    CMD,
+    '--no-banner',
+    '--no-confirm-exit',
+    '--no-term-title',
+    '--ext=autoreload',
+    '--TerminalInteractiveShell.highlighting_style=monokai',
+]
 
 args = sys.argv[1:]
 for i, arg in enumerate(args):
@@ -42,4 +48,4 @@ else:
 
 args = DEFAULT_ARGS + args[:i] + ['--'] + args[i:]
 
-subprocess.call([CMD, *args])
+os.execv(CMD, args)
