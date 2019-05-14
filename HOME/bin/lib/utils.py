@@ -36,3 +36,17 @@ def partition(pred, list):
 def partition_by_regex(regex, list):
     r = re.compile(regex or '')
     return partition(r.search, list)
+
+
+def read_lines_from_file(path, comment=None):
+    """Read the lines from a file, skipping empty lines and (optionally) commented lines.
+
+    If 'comment' string is provided, lines beginning with 'comment' will not be returned.
+    """
+    with open(path) as file:
+        lines = [line.rstrip() for line in file]
+
+    return [
+        line for line in lines
+        if line and not (comment and line.startswith(comment))
+    ]

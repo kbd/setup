@@ -1,4 +1,5 @@
 import subprocess
+import tempfile
 from unittest.mock import patch
 
 from lib import utils
@@ -74,3 +75,22 @@ def test_run_shell_input():
     output = utils.run(['cat'], cap=True, input='hello')
     expected_output = 'hello'
     assert output == expected_output
+
+
+def test_read_lines_from_file():
+    values = ['one', 'two', 'three']
+    with tempfile.NamedTemporaryFile() as t:
+        t.writelines(f'{v}\n'.encode() for v in values)
+        t.flush()
+        actual = utils.read_lines_from_file(t.name)
+
+    assert actual == values
+
+def test_read_lines_from_file_with_blanks_and_comments():
+    values = ['one', 'two', 'three', '# commented line', 'four', ' ', 'six']
+    with tempfile.NamedTemporaryFile() as t:
+        t.writelines(f'{v}\n'.encode() for v in values)
+        t.flush()
+        actual = utils.read_lines_from_file(t.name, comment='#')
+
+    assert actual == ['one', 'two', 'three', 'four', 'six']
