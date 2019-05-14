@@ -209,4 +209,6 @@
 
     "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home",
     "workbench.editor.showTabs": true,
+
+    "terminal.integrated.env.osx": { "PATH": "", "PATH_SET": "" }, // https://github.com/microsoft/vscode/issues/70248
 }
