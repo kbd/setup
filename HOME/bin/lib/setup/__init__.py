@@ -2,6 +2,7 @@ from pathlib import Path
 
 SETTINGS_PATH = 'conf/settings.py'
 PARTIALS_PATH = 'conf/partials.txt'
+HOME_DIR = 'HOME'
 
 
 def load_config(path=SETTINGS_PATH):
@@ -10,14 +11,13 @@ def load_config(path=SETTINGS_PATH):
 
 
 def root():
-    # this program lives in $repo/HOME/bin/lib, so $repo/HOME/bin/../../.. will
-    # get the root of the repository. Use resolve() to resolve symlink since
-    # $repo/HOME/bin is symlinked to ~/bin.
-    return Path(__file__).resolve().parents[3]
+    # this file is under HOME_DIR, which is directly under the repo root
+    path = Path(__file__).resolve()  # resolve symlinks (~/bin=setup/HOME/bin)
+    return path.parents[path.parts[::-1].index(HOME_DIR)]
 
 
 def home():
-    return root() / 'HOME'
+    return root() / HOME_DIR
 
 
 def home_path(path):
