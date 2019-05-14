@@ -5,7 +5,7 @@ import subprocess
 import zipfile
 
 from lib import homebrew
-from lib.utils import run
+from lib.utils import run, read_lines_from_file
 
 log = logging.getLogger()
 
@@ -40,7 +40,8 @@ def wow(params, language_filter):
         log.info("Skipping addons because not specifically requested")
         return True
 
-    for addon in params['addons']:
+    addons = read_lines_from_file(params['addons'], comment='#')
+    for addon in addons:
         log.info(f"Downloading addon {addon!r}")
         result = addon_install(type, addon, params['installation_path'])
         if result:

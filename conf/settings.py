@@ -26,23 +26,7 @@
         },
         'wow': {
             'installation_path': '/Applications/World of Warcraft/Interface/AddOns/',
-            'addons': [
-                # 'altoholic',
-                'bagnon',
-                'deadly-boss-mods',
-                'dominos',
-                'droodfocus',
-                'mik-scrolling-battle-text',  # msbt
-                'need-to-know',
-                'omni-cc',
-                'recount',
-                'shadowed-unit-frames',
-                'tidy-plates',
-                'macro-toolkit',
-
-                # other addons I've used in the past:
-                # elkano's buff bars, monkeyquest, prat, auctioneer
-            ],
+            'addons': 'conf/wow-addons.txt',
         },
     },
 }
