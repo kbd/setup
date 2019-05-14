@@ -134,6 +134,7 @@ alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 # git
 alias g=git
 alias s='g s'
+alias gs='g s'
 alias gl='g l'
 alias glg='g lg'
 alias gp='g p'
