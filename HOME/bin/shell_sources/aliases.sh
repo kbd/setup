@@ -130,7 +130,7 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias ts-node="ts-node -D6133"  # disable 'declared but not used' errors
 alias goog='googler -n3 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
-alias et='exa -alT --git -I.git'
+et(){ exa -alT --git -I.git --color=always "$@" | less -RFX; }
 
 # git
 alias g=git
