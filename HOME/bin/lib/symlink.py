@@ -22,7 +22,7 @@ class MyPath(type(Path())):  # https://stackoverflow.com/a/34116756
         suffix = '.bak.' + ts
         i = 1
         while True:  # keep adding to filename until a path is free
-            backup_path = self.with_suffix(suffix * i)
+            backup_path = self.with_suffix(self.suffix + suffix * i)
             if not backup_path.exists():
                 break
             i += 1
