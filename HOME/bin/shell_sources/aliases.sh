@@ -74,7 +74,6 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     }
 fi
 
-# ALIASES
 # directory/navigation
 alias   -- -='cd -'
 alias     ..='cd ..'
@@ -82,6 +81,8 @@ alias    ...='cd ../..'
 alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
+cl()  { cd -- "$1" && ls "${@:2}"; }
+cll() { cd -- "$1" && ll "${@:2}"; }
 
 # ls
 alias l=ls
@@ -91,12 +92,9 @@ alias ll='ls -l'
 alias lla='ls -la'
 alias llt='ls -lt'
 alias llat='ls -lat'
-# gnu ls
-# '--' necessary to correctly handle filenames beginning with -
-# bsd ls handles this correctly by default and doesn't allow --
-# indicator-style=none so you don't get directories with // at the end
 alias lsd='ls -d --indicator-style=none -- */'
 alias lld='ll -d --indicator-style=none -- */'
+et(){ exa -alT --git -I.git --color=always "$@" | less -RFX; }
 
 # edit/open
 alias edit=\$EDITOR "$@"
@@ -130,7 +128,6 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias ts-node="ts-node -D6133"  # disable 'declared but not used' errors
 alias goog='googler -n3 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
-et(){ exa -alT --git -I.git --color=always "$@" | less -RFX; }
 
 # git
 alias g=git
@@ -153,8 +150,14 @@ alias ercho='>&2 echo'  # echo to stderr
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || PROMPT_BARE=1'
 alias last_command='fc -nl -1'
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
+exists() { type "$1" &>/dev/null; } # check if a program exists
+printv() { printf '%q\n' "$1"; } # v for verbatim
+is_remote() { [[ $SSH_TTY || $SSH_CLIENT ]]; }
+is_su() { [[ $USER != "$(logname)" ]]; } # if current user != login user
+is_root() { [[ $EUID == 0 ]]; }
+user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
+my_home() { user_home "$(logname)"; }
 
-# FUNCTIONS
 # source a file or a directory of files, ignore if doesn't exist
 _source() {
     if [[ -d "$1" ]]; then
@@ -169,15 +172,6 @@ _source() {
     fi
 }
 
-exists() {
-    # check if a program exists
-    type "$1" &>/dev/null
-}
-
-printv() {  # v for verbatim
-    printf '%q\n' "$1"
-}
-
 # mkdir + cd
 mcd() {
     if [[ -z "$1" ]]; then
@@ -185,15 +179,6 @@ mcd() {
         return 1
     fi
     mkdir -p -- "$1" && cl "$@"
-}
-
-# cd + ls
-cl() {
-    cd -- "$1" && ls "${@:2}"
-}
-
-cll() {
-    cd -- "$1" && ll "${@:2}"
 }
 
 # dirname, but treat paths that end in slash as a directory
@@ -234,16 +219,6 @@ rep() {
     printf -- "$1%.s" $(seq 1 ${2-$(tput cols)})
 }
 
-# get the homedir of another user. Be careful cause of eval.
-# http://stackoverflow.com/a/20506895
-user_home() {
-    eval echo "~$1"
-}
-
-my_home() {
-    user_home "$(logname)"
-}
-
 filter() {
     # take a space-separated string of words and filter it
     # based on a filter expression (like "word" or "word1|word2").
@@ -259,18 +234,6 @@ join_by() {
     local f=$2
     shift 2
     printf "%s" "$f${@/#/$d}";
-}
-
-is_remote() {
-    [[ $SSH_TTY || $SSH_CLIENT ]]
-}
-
-is_su() {
-    [[ $USER != "$(logname)" ]]  # if current user != login user
-}
-
-is_root() {
-    [[ $EUID == 0 ]]
 }
 
 # "reload history"
