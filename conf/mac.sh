@@ -88,6 +88,10 @@ defaults write com.generalarcade.flycut loadOnStartup -int 1
 defaults write com.generalarcade.flycut pasteMovesToTop -int 1
 defaults write com.generalarcade.flycut removeDuplicates -int 1
 
+# iterm preferences
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder '~/.config/iterm2'
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
 # startup items - https://apple.stackexchange.com/a/310502/
 for app in Flycut SpotMenu Flux iTerm; do
   osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/'$app'.app", hidden:false}' > /dev/null
