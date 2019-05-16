@@ -43,7 +43,7 @@ def backup_path(path, format=BACKUP_FORMAT):
     ts = current_timestamp_str()
     while os.path.lexists(path):  # keep adding to filename until it doesn't exist
         # strip trailing slash in case of directory
-        path = path.rstrip('/') + BACKUP_FORMAT.format(ext=EXTENSION, ts=ts)
+        path = path.rstrip('/') + format.format(ext=EXTENSION, ts=ts)
 
     return path
 
