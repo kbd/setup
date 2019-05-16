@@ -4,6 +4,7 @@
 .git/
 .vscode/
 __*
+*.bak.*
 
 *.pyc
 *.cache
