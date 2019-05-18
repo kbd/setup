@@ -94,6 +94,7 @@ CLIPS = {
     'wine': '🍷',
     'flowers': '💐',
     'kiss': '😘',
+    'yum': '😋',
 }
 
 def print_clips(CLIPS):
