@@ -11,7 +11,9 @@ def load_config(path=SETTINGS_PATH):
 
 
 def root():
-    # this file is under HOME_DIR, which is directly under the repo root
+    """Return the path of the root of this setup repository."""
+    # this file is under HOME_DIR. HOME_DIR's parent is the root.
+    # So search backwards for HOME_DIR and get its parent.
     path = Path(__file__).resolve()  # resolve symlinks (~/bin=setup/HOME/bin)
     return path.parents[path.parts[::-1].index(HOME_DIR)]
 
