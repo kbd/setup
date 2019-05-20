@@ -125,6 +125,10 @@
         "editor.insertSpaces": true,
     },
 
+    "[plaintext]": {
+        "editor.wordBasedSuggestions": false
+    },
+
     "editor.tabCompletion": "on",
     "editor.suggest.localityBonus": true,
     "editor.minimap.enabled": true,
