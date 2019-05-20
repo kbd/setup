@@ -69,15 +69,6 @@
         "editorIndentGuide.activeBackground": "#888"
     },
 
-    "sync.gist": "9c099110598e09bf6ecb597d7b27f4bd",
-    "sync.autoDownload": false,
-    "sync.autoUpload": false,
-    "sync.forceDownload": false,
-    "sync.quietSync": false,
-    "sync.askGistName": false,
-    "sync.removeExtensions": true,
-    "sync.syncExtensions": true,
-
     "gitlens.codeLens.enabled": false,
     "gitlens.advanced.messages": {
         "suppressCommitHasNoPreviousCommitWarning": false,
