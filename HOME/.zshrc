@@ -38,7 +38,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 bindkey -M menuselect '\e[Z' reverse-menu-complete  # menuselect from complist
 
 # key binds
-stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
+stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
 
 bindplugin() {
     # usage: bindplugin "\e[A" up-line-or-beginning-search
@@ -47,22 +47,16 @@ bindplugin() {
     bindkey "$1" "$2"
 }
 
-# up/down-line-or-beginning-search is equivalent to bash's history-search-backward/forward.
-# Zsh's functions of the same name leave you at the beginning of the line instead of the end.
-bindplugin "\e[A" up-line-or-beginning-search
-bindplugin "\e[B" down-line-or-beginning-search
-
-# control + <- / ->
-bindkey "\e[1;5D" backward-word
-bindkey "\e[1;5C" forward-word
-# option + <- / ->
-bindkey "\e\e[D" backward-word
-bindkey "\e\e[C" forward-word
-
-# home, end, delete
-bindkey "\e[H" beginning-of-line
-bindkey "\e[F" end-of-line
-bindkey "\e[3~" delete-char
+# Zsh's built-in ↑ and ↓ leave you at the start of the line instead of the end
+bindplugin "\e[A" up-line-or-beginning-search # ↑ (bash:history-search-backward)
+bindplugin "\e[B" down-line-or-beginning-search # ↓ (bash:history-search-forward)
+bindkey "\e[1;5D" backward-word # ⌃←
+bindkey "\e[1;5C" forward-word # ⌃→
+bindkey "\e\e[D" backward-word # ⌥←
+bindkey "\e\e[C" forward-word # ⌥→
+bindkey "\e[H" beginning-of-line # home
+bindkey "\e[F" end-of-line # end
+bindkey "\e[3~" delete-char # delete
 
 # 3rd party software config
 eval "$(thefuck --alias)"
