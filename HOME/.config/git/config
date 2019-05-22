@@ -100,12 +100,11 @@
 	ri = rebase -i
 	s = status
 	st = stash
+	stm = stash push -m
 	stl = stash list
 	stp = stash pop
-	stpu = stash push
-	stpum = stash push -m
 	sts = stash show
-	stsp = stash show -p
+	stp = stash show -p
 	unstage = reset --
 	uncommit = reset @~ --
 	upstream = name-rev @{upstream}
