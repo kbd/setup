@@ -151,20 +151,6 @@ is_root() { [[ $EUID == 0 ]]; }
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 my_home() { user_home "$(logname)"; }
 
-# source a file or a directory of files, ignore if doesn't exist
-_source() {
-    if [[ -d "$1" ]]; then
-        # if it's a directory, source everything in the directory, recursively
-        local file
-        for file in "$1"/**/*.sh; do  # requires bash 4 and shopt -s globstar
-            source "$file" 2>/dev/null
-        done
-    elif [[ -f "$1" ]]; then
-        # If it's a file, source it
-        source "$1" 2>/dev/null
-    fi
-}
-
 # mkdir + cd
 mcd() {
     if [[ -z "$1" ]]; then
