@@ -129,21 +129,14 @@ alias ts-node="ts-node -D6133"  # disable 'declared but not used' errors
 alias goog='googler -n3 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
-# git
 alias g=git
+# create aliases for all short (<= 4 character) git aliases
+for gitalias in $(git alias | grep -E '^.{0,4}$'); do
+    # shellcheck disable=SC2139
+    alias "g$gitalias=g $gitalias"
+done
 alias s='g s'
-alias gs='g s'
-alias gl='g l'
-alias glg='g lg'
-alias gp='g p'
-alias gpl='g pl'
 alias ga='g af'
-alias gap='g ap'
-alias gd='g d'
-alias gdf='g df'
-alias gds='g ds'
-alias gc='g c'
-alias gcm='g cm'
 
 # "system"
 alias ercho='>&2 echo'  # echo to stderr

@@ -46,6 +46,8 @@
 
 # aliases
 [alias]
+	# list all aliases
+	alias = !git config --get-regexp '^alias\\.' | perl -pe 's/[^.]+\\.([^=\\s]+).*$/$1/'
 	a = add
 	af = !gsf git a
 	aa = add -A
