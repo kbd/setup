@@ -29,16 +29,11 @@ _fzf_compgen_dir() { fd -td -HL . "$1"; }
 # SHELL SPECIFIC
 case $(current_shell) in
     zsh)
-        alias history='history -i'  # always include timestamp
-        alias hs='h 0 | rg'  # 'history search'
-
-        # global aliases (zsh-only)
         alias -g FZF='$(`last_command` | fzi)'
         alias -g L='| $PAGER'  # would be nice to map ↑ +this to ⌘l
         alias -g H='| head'  # would be nice to map ↑ +this to ⌘l
     ;;
     bash)
-        alias hs='h | rg'
     ;;
 esac
 
@@ -115,7 +110,6 @@ alias vi=vim
 alias vless=vimpager
 alias c=cat
 alias cat=bat
-alias h=history
 alias p=python3
 alias py=ipython
 alias pyc='py -c'

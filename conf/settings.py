@@ -5,6 +5,7 @@
             'post_install': [
                 'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
                 'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh HOME/bin/shell_sources/3rdparty',
+                'perl -pi -e \'s/fc -rl 1/fc -rli 1/\' "$(brew --prefix fzf)/shell/key-bindings.zsh"',
                 # https://docs.docker.com/docker-for-mac/#zsh
                 """
                     etc=/Applications/Docker.app/Contents/Resources/etc;
