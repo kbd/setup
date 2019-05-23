@@ -30,8 +30,8 @@ _fzf_compgen_dir() { fd -td -HL . "$1"; }
 case $(current_shell) in
     zsh)
         alias -g FZF='$(`last_command` | fzi)'
-        alias -g L='| $PAGER'  # would be nice to map ↑ +this to ⌘l
-        alias -g H='| head'  # would be nice to map ↑ +this to ⌘l
+        alias -g L='| $PAGER'
+        alias -g H='| head'
     ;;
     bash)
     ;;
