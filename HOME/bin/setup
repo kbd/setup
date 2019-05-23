@@ -10,6 +10,7 @@ from pathlib import Path
 from lib import symlink, setup
 from lib.mac import restart_os_functions, update_os_settings
 from lib.setup.packages import install_packages
+from lib.utils import read_lines_from_file
 
 log = logging.getLogger()
 
@@ -108,7 +109,7 @@ def main():
     if hasattr(args, 'func'):
         args.func(settings, **vars(args))
     else:
-        partials = list(map(str.strip, open(setup.PARTIALS_PATH)))
+        partials = read_lines_from_file(setup.PARTIALS_PATH)
         symlink.create_links(repo_home_dir, home_dir, partials)
         update_os_settings(settings)
 
