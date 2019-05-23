@@ -18,6 +18,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
+export GREP_OPTIONS='--color=auto'
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export ERL_AFLAGS="-kernel shell_history enabled"  # remember Elixir iex history across sessions
 export FZF_DEFAULT_COMMAND='fd -tf -HL'
@@ -107,7 +108,6 @@ alias wcl='wc -l'
 alias du='du -h'
 alias dud='du -d0 .'
 alias ncdu='ncdu --color=dark'
-alias grep='grep --color=auto'
 alias curl='curl -L'  # follow redirects by default
 alias map='parallel'
 alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
