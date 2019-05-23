@@ -12,7 +12,7 @@ from .utils import run
 log = logging.getLogger(__name__)
 
 
-def workflow(bundle, post_install):
+def workflow(bundle):
     """Run an entire Homebrew update workflow."""
     # prereqs
     ensure_homebrew_installed()
@@ -27,9 +27,6 @@ def workflow(bundle, post_install):
     # cleanup
     cleanup()
     clean_cache()
-
-    # post-install
-    run_post_install(post_install)
 
 
 def bundle_install(path):
@@ -219,22 +216,6 @@ def ensure_command_line_tools_installed():
     except KeyboardInterrupt:
         print("\nExiting")
         sys.exit(1)
-
-
-def run_post_install(post_install):
-    """
-    Run any post-install operations.
-
-    'post_install' is a list of shell commands. Each shell command can be a string or a list
-    of strings. If a string, will pass shell=True to the subprocess call.
-
-    """
-    if not post_install:
-        return
-
-    log.info("Running post-install operations")
-    for cmd in post_install:
-        run(cmd)
 
 
 def get_formula_uses(formula, installed=True):
