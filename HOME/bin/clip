@@ -28,7 +28,7 @@ def get_requested_clips(all_clips, requested_clips):
 def copy_to_clipboard(output):
     # todo: replace this with pyperclip or xerox
     escaped_output = ' '.join(output).replace("'", "'\\''")
-    cmd = f"echo -n '{escaped_output}' | pbcopy"
+    cmd = f"echo -n '{escaped_output}' | cb"
     run(cmd)
 
 
