@@ -155,5 +155,9 @@
         "editor.wordBasedSuggestions": false
     },
 
+    "files.associations": {
+        "config": "ini", // git config not being recognized?
+    },
+
     "go.useLanguageServer": true,
 }
