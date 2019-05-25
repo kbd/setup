@@ -1,5 +1,6 @@
 import logging
 import subprocess
+from itertools import chain
 
 from . import homebrew
 from .utils import run
@@ -32,14 +33,10 @@ DEFAULTS_TYPE_MAP = {
 }
 
 def flatten(value):
-    result = []
     # will throw exception for unknown type, which is fine
-    typestr = f'-{DEFAULTS_TYPE_MAP[type(value)]}'
-    result.append(typestr)
+    result = [f'-{DEFAULTS_TYPE_MAP[type(value)]}']
     if isinstance(value, dict):
-        for k, v in value.items():
-            result.append(k)
-            result.extend(flatten(v))
+        result.extend(chain.from_iterable((k, *flatten(v)) for k, v in value.items()))
     else:
         result.append(str(value))
 
