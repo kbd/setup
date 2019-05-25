@@ -77,8 +77,6 @@ alias    ...='cd ../..'
 alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
-cl()  { cd -- "$1" && ls "${@:2}"; }
-cll() { cd -- "$1" && ll "${@:2}"; }
 
 # ls
 alias l=ls
@@ -90,6 +88,8 @@ alias llt='ls -lt'
 alias llat='ls -lat'
 alias lsd='ls -d --indicator-style=none -- */'
 alias lld='ll -d --indicator-style=none -- */'
+cl() { cd -- "$1" && l "${@:2}"; }
+cll() { cd -- "$1" && ll "${@:2}"; }
 et(){ exa -alT --git -I.git --color=always "$@" | less -RFX; }
 
 # edit/open
