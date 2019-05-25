@@ -8,8 +8,8 @@ from functools import partial
 from pathlib import Path
 
 from lib import symlink, setup
-from lib.mac import restart_os_functions, update_os_settings
-from lib.setup.packages import install_packages
+from lib.mac import restart_os_functions
+from lib.setup.packages import install_packages, mac
 from lib.utils import read_lines_from_file
 
 log = logging.getLogger()
@@ -111,7 +111,8 @@ def main():
     else:
         partials = read_lines_from_file(setup.PARTIALS_PATH)
         symlink.create_links(repo_home_dir, home_dir, partials)
-        update_os_settings(settings)
+        mac(settings['packages']['mac'], 'mac')
+        restart_os_functions()
 
 
 if __name__ == '__main__':

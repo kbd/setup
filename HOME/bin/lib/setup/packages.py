@@ -131,3 +131,9 @@ def brew(package_settings, language_filter):
     log.info("Running post-install operations")
     for cmd in post_install:
         run(cmd)
+
+
+def mac(settings, language_filter):
+    mac_settings_location = settings['path']
+    log.info(f"Running {mac_settings_location}")
+    subprocess.run(mac_settings_location)

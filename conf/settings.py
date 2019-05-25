@@ -22,6 +22,10 @@
         'node': {
             'cmd': "cat conf/npm.txt | xargs -t npm install -g",
         },
+        'mac': {
+            'skip_if_not_requested': True,
+            'path': 'conf/mac.py'
+        },
         'vscode': {
             'extensions': 'conf/vscode.txt',
         },
