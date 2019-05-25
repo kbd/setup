@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 def update_os_settings(settings):
     # defaults read | pbcopy to get a list of all current settings
     # execute mac.sh in conf as a shell script
-    mac_settings_location = 'conf/mac.sh'
+    mac_settings_location = 'conf/mac.py'
     log.info(f"Running {mac_settings_location}")
     subprocess.run(mac_settings_location)
     restart_os_functions()
