@@ -19,6 +19,13 @@ def install_packages(settings, *args, **kwargs):
             log.debug(f"Skipping {language}")
             continue
 
+        if params.get('skip_if_not_requested') and (
+            not language_filter or
+            (language_filter and not re.fullmatch(language_filter, language))
+        ):
+            log.info(f"Skipping {language}; not specifically requested")
+            continue
+
         log.info(f"Installing/upgrading packages for: {language}")
 
         # if the name of the "language" matches a function in this module, call
@@ -36,10 +43,6 @@ def install_packages(settings, *args, **kwargs):
 
 def wow(params, language_filter):
     log.info("Installing addons for World of Warcraft")
-    if not re.fullmatch(language_filter, 'wow'):
-        log.info("Skipping addons because not specifically requested")
-        return True
-
     addons = read_lines_from_file(params['addons'], comment='#')
     for addon in addons:
         log.info(f"Downloading addon {addon!r}")

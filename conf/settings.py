@@ -26,6 +26,7 @@
             'extensions': 'conf/vscode.txt',
         },
         'wow': {
+            'skip_if_not_requested': True,
             'installation_path': '/Applications/World of Warcraft/Interface/AddOns/',
             'addons': 'conf/wow-addons.txt',
         },
