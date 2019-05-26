@@ -118,10 +118,10 @@
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --color=always --pretty=format:'%C(blue)%ad %C(cyan)%cn %C(auto)%h%C(auto)%d%n %s%n%w(0,4,4)%+b' --stat
-	lo = !git l ORIG_HEAD..
 	lg = "!f() { git log --color=always --graph --pretty=format:'%C(auto)%h %C(auto,green)(%ar)%C(auto)%d%C(reset) %s %C(auto,bold blue)<%an>%C(reset)' \"$@\" | perl -pe 's/([^(]+\\()(\\d+)\\s+(\\w{2})\\w+[^)]+\\)/$1.sprintf(\"%02d\", $2).$3.\")\"/e' | less -RFX; }; f"
-	lgo = !git lg ORIG_HEAD..
 	l1 = log --date=short --pretty=format:'%C(auto,green)%ad %C(auto)%h %C(blue)%<(20,trunc)%an %C(reset)%<(70,trunc)%s%C(auto)%d'
+	lo = !git l ORIG_HEAD..
+	lgo = !git lg ORIG_HEAD..
 	l1o = !git l1 ORIG_HEAD..
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
 	prune-remote = remote prune origin # prune branches deleted from remote
