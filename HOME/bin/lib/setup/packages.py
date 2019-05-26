@@ -1,10 +1,12 @@
 import io
 import logging
 import re
+import runpy
 import subprocess
 import zipfile
 
 from lib import homebrew
+from lib.mac import defaults
 from lib.utils import run, read_lines_from_file
 
 log = logging.getLogger()
@@ -17,6 +19,13 @@ def install_packages(settings, *args, **kwargs):
     for language, params in settings['packages'].items():
         if language_filter and not re.search(language_filter, language):
             log.debug(f"Skipping {language}")
+            continue
+
+        if params.get('skip_if_not_requested') and (
+            not language_filter or
+            (language_filter and not re.fullmatch(language_filter, language))
+        ):
+            log.info(f"Skipping {language}; not specifically requested")
             continue
 
         log.info(f"Installing/upgrading packages for: {language}")
@@ -36,10 +45,6 @@ def install_packages(settings, *args, **kwargs):
 
 def wow(params, language_filter):
     log.info("Installing addons for World of Warcraft")
-    if not re.fullmatch(language_filter, 'wow'):
-        log.info("Skipping addons because not specifically requested")
-        return True
-
     addons = read_lines_from_file(params['addons'], comment='#')
     for addon in addons:
         log.info(f"Downloading addon {addon!r}")
@@ -128,3 +133,9 @@ def brew(package_settings, language_filter):
     log.info("Running post-install operations")
     for cmd in post_install:
         run(cmd)
+
+
+def mac(settings, language_filter):
+    path = settings['path']
+    log.info(f"Running {path}")
+    runpy.run_path(path, {'defaults': defaults, 'run': run})

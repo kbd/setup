@@ -22,10 +22,15 @@
         'node': {
             'cmd': "cat conf/npm.txt | xargs -t npm install -g",
         },
+        'mac': {
+            'skip_if_not_requested': True,
+            'path': 'conf/mac.py'
+        },
         'vscode': {
             'extensions': 'conf/vscode.txt',
         },
         'wow': {
+            'skip_if_not_requested': True,
             'installation_path': '/Applications/World of Warcraft/Interface/AddOns/',
             'addons': 'conf/wow-addons.txt',
         },
