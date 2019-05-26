@@ -1,10 +1,12 @@
 import io
 import logging
 import re
+import runpy
 import subprocess
 import zipfile
 
 from lib import homebrew
+from lib.mac import defaults
 from lib.utils import run, read_lines_from_file
 
 log = logging.getLogger()
@@ -134,6 +136,6 @@ def brew(package_settings, language_filter):
 
 
 def mac(settings, language_filter):
-    mac_settings_location = settings['path']
-    log.info(f"Running {mac_settings_location}")
-    subprocess.run(mac_settings_location)
+    path = settings['path']
+    log.info(f"Running {path}")
+    runpy.run_path(path, {'defaults': defaults, 'run': run})

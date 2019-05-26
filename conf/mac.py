@@ -1,25 +1,25 @@
-#!/bin/sh
-
 ### trackpad settings ###
-for key in com.apple.AppleMultitouchTrackpad com.apple.driver.AppleBluetoothMultitouch.trackpad; do
-    defaults write $key Clicking -bool true # touch to click
+for key in (
+    'com.apple.AppleMultitouchTrackpad',
+    'com.apple.driver.AppleBluetoothMultitouch.trackpad'
+):
+    trackpad = defaults[key]
+    trackpad['Clicking'] = True # touch to click
 
     # enable *both* methods of right clicking
-    defaults write $key TrackpadRightClick -bool true # two finger tap
-    defaults write $key TrackpadCornerSecondaryClick -int 2 # pushing to click in right corner
+    trackpad['TrackpadRightClick'] = True # two finger tap
+    trackpad['TrackpadCornerSecondaryClick'] = 2 # pushing to click in right corner
 
     # disable "smart zoom" because it puts a delay on two-finger-tap right click
-    defaults write $key TrackpadTwoFingerDoubleTapGesture -bool false
+    trackpad['TrackpadTwoFingerDoubleTapGesture'] = False
 
-    defaults write $key TrackpadThreeFingerDrag -bool true
-done
-
+    trackpad['TrackpadThreeFingerDrag'] = True
 
 # disable dashboard
-defaults write com.apple.dashboard mcx-disabled -bool true
+defaults['com.apple.dashboard']['mcx-disabled'] = True
 
 # http://www.defaults-write.com/enable-highlight-hover-effect-for-grid-view-stacks/
-defaults write com.apple.dock mouse-over-hilite-stack -bool true
+defaults['com.apple.dock']['mouse-over-hilite-stack'] = True
 
 
 # hot corners
@@ -35,64 +35,69 @@ defaults write com.apple.dock mouse-over-hilite-stack -bool true
 # 11: Launchpad
 # 12: Notification Center
 
+dock = defaults['com.apple.dock']
+
 # bottom left: sleep
-defaults write com.apple.dock wvous-bl-corner -int 10
-defaults write com.apple.dock wvous-bl-modifier -int 0
+dock['wvous-bl-corner'] = 10
+dock['wvous-bl-modifier'] = 0
 
 # bottom right: application windows
-defaults write com.apple.dock wvous-br-corner -int 3
-defaults write com.apple.dock wvous-br-modifier -int 0
+dock['wvous-br-corner'] = 3
+dock['wvous-br-modifier'] = 0
 
 # top left: mission control
-defaults write com.apple.dock wvous-tl-corner -int 2
-defaults write com.apple.dock wvous-tl-modifier -int 0
+dock['wvous-tl-corner'] = 2
+dock['wvous-tl-modifier'] = 0
 
 # top right: desktop
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0
+dock['wvous-tr-corner'] = 4
+dock['wvous-tr-modifier'] = 0
 
 
 # finder
-defaults write com.apple.finder ShowPathbar -bool true
-defaults write com.apple.finder ShowStatusBar -bool true
+finder = defaults['com.apple.finder']
+finder['ShowPathbar'] = True
+finder['ShowStatusBar'] = True
 
 # show battery % in menubar
-defaults write com.apple.menuextra.battery ShowPercent -bool true
+defaults['com.apple.menuextra.battery']['ShowPercent'] = True
 
 # key repeat rate and delay
-defaults write -g InitialKeyRepeat -int 10
-defaults write -g KeyRepeat -int 2
+defaults.g['InitialKeyRepeat'] = 10
+defaults.g['KeyRepeat'] = 2
 
 # set default text file association to vscode
-duti -s com.microsoft.vscode public.plain-text all
+run(['duti', '-s', 'com.microsoft.vscode', 'public.plain-text', 'all'])
 
 # make tab move between "All Controls" (System Prefs -> Keyboard -> Shortcuts)
-defaults write -g AppleKeyboardUIMode -int 3
+defaults.g['AppleKeyboardUIMode'] = 3
 
 # show the date in the clock
-defaults write com.apple.menuextra.clock DateFormat "EEE MMM d  h:mm a"
+defaults['com.apple.menuextra.clock']['DateFormat'] = "EEE MMM d  h:mm a"
 
 # use function keys as function keys
-defaults write -g com.apple.keyboard.fnState -bool true
+defaults.g['com.apple.keyboard.fnState'] = True
 
 # change spaces shortcuts away from ctrl + <- etc.
 # todo
 
 # zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
-defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+defaults['com.apple.universalaccess']['closeViewScrollWheelToggle'] = True
 
 # flycut preferences
 # shortcut to ctrl+cmd v
-defaults write com.generalarcade.flycut "ShortcutRecorder mainHotkey" -dict keyCode -int 47 modifierFlags -int 1310720
-defaults write com.generalarcade.flycut loadOnStartup -int 1
-defaults write com.generalarcade.flycut pasteMovesToTop -int 1
-defaults write com.generalarcade.flycut removeDuplicates -int 1
+flycut = defaults['com.generalarcade.flycut']
+flycut["ShortcutRecorder mainHotkey"] = {'keyCode': 47, 'modifierFlags': 1310720}
+flycut['loadOnStartup'] = 1
+flycut['pasteMovesToTop'] = 1
+flycut['removeDuplicates'] = 1
 
 # iterm preferences
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder '~/.config/iterm2'
-defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+iterm = defaults['com.googlecode.iterm2']
+iterm['PrefsCustomFolder'] = '~/.config/iterm2'
+iterm['LoadPrefsFromCustomFolder'] = True
 
 # startup items - https://apple.stackexchange.com/a/310502/
-for app in Flycut SpotMenu Flux iTerm; do
-  osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/'$app'.app", hidden:false}' > /dev/null
-done
+script = 'tell application "System Events" to make login item at end with properties {{path:"/Applications/{app}.app", hidden:false}}'
+for app in 'Flycut', 'SpotMenu', 'Flux', 'iTerm':
+    run(['osascript', '-e', script.format(app=app)], cap='stdout')
