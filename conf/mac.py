@@ -4,11 +4,11 @@ for key in (
     'com.apple.driver.AppleBluetoothMultitouch.trackpad'
 ):
     trackpad = defaults[key]
-    trackpad['Clicking'] = True # touch to click
+    trackpad['Clicking'] = True  # touch to click
 
     # enable *both* methods of right clicking
-    trackpad['TrackpadRightClick'] = True # two finger tap
-    trackpad['TrackpadCornerSecondaryClick'] = 2 # pushing to click in right corner
+    trackpad['TrackpadRightClick'] = True  # two finger tap
+    trackpad['TrackpadCornerSecondaryClick'] = 2  # pushing to click in right corner
 
     # disable "smart zoom" because it puts a delay on two-finger-tap right click
     trackpad['TrackpadTwoFingerDoubleTapGesture'] = False
@@ -20,7 +20,6 @@ defaults['com.apple.dashboard']['mcx-disabled'] = True
 
 # http://www.defaults-write.com/enable-highlight-hover-effect-for-grid-view-stacks/
 defaults['com.apple.dock']['mouse-over-hilite-stack'] = True
-
 
 # hot corners
 # Possible values:
@@ -34,27 +33,16 @@ defaults['com.apple.dock']['mouse-over-hilite-stack'] = True
 # 10: Put display to sleep
 # 11: Launchpad
 # 12: Notification Center
-
 dock = defaults['com.apple.dock']
-
-# bottom left: sleep
-dock['wvous-bl-corner'] = 10
+dock['wvous-bl-corner'] = 10  # bottom left: sleep
 dock['wvous-bl-modifier'] = 0
-
-# bottom right: application windows
-dock['wvous-br-corner'] = 3
+dock['wvous-br-corner'] = 3  # bottom right: application windows
 dock['wvous-br-modifier'] = 0
-
-# top left: mission control
-dock['wvous-tl-corner'] = 2
+dock['wvous-tl-corner'] = 2  # top left: mission control
 dock['wvous-tl-modifier'] = 0
-
-# top right: desktop
-dock['wvous-tr-corner'] = 4
+dock['wvous-tr-corner'] = 4  # top right: desktop
 dock['wvous-tr-modifier'] = 0
 
-
-# finder
 finder = defaults['com.apple.finder']
 finder['ShowPathbar'] = True
 finder['ShowStatusBar'] = True
@@ -84,15 +72,13 @@ defaults.g['com.apple.keyboard.fnState'] = True
 # zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
 defaults['com.apple.universalaccess']['closeViewScrollWheelToggle'] = True
 
-# flycut preferences
-# shortcut to ctrl+cmd v
 flycut = defaults['com.generalarcade.flycut']
+# shortcut to ctrl+cmd v
 flycut["ShortcutRecorder mainHotkey"] = {'keyCode': 47, 'modifierFlags': 1310720}
 flycut['loadOnStartup'] = 1
 flycut['pasteMovesToTop'] = 1
 flycut['removeDuplicates'] = 1
 
-# iterm preferences
 iterm = defaults['com.googlecode.iterm2']
 iterm['PrefsCustomFolder'] = '~/.config/iterm2'
 iterm['LoadPrefsFromCustomFolder'] = True
