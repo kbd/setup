@@ -104,7 +104,6 @@
 	st = stash
 	stm = stash push -m
 	stl = stash list
-	stp = stash pop
 	sts = stash show
 	stp = stash show -p
 	unstage = reset --
