@@ -130,5 +130,5 @@
 	# fl = "fix last", sl = "squash last"
 	fl = commit --amend -C@
 	sl = commit --amend -c@
-	fixup = "!f() { git commit --fixup $1 && GIT_EDITOR=true git rebase -i --autosquash $1~; }; f"
-	squash = "!f() { git commit -C $1 --squash $1 && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $1~; }; f"
+	fixup  = "!f() { git commit --fixup $1       && GIT_EDITOR=true          git rebase -i --autosquash $1~; }; f"
+	squash = "!f() { git commit --squash $1 -C$1 && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $1~; }; f"
