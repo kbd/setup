@@ -21,6 +21,7 @@
     "window.restoreWindows": "all",
     "window.closeWhenEmpty": true,
     "window.zoomLevel": 0,
+    "window.newWindowDimensions": "inherit",
 
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,

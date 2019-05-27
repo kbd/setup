@@ -15,9 +15,9 @@
 
 # diff / merge config
 [diff]
-	tool = kdiff3
+	tool = vscode
 [merge]
-	tool = kdiff3
+	tool = vscode
 [difftool]
 	prompt = false
 [mergetool]
@@ -30,13 +30,13 @@
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [difftool "vscode"]
-	cmd = code -n --wait --diff $LOCAL $REMOTE
+	cmd = code -nwd $LOCAL $REMOTE
 
 # below settings for pager + colors suggested by diff-so-fancy
 # https://github.com/so-fancy/diff-so-fancy
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
-	editor = code -n --wait
+	editor = code -nw
 
 [color "diff"]
 	meta = yellow
