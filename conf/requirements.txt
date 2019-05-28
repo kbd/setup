@@ -15,6 +15,7 @@ pandas
 pip
 pipdeptree
 pipenv
+poetry
 psycopg2-binary
 pygit2
 pymongo

@@ -18,6 +18,9 @@
         },
         'python': {
             'cmd': ['pip3', 'install', '--upgrade', '-r', 'conf/requirements.txt'],
+            'post_install': [
+                'poetry completions zsh > `brew --prefix`/share/zsh/site-functions/_poetry',
+            ]
         },
         'node': {
             'cmd': "cat conf/npm.txt | xargs -t npm install -g",
