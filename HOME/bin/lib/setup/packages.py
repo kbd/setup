@@ -42,6 +42,14 @@ def install_packages(settings, *args, **kwargs):
             log.debug(f"Executing: {cmd}")
             run(cmd)
 
+        # post_install should be a list of shell commands.
+        # Each shell command can be a string or a list of strings, passed to 'run'
+        post_install = params.get('post_install')
+        if post_install:
+            log.info("Running post-install operations")
+            for cmd in post_install:
+                run(cmd)
+
 
 def wow(params, language_filter):
     log.info("Installing addons for World of Warcraft")
@@ -123,16 +131,6 @@ def vscode(package_settings, language_filter):
 
 def brew(package_settings, language_filter):
     homebrew.workflow(package_settings['bundle'])
-
-    # post_install should be a list of shell commands.
-    # Each shell command can be a string or a list of strings, passed to 'run'
-    post_install = package_settings.get('post_install')
-    if not post_install:
-        return
-
-    log.info("Running post-install operations")
-    for cmd in post_install:
-        run(cmd)
 
 
 def mac(settings, language_filter):
