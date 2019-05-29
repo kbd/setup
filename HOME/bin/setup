@@ -38,17 +38,17 @@ def create_command_line_parser(settings):
 
     # packages
     subparser = subparsers.add_parser(
-        'packages', help="Install/update language/app-specific packages 🐍"
+        'packages', help="Install/update packages"
     )
     subparser.add_argument(
-        'language_filter', help="Only update languages matching regex", nargs='?'
+        'filter', help="Only install/update packages matching regex", nargs='?'
     )
     subparser.set_defaults(func=install_packages)
 
     # export every "setup packages foo" as "setup foo"
-    for package_type in settings['packages']:
-        subparser = subparsers.add_parser(package_type, help=f"Update packages for {package_type}")
-        subparser.set_defaults(func=partial(install_packages, language_filter=f'^{package_type}$'))
+    for name in settings['packages']:
+        subparser = subparsers.add_parser(name, help=f"Install/update packages for {name}")
+        subparser.set_defaults(func=partial(install_packages, filter=f'^{name}$'))
 
     # debug: load the setup program as a module and start an interactive console
     subparser = subparsers.add_parser('debug', help="Start an interactive console")

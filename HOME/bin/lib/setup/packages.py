@@ -14,45 +14,44 @@ log = logging.getLogger()
 
 def install_packages(settings, *args, **kwargs):
     log.info("Installing/upgrading packages")
-    module = globals()
-    language_filter = kwargs['language_filter']
-    for language, params in settings['packages'].items():
-        if language_filter and not re.search(language_filter, language):
-            log.debug(f"Skipping {language}")
+    filter = kwargs['filter']
+    for name, settings in settings['packages'].items():
+        if filter and not re.search(filter, name):
+            log.debug(f"Skipping {name}")
             continue
 
-        if params.get('skip_if_not_requested') and (
-            not language_filter or
-            (language_filter and not re.fullmatch(language_filter, language))
+        if settings.get('skip_if_not_requested') and (
+            not filter or (filter and not re.fullmatch(filter, name))
         ):
-            log.info(f"Skipping {language}; not specifically requested")
+            log.info(f"Skipping {name}; not specifically requested")
             continue
 
-        log.info(f"Installing/upgrading packages for: {language}")
+        install_package(name, settings)
 
-        # if the name of the "language" matches a function in this module, call
-        # the function and pass it a reference to the settings for that "language"
-        if language in module:
-            # the function does whatever it wants with its settings
-            log.debug(f"Found package function for {language}")
-            module[language](params, language_filter)
-        else:
-            # allow specific commands
-            cmd = params['cmd']
-            log.debug(f"Executing: {cmd}")
+
+def install_package(name, settings):
+    log.info(f"Installing packages for: {name}")
+    module = globals()
+    if name in module:
+        # if the name matches a function in this module, call it and pass settings
+        log.debug(f"Found package function for {name}")
+        module[name](settings)
+    else:
+        # otherwise, expect a cmd to run
+        cmd = settings['cmd']
+        log.debug(f"Executing: {cmd}")
+        run(cmd)
+
+    # post_install should be a list of shell commands passed directly to 'run'
+    post_install = settings.get('post_install')
+    if post_install:
+        log.info("Running post-install operations")
+        for cmd in post_install:
             run(cmd)
 
-        # post_install should be a list of shell commands.
-        # Each shell command can be a string or a list of strings, passed to 'run'
-        post_install = params.get('post_install')
-        if post_install:
-            log.info("Running post-install operations")
-            for cmd in post_install:
-                run(cmd)
 
-
-def vscode(package_settings, language_filter):
-    config_path = package_settings['extensions']
+def vscode(settings):
+    config_path = settings['extensions']
     log.info("Updating Visual Studio Code extensions")
 
     # show currently installed extensions
@@ -77,11 +76,11 @@ def vscode(package_settings, language_filter):
         log.info(f"The following extensions are installed but not in source control: {fmt(unexpected)}")
 
 
-def brew(package_settings, language_filter):
-    homebrew.workflow(package_settings['bundle'])
+def brew(settings):
+    homebrew.workflow(settings['bundle'])
 
 
-def mac(settings, language_filter):
+def mac(settings):
     path = settings['path']
     log.info(f"Running {path}")
     runpy.run_path(path, {'defaults': defaults, 'run': run})
