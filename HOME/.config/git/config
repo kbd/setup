@@ -15,9 +15,9 @@
 
 # diff / merge config
 [diff]
-	tool = vscode
+	tool = kdiff3
 [merge]
-	tool = vscode
+	tool = kdiff3
 [difftool]
 	prompt = false
 [mergetool]
