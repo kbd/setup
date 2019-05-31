@@ -70,9 +70,8 @@
 	dt = difftool
 	df = !git pick-status-files d
 	dtf = !git pick-status-files dt
-	# https://stackoverflow.com/a/42956594/
-	d1  = "!f() { rev=$(git rev-parse \"${*:-HEAD}\"); git d $rev~1 $rev; }; f"
-	dt1 = "!f() { rev=$(git rev-parse \"${*:-HEAD}\"); git dt $rev~1 $rev; }; f"
+	d1  = "!f() { git d  ${1:-@}^!; }; f"
+	dt1 = "!f() { git dt ${1:-@}^!; }; f"
 	ds = diff --staged
 	dts = difftool --staged
 	dst = difftool --staged
@@ -92,7 +91,8 @@
 	pl = pull
 	pr = pull --rebase
 	pick-commit = !git l1 | fzi --ansi | cut -d' ' -f2
-	pick-status-files = "!f() { git status -z | xargs -0n1 | cut -c4- | fzi --print0 | xargs -0to git "$@"; }; f"
+	pc = pick-commit
+	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi | xargs -t git
 	r = rebase
 	ra = rebase --abort
 	rc = rebase --continue
