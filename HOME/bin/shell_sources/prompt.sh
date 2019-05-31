@@ -18,8 +18,7 @@
 # $PROMPT_BARE
 #   set to enable a very minimal prompt, useful for copying exmaples
 #
-# note: this code depends on colors.sh and funcs.sh already being loaded.
-# they only happen to be becase c < f < p alphabetically, but ¯\_(ツ)_/¯
+# note: this code depends on colors.sh and aliases.sh (for filter function)
 _prompt_date() {
     echo -n "$eo${COL[grey]}$ec$dt$eo${COL[reset]}$ec:"
 }
