@@ -111,7 +111,7 @@ def main():
     else:
         partials = read_lines_from_file(setup.PARTIALS_PATH)
         symlink.create_links(repo_home_dir, home_dir, partials)
-        mac(settings['packages']['mac'], 'mac')
+        mac(settings['packages']['mac'])
         restart_os_functions()
 
 
