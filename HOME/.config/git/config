@@ -49,7 +49,7 @@
 	# list all aliases
 	alias = !git config --get-regexp '^alias\\.' | perl -pe 's/[^.]+\\.([^=\\s]+).*$/$1/'
 	a = add
-	af = !gsf git a
+	af = !git pick-status-files a
 	aa = add -A
 	au = add -u
 	ap = add -p
@@ -65,14 +65,14 @@
 	cmp  = "!f() { git cm \"$@\" && git p; }; f"
 	camp = "!f() { git cam \"$@\" && git p; }; f"
 	co = checkout
-	cof = !gsf git co
+	cof = !git pick-status-files co
 	cf = !git cof
 	cob = checkout -b
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
 	dt = difftool
-	df = !gsf git d
-	dtf = !gsf git dt
+	df = !git pick-status-files d
+	dtf = !git pick-status-files dt
 	# https://stackoverflow.com/a/42956594/
 	d1  = "!f() { rev=$(git rev-parse \"${*:-HEAD}\"); git d $rev~1 $rev; }; f"
 	dt1 = "!f() { rev=$(git rev-parse \"${*:-HEAD}\"); git dt $rev~1 $rev; }; f"
@@ -97,6 +97,7 @@
 	pl = pull
 	pr = pull --rebase
 	pick-commit = !git l1 | fzi --ansi | cut -d' ' -f2
+	pick-status-files = "!f() { git status -z | xargs -0n1 | cut -c4- | fzi --print0 | xargs -0to git "$@"; }; f"
 	r = rebase
 	ra = rebase --abort
 	rc = rebase --continue
