@@ -96,10 +96,12 @@
 	pf = push --force
 	pl = pull
 	pr = pull --rebase
+	pick-commit = !git l1 | fzi --ansi | cut -d' ' -f2
 	r = rebase
 	ra = rebase --abort
 	rc = rebase --continue
 	ri = rebase -i
+	rif = "!f() { rev=$(git pick-commit); [[ $rev ]] && git ri $rev~; }; f"
 	s = status
 	st = stash
 	stm = stash push -m
