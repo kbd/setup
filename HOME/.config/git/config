@@ -76,8 +76,6 @@
 	ds = diff --staged
 	dts = difftool --staged
 	dst = difftool --staged
-	dl = diff @~..@
-	dtl = difftool @~..@
 	email = config user.email
 	exec = "!exec " # git aliases run from repo root, so can exec something from root
 	edit = "!exec $EDITOR ."
