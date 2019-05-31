@@ -1,4 +1,3 @@
-# base config
 [user]
 	name = Keith Devens
 [include]
@@ -13,7 +12,6 @@
 [status]
 	showUntrackedFiles = all
 
-# diff / merge config
 [diff]
 	tool = kdiff3
 [merge]
@@ -44,7 +42,6 @@
 	commit = yellow bold
 	whitespace = red reverse
 
-# aliases
 [alias]
 	# list all aliases
 	alias = !git config --get-regexp '^alias\\.' | perl -pe 's/[^.]+\\.([^=\\s]+).*$/$1/'
