@@ -18,6 +18,7 @@ pipenv
 poetry
 psycopg2-binary
 pygit2
+pylint
 pymongo
 python-dateutil
 pudb
