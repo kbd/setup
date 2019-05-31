@@ -97,7 +97,7 @@
 	ra = rebase --abort
 	rc = rebase --continue
 	ri = rebase -i
-	rif = "!f() { rev=$(git pick-commit); [[ $rev ]] && git ri $rev~; }; f"
+	rif = !git pick-commit | xargs -tI% git ri %~
 	s = status
 	st = stash
 	stm = stash push -m
