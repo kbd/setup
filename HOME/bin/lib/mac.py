@@ -1,4 +1,6 @@
+import ast
 import logging
+import re
 import subprocess
 from itertools import chain
 
@@ -21,13 +23,19 @@ DEFAULTS_TYPE_MAP = {
     float: 'float',
     str: 'string',
     dict: 'dict',
+    list: 'array',
 }
+REVERSE_TYPE_MAP = {v: k for k, v in DEFAULTS_TYPE_MAP.items()}
+REVERSE_TYPE_MAP.update({'boolean': bool, 'dictionary': dict})
+
 
 def flatten(value):
     # will throw exception for unknown type, which is fine
     result = [f'-{DEFAULTS_TYPE_MAP[type(value)]}']
     if isinstance(value, dict):
         result.extend(chain.from_iterable((k, *flatten(v)) for k, v in value.items()))
+    elif isinstance(value, list):
+        result.extend(map(str, value))
     else:
         result.append(str(value))
 
@@ -41,10 +49,44 @@ class _DefaultsDomain:
         if not self.domain:  # still needs a domain
             return _DefaultsDomain(key)
 
-        run(["defaults", "read", self.domain, key])
+        return DefaultsValue(self.domain, key)
 
     def __setitem__(self, key, value):
-        run(["defaults", "write", self.domain, key, *flatten(value)])
+        DefaultsValue(self.domain, key).write(value)
+
+
+class DefaultsValue:
+    def __init__(self, domain, key):
+        self.domain = domain
+        self.key = key
+
+    def type(self):
+        typestr = run(["defaults", "read-type", self.domain, self.key], cap=True)
+        # read-type returns (literally) "Type is {typename}".
+        # Pull the last word from the string to get the type.
+        return REVERSE_TYPE_MAP[typestr.split()[-1]]
+
+    def read_str(self):
+        return run(["defaults", "read", self.domain, self.key], cap=True)
+
+    def read(self):
+        t = self.type()
+        s = self.read_str()
+        if t != dict:
+            return t(ast.literal_eval(s))
+
+        # parse dict. Looks like: '{\n    keyCode = 47;\n    modifierFlags = 1310720;\n}\n'
+        stripped_lines = (l.strip() for l in s.strip().strip('{}').splitlines())
+        lines = [line for line in stripped_lines if line]
+        return {
+            m[1]: ast.literal_eval(m[2])
+            for m in (re.search(r'(\w+)\s+=\s+(.*);', line) for line in lines)
+        }
+
+    def write(self, value):
+        return run(["defaults", "write", self.domain, self.key, *flatten(value)])
+
+    __str__ = read_str
 
 
 defaults = _DefaultsDomain()
