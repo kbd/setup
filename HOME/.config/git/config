@@ -74,7 +74,7 @@
 	dt1 = "!f() { git dt ${1:-@}^!; }; f"
 	ds = diff --staged
 	dts = difftool --staged
-	dst = difftool --staged
+	dst = dts
 	email = config user.email
 	exec = "!exec " # git aliases run from repo root, so can exec something from root
 	edit = "!exec $EDITOR ."
@@ -93,6 +93,8 @@
 	pick-commit = !git l1 | fzi --ansi | cut -d' ' -f2
 	pc = pick-commit
 	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi --print0 | xargs -0t git
+	psf = pick-status-files
+	sf = psf
 	r = rebase
 	ra = rebase --abort
 	rc = rebase --continue
