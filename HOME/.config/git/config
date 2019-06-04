@@ -92,7 +92,7 @@
 	pr = pull --rebase
 	pick-commit = !git l1 | fzi --ansi | cut -d' ' -f2
 	pc = pick-commit
-	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi | xargs -t git
+	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi --print0 | xargs -0t git
 	r = rebase
 	ra = rebase --abort
 	rc = rebase --continue
