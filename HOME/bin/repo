@@ -75,23 +75,34 @@ def get_templates(shell):
 
 
 def repo_state(repo):
-    """Return a code for the current repo state. 'R' if in rebase or '' if normal.
+    """Return a code for the current repo state.
 
-    Potentially support more states in the future.
+    Possible states:
+        R - rebase
+        M - merge
+        C - cherry-pick
+        B - bisect
+        V - revert
+
+    The code returned will indicate multiple states (if that's possible?)
+    or the empty string if the repo is in a normal state.
     """
-    # this is ridiculous that this is how you check for rebase
-    # https://stackoverflow.com/a/3921928
-    #
-    # apparently there are all kinds of extra tests you can do:
-    # https://stackoverflow.com/a/3922581
-    # but leave it at just "rebase or not" for now.
-    for path in ['rebase-merge', 'rebase-apply']:
-        cmd = ['git', 'rev-parse', '--git-path', path]
-        dir = check_output(cmd, cwd=repo.workdir).decode().strip()
-        if Path(repo.workdir, dir).exists():
-            return 'R'
-
-    return ''
+    # Unfortunately there's no porcelain to check for various git states.
+    # Determining state is done by checking for the existence of files within
+    # the git repository. Reference for possible checks:
+    # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh#L397
+    checks = {
+        'rebase-merge': 'R',
+        'rebase-apply': 'R',
+        'MERGE_HEAD': 'M',
+        'CHERRY_PICK_HEAD': 'C',
+        'BISECT_LOG': 'B',
+        'REVERT_HEAD': 'V',
+    }
+    git_files = {p.name for p in Path(repo.path).iterdir()}
+    present_files = checks.keys() & git_files
+    statuses = {checks[p] for p in present_files}
+    return ''.join(sorted(statuses))
 
 
 def get_repo(dir):
