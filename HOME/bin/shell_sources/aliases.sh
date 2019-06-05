@@ -120,7 +120,7 @@ alias tcl='rlwrap tclsh'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias ts-node="ts-node -D6133"  # disable 'declared but not used' errors
-alias goog='googler -n 5 --np'
+alias goog='googler -n5 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
 alias g=git
