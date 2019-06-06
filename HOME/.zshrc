@@ -76,6 +76,11 @@ done
 # 1st party software config
 export PROMPT_SHORT_DISPLAY=1
 register_prompt
+TERMS_WITH_BROKEN_UNICODE=('vscode')
+# https://unix.stackexchange.com/a/411307
+if [[ ${TERMS_WITH_BROKEN_UNICODE[(ie)$TERM_PROGRAM]} -le ${#TERMS_WITH_BROKEN_UNICODE} ]]; then
+    PROMPT_PREFIX=''
+fi
 
 precmd() {
     tabtitle "$PWD"
