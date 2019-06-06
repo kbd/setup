@@ -86,6 +86,11 @@
 	list-hidden = !git ls-files -v | grep '^[a-z]' | cut -c3-
 	list-ignored = !git status -s --ignored | grep '^!!' | cut -c4-
 	list-untracked = ls-files --others --exclude-standard
+	m = merge
+	ma = merge --abort
+	mc = merge --continue
+	mf = merge --ff-only
+	mn = merge --no-ff
 	p = "!f() { if git upstream; then git push; else git push -u; fi }; f" # push, set upstream if necessary
 	pf = push --force
 	pl = pull
