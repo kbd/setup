@@ -46,7 +46,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     alias awk=gawk
     alias sed=gsed
     alias tar=gtar
-    alias ls='gls -F --color=auto'
+    alias ls='/usr/local/bin/gls -F --color=auto'
 
     # have sshrc use GNU tar because tar-ing on Mac (with BSD tar) makes GNU tar
     # spit out a bunch of warnings on the server from extended stuff it doesn't

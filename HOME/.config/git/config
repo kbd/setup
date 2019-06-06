@@ -83,9 +83,13 @@
 	hide = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
 	unhide-all = update-index --really-refresh
+	ls = ls-files
 	list-hidden = !git ls-files -v | grep '^[a-z]' | cut -c3-
 	list-ignored = !git status -s --ignored | grep '^!!' | cut -c4-
 	list-untracked = ls-files --others --exclude-standard
+	lh = list-hidden
+	li = list-ignored
+	lu = list-untracked
 	m = merge
 	ma = merge --abort
 	mc = merge --continue
