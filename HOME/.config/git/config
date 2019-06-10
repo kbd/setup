@@ -6,7 +6,7 @@
 [push]
 	default = current
 [pull]
-	rebase = preserve
+	rebase = merges
 [rebase]
 	autoStash = true
 [status]
