@@ -13,6 +13,7 @@ __pycache__/
 rethinkdb_data/
 node_modules/
 .meteor/
+*.ipynb
 
 scratch.*
 notes.txt
