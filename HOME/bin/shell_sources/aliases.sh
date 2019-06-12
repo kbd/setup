@@ -91,6 +91,9 @@ alias lld='ll -d --indicator-style=none -- */'
 cl() { cd -- "$1" && l "${@:2}"; }
 cll() { cd -- "$1" && ll "${@:2}"; }
 et(){ exa -alT --git -I.git --color=always "$@" | less -RFX; }
+alias et1='et -L1'
+alias et2='et -L2'
+alias et3='et -L3'
 
 # edit/open
 alias edit=\$EDITOR "$@"
