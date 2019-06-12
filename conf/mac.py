@@ -54,8 +54,18 @@ defaults['com.apple.menuextra.battery']['ShowPercent'] = True
 defaults.g['InitialKeyRepeat'] = 10
 defaults.g['KeyRepeat'] = 2
 
-# set default text file association to vscode
-run(['duti', '-s', 'com.microsoft.vscode', 'public.plain-text', 'all'])
+# set file-type associations
+associations = {
+    'com.microsoft.vscode': [
+        # plain-text association has the side-effect of
+        # controlling the default text editor (open -t)
+        'public.plain-text',
+        'public.python-script',
+    ],
+}
+for program, types in associations.items():
+    for type in types:
+        run(['duti', '-s', program, type, 'all'])
 
 # make tab move between "All Controls" (System Prefs -> Keyboard -> Shortcuts)
 defaults.g['AppleKeyboardUIMode'] = 3
