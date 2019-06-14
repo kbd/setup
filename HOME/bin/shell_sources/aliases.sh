@@ -118,6 +118,7 @@ alias py=ipython
 alias pyc='py -c'
 alias x='chmod +x'
 alias hex='hexyl'
+alias rg='rg --colors=match:fg:green --smart-case'
 
 alias tcl='rlwrap tclsh'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
