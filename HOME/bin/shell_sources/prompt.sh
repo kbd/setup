@@ -24,20 +24,20 @@ _prompt_date() {
 }
 
 _prompt_user() {
-    local color="$eo${COL[green]}$ec"
+    local color="${COL[green]}"
     if is_root; then
-        color="$eo${COL[red]}$ec"
+        color="${COL[red]}"
     elif is_su; then
-        color="$eo${COL[yellow]}$ec$eo${COL[bold]}$ec"
+        color="${COL[yellow]}${COL[bold]}"
     fi
-    echo -n "$color$user$eo${COL[reset]}$ec"
+    echo -n "$eo$color$ec$user$eo${COL[reset]}$ec"
 }
 
 _prompt_at() {
     # show the @ in red if not local
     local at='@'
     if is_remote; then
-        at="$eo${COL[red]}$ec$eo${COL[bold]}$ec$at$eo${COL[reset]}$ec"
+        at="$eo${COL[red]}${COL[bold]}$ec$at$eo${COL[reset]}$ec"
     fi
     echo -n "$at"
 }
@@ -75,13 +75,13 @@ _prompt_sep() {
     # separator - red if cwd unwritable
     local sep=':';
     if [[ ! -w "${PWD}" ]]; then
-        sep="$eo${COL[red]}$ec$eo${COL[bold]}$ec$sep$eo${COL[reset]}$ec"
+        sep="$eo${COL[red]}${COL[bold]}$ec$sep$eo${COL[reset]}$ec"
     fi
     echo -n "$sep"
 }
 
 _prompt_path() {
-    echo -n "$eo${COL[purple]}$ec$eo${COL[bold]}$ec$ppath$eo${COL[reset]}$ec"
+    echo -n "$eo${COL[purple]}${COL[bold]}$ec$ppath$eo${COL[reset]}$ec"
 }
 
 # source control information in prompt
