@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+"""Join a list of strings into one string.
+
+So often, I have a list of strings intended for subprocess.run that I need to
+try to execute directly on the shell, and I have to manually take out all the
+commas and quote characters first.
+
+cmd = ['echo', 'hello', 'world']
+subprocess.run(cmd)
+
+Here's how this program should work:
+
+$ echo "['echo', 'hello', 'world']" | cmdstr
+echo hello world
+
+"""
+import sys
+cmd = not sys.stdin.isatty() and sys.stdin.read() or ''.join(sys.argv[1:])
+if not cmd:
+    sys.exit(1)
+print(' '.join(eval(cmd)), end='')
