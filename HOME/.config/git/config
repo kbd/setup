@@ -122,6 +122,7 @@
 	info = remote show origin
 	rao = remote add origin
 	rso = remote set-url origin
+	rro = remote rm origin
 	repo-root = rev-parse --show-toplevel
 	repo-parent = rev-parse --show-superproject-working-tree # for submodules
 	patch = !git --no-pager diff --no-color
