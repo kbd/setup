@@ -104,10 +104,10 @@
 	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi --print0 | xargs -0t git
 	psf = pick-status-files
 	sf = psf
-	r = rebase
+	r = rebase --rebase-merges
 	ra = rebase --abort
 	rc = rebase --continue
-	ri = rebase -i
+	ri = r -i
 	rif = !git pick-commit | xargs -tI% git ri %~
 	s = status
 	st = stash
@@ -140,5 +140,5 @@
 	# fl = "fix last", sl = "squash last"
 	fl = commit --amend -C@
 	sl = commit --amend -c@
-	fixup  = "!f() { git commit --fixup $1       && GIT_EDITOR=true          git rebase -i --autosquash --rebase-merges $1~; }; f"
-	squash = "!f() { git commit --squash $1 -C$1 && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash --rebase-merges $1~; }; f"
+	fixup  = "!f() { git commit --fixup  $1      && GIT_EDITOR=true          git ri --autosquash $1~; }; f"
+	squash = "!f() { git commit --squash $1 -C$1 && GIT_SEQUENCE_EDITOR=true git ri --autosquash $1~; }; f"
