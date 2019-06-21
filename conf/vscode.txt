@@ -1,5 +1,5 @@
 alefragnani.Bookmarks
-CoenraadS.bracket-pair-colorizer
+CoenraadS.bracket-pair-colorizer-2
 dbaeumer.vscode-eslint
 eamodio.gitlens
 formulahendry.code-runner
