@@ -9,8 +9,7 @@ https://github.com/yonchu/zsh-vcs-prompt
 zsh's vcs_info
 
 todo:
-* capture merge/rebase status
-* support other vcs
+* support other vcs?
 * rewrite in C using libgit2 directly?
 """
 import argparse
