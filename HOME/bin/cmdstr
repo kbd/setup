@@ -14,12 +14,10 @@ $ echo "['echo', 'hello', 'world']" | cmdstr
 echo hello world
 
 """
+import shlex
 import sys
-cmd = not sys.stdin.isatty() and sys.stdin.read() or ' '.join(sys.argv[1:])
-if not cmd.strip():
-    sys.exit(1)
+cmd = sys.stdin.read()
 if sys.argv[1:2] == ['-r']: # 'reverse': shell to python
-    import shlex
-    print(repr(shlex.split(cmd.lstrip('-r '))), end='')
+    print(repr(shlex.split(cmd)), end='')
 else: # normal: python to shell
-    print(' '.join(eval(cmd)), end='')
+    print(' '.join(map(shlex.quote, eval(cmd))), end='')
