@@ -135,6 +135,7 @@ for gitalias in $(git alias | grep -E '^.{0,4}$'); do
 done
 alias s='g s'
 alias ga='g af'
+alias g-='gco -'
 
 # "system"
 alias ercho='>&2 echo'  # echo to stderr
