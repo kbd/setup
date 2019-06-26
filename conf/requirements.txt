@@ -11,6 +11,7 @@ flask-socketio
 ftfy
 ipdb
 jupyter
+mypy
 pandas
 pip
 pipdeptree
