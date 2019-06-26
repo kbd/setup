@@ -143,7 +143,7 @@
     "python.pythonPath": "/usr/local/bin/python3",
     "python.globalModuleInstallation": true,
     "python.autoComplete.addBrackets": false,
-    "python.testing.pyTestEnabled": true,
+    "python.testing.pytestEnabled": true,
     // "python.formatting.provider": "black",
     // "python.formatting.blackArgs": ["-S"],
     // "python.linting.pylintArgs": [
