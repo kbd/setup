@@ -17,6 +17,7 @@
     "breadcrumbs.enabled": true,
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
+    "search.useIgnoreFiles": true,
 
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
     "window.restoreWindows": "all",
