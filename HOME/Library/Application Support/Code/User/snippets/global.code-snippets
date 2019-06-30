@@ -102,5 +102,12 @@
 		"scope": "go",
 		"prefix": "P",
 		"body": "fmt.Printf(\"$1\", $0)",
+	},
+	"shebang": {
+		"prefix": "#!",
+		"body": [
+			"#!/usr/bin/env "
+		],
+		"description": "shebang!"
 	}
 }
