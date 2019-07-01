@@ -72,6 +72,8 @@
 	dtf = !git pick-status-files dt
 	d1  = "!f() { git d  ${1:-@}^!; }; f"
 	dt1 = "!f() { git dt ${1:-@}^!; }; f"
+	d1c = !git pick-commit | xargs -t git d1
+	dt1c = !git pick-commit | xargs -t git dt1
 	ds = diff --staged
 	dts = difftool --staged
 	dst = dts
@@ -108,7 +110,7 @@
 	ra = rebase --abort
 	rc = rebase --continue
 	ri = r -i
-	rif = !git pick-commit | xargs -tI% git ri %~
+	ric = !git pick-commit | xargs -tI% git ri %~
 	s = status
 	st = stash
 	stm = stash push -m
@@ -137,8 +139,9 @@
 	prune-remote = remote prune origin # prune branches deleted from remote
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
 	authors = shortlog -sne
-	# fl = "fix last", sl = "squash last"
-	fl = commit --amend -C@
-	sl = commit --amend -c@
+	fl = commit --amend -C@ # fix last
+	sl = commit --amend -c@ # squash last
+	fc = !git pick-commit | xargs -t git fixup
+	sc = !git pick-commit | xargs -t git squash
 	fixup  = "!f() { git commit --fixup  $1      && GIT_EDITOR=true          git ri --autosquash $1~; }; f"
 	squash = "!f() { git commit --squash $1 -C$1 && GIT_SEQUENCE_EDITOR=true git ri --autosquash $1~; }; f"
