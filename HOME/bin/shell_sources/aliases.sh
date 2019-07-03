@@ -145,7 +145,7 @@ alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash'
 exists() { type "$1" &>/dev/null; } # check if a program exists
 printv() { printf '%q\n' "$1"; } # v for verbatim
 is_remote() { [[ $SSH_TTY || $SSH_CLIENT ]]; }
-is_su() { [[ $USER != "$(logname)" ]]; } # if current user != login user
+is_su() { [[ $(whoami) != $(logname) ]]; } # if current user != login user
 is_root() { [[ $EUID == 0 ]]; }
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 my_home() { user_home "$(logname)"; }

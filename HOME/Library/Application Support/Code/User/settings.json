@@ -12,7 +12,7 @@
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 12,
-    "terminal.integrated.env.osx": {"PATH": "", "PATH_SET": ""}, // https://github.com/microsoft/vscode/issues/70248
+    "terminal.integrated.inheritEnv": false,
 
     "breadcrumbs.enabled": true,
     "search.showLineNumbers": true,
@@ -32,7 +32,6 @@
     "workbench.editor.showTabs": true,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.colorTheme": "Spacegray Eighties Dark",
-    "workbench.statusBar.feedback.visible": false,
     "workbench.startupEditor": "newUntitledFile",
     "workbench.quickOpen.closeOnFocusLost": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
@@ -161,10 +160,6 @@
 
     "[plaintext]": {
         "editor.wordBasedSuggestions": false
-    },
-
-    "files.associations": {
-        "config": "ini", // git config not being recognized?
     },
 
     "go.useLanguageServer": true,
