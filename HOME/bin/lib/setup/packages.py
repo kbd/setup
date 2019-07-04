@@ -1,13 +1,10 @@
-import io
 import logging
 import re
 import runpy
-import subprocess
-import zipfile
 
 from lib import homebrew
 from lib.mac import defaults
-from lib.utils import run, read_lines_from_file
+from lib.utils import run
 
 log = logging.getLogger()
 
