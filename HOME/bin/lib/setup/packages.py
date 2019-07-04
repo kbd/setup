@@ -26,6 +26,21 @@ def install_packages(settings, *args, **kwargs):
         install_package(name, settings)
 
 
+def run_commands(cmd):
+    """Take one ore more commands to run as a subprocess.
+
+    * 'cmd' be one command or a tuple of commands
+    * each command is handed to utils.run
+
+    To make it easy to tell what's intended, require a tuple instead of a list
+    for a top-level that contains multiple commands.
+    """
+    if isinstance(cmd, tuple):
+        return [run(c) for c in cmd]
+
+    return run(cmd)
+
+
 def install_package(name, settings):
     log.info(f"Installing packages for: {name}")
     module = globals()
@@ -35,16 +50,13 @@ def install_package(name, settings):
         module[name](settings)
     else:
         # otherwise, expect a cmd to run
-        cmd = settings['cmd']
-        log.debug(f"Executing: {cmd}")
-        run(cmd)
+        run_commands(settings['cmd'])
 
-    # post_install should be a list of shell commands passed directly to 'run'
+    # run post-install operations, if present
     post_install = settings.get('post_install')
     if post_install:
         log.info("Running post-install operations")
-        for cmd in post_install:
-            run(cmd)
+        run_commands(post_install)
 
 
 def vscode(settings):

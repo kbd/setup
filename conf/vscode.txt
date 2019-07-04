@@ -1,4 +1,5 @@
 alefragnani.Bookmarks
+bungcip.better-toml
 CoenraadS.bracket-pair-colorizer-2
 dbaeumer.vscode-eslint
 eamodio.gitlens
