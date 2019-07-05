@@ -104,7 +104,7 @@
 		"body": "fmt.Printf(\"$1\", $0)",
 	},
 	"shebang": {
-		"prefix": "#!",
+		"prefix": "env",
 		"body": [
 			"#!/usr/bin/env "
 		],
