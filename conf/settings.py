@@ -28,6 +28,7 @@
         'rust': {
             'skip_if_not_requested': True,
             'cmd': (
+                ['rustup-init', '-y', '--no-modify-path'],
                 ['rustup', 'update'],
                 ['rustup', 'install', 'nightly'],
                 ['cargo', '+nightly', 'install', 'pyoxidizer', '-Z', 'install-upgrade'],
