@@ -26,8 +26,10 @@
             'cmd': "cat conf/npm.txt | xargs -t npm install -g",
         },
         'rust': {
+            'skip_if_not_requested': True,
             'cmd': (
                 ['rustup', 'update'],
+                ['rustup', 'install', 'nightly'],
                 ['cargo', '+nightly', 'install', 'pyoxidizer', '-Z', 'install-upgrade'],
             ),
         },
