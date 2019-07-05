@@ -28,7 +28,7 @@
         'rust': {
             'cmd': (
                 ['rustup', 'update'],
-                ['cargo', 'install', 'pyoxidizer'],
+                ['cargo', '+nightly', 'install', 'pyoxidizer', '-Z', 'install-upgrade'],
             ),
         },
         'mac': {
