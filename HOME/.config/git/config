@@ -141,7 +141,9 @@
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
 	authors = shortlog -sne
 	fl = commit --amend -C@ # fix last
-	sl = commit --amend -c@ # squash last
+	al = commit --amend -c@ # amend last
+	ac = "!f() { export c=$(git pick-commit); [[ -z $c ]] && return; GIT_SEQUENCE_EDITOR='git reword-editor' git ri $c~ || git ra; }; f"
+	reword-editor = "!f() { perl -pi -e \"s/^(pick\\s+)$c/reword $c/\" $1; }; f"
 	fc = !git pick-commit | xargs -t git fixup
 	sc = !git pick-commit | xargs -t git squash
 	fixup  = "!f() { git commit --fixup  $1      && GIT_EDITOR=true          git ri --autosquash $1~; }; f"
