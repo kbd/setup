@@ -1,6 +1,6 @@
-typescript
-ts-node
-jest
 git-open
-npx
+jest
 npm
+npx
+ts-node
+typescript
