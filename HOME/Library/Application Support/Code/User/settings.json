@@ -163,4 +163,5 @@
     },
 
     "go.useLanguageServer": true,
+    "python.dataScience.sendSelectionToInteractiveWindow": false,
 }
