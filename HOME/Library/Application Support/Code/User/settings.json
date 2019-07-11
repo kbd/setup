@@ -37,6 +37,7 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.activityBar.visible": true,
     "workbench.statusBar.visible": true,
+    "workbench.list.keyboardNavigation": "filter",
 
     // colors
     "editor.tokenColorCustomizations": {
