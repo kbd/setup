@@ -132,6 +132,7 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.tslint": true
     },
+    "npm.enableScriptExplorer": true,
 
     "[shellscript]": {
         "editor.tabSize": 2,
