@@ -12,7 +12,6 @@
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 12,
-    "terminal.integrated.inheritEnv": false,
 
     "breadcrumbs.enabled": true,
     "search.showLineNumbers": true,
