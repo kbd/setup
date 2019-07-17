@@ -158,11 +158,11 @@
     ],
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": ["-S"],
+    "python.dataScience.sendSelectionToInteractiveWindow": false,
 
     "[plaintext]": {
         "editor.wordBasedSuggestions": false
     },
 
     "go.useLanguageServer": true,
-    "python.dataScience.sendSelectionToInteractiveWindow": false,
 }
