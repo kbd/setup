@@ -161,7 +161,9 @@
     "python.dataScience.sendSelectionToInteractiveWindow": false,
 
     "[plaintext]": {
-        "editor.wordBasedSuggestions": false
+        "editor.wordBasedSuggestions": false,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
     },
 
     "[markdown]": {
