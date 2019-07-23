@@ -83,5 +83,7 @@ precmd() {
     tabtitle "$PWD"
 }
 
+[[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
+
 # syntax highlighting needs to be sourced last
 source `brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
