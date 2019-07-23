@@ -2,7 +2,7 @@
 	name = Keith Devens
 [include]
 	# allow machine-specific configuration (eg. work vs home)
-	path = ~/.config/machine_specific/.gitconfig
+	path = ~/.config/.machine/.gitconfig
 [push]
 	default = current
 [pull]

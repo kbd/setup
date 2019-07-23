@@ -1,1 +1,1 @@
-%include ~/.config/machine_specific/.hgrc
+%include ~/.config/.machine/.hgrc
