@@ -68,6 +68,8 @@
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
 	dt = difftool
+	dc = !git pick-commit | xargs -t git d
+	dtc = !git pick-commit | xargs -t git dt
 	df = !git pick-status-files d
 	dtf = !git pick-status-files dt
 	d1  = "!f() { git d  ${1:-@}^!; }; f"
