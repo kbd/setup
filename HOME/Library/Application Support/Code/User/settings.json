@@ -99,6 +99,10 @@
     "gitlens.views.lineHistory.enabled": true,
 
     "peacock.surpriseMeOnStartup": true,
+    "peacock.affectStatusBar": false,
+    "peacock.affectActivityBar": false,
+    "peacock.affectAccentBorders": false,
+    "peacock.affectTabActiveBorder": true,
     "peacock.favoriteColors": [
         { "name": "Angular Red", "value": "#b52e31" },
         { "name": "Auth0 Orange", "value": "#eb5424" },
@@ -118,8 +122,6 @@
         { "name": "setup lavender", "value": "#9a80a9" },
         { "name": "Velocity Purple", "value": "#6c1780" }
     ],
-
-    "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home",
 
     // language-specific
     "[typescript]": {
