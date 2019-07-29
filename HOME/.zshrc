@@ -83,6 +83,12 @@ precmd() {
     tabtitle "$PWD"
 }
 
+# hashed directories
+hash -d P=~/proj
+hash -d S=~/setup
+hash -d H=~S/HOME
+
+# machine-specific config
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
 
 # syntax highlighting needs to be sourced last
