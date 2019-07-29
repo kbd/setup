@@ -98,7 +98,7 @@
     "gitlens.views.fileHistory.enabled": true,
     "gitlens.views.lineHistory.enabled": true,
 
-    "peacock.surpriseMeOnStartup": true,
+    "peacock.surpriseMeOnStartup": false,
     "peacock.affectStatusBar": false,
     "peacock.affectActivityBar": false,
     "peacock.affectAccentBorders": false,
