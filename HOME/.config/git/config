@@ -118,9 +118,12 @@
 	s = status
 	st = stash
 	stm = st push -m
+	stf = !git pick-status-files st push
+	stfm = !git pick-status-files st push -m
+	stp = st pop
 	stl = st list
 	sts = st show
-	stp = st show -p
+	stsp = st show -p
 	unstage = reset --
 	uncommit = reset @~ --
 	upstream = name-rev @{upstream}
