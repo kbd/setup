@@ -16,8 +16,9 @@ echo hello world
 """
 import shlex
 import sys
+from pathlib import *
 cmd = sys.stdin.read()
 if sys.argv[1:2] == ['-r']: # 'reverse': shell to python
     print(repr(shlex.split(cmd)), end='')
 else: # normal: python to shell
-    print(' '.join(map(shlex.quote, eval(cmd))), end='')
+    print(' '.join(map(shlex.quote, map(str, eval(cmd)))), end='')
