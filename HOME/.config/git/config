@@ -125,7 +125,9 @@
 	sts = st show
 	stsp = st show -p
 	unstage = reset --
+	uns = unstage
 	uncommit = reset @~ --
+	unc = uncommit
 	upstream = name-rev @{upstream}
 	url = remote get-url origin
 	info = remote show origin
