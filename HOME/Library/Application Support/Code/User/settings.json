@@ -120,7 +120,8 @@
         { "name": "Salesforce Blue", "value": "#00A1E0" },
         { "name": "Slate Blue", "value": "#7fa1c1" },
         { "name": "setup lavender", "value": "#9a80a9" },
-        { "name": "Velocity Purple", "value": "#6c1780" }
+        { "name": "Velocity Purple", "value": "#6c1780" },
+        { "name": "Nim Yellow", "value": "#fee760" }
     ],
 
     // language-specific
