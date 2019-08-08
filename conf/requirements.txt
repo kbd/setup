@@ -2,6 +2,7 @@ ansible
 attrs
 black
 boto3
+csvs-to-sqlite
 Django
 fabric
 fire
@@ -33,6 +34,7 @@ rethinkdb
 setuptools
 Sphinx
 sqlalchemy
+sqlite-utils
 tmuxp
 virtualenv
 xlrd
