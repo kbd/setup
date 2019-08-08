@@ -54,7 +54,8 @@
 	rpc = !git pick-commit | xargs -toI% git rp %~  # "oops that shouldn't be in that commit"
 	b = branch
 	br = b -r
-	bv = !git b | cut -c3- | xargs git commit-info --color=always | sort -r
+	bv = !git b --sort=-creatordate | cut -c3- | xargs git commit-info
+	brv = branch --sort=-creatordate --format='%(color:reset)%(creatordate:short) %(color:bold white)%(align:2,right)%(upstream:trackshort)%(end)%(color:nobold) %(align:40,left)%(color:yellow)%(refname:short)%(end) %(color:reset)%(contents:subject)'
 	commit-info = show --no-patch --date=short --pretty=format:'%C(green)%ad%C(reset) %C(magenta)%C(italic)%<(20,trunc)%S%C(reset) %C(auto)%h %C(blue)%<(20,trunc)%an %C(auto)%<(70,trunc)%s%D%C(reset)'
 	current-branch = symbolic-ref --short HEAD
 	current-tags = tag --list --points-at HEAD
