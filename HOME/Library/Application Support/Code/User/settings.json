@@ -159,7 +159,6 @@
         "--enable=unused-import",
     ],
     "python.formatting.provider": "black",
-    "python.formatting.blackArgs": ["-S"],
     "python.dataScience.sendSelectionToInteractiveWindow": false,
 
     "[plaintext]": {
