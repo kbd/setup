@@ -42,6 +42,7 @@ brew "mtr"
 cask "java"  #required for osquery
 brew "osquery"
 brew "ncdu"
+brew "neofetch"
 brew "nim"
 brew "parallel"
 brew "path-extractor"
