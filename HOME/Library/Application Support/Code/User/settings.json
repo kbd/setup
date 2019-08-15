@@ -25,8 +25,8 @@
     "window.newWindowDimensions": "inherit",
 
     "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
 
     "workbench.editor.showTabs": true,
     "workbench.editor.highlightModifiedTabs": true,
