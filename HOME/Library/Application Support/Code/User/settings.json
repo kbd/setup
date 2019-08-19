@@ -8,7 +8,6 @@
     "editor.tabCompletion": "on",
     "editor.suggest.localityBonus": true,
     "editor.minimap.enabled": true,
-    "editor.multiCursorModifier": "ctrlCmd",
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 12,
@@ -38,38 +37,6 @@
     "workbench.statusBar.visible": true,
     "workbench.list.keyboardNavigation": "filter",
 
-    // colors
-    "editor.tokenColorCustomizations": {
-        "comments": "#27bd2f",
-        "textMateRules": [
-            {
-                "scope": [
-                    "keyword.control",
-                    "storage"
-                ],
-                "settings": {
-                    "fontStyle": "italic"
-                }
-            },
-            {
-                "scope": [
-                    "variable"
-                ],
-                "settings": {
-                    "foreground": "#ffaa00",
-                }
-            },
-            // {
-            //     "scope": [
-            //         "string"
-            //     ],
-            //     "settings": {
-            //         "foreground": "#ffcccc",
-            //     }
-            // }
-        ]
-    },
-
     "workbench.colorCustomizations": {
         "editor.selectionBackground": "#888",
         "editor.selectionHighlightBackground": "#555",
@@ -77,6 +44,33 @@
         "titleBar.activeBackground": "#777",
         "titleBar.inactiveBackground": "#696969",
         "editorIndentGuide.activeBackground": "#888"
+    },
+
+    // colors
+    "editor.tokenColorCustomizations": {
+        "comments": "#27bd2f",
+        "textMateRules": [
+            {
+                "scope": ["keyword.control", "storage"],
+                "settings": {"fontStyle": "italic"}
+            },
+            {
+                "scope": ["variable"],
+                "settings": {"foreground": "#ffaa00"}
+            },
+            {
+                "scope": ["string"],
+                "settings": {"foreground": "#9198ff"}
+            },
+            {
+                "scope": ["string.quoted"],
+                "settings": {"foreground": "#ff8af7"}
+            },
+            {
+                "scope": ["string.quoted.docstring.multi.python"],
+                "settings": {"foreground": "#27bd2f", "fontStyle": "bold"}
+            },
+        ]
     },
 
     // extensions
