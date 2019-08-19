@@ -115,7 +115,8 @@
         { "name": "Slate Blue", "value": "#7fa1c1" },
         { "name": "setup lavender", "value": "#9a80a9" },
         { "name": "Velocity Purple", "value": "#6c1780" },
-        { "name": "Nim Yellow", "value": "#fee760" }
+        { "name": "Nim Yellow", "value": "#fee760" },
+        { "name": "Homebrew Orange", "value": "#FAA638" }
     ],
 
     // language-specific
