@@ -159,7 +159,7 @@ mcd() {
         ercho "missing argument"
         return 1
     fi
-    mkdir -p -- "$1" && cl "$@"
+    mkdir -p -- "$1" && cl "$@" -A
 }
 
 # dirname, but treat paths that end in slash as a directory
