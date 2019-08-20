@@ -54,6 +54,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
     alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
 
     alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
+    alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
 
     # bundleid/uti funcs from https://superuser.com/a/341429/
     # useful with 'duti' to set file associations
