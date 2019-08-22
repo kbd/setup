@@ -3,6 +3,7 @@ bungcip.better-toml
 CoenraadS.bracket-pair-colorizer-2
 dbaeumer.vscode-eslint
 eamodio.gitlens
+esbenp.prettier-vscode
 formulahendry.code-runner
 ionutvmi.spacegray-vscode
 JakeBecker.elixir-ls

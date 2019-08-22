@@ -123,12 +123,21 @@
     "[typescript]": {
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveTimeout": 2000,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
     },
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "debug.node.autoAttach": "on",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "prettier.tslintIntegration": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.tslint": true
     },
+    "debug.node.autoAttach": "on",
 
     "[shellscript]": {
         "editor.tabSize": 2,

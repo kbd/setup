@@ -2,5 +2,6 @@ git-open
 jest
 npm
 npx
+prettier
 ts-node
 typescript
