@@ -26,6 +26,7 @@
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
+    "files.hotExit": "onExitAndWindowClose",
 
     "workbench.editor.showTabs": true,
     "workbench.editor.highlightModifiedTabs": true,
