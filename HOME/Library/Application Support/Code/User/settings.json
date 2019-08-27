@@ -10,7 +10,7 @@
     "editor.minimap.enabled": true,
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
-    "terminal.integrated.fontSize": 12,
+    "terminal.integrated.fontSize": 13,
 
     "breadcrumbs.enabled": true,
     "search.showLineNumbers": true,
