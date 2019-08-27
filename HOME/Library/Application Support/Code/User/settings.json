@@ -177,5 +177,13 @@
         "editor.insertSpaces": true,
     },
 
+    "[elixir]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.wordBasedSuggestions": true,
+        "editor.acceptSuggestionOnEnter": "on",
+        "editor.formatOnSave": true,
+    },
+
     "go.useLanguageServer": true,
 }
