@@ -189,6 +189,10 @@
         "editor.acceptSuggestionOnEnter": "on",
         "editor.formatOnSave": true,
     },
+    "[HTML (EEx)]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+    },
 
     "go.useLanguageServer": true,
 }
