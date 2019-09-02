@@ -194,5 +194,12 @@
         "editor.insertSpaces": true,
     },
 
+    "[nim]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.acceptSuggestionOnEnter": "off",
+        "editor.formatOnSave": true,
+    },
+
     "go.useLanguageServer": true,
 }
