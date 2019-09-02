@@ -7,5 +7,5 @@
 "\e\e[D": backward-word # ⌥←
 "\e\e[C": forward-word # ⌥→
 "\e[H": beginning-of-line # home
-"\e[F" end-of-line # end
+"\e[F": end-of-line # end
 "\e[3~": delete-char # delete
