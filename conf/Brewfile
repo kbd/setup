@@ -37,7 +37,6 @@ brew "kakoune"
 brew "mas"
 brew "micro"
 brew "minimal-racket"
-brew "mongodb"
 brew "mtr"
 cask "java"  #required for osquery
 brew "osquery"
