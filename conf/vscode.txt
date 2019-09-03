@@ -1,6 +1,7 @@
 alefragnani.Bookmarks
 bungcip.better-toml
 CoenraadS.bracket-pair-colorizer-2
+deerawan.vscode-dash
 eamodio.gitlens
 esbenp.prettier-vscode
 formulahendry.code-runner
