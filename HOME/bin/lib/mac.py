@@ -62,17 +62,19 @@ class DefaultsValue:
 
     def type(self):
         typestr = run(["defaults", "read-type", self.domain, self.key], cap=True)
-        # read-type returns (literally) "Type is {typename}".
+        # read-type returns (literally) "Type is {typename}\n".
         # Pull the last word from the string to get the type.
         return REVERSE_TYPE_MAP[typestr.split()[-1]]
 
     def read_str(self):
-        return run(["defaults", "read", self.domain, self.key], cap=True)
+        return run(["defaults", "read", self.domain, self.key], cap=True).rstrip('\n')
 
     def read(self):
         t = self.type()
         s = self.read_str()
-        if t != dict:
+        if t == str:
+            return s
+        elif t != dict:
             return t(ast.literal_eval(s))
 
         # parse dict. Looks like: '{\n    keyCode = 47;\n    modifierFlags = 1310720;\n}\n'
