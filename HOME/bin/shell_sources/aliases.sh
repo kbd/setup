@@ -102,6 +102,7 @@ alias e=edit
 alias e.='e .'
 alias o=open
 alias o.='o .'
+alias a='o -a'
 
 alias wcl='wc -l'
 alias du='du -h'
