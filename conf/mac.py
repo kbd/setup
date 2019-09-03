@@ -93,6 +93,10 @@ iterm = defaults['com.googlecode.iterm2']
 iterm['PrefsCustomFolder'] = '~/.config/iterm2'
 iterm['LoadPrefsFromCustomFolder'] = True
 
+dash = defaults['com.kapeli.dashdoc']
+dash['syncFolderPath'] = "~/Documents/Dash"
+dash['snippetSQLPath'] = "~/Documents/Dash/snippets.dash"
+
 # startup items - https://apple.stackexchange.com/a/310502/
 script = 'tell application "System Events" to make login item at end with properties {{path:"/Applications/{app}.app", hidden:false}}'
 for app in 'Flycut', 'SpotMenu', 'Flux', 'iTerm':
