@@ -117,7 +117,10 @@
         { "name": "setup lavender", "value": "#9a80a9" },
         { "name": "Velocity Purple", "value": "#6c1780" },
         { "name": "Nim Yellow", "value": "#fee760" },
-        { "name": "Homebrew Orange", "value": "#FAA638" }
+        { "name": "Homebrew Orange", "value": "#FAA638" },
+        { "name": "setup (home) purple", "value": "#7f1759" },
+        { "name": "Elixir Purple", "value": "#5F456C" },
+        { "name": "Phoenix Red", "value": "#ED4A1F" },
     ],
 
     // language-specific
