@@ -18,9 +18,10 @@ for key in (
 # disable dashboard
 defaults['com.apple.dashboard']['mcx-disabled'] = True
 
+dock = defaults['com.apple.dock']
+dock['show-recents'] = False
 # http://www.defaults-write.com/enable-highlight-hover-effect-for-grid-view-stacks/
-defaults['com.apple.dock']['mouse-over-hilite-stack'] = True
-
+dock['mouse-over-hilite-stack'] = True
 # hot corners
 # Possible values:
 #  0: no-op
@@ -33,7 +34,6 @@ defaults['com.apple.dock']['mouse-over-hilite-stack'] = True
 # 10: Put display to sleep
 # 11: Launchpad
 # 12: Notification Center
-dock = defaults['com.apple.dock']
 dock['wvous-bl-corner'] = 10  # bottom left: sleep
 dock['wvous-bl-modifier'] = 0
 dock['wvous-br-corner'] = 3  # bottom right: application windows
