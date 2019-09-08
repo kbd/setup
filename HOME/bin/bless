@@ -3,6 +3,7 @@
 This program is meant for moving a file under my setup source control.
 Named after Perl where you'd "bless" data into an object.
 """
+import logging
 import os
 import shutil
 import subprocess
@@ -10,11 +11,20 @@ import sys
 from pathlib import Path
 
 from lib import setup
+from lib.symlink import Partials
 
 
 def copy(path_from, path_to):
     print(f"Copying {str(path_from)!r} to {str(path_to)!r}")
     func = shutil.copytree if os.path.isdir(path_from) else shutil.copy2
+    parent = path_to.parent
+    if not parent.exists():
+        print(f"Creating parent directory {str(parent)!r}")
+        parent.mkdir(parents=True)
+        partials = Partials(Path(setup.root(), setup.PARTIALS_PATH))
+        partials.add(setup.tilde_path(parent))
+        partials.save()
+
     func(path_from, path_to)
 
 
@@ -41,6 +51,7 @@ def bless(path):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     paths = sys.argv[1:]
     if not paths:
         print("No files provided", file=sys.stderr)

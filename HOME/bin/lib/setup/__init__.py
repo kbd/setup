@@ -28,3 +28,8 @@ def home_path(path):
     Note: no valid setup path for anything outside of $HOME, so throws exception
     """
     return home() / Path(path).resolve().relative_to(Path.home())
+
+
+def tilde_path(path):
+    """Given a path within setup's HOME dir, return the path relative to ~"""
+    return Path('~') / Path(path).relative_to(home())

@@ -1,15 +1,17 @@
 import datetime
-import fnmatch
 import logging
 import os
 from pathlib import Path
 from subprocess import run
+from typing import Container
+
+from lib.utils import read_lines_from_file
 
 
 log = logging.getLogger(__name__)
 
 
-class MyPath(type(Path())):  # https://stackoverflow.com/a/34116756
+class MyPath(type(Path())):  # type: ignore - https://stackoverflow.com/a/34116756
     def current_link_path(self):
         return self.__class__(os.readlink(self))
 
@@ -31,34 +33,60 @@ class MyPath(type(Path())):  # https://stackoverflow.com/a/34116756
         return backup_path
 
 
-def preprocess_partials(partial_paths):
-    """Expand partials as-specified-in-the-config to what we need in code.
+class Partials:
+    def __init__(self, path):
+        self.path = path
+        self.source = read_lines_from_file(path)
+        self.process()
 
-    Background: The difference between a "partial" directory and a regular one
-    is that a regular directory is symlinked, whereas only the *contents* of a
-    partial directory are symlinked. A regular directory is under full contol of
-    setup, while a partial directory is only partially under control of setup.
-    For a partial directory, the directory as a whole is not under source
-    control, only specific files within it.
+    def __contains__(self, value):
+        return value in self.paths
 
-    Unfortunately, it can't be obvious when a directory is in source control
-    under (eg) HOME/a/b/c where we want to "start source controlling". It could
-    be a, b, or c. It's something that needs to be configured.
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.source})'
 
+    def add(self, path):
+        log.info(f"Adding {str(path)!r} to partials")
+        self.source = sorted(set(self.source + [str(path)]))  # ensure no dupes
+        self.process()
 
-    The config specifies a full absolute path, ~/a/b/c. Having a sub-directory
-    that is a partial logically implies that directories above it are partials
-    as well. So `preprocess_partials` expands the list of partial directories
-    into the set of all parent directories up to and including the partial
-    directory. That way it's a simple set membership test to determine whether a
-    given path is a partial.
-    """
-    original_partials = {MyPath(p).expanduser() for p in partial_paths}
-    all_partials = original_partials.copy()
-    for p in original_partials:
-        all_partials |= set(p.parents)
+    def save(self):
+        log.info(f"Writing partials to {str(self.path)!r}")
+        with open(self.path, 'w') as f:
+            f.writelines(f"{line}\n" for line in self.source)
 
-    return all_partials
+    def process(self):
+        self.paths = self._process(self.source)
+
+    def _process(self, partial_paths):
+        """Expand partials as-specified-in-the-config to what we need in code.
+
+        Background: The difference between a "partial" directory and a regular
+        one is that a regular directory is symlinked, whereas only the
+        *contents* of a partial directory are symlinked. A regular directory is
+        under full contol of setup, while a partial directory is only partially
+        under control of setup. For a partial directory, the directory as a
+        whole is not under source control, only specific files within it.
+
+        Unfortunately, it can't be obvious when a directory is in source control
+        under (eg) HOME/a/b/c where we want to "start source controlling". It
+        could be a, b, or c. It's something that needs to be configured.
+
+        ---
+
+        The config specifies a full absolute path, ~/a/b/c. Having a
+        sub-directory that is a partial logically implies that directories above
+        it are partials as well. So this expands the list of partial directories
+        into the set of all parent directories up to and including the partial
+        directory. That way it's a simple set membership test to determine
+        whether a given path is a partial.
+        """
+        original_partials = {MyPath(p).expanduser() for p in partial_paths}
+        all_partials = original_partials.copy()
+        for p in original_partials:
+            all_partials |= set(p.parents)
+
+        return all_partials
 
 
 def create_links(source_dir, dest_dir, partials):
@@ -67,8 +95,6 @@ def create_links(source_dir, dest_dir, partials):
     dest_dir = MyPath(dest_dir).expanduser()
     assert source_dir != dest_dir
     log.info(f"Creating symlinks: {source_dir} -> {dest_dir}")
-    partials = preprocess_partials(partials)
-
     _ready_create_links(source_dir, dest_dir, partials)
 
 
@@ -84,7 +110,7 @@ def _ready_create_links(source_dir, dest_dir, partials):
         create_link(repo_path, dest_path, partials)
 
 
-def create_link(repo_path, dest_path, partials):
+def create_link(repo_path, dest_path, partials: Container[Path]):
     log.debug(f"Creating link from {dest_path} to {repo_path}.")
     # respect ignored files
     if repo_path.is_ignored():
