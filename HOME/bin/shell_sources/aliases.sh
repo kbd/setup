@@ -141,6 +141,8 @@ alias ga='g af'
 alias gaf='g a -f'
 alias g-='gco -'
 
+alias dm='python3 manage.py'  # "django manage"
+
 # "system"
 alias ercho='>&2 echo'  # echo to stderr
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || PROMPT_BARE=1'
