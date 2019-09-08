@@ -121,6 +121,9 @@
         { "name": "setup (home) purple", "value": "#7f1759" },
         { "name": "Elixir Purple", "value": "#5F456C" },
         { "name": "Phoenix Red", "value": "#ED4A1F" },
+        { "name": "Django Green Dark", "value": "#0F422D" },
+        { "name": "Django Green Light", "value": "#3DAE80" },
+        { "name": "Django Green Official", "value": "#092E20" },
     ],
 
     // language-specific
