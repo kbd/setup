@@ -27,14 +27,7 @@ import os
 import sys
 
 CMD = '/usr/local/bin/ipython'
-DEFAULT_ARGS = [
-    CMD,
-    '--no-banner',
-    '--no-confirm-exit',
-    '--no-term-title',
-    '--ext=autoreload',
-    '--TerminalInteractiveShell.highlighting_style=monokai',
-]
+DEFAULT_ARGS = [CMD, '--ext=autoreload']
 
 args = sys.argv[1:]
 for i, arg in enumerate(args):
