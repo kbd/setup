@@ -122,7 +122,6 @@ alias pym='py -ic "import pandas as pd; import re; import datetime as dt; from p
 alias x='chmod +x'
 alias hex='hexyl'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
-
 alias tcl='rlwrap tclsh'
 alias yaegi='rlwrap $GOBIN/yaegi'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
@@ -130,6 +129,7 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias goog='googler -n5 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
+# git
 alias g=git
 # create aliases for all short (<= 4 character) git aliases
 for gitalias in $(git alias | grep -E '^.{0,4}$'); do
@@ -141,6 +141,8 @@ alias ga='g af'
 alias gaf='g a -f'
 alias g-='gco -'
 
+# django
+alias da='django-admin'
 alias dm='python3 manage.py'  # "django manage"
 
 # "system"
