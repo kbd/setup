@@ -37,13 +37,13 @@ class Partials:
     def __init__(self, path):
         self.path = path
         self.source = read_lines_from_file(path)
-        self.process()
+        self.process()  # assigns self.paths
 
     def __contains__(self, value):
         return value in self.paths
 
     def __repr__(self):
-        return f'{self.__class__.__name__}({self.source})'
+        return f"{self.__class__.__name__}({', '.join(self.source)})"
 
     def add(self, path):
         log.info(f"Adding {str(path)!r} to partials")
@@ -58,7 +58,8 @@ class Partials:
     def process(self):
         self.paths = self._process(self.source)
 
-    def _process(self, partial_paths):
+    @staticmethod
+    def _process(partial_paths):
         """Expand partials as-specified-in-the-config to what we need in code.
 
         Background: The difference between a "partial" directory and a regular
