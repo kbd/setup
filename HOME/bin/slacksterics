@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# https://webapps.stackexchange.com/questions/86557/how-do-i-escape-formatting-characters-in-slack
+echo -n *"$@"*­ | cb
