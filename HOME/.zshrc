@@ -80,7 +80,7 @@ if [[ ${TERMS_WITH_BROKEN_UNICODE[(ie)$TERM_PROGRAM]} -le ${#TERMS_WITH_BROKEN_U
 fi
 
 precmd() {
-    tabtitle "$PWD"
+    tabtitle "$(print -P '%~')"
 }
 
 # hashed directories
