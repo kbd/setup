@@ -132,6 +132,8 @@
 	uns = unstage
 	uncommit = reset @~ --
 	unc = uncommit
+	uncommit-soft = reset --soft @~ --
+	uncs = uncommit-soft
 	upstream = name-rev @{upstream}
 	url = remote get-url origin
 	info = remote show origin
