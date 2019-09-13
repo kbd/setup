@@ -126,6 +126,7 @@
 	stfm = !git pick-status-files st push -m
 	stp = st pop
 	stl = st list
+	std = st drop
 	sts = st show
 	stsp = st show -p
 	unstage = reset --
