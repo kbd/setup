@@ -118,7 +118,7 @@ alias cat=bat
 alias p=python3
 alias py=ipython
 alias pyc='py -c'
-alias pym='py -ic "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json;"'
+alias pym='py -ic "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias x='chmod +x'
 alias hex='hexyl'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
