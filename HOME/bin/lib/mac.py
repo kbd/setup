@@ -18,15 +18,20 @@ def restart_os_functions(*args, **kwargs):
 
 
 DEFAULTS_TYPE_MAP = {
-    bool: 'bool',
-    int: 'int',
+    bool: 'boolean',
+    int: 'integer',
     float: 'float',
     str: 'string',
     dict: 'dict',
     list: 'array',
+    # todo: conversion procsess between bytes and <62706c69 73743030 d4010203...>
+    # format that 'defaults' uses
+    bytes: 'data',
 }
 REVERSE_TYPE_MAP = {v: k for k, v in DEFAULTS_TYPE_MAP.items()}
-REVERSE_TYPE_MAP.update({'boolean': bool, 'dictionary': dict})
+# Other names for types. For example, while 'defaults write' requires '-dict' to
+# write a dictionary, 'defaults read-type' returns 'dictionary' for its type.
+REVERSE_TYPE_MAP.update({'bool': bool, 'int': int, 'dictionary': dict})
 
 
 def flatten(value):
