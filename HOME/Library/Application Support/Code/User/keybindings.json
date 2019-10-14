@@ -219,24 +219,9 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "f9",
-    "command": "-editor.debug.action.toggleBreakpoint",
-    "when": "editorTextFocus"
-  },
-  {
     "key": "shift+alt+f2",
     "command": "editor.debug.action.toggleInlineBreakpoint",
     "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+f9",
-    "command": "-editor.debug.action.toggleInlineBreakpoint",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "f9",
-    "command": "editor.action.quickFix",
-    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
   },
   {
     "key": "cmd+.",
