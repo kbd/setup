@@ -130,6 +130,9 @@
 	std = st drop
 	sts = st show
 	stsp = st show -p
+	w = switch
+	w- = w -
+	wm = w master
 	unstage = reset --
 	uns = unstage
 	uncommit = reset @~ --

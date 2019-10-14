@@ -139,7 +139,7 @@ done
 alias s='g s'
 alias ga='g af'
 alias gaf='g a -f'
-alias g-='gco -'
+alias g-='gw-'
 
 # django
 alias da='django-admin'
