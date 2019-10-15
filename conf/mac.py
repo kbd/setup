@@ -80,6 +80,9 @@ defaults.g['com.apple.keyboard.fnState'] = True
 # don't switch to another space when alt tabbing
 defaults.g['AppleSpacesSwitchOnActivate'] = False
 
+# don't close windows when quitting program (required for iterm2 to restore windows)
+defaults.g['NSQuitAlwaysKeepsWindows'] = True
+
 # change spaces shortcuts away from ctrl + <- etc.
 # todo
 
