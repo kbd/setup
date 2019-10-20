@@ -11,6 +11,7 @@ flask-restful
 flask-socketio
 ftfy
 ipdb
+ipython
 jupyter
 mypy
 pandas
