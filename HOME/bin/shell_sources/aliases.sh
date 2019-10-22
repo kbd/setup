@@ -115,6 +115,9 @@ alias vi=vim
 alias vless=vimpager
 alias c=cat
 alias cat=bat
+alias cn='bat --style=numbers'
+alias chn='bat --style=header,numbers'
+alias cnh='bat --style=header,numbers'
 alias p=python3
 alias py=ipython
 alias pyc='py -c'
