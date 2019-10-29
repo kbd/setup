@@ -4,7 +4,6 @@ import re
 import subprocess
 from itertools import chain
 
-from . import homebrew
 from .utils import run
 
 log = logging.getLogger(__name__)
