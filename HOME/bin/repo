@@ -227,9 +227,9 @@ def get_repo_info(repo):
         'staged': staged,
         'modified': status['GIT_STATUS_WT_MODIFIED'],
         'deleted': status['GIT_STATUS_WT_DELETED'],
+        'stashed': get_stash_string(repo),
         'untracked': status['GIT_STATUS_WT_NEW'],
         'conflicted': status['GIT_STATUS_CONFLICTED'],
-        'stashed': get_stash_string(repo),
     }
     return result
 
