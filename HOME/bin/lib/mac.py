@@ -59,6 +59,11 @@ class _DefaultsDomain:
     def __setitem__(self, key, value):
         DefaultsValue(self.domain, key).write(value)
 
+    def read_str(self):
+        return run(["defaults", "read", self.domain], cap=True).rstrip('\n')
+
+    read = read_str  # todo: read should really return a Python data structure
+
 
 class DefaultsValue:
     def __init__(self, domain, key):
