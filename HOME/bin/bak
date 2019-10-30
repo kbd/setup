@@ -5,6 +5,7 @@ import os
 import re
 import shutil
 import sys
+from functools import partial
 
 BACKUP_FORMAT = ".{ext}.{ts}"
 EXTENSION = 'bak'
@@ -81,16 +82,19 @@ def most_recent_backup_file(original_path):
     return os.path.join(dir, backup_files[0])
 
 
-def move_file(from_path, to_path, keep=False):
+def move_file(from_path, to_path, keep=False, symlinks=False):
     print(f"{'Copying' if keep else 'Moving'} {from_path!r} to {to_path!r}")
     func = os.rename
     if keep:
-        func = shutil.copytree if os.path.isdir(from_path) else shutil.copy2
+        if os.path.isdir(from_path):
+            func = partial(shutil.copytree, symlinks=symlinks)
+        else:
+            func = shutil.copy2
 
     func(from_path, to_path)
 
 
-def restore_file(path, keep=False, flip=False):
+def restore_file(path, keep=False, flip=False, symlinks=False):
     """Restore backed up file to its original location.
 
     If 'path' matches a backup pattern, derive its original location from that
@@ -114,7 +118,7 @@ def restore_file(path, keep=False, flip=False):
     if os.path.lexists(original_path):
         if flip:
             # bak up the original file first
-            backup_file(original_path)
+            backup_file(original_path, symlinks=symlinks)
         else:
             printerr(f"Original file exists at {original_path!r}. Not restoring.")
             return
@@ -122,26 +126,27 @@ def restore_file(path, keep=False, flip=False):
     move_file(path, original_path, keep)
 
 
-def backup_file(path, keep=False):
-    move_file(path, backup_path(path), keep)
+def backup_file(path, keep=False, symlinks=False):
+    move_file(path, backup_path(path), keep, symlinks)
 
 
 def main(args):
     files = args.files
     keep = args.keep
+    symlinks = args.symlinks
     restore = args.restore or args.flip
     flip = args.flip
 
     for file in files:
         if restore:
-            restore_file(file, keep, flip)
+            restore_file(file, keep, flip, symlinks)
             continue
 
         if not os.path.lexists(file):
             printerr(f"File {file!r} doesn't exist, skipping")
             continue
 
-        backup_file(file, keep)
+        backup_file(file, keep, symlinks)
 
     return NUM_ERRORS > 0
 
@@ -154,6 +159,9 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--flip', action='store_true',
         help='"Flip" w/ the specified backup. Read "-r --force", but backs up the existing first. ' + \
             '-f implies -r or can be spelled -rf'
+    )
+    parser.add_argument('-s', '--symlinks', action='store_true',
+        help='If copying a directory tree, leave symlinks as symlinks'
     )
     args = parser.parse_args()
     sys.exit(main(args))
