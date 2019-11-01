@@ -162,6 +162,7 @@
         "editor.formatOnSave": false,
     },
     "python.pythonPath": "/usr/local/bin/python3",
+    "python.jediEnabled": false,
     "python.globalModuleInstallation": true,
     "python.autoComplete.addBrackets": false,
     "python.testing.pytestEnabled": true,
