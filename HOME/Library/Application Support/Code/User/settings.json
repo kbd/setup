@@ -8,11 +8,13 @@
     "editor.tabCompletion": "on",
     "editor.suggest.localityBonus": true,
     "editor.minimap.enabled": true,
+    "editor.minimap.showSlider": "always",
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
 
     "breadcrumbs.enabled": true,
+
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useIgnoreFiles": true,
@@ -37,7 +39,12 @@
     "workbench.activityBar.visible": true,
     "workbench.statusBar.visible": true,
     "workbench.list.keyboardNavigation": "filter",
+    "workbench.settings.editor": "json",
+    "workbench.settings.useSplitJSON": true,
 
+    "debug.showBreakpointsInOverviewRuler": true,
+
+    // colors
     "workbench.colorCustomizations": {
         "editor.selectionBackground": "#888",
         "editor.selectionHighlightBackground": "#555",
@@ -47,7 +54,6 @@
         "editorIndentGuide.activeBackground": "#888"
     },
 
-    // colors
     "editor.tokenColorCustomizations": {
         "comments": "#27bd2f",
         "textMateRules": [
