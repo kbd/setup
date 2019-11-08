@@ -1,3 +1,9 @@
+# type: ignore
+
+# silence linter errors
+defaults = defaults
+run = run
+
 ### trackpad settings ###
 for key in (
     'com.apple.AppleMultitouchTrackpad',
