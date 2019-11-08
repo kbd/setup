@@ -66,7 +66,7 @@ eval "$(fasd --init auto)"
 source "$HOME/.config/fzf/fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed
-for file in "$HOME"/bin/shell_sources/**/*.(z|)sh; do
+for file in "$HOME"/bin/shell/**/*.(z|)sh; do
     source "$file";
 done
 

@@ -29,7 +29,7 @@ if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
     # always seems to cause problems on servers, so disable it
     export PROMPT_PREFIX=''
 else
-    SOURCE_DIR="$HOME/bin/shell_sources"
+    SOURCE_DIR="$HOME/bin/shell"
     SELF="$HOME/.bashrc"
 
     # COMPLETIONS
