@@ -80,8 +80,11 @@ if [[ ${TERMS_WITH_BROKEN_UNICODE[(ie)$TERM_PROGRAM]} -le ${#TERMS_WITH_BROKEN_U
 fi
 
 precmd() {
-    tabtitle "$(print -P '%~')"
+    local s="$TABTITLE"
+    if [[ "$s" ]]; then s="$s — "; fi
+    tabtitle "$s$(print -P '%~')";
 }
+tt() { TABTITLE="$@"; }
 
 # hashed directories
 hash -d P=~/proj
