@@ -81,8 +81,8 @@ fi
 
 precmd() {
     local s="$TABTITLE"
-    if [[ "$s" ]]; then s="$s — "; fi
-    tabtitle "$s$(print -P '%~')";
+    if [[ "$s" ]]; then s=" — $s"; fi
+    tabtitle "$(print -P '%~')$s";
 }
 tt() { TABTITLE="$@"; }
 
