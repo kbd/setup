@@ -27,13 +27,10 @@ def install_packages(settings, *args, **kwargs):
 
 
 def run_commands(cmd):
-    """Take one ore more commands to run as a subprocess.
+    """Take one or more commands to run as a subprocess.
 
     * 'cmd' be one command or a tuple of commands
-    * each command is handed to utils.run
-
-    To make it easy to tell what's intended, require a tuple instead of a list
-    for a top-level that contains multiple commands.
+    * each command can be a string or a list of strings, passed to utils.run
     """
     if isinstance(cmd, tuple):
         return [run(c) for c in cmd]
