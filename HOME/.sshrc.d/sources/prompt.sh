@@ -1,1 +1,1 @@
-../../bin/shell_sources/prompt.sh
+../../bin/shell/prompt.sh

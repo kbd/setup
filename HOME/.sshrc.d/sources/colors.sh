@@ -1,1 +1,1 @@
-../../bin/shell_sources/colors.sh
+../../bin/shell/colors.sh

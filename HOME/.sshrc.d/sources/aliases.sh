@@ -1,1 +1,1 @@
-../../bin/shell_sources/aliases.sh
+../../bin/shell/aliases.sh
