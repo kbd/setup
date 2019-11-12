@@ -85,6 +85,7 @@ precmd() {
     tabtitle "$(print -P '%~')$s";
 }
 tt() { TABTITLE="$@"; }
+ttl() { TABTITLE="⚡$@⚡"; }
 
 # hashed directories
 hash -d P=~/proj
