@@ -29,6 +29,7 @@ pymongo
 pyquery
 pytest
 pytest-cov
+pytest-gitignore
 python-dateutil
 PyYAML
 requests
