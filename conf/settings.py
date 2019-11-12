@@ -44,5 +44,14 @@
         'vscode': {
             'extensions': 'conf/vscode.txt',
         },
-    },
+        'manual': {
+            'skip_if_not_requested': True,
+            'packages': {
+                'bak': {
+                    'url': 'https://github.com/kbd/bak.git',
+                    'bin': 'bak'
+                }
+            }
+        }
+    }
 }

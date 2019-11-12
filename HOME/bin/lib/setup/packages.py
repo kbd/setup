@@ -1,12 +1,16 @@
 import logging
 import re
 import runpy
+import shutil
+from pathlib import Path
 
 from lib import homebrew
 from lib.mac import defaults
 from lib.utils import run
 
 log = logging.getLogger()
+
+VENDOR_DIR = '3rdparty'  # 3rdparty is already in gitignore
 
 
 def install_packages(settings, *args, **kwargs):
@@ -27,13 +31,10 @@ def install_packages(settings, *args, **kwargs):
 
 
 def run_commands(cmd):
-    """Take one ore more commands to run as a subprocess.
+    """Take one or more commands to run as a subprocess.
 
     * 'cmd' be one command or a tuple of commands
-    * each command is handed to utils.run
-
-    To make it easy to tell what's intended, require a tuple instead of a list
-    for a top-level that contains multiple commands.
+    * each command can be a string or a list of strings, passed to utils.run
     """
     if isinstance(cmd, tuple):
         return [run(c) for c in cmd]
@@ -93,3 +94,62 @@ def mac(settings):
     path = settings['path']
     log.info(f"Running {path}")
     runpy.run_path(path, {'defaults': defaults, 'run': run})
+
+
+def manual(settings):
+    """Set up software that is more manual.
+
+    For example, software that isn't configured with a package manager like
+    Homebrew, where an archive needs to be downloaded and unpacked, or a repo
+    needs to be checked out from git and a program manually built.
+
+    Conventions:
+        * if git, shallow check out into __deps/{name}
+        * if archive, download into __deps/{name}/{archive_name},
+          extract and process from there
+
+    Note that 'setup' automatically sets the cwd to the root of the repo, so
+    __deps == repo_root/__deps.
+
+    Could be clever and, with git, for example:
+        * check if dir exists
+        * and is a git repo
+        * and remote = the same as is currently specified in the config
+        * if so, git pull
+        * else, blow away and re-get
+
+    Instead, at least to start with, each time just get from scratch.
+
+    For now, just support git.
+    """
+    for name, params in settings['packages'].items():
+        log.info(f"Running setup for {name!r}")
+        url = params['url']
+        cmd = params.get('cmd')
+        bin = params.get('bin')
+
+        # remove if exists
+        path = Path(VENDOR_DIR, name).resolve()
+        if path.exists():
+            log.info(f"Deleting existing directory: {path}")
+            if input(f"rm -rf '{path}' ok? (y/N) ").upper() == 'Y':
+                shutil.rmtree(path)
+            else:
+                log.info(f"Skipping {name}")
+                continue
+
+        # clone repo
+        git_clone = ['git', 'clone', '--depth', '1', url, path]
+        run(git_clone)
+
+        # run any build commands
+        if cmd:
+            run_commands(cmd)
+
+        # link any binaries specified
+        # 'bin' is the relative (to the source repo root) path of the final executable
+        # take the basename as the name of the binary to link into ~/bin
+        if bin:
+            # TODO: allow multiple executables
+            cmd = f'ln -sf `setup --root`/{VENDOR_DIR}/{name}/{bin} ~/bin/{VENDOR_DIR}/{Path(bin).name}'
+            run(cmd)
