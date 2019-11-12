@@ -17,7 +17,7 @@ def test_defaults_write_global():
         mac.defaults.g['com.apple.keyboard.fnState'] = True
 
     run.assert_called_once_with([
-        'defaults', 'write', '-g', 'com.apple.keyboard.fnState', '-bool', 'True'
+        'defaults', 'write', '-g', 'com.apple.keyboard.fnState', '-boolean', 'True'
     ])
 
 
@@ -31,6 +31,6 @@ def test_defaults_write_dict():
     run.assert_called_once_with(
         [
             'defaults', 'write', 'com.generalarcade.flycut', "ShortcutRecorder mainHotkey",
-            '-dict', 'keyCode', '-int', '47', 'modifierFlags', '-int', '1310720'
+            '-dict', 'keyCode', '-integer', '47', 'modifierFlags', '-integer', '1310720'
         ]
     )
