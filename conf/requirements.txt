@@ -20,6 +20,7 @@ pipdeptree
 pipenv
 poetry
 psycopg2-binary
+ptpython
 pudb
 pygit2
 pygments
