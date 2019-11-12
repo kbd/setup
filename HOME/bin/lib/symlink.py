@@ -11,7 +11,7 @@ from lib.utils import read_lines_from_file
 log = logging.getLogger(__name__)
 
 
-class MyPath(type(Path())):  # type: ignore - https://stackoverflow.com/a/34116756
+class MyPath(type(Path())):  # type: ignore # https://stackoverflow.com/a/34116756
     def current_link_path(self):
         return self.__class__(os.readlink(self))
 
