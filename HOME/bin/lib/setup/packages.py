@@ -151,5 +151,5 @@ def manual(settings):
         # take the basename as the name of the binary to link into ~/bin
         if bin:
             # TODO: allow multiple executables
-            cmd = f'ln -sf `setup --root`/{VENDOR_DIR}/{name}/{bin} ~/bin/{VENDOR_DIR}/{Path(bin).name}'
+            cmd = f'ln -sf `setup --root`/{VENDOR_DIR}/{name}/{bin} ~/bin/{Path(bin).name}'
             run(cmd)
