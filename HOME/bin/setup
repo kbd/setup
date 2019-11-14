@@ -87,9 +87,7 @@ def edit(*args, **kwargs):
 
 def main():
     repo_root_dir = setup.root()
-    repo_home_dir = setup.home()
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
-    home_dir = Path.home()
 
     # get settings, set up command line parser and parse command line args
     settings = setup.load_config()
@@ -114,7 +112,7 @@ def main():
     if hasattr(args, 'func'):
         args.func(settings, **vars(args))
     else:
-        symlink.link_directories(repo_home_dir, home_dir)
+        symlink.link_directories(setup.home(), Path.home())
         mac(settings['packages']['mac'])
         restart_os_functions()
 
