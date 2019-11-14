@@ -114,7 +114,7 @@ def main():
     if hasattr(args, 'func'):
         args.func(settings, **vars(args))
     else:
-        symlink.create_links(repo_home_dir, home_dir)
+        symlink.link_directories(repo_home_dir, home_dir)
         mac(settings['packages']['mac'])
         restart_os_functions()
 
