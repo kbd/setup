@@ -5,11 +5,10 @@ import subprocess
 log = logging.getLogger(__name__)
 
 
-def run(cmd, check=True, cap=False, input=None, exe='/bin/bash', cwd=None, env=None):
+def run(cmd, check=True, cap=False, input=None, exe='/bin/bash', cwd=None, env=None, **kwargs):
     log.debug(f"Executing: {cmd!r}")
     shell = isinstance(cmd, str)
-    result = subprocess.run(
-        cmd,
+    args = dict(
         check=check,
         shell=shell,
         stdout=subprocess.PIPE if cap in (True, 'stdout') else None,
@@ -19,6 +18,9 @@ def run(cmd, check=True, cap=False, input=None, exe='/bin/bash', cwd=None, env=N
         cwd=cwd,
         env=env,
     )
+    args.update(kwargs)
+
+    result = subprocess.run(cmd, **args)
 
     if cap:
         return result.stdout.decode()

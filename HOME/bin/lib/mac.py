@@ -1,4 +1,5 @@
 import ast
+import json
 import logging
 import re
 import subprocess
@@ -56,10 +57,13 @@ class _DefaultsDomain:
         return DefaultsValue(self.domain, key)
 
     def __setitem__(self, key, value):
-        DefaultsValue(self.domain, key).write(value)
+        return DefaultsValue(self.domain, key).write(value)
 
     def read_str(self):
         return run(["defaults", "read", self.domain], cap=True).rstrip('\n')
+
+    def read_json(self):
+        return json.loads(run(["plist-to-json"], cap=True, input=self.read_str()))
 
     read = read_str  # todo: read should really return a Python data structure
 
@@ -77,6 +81,9 @@ class DefaultsValue:
 
     def read_str(self):
         return run(["defaults", "read", self.domain, self.key], cap=True).rstrip('\n')
+
+    def read_json(self):
+        return json.loads(run(["plist-to-json"], cap=True, input=self.read_str()))
 
     def read(self):
         t = self.type()
