@@ -48,6 +48,7 @@ def main():
 
     print("Installing all the things")
     subprocess.check_call([setup_exe, 'brew'])
+    subprocess.check_call([setup_exe, 'manual'])
     subprocess.check_call([setup_exe, 'packages'])
     subprocess.check_call([setup_exe])
 
