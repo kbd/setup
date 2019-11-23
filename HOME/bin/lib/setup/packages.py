@@ -4,13 +4,11 @@ import runpy
 import shutil
 from pathlib import Path
 
-from lib import homebrew
+from lib import homebrew, setup, symlink
 from lib.mac import defaults
 from lib.utils import run
 
 log = logging.getLogger()
-
-VENDOR_DIR = '3rdparty'  # 3rdparty is already in gitignore
 
 
 def install_packages(settings, *args, **kwargs):
@@ -122,14 +120,24 @@ def manual(settings):
 
     For now, just support git.
     """
+    def create_symlink(dir, relative_path):
+        """Create symlink in ~/bin to binary at dir/relative_path"""
+        # no funny stuff, also ensures relative_path is a Path
+        assert not relative_path.is_absolute(), f"relative path ({relative_path}) can't be absolute"
+        to = setup.root() / dir / relative_path
+        frm = Path('~/bin').expanduser() / relative_path.name
+        symlink.link_file(to, frm)
+
+    dir = setup.root() / settings['dir']  # directory to download / checkout to
     for name, params in settings['packages'].items():
         log.info(f"Running setup for {name!r}")
-        url = params['url']
-        cmd = params.get('cmd')
-        bin = params.get('bin')
+        url = params['url']  # url of git repository
+        cmd = params.get('cmd')  # commands to run after cloning
+        bin = params.get('bin')  # path to the executable to install in ~/bin
 
         # remove if exists
-        path = Path(VENDOR_DIR, name).resolve()
+        path = Path(dir, name)
+        assert Path.home() in path.parents, f"path ({path}) must be under $HOME"
         if path.exists():
             log.info(f"Deleting existing directory: {path}")
             if input(f"rm -rf '{path}' ok? (y/N) ").upper() == 'Y':
@@ -147,9 +155,10 @@ def manual(settings):
             run_commands(cmd)
 
         # link any binaries specified
-        # 'bin' is the relative (to the source repo root) path of the final executable
-        # take the basename as the name of the binary to link into ~/bin
         if bin:
-            # TODO: allow multiple executables
-            cmd = f'ln -sf `setup --root`/{VENDOR_DIR}/{name}/{bin} ~/bin/{Path(bin).name}'
-            run(cmd)
+            # accept either a string or a sequence of strings
+            if isinstance(bin, str):
+                bin = [bin]
+
+            for b in bin:
+                create_symlink(dir, Path(name, b))

@@ -10,7 +10,9 @@ from lib.utils import read_lines_from_file
 
 log = logging.getLogger(__name__)
 
-class MyPath(type(Path())):  # type: ignore # https://stackoverflow.com/a/34116756
+SYSTEM_FILES = ('.git', '.gitignore')
+
+class SymPath(type(Path())):  # type: ignore # https://stackoverflow.com/a/34116756
     def current_link_path(self):
         return self.__class__(os.readlink(self))
 
@@ -22,7 +24,7 @@ class MyPath(type(Path())):  # type: ignore # https://stackoverflow.com/a/341167
         run(['bak', self])
 
     def walk(self):
-        """Return all (un-ignored) files under this directory"""
+        """Return all files under this directory"""
         for file in self.iterdir():
             p = self / file
             if p.is_dir():
@@ -33,8 +35,8 @@ class MyPath(type(Path())):  # type: ignore # https://stackoverflow.com/a/341167
 
 def link_directories(source_dir, dest_dir):
     """Symlink all files within source_dir into dest_dir."""
-    source_dir = MyPath(source_dir).expanduser()
-    dest_dir = MyPath(dest_dir).expanduser()
+    source_dir = SymPath(source_dir).expanduser()
+    dest_dir = SymPath(dest_dir).expanduser()
     assert source_dir != dest_dir
     _link_directories(source_dir, dest_dir)
 
@@ -44,18 +46,33 @@ def _link_directories(source_dir, dest_dir):
 
     Useful as an entry-point for tests"""
     log.info(f"Creating symlinks: {source_dir} -> {dest_dir}")
-    for file in source_dir.walk():
-        source = source_dir / file
-        dest = dest_dir / file
-        log.debug(f"Creating link from {dest} to {source}.")
-        link_file(source, dest)
+    for file in sorted(source_dir.walk()):
+        source_path = file.resolve()  # ensure absolute
+        dest_path = dest_dir / file.relative_to(source_dir)
+
+        # don't link files ignored by git
+        if source_path.is_ignored():
+            log.debug(f"{source_path} is ignored")
+            continue
+        elif source_path.name in SYSTEM_FILES:
+            log.debug(f"Ignoring system file {source_path}")
+            continue
+
+        log.debug(f"Creating link at {dest_path} to {source_path}")
+        link_file(source_path, dest_path)
 
 
-def link_file(source_path, dest_path):
-    # don't link files ignored by git
-    if source_path.is_ignored():
-        log.debug(f"{source_path} is ignored.")
-        return
+def link_file(link_path: Path, dest_path: Path):
+    # coerce to SymPaths in case
+    link_path = SymPath(link_path)
+    dest_path = SymPath(dest_path)
+    if link_path.parent.resolve() == dest_path.parent.resolve():
+        msg = (
+            f"Parent directories being linked point to the same place: "
+            f"{link_path.parent} == {dest_path.parent}"
+        )
+        log.error(msg)
+        raise Exception(msg)
 
     # create parent directories if necessary
     if not dest_path.parent.exists():
@@ -64,11 +81,11 @@ def link_file(source_path, dest_path):
 
     # handle existing symlink
     if dest_path.is_symlink():
-        log.debug(f"{dest_path} is an existing symlink.")
+        log.debug(f"{dest_path} is an existing symlink")
         curr_link_path = dest_path.current_link_path()
-        if curr_link_path == source_path:
+        if curr_link_path == link_path:
             # if the link points where we want, leave it alone
-            log.debug(f"{dest_path} already points to {source_path}, making no changes.")
+            log.debug(f"{dest_path} already points to {link_path}, making no changes")
             return True  # return of True makes it easier to test this case
         else:
             # otherwise remove the wrong-pointing symlink
@@ -79,5 +96,5 @@ def link_file(source_path, dest_path):
         log.info(f"Existing file at {dest_path}. Backing up.")
         dest_path.backup()
 
-    log.info(f"Creating symlink to {source_path} at {dest_path}")
-    dest_path.symlink_to(source_path)
+    log.info(f"Creating symlink at {dest_path} to {link_path}")
+    dest_path.symlink_to(link_path)

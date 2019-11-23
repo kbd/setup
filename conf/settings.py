@@ -46,6 +46,7 @@
         },
         'manual': {
             'skip_if_not_requested': True,
+            'dir': '3rdparty',  # 3rdparty is already in gitignore
             'packages': {
                 'bak': {
                     'url': 'https://github.com/kbd/bak.git',
