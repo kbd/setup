@@ -1,11 +1,7 @@
-import datetime
 import logging
 import os
 from pathlib import Path
 from subprocess import run
-from typing import Container
-
-from lib.utils import read_lines_from_file
 
 
 log = logging.getLogger(__name__)
@@ -21,7 +17,7 @@ class SymPath(type(Path())):  # type: ignore # https://stackoverflow.com/a/34116
         return run(['git', 'check-ignore', '-q', str(self)]).returncode == 0
 
     def backup(self):
-        run(['bak', self])
+        run(['bak', self], check=True)
 
     def walk(self):
         """Return all files under this directory"""
