@@ -51,6 +51,10 @@
                 'bak': {
                     'url': 'https://github.com/kbd/bak.git',
                     'bin': 'bak'
+                },
+                'repo_stauts': {
+                    'url': 'https://github.com/kbd/repo_status.git',
+                    'bin': 'repo_status'
                 }
             }
         }

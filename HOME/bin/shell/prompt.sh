@@ -90,7 +90,7 @@ _prompt_repo() {
         # skip repo support over ssh(rc) because repo status won't be able to run
         return 0
     fi
-    local repostr="$(repo)"
+    local repostr="$(repo_status)"
     if [[ -n "$repostr" ]]; then
         echo -n "[$repostr]"
     fi

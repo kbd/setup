@@ -3,50 +3,18 @@
 class D(dict):
   __getattr__ = dict.__getitem__
 
-s = D(  # s = style
-    reset='\x1b[0m',
-    bold='\x1b[1m',
-    it='\x1b[3m',
-    ul='\x1b[4m',
-    rev='\x1b[7m',
-    it_off='\x1b[23m',
-    ul_off='\x1b[24m',
-    rev_off='\x1b[27m',
-)
 
-fg = D(  # fg = foreground
-    black='\x1b[30m',
-    red='\x1b[31m',
-    green='\x1b[32m',
-    yellow='\x1b[33m',
-    blue='\x1b[34m',
-    magenta='\x1b[35m',
-    cyan='\x1b[36m',
-    white='\x1b[37m',
-)
+colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+style_codes = dict(reset=0, bold=1, it=3, ul=4, rev=7, it_off=23, ul_off=24, rev_off=27)
+esc = lambda i: f'\x1b[{i}m'
 
-bg = D(  # bg = background
-    black='\x1b[40m',
-    red='\x1b[41m',
-    green='\x1b[42m',
-    yellow='\x1b[4m',
-    blue='\x1b[44m',
-    magenta='\x1b[45m',
-    cyan='\x1b[46m',
-    white='\x1b[47m',
-)
+# s = style, fg = foreground, bg = background
+s = D({name: esc(i) for name, i in style_codes.items()})
+fg = D({colors[i]: esc(30+i) for i in range(8)})
+bg = D({colors[i]: esc(40+i) for i in range(8)})
 
-e = D(  # e = escapes for use within prompt
-    zsh=D(
-        o='%{',  # open
-        c='%}',  # close
-    ),
-    bash=D(
-        o='\\[\x1b[',
-        c='\\]',
-    ),
-    interactive=D(
-        o='',
-        c='',
-    ),
+e = D(  # e = escapes for use within prompt, o=open, c=close
+    zsh=D(o='%{', c='%}'),
+    bash=D(o='\\[\x1b[', c='\\]'),
+    interactive=D(o='', c=''),
 )
