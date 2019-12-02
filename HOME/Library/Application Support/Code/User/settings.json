@@ -13,6 +13,7 @@
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
 
+    "editor.snippetSuggestions": "top",
     "breadcrumbs.enabled": true,
 
     "search.showLineNumbers": true,
