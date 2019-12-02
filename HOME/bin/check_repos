@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+fd -td -d1 | while read -r dir; do
+  echo -n "$dir: "
+  repo_status "$dir"
+  echo ''
+done
