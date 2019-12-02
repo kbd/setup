@@ -34,7 +34,7 @@
                 ['rustup-init', '-y', '--no-modify-path'],
                 ['rustup', 'update'],
                 ['rustup', 'install', 'nightly'],
-                ['cargo', '+nightly', 'install', 'pyoxidizer', '-Z', 'install-upgrade'],
+                ['cargo', '+nightly', 'install', 'pyoxidizer'],
             ),
         },
         'mac': {
