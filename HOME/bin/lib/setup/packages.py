@@ -4,7 +4,7 @@ import runpy
 import shutil
 from pathlib import Path
 
-from lib import homebrew, setup, symlink
+from lib import homebrew, setup
 from lib.mac import defaults
 from lib.utils import run
 
@@ -126,7 +126,7 @@ def manual(settings):
         assert not relative_path.is_absolute(), f"relative path ({relative_path}) can't be absolute"
         to = setup.root() / dir / relative_path
         frm = Path('~/bin').expanduser() / relative_path.name
-        symlink.link_file(to, frm)
+        run(['symgr', frm, to], check=True)
 
     dir = setup.root() / settings['dir']  # directory to download / checkout to
     for name, params in settings['packages'].items():

@@ -48,6 +48,12 @@
             'skip_if_not_requested': True,
             'dir': '3rdparty',  # 3rdparty is already in gitignore
             'packages': {
+                'symgr': {
+                    'url': 'https://github.com/kbd/symgr.git',
+                    # this command is equivalent to setting 'bin' to 'symgr',
+                    # but this is bootstrapping the symlinking done for 'bin'
+                    'cmd': 'ln -sf $(setup --root)/3rdparty/symgr/symgr ~/bin/symgr'
+                },
                 'bak': {
                     'url': 'https://github.com/kbd/bak.git',
                     'bin': 'bak'

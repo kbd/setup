@@ -8,9 +8,10 @@ import sys
 from functools import partial
 from pathlib import Path
 
-from lib import symlink, setup
+from lib import setup
 from lib.mac import restart_os_functions
 from lib.setup.packages import install_packages, mac
+
 
 log = logging.getLogger()
 
@@ -85,6 +86,10 @@ def edit(*args, **kwargs):
     subprocess.call('$EDITOR .', shell=True)  # works because cwd is set
 
 
+def create_symlinks(frm, to):
+    subprocess.run(['symgr', frm, to], check=True)
+
+
 def main():
     repo_root_dir = setup.root()
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
@@ -112,7 +117,7 @@ def main():
     if hasattr(args, 'func'):
         args.func(settings, **vars(args))
     else:
-        symlink.link_directories(setup.home(), Path.home())
+        create_symlinks(Path.home(), setup.home())
         mac(settings['packages']['mac'])
         restart_os_functions()
 
