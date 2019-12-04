@@ -49,12 +49,7 @@
 
     // colors
     "workbench.colorCustomizations": {
-        "editor.selectionBackground": "#888",
-        "editor.selectionHighlightBackground": "#555",
-        "editor.findMatchHighlightBackground": "#2cdd1c65",
-        "titleBar.activeBackground": "#777",
-        "titleBar.inactiveBackground": "#696969",
-        "editorIndentGuide.activeBackground": "#888"
+        "editor.selectionHighlightBackground": "#040",
     },
 
     "editor.tokenColorCustomizations": {
