@@ -106,8 +106,6 @@ def main():
     # set up logging
     loglevel = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(level=loglevel)
-
-    # set requests loglevel
     logging.getLogger('requests').setLevel(logging.WARNING)
 
     log.debug(f"Set cwd to {repo_root_dir!r}")
