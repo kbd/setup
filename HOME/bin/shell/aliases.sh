@@ -147,6 +147,7 @@ alias s='g s'
 alias ga='g af'
 alias gaf='g a -f'
 alias g-='gw-'
+gccb() { git clone "$@" -- "$(cb)" && cd "$(basename "$_" .git)" || return; }
 
 # django
 alias da='django-admin'

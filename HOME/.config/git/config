@@ -71,7 +71,6 @@
 	cof = !git pick-status-files co
 	cf = !git cof
 	cob = co -b
-	ccb = !git clone "$(cb)"
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
 	dt = difftool
