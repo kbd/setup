@@ -125,6 +125,8 @@
 	s = status
 	st = stash
 	stm = st push -m
+	stu = stash --include-untracked
+	stum = st push --include-untracked -m
 	stf = !git pick-status-files st push
 	stfm = !git pick-status-files st push -m
 	stp = st pop
