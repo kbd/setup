@@ -314,4 +314,12 @@
     "command": "-python.execSelectionInTerminal",
     "when": "editorTextFocus && !findInputFocussed && !python.datascience.ownsSelection && !replaceInputFocussed && editorLangId == 'python'"
   },
+  {
+    "key": "shift+cmd+u",
+    "command": "cursorRedo"
+  },
+  {
+    "key": "shift+cmd+u",
+    "command": "-workbench.action.output.toggleOutput"
+  },
 ]
