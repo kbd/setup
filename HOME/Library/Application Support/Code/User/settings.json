@@ -12,11 +12,14 @@
     "editor.snippetSuggestions": "top",
     "editor.autoClosingQuotes": "beforeWhitespace",
     "editor.autoClosingBrackets": "beforeWhitespace",
+    "editor.renderLineHighlight": "all",
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
 
     "breadcrumbs.enabled": true,
+
+    "problems.showCurrentInStatus": true,
 
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
@@ -137,6 +140,9 @@
         "editor.formatOnSave": true,
         "editor.formatOnSaveTimeout": 2000,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.tslint": true
+        },
     },
     "[javascript]": {
         "editor.tabSize": 2,
@@ -148,9 +154,6 @@
     },
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "editor.codeActionsOnSave": {
-        "source.fixAll.tslint": true
     },
     "debug.node.autoAttach": "on",
 
