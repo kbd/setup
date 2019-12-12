@@ -42,6 +42,12 @@
 	commit = yellow bold
 	whitespace = red reverse
 
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
 [alias]
 	# list all aliases
 	alias = !git config --get-regexp '^alias\\.' | perl -pe 's/[^.]+\\.([^=\\s]+).*$/$1/'
