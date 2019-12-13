@@ -75,7 +75,7 @@
                 "settings": {"foreground": "#ff8af7"}
             },
             {
-                "scope": ["string.quoted.docstring.multi.python"],
+                "scope": ["string.quoted.docstring.multi.python", "string.quoted.docstring.raw.multi.python"],
                 "settings": {"foreground": "#27bd2f", "fontStyle": "bold"}
             },
         ]
