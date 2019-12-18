@@ -136,7 +136,7 @@
 	stf = !git pick-status-files st push
 	stfm = !git pick-status-files st push -m
 	stp = st pop
-	stl = st list
+	stl = st list --pretty=format:'%C(yellow)%gd%C(reset) %C(green)(%cr)%C(reset) %s'
 	std = st drop
 	sts = st show
 	stsp = st show -p
