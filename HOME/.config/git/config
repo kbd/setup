@@ -93,6 +93,7 @@
 	dst = dts
 	delete-branch = !git b | rg -v 'master|^\\*' | fzi | xargs -tp -L1 git b --delete
 	delete-remote = !git br | rg -v 'HEAD|master' | fzi | awk -F/ '{print \"git push \" $1 \" --delete \" $2}' | xargs -I% -tp -L1 sh -c '%'
+	e = restore
 	email = config user.email
 	exec = "!exec " # git aliases run from repo root, so can exec something from root
 	edit = "!exec $EDITOR ."
