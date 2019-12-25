@@ -26,7 +26,7 @@
             'cmd': "cat conf/npm.txt | xargs -t npm install -g",
         },
         'go': {
-            'cmd': "go get -v -u github.com/containous/yaegi/cmd/yaegi",
+            'cmd': ['go', 'get', '-v', '-u', 'github.com/containous/yaegi/cmd/yaegi'],
         },
         'rust': {
             'skip_if_not_requested': True,
