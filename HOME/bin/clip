@@ -2,10 +2,10 @@
 import sys
 from pathlib import Path
 
-from lib.utils import run, read_lines_from_file
+from lib.utils import run, read_config_file
 
 CLIPS_PATH = Path(__file__).parent / 'data' / 'clips.txt'
-CLIPS = dict(line.split(maxsplit=1) for line in read_lines_from_file(CLIPS_PATH))
+CLIPS = dict(line.split(maxsplit=1) for line in read_config_file(CLIPS_PATH))
 
 def print_clips(CLIPS):
     print("Available clips:")

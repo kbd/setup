@@ -40,15 +40,13 @@ def partition_by_regex(regex, list):
     return partition(r.search, list)
 
 
-def read_lines_from_file(path, comment=None):
-    """Read the lines from a file, skipping empty lines and (optionally) commented lines.
+def read_config_file(path, comment='#'):
+    """Read the lines from a file, skipping empty and commented lines.
 
-    If 'comment' string is provided, lines beginning with 'comment' will not be returned.
+    Don't process comments if 'comment' is falsy.
     """
     with open(path) as file:
-        lines = [line.rstrip() for line in file]
-
-    return [
-        line for line in lines
-        if line and not (comment and line.startswith(comment))
-    ]
+        return [
+            line for line in (line.rstrip() for line in file)
+            if line and not (comment and line.startswith(comment))
+        ]

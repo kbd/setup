@@ -6,7 +6,7 @@ from pathlib import Path
 
 from lib import homebrew, setup
 from lib.mac import defaults
-from lib.utils import run
+from lib.utils import run, read_config_file
 
 log = logging.getLogger()
 
@@ -62,10 +62,10 @@ def vscode(settings):
     config_path = settings['extensions']
     log.info("Updating Visual Studio Code extensions")
 
-    # show currently installed extensions
+    # get installed/expected extensions
     cmd = ['code', '--list-extensions']
     current_extensions = set(map(str.strip, run(cmd, cap='stdout').splitlines()))
-    expected_extensions = set(map(str.strip, open(config_path)))
+    expected_extensions = read_config_file(config_path)
 
     fmt = lambda s: ', '.join(sorted(s, key=str.lower))
 
