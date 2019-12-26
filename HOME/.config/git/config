@@ -143,6 +143,7 @@
 	stsp = st show -p
 	w = switch
 	w- = w -
+	wc = w -c
 	wm = w master
 	unstage = reset --
 	uns = unstage
