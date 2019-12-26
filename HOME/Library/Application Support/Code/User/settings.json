@@ -52,7 +52,18 @@
 
     // colors
     "workbench.colorCustomizations": {
-        "editor.selectionHighlightBackground": "#040",
+        // selection
+        "editor.selectionHighlightBackground": "#040E",
+        "editor.selectionHighlightBorder": "#080",
+        "minimap.selectionHighlight": "#080",
+        "editorOverviewRuler.selectionHighlightForeground": "#080E",
+
+        // find
+        "editor.findMatchBackground": "#B00",
+        "editor.findMatchHighlightBackground": "#FFF0",
+        "editor.findMatchHighlightBorder": "#F00",
+        "minimap.findMatchHighlight": "#A00",
+        "editorOverviewRuler.findMatchForeground": "#A00E",
     },
 
     "editor.tokenColorCustomizations": {
