@@ -170,6 +170,7 @@
 	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
 	prune-remote = remote prune origin # prune branches deleted from remote
 	prune-branches = !git prune-merged && git prune-remote
+	pb = prune-branches
 	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
 	authors = shortlog -sne
 	fl = commit --amend -C@ # fix last
