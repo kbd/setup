@@ -62,9 +62,10 @@
 	br = b -r
 	ba = b -a
 	bv = !git b --sort=-creatordate | cut -c3- | xargs git commit-info
-	brv = branch --sort=-creatordate --format='%(color:reset)%(creatordate:short) %(color:bold white)%(align:2,right)%(upstream:trackshort)%(end)%(color:nobold) %(align:40,left)%(color:yellow)%(refname:short)%(end) %(color:reset)%(contents:subject)'
+	brv = !git br --sort=-creatordate | rg -v ' -> ' | cut -c3- | xargs git commit-info
 	bf = !git bv --color=always | fzi --ansi | awk '{print $2}' | xargs -t git co
-	commit-info = show --no-patch --date=short --pretty=format:'%C(green)%ad%C(reset) %C(magenta)%C(italic)%<(25,trunc)%S%C(reset) %C(auto)%h %C(blue)%<(20,trunc)%an %C(auto)%<(70,trunc)%s%D%C(reset)'
+	brf = !git brv --color=always | fzi --ansi | awk '{print $2}' | xargs -t git co -t
+	commit-info = show --no-patch --date=short --pretty=format:'%C(green)%ad%C(reset) %C(magenta)%C(italic)%<(40,trunc)%S%C(reset) %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%D%C(reset)'
 	current-branch = symbolic-ref --short HEAD
 	current-tags = tag --list --points-at HEAD
 	c = commit
