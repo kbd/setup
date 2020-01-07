@@ -25,6 +25,9 @@ for key in (
 defaults['com.apple.dashboard']['mcx-disabled'] = True
 
 dock = defaults['com.apple.dock']
+dock['autohide'] = True
+dock['autohide-delay'] = .05
+dock['autohide-time-modifier'] = 0.4
 dock['show-recents'] = False
 # http://www.defaults-write.com/enable-highlight-hover-effect-for-grid-view-stacks/
 dock['mouse-over-hilite-stack'] = True
