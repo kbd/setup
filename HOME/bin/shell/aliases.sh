@@ -81,12 +81,12 @@ alias ......='cd ../../../../..'
 
 # ls
 alias l=ls
-alias la='ls -a'
+alias la='ls -A'
 alias lt='ls -t'
 alias ll='ls -lh'
-alias lla='ll -a'
+alias lla='ll -A'
 alias llt='ll -t'
-alias llat='ll -at'
+alias llat='ll -At'
 alias lsd='ls -d --indicator-style=none -- */'
 alias lld='ll -d --indicator-style=none -- */'
 cl() { cd -- "$1" && l "${@:2}"; }
