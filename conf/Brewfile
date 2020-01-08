@@ -1,5 +1,6 @@
 tap "homebrew/cask-fonts"
 
+brew "ack"
 brew "aria2"
 brew "awscli"
 brew "bash"
