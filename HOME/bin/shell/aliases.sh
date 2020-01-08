@@ -2,8 +2,8 @@
 
 # VARS
 if [[ -z "$PATH_SET" ]]; then
-    export PATH="$HOME/bin:$PATH:$HOME/.cargo/bin"
-    export PATH_SET=1
+  export PATH="$HOME/bin:$PATH:$HOME/.cargo/bin"
+  export PATH_SET=1
 fi
 export PLATFORM="$(uname)"
 export PAGER=less
@@ -28,47 +28,47 @@ _fzf_compgen_dir() { fd -td -HL . "$1"; }
 
 # SHELL SPECIFIC
 case $(current_shell) in
-    zsh)
-        alias -g FZF='$(`last_command` | fzi)'
-        alias -g L='| $PAGER'
-        alias -g H='| head'
-    ;;
-    bash)
-    ;;
+  zsh)
+    alias -g FZF='$(`last_command` | fzi)'
+    alias -g L='| $PAGER'
+    alias -g H='| head'
+  ;;
+  bash)
+  ;;
 esac
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
-    export EDITOR='open -t'  # use default text file association
-    # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-    # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+  export EDITOR='open -t'  # use default text file association
+  # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-    alias awk=gawk
-    alias sed=gsed
-    alias tar=gtar
-    alias ls='/usr/local/bin/gls -F --color=auto'
+  alias awk=gawk
+  alias sed=gsed
+  alias tar=gtar
+  alias ls='/usr/local/bin/gls -F --color=auto'
 
-    # have sshrc use GNU tar because tar-ing on Mac (with BSD tar) makes GNU tar
-    # spit out a bunch of warnings on the server from extended stuff it doesn't
-    # understand - https://github.com/Russell91/sshrc/pull/76
-    alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
+  # have sshrc use GNU tar because tar-ing on Mac (with BSD tar) makes GNU tar
+  # spit out a bunch of warnings on the server from extended stuff it doesn't
+  # understand - https://github.com/Russell91/sshrc/pull/76
+  alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
 
-    alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
-    alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
+  alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
+  alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
 
-    # bundleid/uti funcs from https://superuser.com/a/341429/
-    # useful with 'duti' to set file associations
-    bundleid() {
-        osascript -e "id of app \"$*\""
-    }
+  # bundleid/uti funcs from https://superuser.com/a/341429/
+  # useful with 'duti' to set file associations
+  bundleid() {
+    osascript -e "id of app \"$*\""
+  }
 
-    uti() {
-        local f="/tmp/me.lri.getuti.${1##*.}"
-        touch "$f"
-        mdimport "$f"
-        mdls -name kMDItemContentTypeTree "$f"
-        rm "$f"
-    }
+  uti() {
+    local f="/tmp/me.lri.getuti.${1##*.}"
+    touch "$f"
+    mdimport "$f"
+    mdls -name kMDItemContentTypeTree "$f"
+    rm "$f"
+  }
 fi
 
 # directory/navigation
@@ -141,8 +141,8 @@ alias pe=path-extractor
 alias g=git
 # create aliases for all short (<= 4 character) git aliases
 for gitalias in $(git alias | grep -E '^.{0,4}$'); do
-    # shellcheck disable=SC2139
-    alias "g$gitalias=g $gitalias"
+  # shellcheck disable=SC2139
+  alias "g$gitalias=g $gitalias"
 done
 alias s='g s'
 alias ga='g af'
@@ -169,93 +169,93 @@ my_home() { user_home "$(logname)"; }
 
 # mkdir + cd
 mcd() {
-    if [[ -z "$1" ]]; then
-        ercho "missing argument"
-        return 1
-    fi
-    mkdir -p -- "$1" && cl "$@" -A
+  if [[ -z "$1" ]]; then
+    ercho "missing argument"
+    return 1
+  fi
+  mkdir -p -- "$1" && cl "$@" -A
 }
 
 # dirname, but treat paths that end in slash as a directory
 dirnameslash() {
-    if [[ "$1" == */ ]]; then
-        echo "$1"
-    else
-        dirname -- "$1"
-    fi
+  if [[ "$1" == */ ]]; then
+    echo "$1"
+  else
+    dirname -- "$1"
+  fi
 }
 
 # cp, creating directories if necessary
 cpm() {
-    # ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to cp.
-    local d="$(dirnameslash "${@: -1}")"
-    if [[ ! -d "$d" ]]; then
-        echo "Creating '$d'"  # -v on Mac's mkdir -p does nothing
-        mkdir -p -- "$d"
-    fi
-    cp "$@"
+  # ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to cp.
+  local d="$(dirnameslash "${@: -1}")"
+  if [[ ! -d "$d" ]]; then
+    echo "Creating '$d'"  # -v on Mac's mkdir -p does nothing
+    mkdir -p -- "$d"
+  fi
+  cp "$@"
 }
 
 # touch, creating intermediate directories
 t() {
-    if [[ -z "$1" ]]; then
-        ercho "missing argument"
-        return 1
-    fi
+  if [[ -z "$1" ]]; then
+    ercho "missing argument"
+    return 1
+  fi
 
-    for f in "$@"; do
-        mkdir -p -- "$(dirnameslash "$f")" && touch -- "$f"
-    done
+  for f in "$@"; do
+    mkdir -p -- "$(dirnameslash "$f")" && touch -- "$f"
+  done
 }
 
 # repeat
 rep() {
-    # https://stackoverflow.com/a/5349842
-    printf -- "$1%.s" $(seq 1 ${2-$(tput cols)})
+  # https://stackoverflow.com/a/5349842
+  printf -- "$1%.s" $(seq 1 ${2-$(tput cols)})
 }
 
 filter() {
-    # take a space-separated string of words and filter it
-    # based on a filter expression (like "word" or "word1|word2").
-    # This seems goofy but at least it's a simple one-liner.
-    # note I *don't* want to quote $1, since this is meant to operate on "words"
-    echo $1 | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
+  # take a space-separated string of words and filter it
+  # based on a filter expression (like "word" or "word1|word2").
+  # This seems goofy but at least it's a simple one-liner.
+  # note I *don't* want to quote $1, since this is meant to operate on "words"
+  echo $1 | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
 }
 
 join_by() {
-    # usage: join_by delim list of strings
-    # join_by - a b c de => a-b-c-de
-    local d=$1
-    local f=$2
-    shift 2
-    printf "%s" "$f${@/#/$d}";
+  # usage: join_by delim list of strings
+  # join_by - a b c de => a-b-c-de
+  local d=$1
+  local f=$2
+  shift 2
+  printf "%s" "$f${@/#/$d}";
 }
 
 # "reload history"
 rlh() {
-    if [[ "$(current_shell)" == 'zsh' ]]; then
-        fc -R
-    else
-        history -r
-    fi
-    echo "History reloaded"
+  if [[ "$(current_shell)" == 'zsh' ]]; then
+    fc -R
+  else
+    history -r
+  fi
+  echo "History reloaded"
 }
 
 # "reload shell"
 rls() {
-    # make it easier to reload shell config
-    local s=$(current_shell)
-    case $s in
-        bash)
-            echo "Reloading bash config"
-            source "$HOME/.bash_profile"
-        ;;
-        zsh)
-            echo "Reloading zsh config"
-            source "$HOME/.zshrc"  # not perfect, doesn't get all files
-        ;;
-        *)
-            echo "Unknown shell '$s', can't reload config"
-        ;;
-    esac
+  # make it easier to reload shell config
+  local s=$(current_shell)
+  case $s in
+    bash)
+      echo "Reloading bash config"
+      source "$HOME/.bash_profile"
+    ;;
+    zsh)
+      echo "Reloading zsh config"
+      source "$HOME/.zshrc"  # not perfect, doesn't get all files
+    ;;
+    *)
+      echo "Unknown shell '$s', can't reload config"
+    ;;
+  esac
 }

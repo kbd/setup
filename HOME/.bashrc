@@ -16,29 +16,29 @@ export HISTFILE=~/.bash_history
 stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
 
 if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
-    SOURCE_DIR="$SSHHOME/.sshrc.d/sources"
-    SELF="$SSHHOME/.sshrc"
+  SOURCE_DIR="$SSHHOME/.sshrc.d/sources"
+  SELF="$SSHHOME/.sshrc"
 
-    export PATH="$SSHHOME/.sshrc.d/bin:$PATH"
-    export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/.vimrc' | source \$MYVIMRC"
+  export PATH="$SSHHOME/.sshrc.d/bin:$PATH"
+  export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/.vimrc' | source \$MYVIMRC"
 
-    # bind my keyboard shortcuts
-    bind -f "$SSHHOME/.sshrc.d/.inputrc"
+  # bind my keyboard shortcuts
+  bind -f "$SSHHOME/.sshrc.d/.inputrc"
 
-    # unicode character prompt prefix works fine locally but
-    # always seems to cause problems on servers, so disable it
-    export PROMPT_PREFIX=''
+  # unicode character prompt prefix works fine locally but
+  # always seems to cause problems on servers, so disable it
+  export PROMPT_PREFIX=''
 else
-    SOURCE_DIR="$HOME/bin/shell"
-    SELF="$HOME/.bashrc"
+  SOURCE_DIR="$HOME/bin/shell"
+  SELF="$HOME/.bashrc"
 
-    # COMPLETIONS
-    source /usr/local/etc/bash_completion
-    complete -cf sudo  # allow autocompletions after sudo
+  # COMPLETIONS
+  source /usr/local/etc/bash_completion
+  complete -cf sudo  # allow autocompletions after sudo
 
-    # 3rd party software config (only local)
-    eval "$(thefuck --alias)"
-    source "$HOME/.config/fzf/fzf.bash"
+  # 3rd party software config (only local)
+  eval "$(thefuck --alias)"
+  source "$HOME/.config/fzf/fzf.bash"
 fi
 
 # 3rd party software config
@@ -46,7 +46,7 @@ eval "$(fasd --init auto)"
 
 # SOURCES
 for file in "$SOURCE_DIR"/**/*.sh; do
-    source "$file"
+  source "$file"
 done
 
 # configure prompt
@@ -65,11 +65,11 @@ alias sudosu="export PROMPT_COMMAND='source $SELF; $PROMPT_COMMAND' && sudo -E s
 
 # override prompt precmd (prompt.sh)
 _prompt_precmd() {
-    # set tab title to the current directory
-    # http://tldp.org/HOWTO/Xterm-Title-4.html
-    echo -n "$eo$(tabtitle '\w')$ec"
+  # set tab title to the current directory
+  # http://tldp.org/HOWTO/Xterm-Title-4.html
+  echo -n "$eo$(tabtitle '\w')$ec"
 }
 
 if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
-    if alias | grep -qE '^(alias )?cat='; then unalias cat; fi  # locally aliased to bat
+  if alias | grep -qE '^(alias )?cat='; then unalias cat; fi  # locally aliased to bat
 fi

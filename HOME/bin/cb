@@ -27,11 +27,11 @@
 # cb "$(cat testfile)"
 
 if [[ -t 0 ]]; then  # if interactive session (not pipeline)
-    if [[ $# -eq 0 ]]; then  # if no args
-        pbpaste
-    else
-        echo -n "$@" | pbcopy
-    fi
+  if [[ $# -eq 0 ]]; then  # if no args
+    pbpaste
+  else
+    echo -n "$@" | pbcopy
+  fi
 else
-    pbcopy
+  pbcopy
 fi

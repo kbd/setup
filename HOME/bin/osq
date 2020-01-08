@@ -1,16 +1,16 @@
 #!/bin/sh
 file="$HOME/bin/osquery/$1.sql"
 if [ ! -f "$file" ]; then
-    # if there's an argument that starts with "select",
-    # consider it a query and pass through to osqueryi
-    for arg in "$@"; do
-        if echo "$arg" | grep -qi '^SELECT'; then
-            exec osqueryi "$@"
-        fi
-    done
+  # if there's an argument that starts with "select",
+  # consider it a query and pass through to osqueryi
+  for arg in "$@"; do
+    if echo "$arg" | grep -qi '^SELECT'; then
+      exec osqueryi "$@"
+    fi
+  done
 
-    echo >&2 "$file not found"
-    exit 1
+  echo >&2 "$file not found"
+  exit 1
 fi
 shift
 osqueryi <"$file" "$@"

@@ -41,10 +41,10 @@ bindkey -M menuselect '\e[Z' reverse-menu-complete  # menuselect from complist
 stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
 
 bindplugin() {
-    # usage: bindplugin "\e[A" up-line-or-beginning-search
-    autoload -Uz "$2"
-    zle -N "$2"
-    bindkey "$1" "$2"
+  # usage: bindplugin "\e[A" up-line-or-beginning-search
+  autoload -Uz "$2"
+  zle -N "$2"
+  bindkey "$1" "$2"
 }
 
 # Zsh's built-in ↑ and ↓ leave you at the start of the line instead of the end
@@ -67,7 +67,7 @@ source "$HOME/.config/fzf/fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
-    source "$file";
+  source "$file";
 done
 
 # 1st party software config
@@ -76,13 +76,13 @@ register_prompt
 TERMS_WITH_BROKEN_UNICODE=('vscode')
 # https://unix.stackexchange.com/a/411307
 if [[ ${TERMS_WITH_BROKEN_UNICODE[(ie)$TERM_PROGRAM]} -le ${#TERMS_WITH_BROKEN_UNICODE} ]]; then
-    PROMPT_PREFIX=''
+  PROMPT_PREFIX=''
 fi
 
 precmd() {
-    local s="$TABTITLE"
-    if [[ "$s" ]]; then s=" — $s"; fi
-    tabtitle "$(print -P '%~')$s";
+  local s="$TABTITLE"
+  if [[ "$s" ]]; then s=" — $s"; fi
+  tabtitle "$(print -P '%~')$s";
 }
 tt() { TABTITLE="$@"; }
 ttl() { TABTITLE="⚡$@⚡"; }
