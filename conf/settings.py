@@ -34,8 +34,10 @@
                 ['rustup-init', '-y', '--no-modify-path'],
                 ['rustup', 'update'],
                 ['rustup', 'install', 'nightly'],
-                ['cargo', '+nightly', 'install', 'pyoxidizer'],
             ),
+        },
+        'cargo': {
+            'cmd': ['cargo', '+nightly', 'install', 'pyoxidizer'],
         },
         'mac': {
             'skip_if_not_requested': True,
