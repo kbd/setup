@@ -30,7 +30,7 @@
             'cmd': "cat conf/npm.txt | xargs -t npm install -g",
         },
         'go': {
-            'cmd': ['go', 'get', '-v', '-u', 'github.com/containous/yaegi/cmd/yaegi'],
+            'cmd': "cat conf/go.txt | xargs -t -L1 go get -v -u"
         },
         'rust': {
             'skip_if_not_requested': True,
@@ -41,7 +41,7 @@
             ),
         },
         'cargo': {
-            'cmd': ['cargo', '+nightly', 'install', 'pyoxidizer', 'broot'],
+            'cmd': "cat conf/cargo.txt | xargs -t cargo +nightly install",
             'post_install': (
                 'ln -sf ~/Library/Preferences/org.dystroy.broot/launcher/bash/br ~/bin/shell/3rdparty/br.sh',
             )
