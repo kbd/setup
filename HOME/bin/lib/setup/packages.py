@@ -65,7 +65,7 @@ def vscode(settings):
     # get installed/expected extensions
     cmd = ['code', '--list-extensions']
     current_extensions = set(map(str.strip, run(cmd, cap='stdout').splitlines()))
-    expected_extensions = read_config_file(config_path)
+    expected_extensions = set(read_config_file(config_path))
 
     fmt = lambda s: ', '.join(sorted(s, key=str.lower))
 
