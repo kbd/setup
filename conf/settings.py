@@ -37,7 +37,10 @@
             ),
         },
         'cargo': {
-            'cmd': ['cargo', '+nightly', 'install', 'pyoxidizer'],
+            'cmd': ['cargo', '+nightly', 'install', 'pyoxidizer', 'broot'],
+            'post_install': (
+                'ln -sf ~/Library/Preferences/org.dystroy.broot/launcher/bash/br ~/bin/shell/3rdparty/br.sh',
+            )
         },
         'mac': {
             'skip_if_not_requested': True,
