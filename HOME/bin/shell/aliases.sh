@@ -23,6 +23,8 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export ERL_AFLAGS="-kernel shell_history enabled"  # remember Elixir iex history across sessions
 export FZF_DEFAULT_COMMAND='fd -tf -HL'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd -td -HL'
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 _fzf_compgen_path() { fd -tf -HL . "$1"; }
 _fzf_compgen_dir() { fd -td -HL . "$1"; }
 
