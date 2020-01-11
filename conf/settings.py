@@ -26,6 +26,7 @@
             )
         },
         'node': {
+            'skip_if_not_requested': True,
             'cmd': "cat conf/npm.txt | xargs -t npm install -g",
         },
         'go': {
