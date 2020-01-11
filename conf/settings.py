@@ -3,8 +3,11 @@
         'brew': {
             'bundle': 'conf/Brewfile',
             'post_install': (
-                'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',  # set shell to homebrew'd shell
+                # set shell to homebrew'd shell
+                'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',
+                # symlink zsh autosuggestions
                 'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh ~/bin/shell/3rdparty',
+                # patch fzf's history format to include timestamp
                 'perl -pi -e \'s/fc -rl 1/fc -rli 1/\' "$(brew --prefix fzf)/shell/key-bindings.zsh"',
                 # https://docs.docker.com/docker-for-mac/#zsh
                 """
