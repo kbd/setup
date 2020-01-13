@@ -122,7 +122,7 @@
 	pr = pl --rebase
 	pick-commit = !git l1 | fzi --ansi | cut -d' ' -f2
 	pc = pick-commit
-	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi --print0 --preview='git d --color=always -- {} | $(git config core.pager || echo cat)' --ansi | xargs -0t git
+	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi --print0 --preview='git d --color=always -- {} | $(git config core.pager || echo cat)' | xargs -0t git
 	psf = pick-status-files
 	sf = psf
 	r = rebase --rebase-merges
