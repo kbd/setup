@@ -43,7 +43,9 @@
         'cargo': {
             'cmd': "cat conf/cargo.txt | xargs -t cargo +nightly install",
             'post_install': (
-                'ln -sf ~/Library/Preferences/org.dystroy.broot/launcher/bash/br ~/bin/shell/3rdparty/br.sh',
+                'mkdir -p ~/Library/Preferences/org.dystroy.broot/launcher/',
+                'touch ~/Library/Preferences/org.dystroy.broot/launcher/refused',
+                'broot --print-shell-function zsh > ~/bin/shell/3rdparty/br.zsh',
             )
         },
         'mac': {
