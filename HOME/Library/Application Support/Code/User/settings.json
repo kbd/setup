@@ -222,7 +222,7 @@
     "[nim]": {
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
-        "editor.acceptSuggestionOnEnter": "off",
+        "editor.acceptSuggestionOnEnter": "smart",
         "editor.formatOnSave": true,
     },
 
