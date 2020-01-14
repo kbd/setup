@@ -164,7 +164,7 @@
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --color=always --pretty=format:'%C(green)%ad %C(blue)%an <%ae> %C(auto)%h%d%n %s%n%w(0,4,4)%+b%C(reset)' --stat
 	lg = "!f() { git log --color=always --graph --pretty=format:'%C(auto)%h %C(green)@%ar@%C(auto)%d %s %C(blue)<%an>%C(reset)' \"$@\" | perl -pe 's/@(\\d+)\\s+(\\w{2})[^@]+@/\"(\".sprintf(\"%02d\", $1).$2.\")\"/e' | less -RFX; }; f"
-	l1 = log --date=short --color=always --pretty=format:'%C(green)%ad %C(auto)%h %C(blue)%<(20,trunc)%an %C(auto)%<(70,trunc)%s%d%C(reset)'
+	l1 = log --date=short --color=always --pretty=format:'%C(green)%ad %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%d%C(reset)'
 	lo = !git l ORIG_HEAD..
 	lgo = !git lg ORIG_HEAD..
 	l1o = !git l1 ORIG_HEAD..
