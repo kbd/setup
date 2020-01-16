@@ -23,7 +23,7 @@ def create_command_line_parser(settings):
     parser.add_argument('--root', action='store_true', help='Print setup root path and exit')
 
     subparsers = parser.add_subparsers(dest='action')
-    for action in [status, pull, push, debug, edit, restart_os_funcs]:
+    for action in [status, pull, push, symlinks, debug, edit, restart_os_funcs]:
         subparsers.add_parser(action.__name__, help=action.__doc__) \
             .set_defaults(func=action)
 
@@ -61,6 +61,15 @@ def pull(settings, args):
 def push(settings, args):
     """Push repository to server"""
     repo('push')
+
+
+def symlinks(settings, args):
+    """Create symlinks from $HOME to setup/HOME"""
+    cmd = ['symgr', Path.home(), setup.home()]
+    if args.debug:
+        cmd += ['--debug']
+    log.debug(f"Running: {cmd}")
+    subprocess.run(cmd, check=True)
 
 
 def debug(settings, args):
@@ -104,12 +113,7 @@ def main():
     if hasattr(args, 'func'):
         args.func(settings, args)
     else:
-        cmd = ['symgr', Path.home(), setup.home()]
-        if args.debug:
-            cmd += ['--debug']
-        subprocess.run(cmd, check=True)
-        mac(settings['packages']['mac'])
-        restart_os_funcs()
+        parser.print_help()
 
 
 if __name__ == '__main__':

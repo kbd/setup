@@ -50,8 +50,9 @@ def main():
     subprocess.check_call([setup_exe, 'brew'])
     subprocess.check_call([setup_exe, 'manual'])
     subprocess.check_call([setup_exe, 'packages'])
-    subprocess.check_call([setup_exe])
-
+    subprocess.check_call([setup_exe, 'symlinks'])
+    subprocess.check_call([setup_exe, 'mac'])
+    subprocess.check_call([setup_exe, 'restart_os_funcs'])
     print("Done installing all the things. Restart your terminal.")
 
 
