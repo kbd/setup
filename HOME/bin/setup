@@ -23,25 +23,12 @@ def create_command_line_parser(settings):
     parser.add_argument('--root', action='store_true', help='Print setup root path and exit')
 
     subparsers = parser.add_subparsers(dest='action')
-
-    # status
-    subparser = subparsers.add_parser('status', help="Get repository status")
-    subparser.set_defaults(func=repo, cmd=['status'])
-
-    # pull
-    subparser = subparsers.add_parser(
-        'pull', help="Pull repository from server", aliases=['update']
-    )
-    subparser.set_defaults(func=repo, cmd=['pull'])
-
-    # push
-    subparser = subparsers.add_parser('push', help="Push repository to server")
-    subparser.set_defaults(func=repo, cmd=['push'])
+    for action in [status, pull, push, debug, edit, restart_os_funcs]:
+        subparsers.add_parser(action.__name__, help=action.__doc__) \
+            .set_defaults(func=action)
 
     # packages
-    subparser = subparsers.add_parser(
-        'packages', help="Install/update packages"
-    )
+    subparser = subparsers.add_parser('packages', help="Install/update packages")
     subparser.add_argument(
         'filter', help="Only install/update packages matching regex", nargs='?'
     )
@@ -49,41 +36,47 @@ def create_command_line_parser(settings):
 
     # export every "setup packages foo" as "setup foo"
     for name in settings['packages']:
-        subparser = subparsers.add_parser(name, help=f"Install/update packages for {name}")
+        subparser = subparsers.add_parser(name, help=f"Install/update {name} packages")
         subparser.set_defaults(func=partial(install_packages, filter=f'^{name}$'))
-
-    # debug: load the setup program as a module and start an interactive console
-    subparser = subparsers.add_parser('debug', help="Start an interactive console")
-    subparser.set_defaults(func=debug)
-
-    # edit: open the setup directory in your editor
-    subparser = subparsers.add_parser('edit', help="Open the setup directory in your editor")
-    subparser.set_defaults(func=edit)
-
-    # https://blog.cloudtroopers.com/how-restart-mac-os-x-finder-dock-or-menubar
-    # this should be run if any settings change, but you don't necessarily
-    # need to run this every time 'update_os_settings' is run
-    subparser = subparsers.add_parser(
-        'restart_os_functions', help="Restart Finder, Menubar, Dock, etc."
-    )
-    subparser.set_defaults(func=restart_os_functions)
 
     return parser
 
 
-def repo(settings, *args, **kwargs):
-    cmd = ['git'] + kwargs['cmd']
-    log.debug(f"cmd is {cmd!r} and kwargs is: {kwargs!r}")
-    cmd = [c.format(**kwargs) for c in cmd]
+def repo(*args):
+    cmd = ['git'] + [*args]
+    log.debug(f"Running: {cmd}")
     subprocess.check_call(cmd)
 
 
-def debug(settings, *args, **kwargs):
-    code.interact(local={'settings': settings, **globals()})
+def status(settings, args):
+    """Get repository status"""
+    repo('status')
 
 
-def edit(*args, **kwargs):
+def pull(settings, args):
+    """Pull repository from server"""
+    repo('pull')
+
+
+def push(settings, args):
+    """Push repository to server"""
+    repo('push')
+
+
+def debug(settings, args):
+    """Start an interactive console"""
+    local = {**globals(), 'settings': settings, 'args': args}
+    code.interact(local=local)
+
+
+def edit(settings, args):
+    """Open the setup directory in your editor"""
     subprocess.call('$EDITOR .', shell=True)  # works because cwd is set
+
+
+def restart_os_funcs(settings, args):
+    """Restart Finder, Menubar, Dock, etc."""
+    restart_os_functions()
 
 
 def main():
@@ -109,14 +102,14 @@ def main():
 
     # actually do stuff
     if hasattr(args, 'func'):
-        args.func(settings, **vars(args))
+        args.func(settings, args)
     else:
         cmd = ['symgr', Path.home(), setup.home()]
         if args.debug:
             cmd += ['--debug']
         subprocess.run(cmd, check=True)
         mac(settings['packages']['mac'])
-        restart_os_functions()
+        restart_os_funcs()
 
 
 if __name__ == '__main__':
