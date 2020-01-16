@@ -10,7 +10,7 @@ from pathlib import Path
 
 from lib import setup
 from lib.mac import restart_os_functions
-from lib.setup.packages import install_packages, mac
+from lib.setup.packages import install_packages
 
 
 log = logging.getLogger()
