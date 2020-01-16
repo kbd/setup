@@ -11,9 +11,9 @@ from lib.utils import run, read_config_file
 log = logging.getLogger()
 
 
-def install_packages(settings, *args, **kwargs):
+def install_packages(settings, args, **kwargs):
     log.info("Installing/upgrading packages")
-    filter = kwargs['filter']
+    filter = kwargs.get('filter') or args.filter
     for name, settings in settings['packages'].items():
         if filter and not re.search(filter, name):
             log.debug(f"Skipping {name}")
