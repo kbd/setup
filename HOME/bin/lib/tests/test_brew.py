@@ -5,26 +5,6 @@ import pytest
 from lib import homebrew
 
 
-def test_install_formula():
-    formula = 'myformula'
-    with patch('lib.homebrew.run') as run:
-        homebrew.install_formula(formula)
-
-    run.assert_called_once_with(
-        ['brew', 'install', 'myformula']
-    )
-
-
-def test_install_formula_with_arguments():
-    formula = ['myformula', '--with-arguments', '--arg=5']
-    with patch('lib.homebrew.run') as run:
-        homebrew.install_formula(formula)
-
-    run.assert_called_once_with(
-        ['brew', 'install', 'myformula', '--with-arguments', '--arg=5']
-    )
-
-
 def test_clean_cache():
     fake_cache_location = '/Users/test_user/Library/Caches/Homebrew'
     with patch.multiple('lib.homebrew',
