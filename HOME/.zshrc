@@ -61,6 +61,7 @@ bindkey "\e[3~" delete-char # delete
 # 3rd party software config
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
+unalias a s sd sf d f zz # unalias all fasd aliases but 'z'
 # pyenv is badly behaved and will repeatedly add itself to the path on initialization
 [[ "$PYENV_SHELL" ]] || eval "$(pyenv init -)"
 source "$HOME/.config/fzf/fzf.zsh"

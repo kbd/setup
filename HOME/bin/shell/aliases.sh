@@ -128,7 +128,6 @@ alias x='chmod +x'
 alias d='docker'
 alias hex='hexyl'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
-alias f='fd'
 alias fdu='fd -uu'  # fd, but don't ignore any files
 alias fu='fdu'  # fd, but don't ignore any files
 alias tcl='rlwrap tclsh'
