@@ -226,5 +226,10 @@
         "editor.formatOnSave": true,
     },
 
+    "[yaml]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+    },
+
     "go.useLanguageServer": true,
 }
