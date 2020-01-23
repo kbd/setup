@@ -13,6 +13,8 @@
     "editor.autoClosingQuotes": "beforeWhitespace",
     "editor.autoClosingBrackets": "beforeWhitespace",
     "editor.renderLineHighlight": "all",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
@@ -146,8 +148,6 @@
 
     // language-specific
     "[typescript]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
         "editor.formatOnSave": true,
         "editor.formatOnSaveTimeout": 2000,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -156,8 +156,6 @@
         },
     },
     "[javascript]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
     },
     "[json]": {
@@ -168,14 +166,7 @@
     },
     "debug.node.autoAttach": "on",
 
-    "[shellscript]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
-    },
-
     "[python]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true,
         "editor.formatOnSave": false,
     },
     "python.pythonPath": "/usr/local/bin/python3",
@@ -198,37 +189,17 @@
 
     "[plaintext]": {
         "editor.wordBasedSuggestions": false,
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
-    },
-
-    "[markdown]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
     },
 
     "[elixir]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
         "editor.wordBasedSuggestions": true,
         "editor.acceptSuggestionOnEnter": "on",
         "editor.formatOnSave": true,
     },
-    "[HTML (EEx)]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
-    },
 
     "[nim]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
         "editor.acceptSuggestionOnEnter": "smart",
         "editor.formatOnSave": true,
-    },
-
-    "[yaml]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
     },
 
     "go.useLanguageServer": true,
