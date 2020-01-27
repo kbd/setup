@@ -64,6 +64,9 @@ defaults['com.apple.menuextra.battery']['ShowPercent'] = True
 defaults.g['InitialKeyRepeat'] = 10
 defaults.g['KeyRepeat'] = 2
 
+# turn on "shake mouse pointer to locate"
+defaults.g['CGDisableCursorLocationMagnification'] = False
+
 # set file-type associations
 associations = {
     'com.microsoft.vscode': [
