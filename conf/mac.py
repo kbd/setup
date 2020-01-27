@@ -117,9 +117,18 @@ dash['syncFolderPath'] = "~/Documents/Dash"
 dash['snippetSQLPath'] = "~/Documents/Dash/snippets.dash"
 
 # startup items - https://apple.stackexchange.com/a/310502/
+required_login_apps = {'Flycut', 'SpotMenu', 'Flux', 'iTerm', 'Alfred 4'}
+current_login_apps = set(
+    filter(None,
+        run(['osascript', '-e' 'tell application "System Events" to get the name of every login item'], cap='stdout').strip().split(', ')
+    )
+)
+
 script = 'tell application "System Events" to make login item at end with properties {{path:"/Applications/{app}.app", hidden:false}}'
-for app in 'Flycut', 'SpotMenu', 'Flux', 'iTerm', 'Alfred 4':
-    run(['osascript', '-e', script.format(app=app)], cap='stdout')
+print(f"Current login apps: {current_login_apps}. Required login apps: {required_login_apps}")
+for app in required_login_apps - current_login_apps:
+    print(f"Setting '{app}' to run on login")
+    run(['osascript', '-e', script.format(app=app)])
 
 # menubar items
 menus = [
