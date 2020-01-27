@@ -115,7 +115,7 @@ dash['snippetSQLPath'] = "~/Documents/Dash/snippets.dash"
 
 # startup items - https://apple.stackexchange.com/a/310502/
 script = 'tell application "System Events" to make login item at end with properties {{path:"/Applications/{app}.app", hidden:false}}'
-for app in 'Flycut', 'SpotMenu', 'Flux', 'iTerm':
+for app in 'Flycut', 'SpotMenu', 'Flux', 'iTerm', 'Alfred 4':
     run(['osascript', '-e', script.format(app=app)], cap='stdout')
 
 # menubar items
