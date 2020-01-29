@@ -107,6 +107,7 @@ flycut["ShortcutRecorder mainHotkey"] = {'keyCode': 47, 'modifierFlags': 1310720
 flycut['loadOnStartup'] = 1
 flycut['pasteMovesToTop'] = 1
 flycut['removeDuplicates'] = 1
+flycut['savePreference'] = 2  # "after each clip"
 
 iterm = defaults['com.googlecode.iterm2']
 iterm['PrefsCustomFolder'] = '~/.config/iterm2'
