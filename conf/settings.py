@@ -43,7 +43,7 @@
             ),
         },
         'cargo': {
-            'cmd': "cat conf/cargo.txt | xargs -t cargo +nightly install",
+            'cmd': "cat conf/cargo.txt | xargs -t cargo install",
             'post_install': (
                 'broot --set-install-state refused --print-shell-function zsh > ~/bin/shell/3rdparty/br.zsh',
             )
