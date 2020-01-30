@@ -13,8 +13,10 @@ ftfy
 ipdb
 ipython
 jupyter
+mycli
 mypy
 pandas
+pgcli
 pip
 pipdeptree
 pipenv
