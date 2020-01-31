@@ -186,16 +186,20 @@ dirnameslash() {
   fi
 }
 
-# cp, creating directories if necessary
-cpm() {
-  # ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to cp.
+# {x}, creating directories if necessary
+xpm() {
+  # ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to {x}.
   local d="$(dirnameslash "${@: -1}")"
   if [[ ! -d "$d" ]]; then
     echo "Creating '$d'"  # -v on Mac's mkdir -p does nothing
     mkdir -p -- "$d"
   fi
-  cp "$@"
+  local cmd="$1"
+  shift
+  $cmd "$@"
 }
+cpm() { xpm cp "$@"; }
+mvm() { xpm mv "$@"; }
 
 # touch, creating intermediate directories
 t() {
