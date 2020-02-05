@@ -120,7 +120,6 @@ alias cat=bat
 alias cn='bat --style=numbers'
 alias chn='bat --style=header,numbers'
 alias cnh='bat --style=header,numbers'
-alias p=python3
 alias py=ipython
 alias pyc='py -c'
 alias pym='py -ic "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
@@ -149,6 +148,7 @@ alias s='g s'
 alias ga='g af'
 alias gaf='g a -f'
 alias g-='gw-'
+alias p='gpg'
 gccb() { git clone "$@" -- "$(cb)" && cd "$(basename "$_" .git)" || return; }
 
 # django
