@@ -144,11 +144,11 @@ for gitalias in $(git alias | grep -E '^.{0,4}$'); do
   # shellcheck disable=SC2139
   alias "g$gitalias=g $gitalias"
 done
-alias s='g s'
+alias g-='gw-'
 alias ga='g af'
 alias gaf='g a -f'
-alias g-='gw-'
 alias p='gpg'
+alias s='gs'
 gccb() { git clone "$@" -- "$(cb)" && cd "$(basename "$_" .git)" || return; }
 
 # django
