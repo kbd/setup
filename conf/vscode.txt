@@ -20,4 +20,5 @@ rust-lang.rust
 ryanluker.vscode-coverage-gutters
 stkb.rewrap
 timonwong.shellcheck
+usernamehw.errorlens
 wholroyd.jinja
