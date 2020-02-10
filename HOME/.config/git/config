@@ -122,7 +122,7 @@
 	mf = m --ff-only
 	mn = m --no-ff
 	p = "!f() { if git upstream; then git push; else git push -u; fi }; f" # push, set upstream if necessary
-	pf = push --force
+	pf = "!f() { echo \"On branch $(git current-branch)\"; echo push | xargs -p -I% git % --force; }; f" # push --force, requiring confirmation
 	pl = pull
 	pg = !git pl && git lgo
 	pr = pl --rebase
