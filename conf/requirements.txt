@@ -43,3 +43,4 @@ sqlite-utils
 tmuxp
 virtualenv
 xlrd
+xonsh
