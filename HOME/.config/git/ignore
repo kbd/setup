@@ -15,5 +15,6 @@ __pycache__/
 
 *.ipynb
 
+scratch
 scratch.*
 notes.txt
