@@ -201,7 +201,7 @@ prompt_command_is_readonly() {
 prompt_initialize_vars() {
   dt='D{%m/%d@%H:%M}'
   _LAST_RETURN_CODE=0  # initialize
-  case $(current_shell) in  # current_shell defined in funcs.sh
+  case $(current_shell) in
     bash)
       eo='\['  # 'escape open'
       ec='\]'  # 'escape close'
