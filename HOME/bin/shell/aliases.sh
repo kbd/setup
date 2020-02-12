@@ -29,15 +29,11 @@ _fzf_compgen_path() { fd -tf -HL . "$1"; }
 _fzf_compgen_dir() { fd -td -HL . "$1"; }
 
 # SHELL SPECIFIC
-case $(current_shell) in
-  zsh)
-    alias -g FZF='$(`last_command` | fzi)'
-    alias -g L='| $PAGER'
-    alias -g H='| head'
-  ;;
-  bash)
-  ;;
-esac
+if [[ $ZSH_VERSION ]]; then
+  alias -g FZF='$(`last_command` | fzi)'
+  alias -g L='| $PAGER'
+  alias -g H='| head'
+fi
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
@@ -238,7 +234,7 @@ join_by() {
 
 # "reload history"
 rlh() {
-  if [[ "$(current_shell)" == 'zsh' ]]; then
+  if [[ $ZSH_VERSION ]]; then
     fc -R
   else
     history -r
@@ -249,18 +245,13 @@ rlh() {
 # "reload shell"
 rls() {
   # make it easier to reload shell config
-  local s=$(current_shell)
-  case $s in
-    bash)
-      echo "Reloading bash config"
-      source "$HOME/.bash_profile"
-    ;;
-    zsh)
-      echo "Reloading zsh config"
-      source "$HOME/.zshrc"  # not perfect, doesn't get all files
-    ;;
-    *)
-      echo "Unknown shell '$s', can't reload config"
-    ;;
-  esac
+  if [[ $ZSH_VERSION ]]; then
+    echo "Reloading zsh config"
+    source "$HOME/.zshrc"  # not perfect, doesn't get all files
+  elif [[ $BASH_VERSION ]]; then
+    echo "Reloading bash config"
+    source "$HOME/.bashrc"
+  else
+    echo "Unknown shell, can't reload config"
+  fi
 }
