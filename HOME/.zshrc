@@ -73,7 +73,7 @@ done
 
 # 1st party software config
 export PROMPT_SHORT_DISPLAY=1
-register_prompt
+register_prompt zsh
 TERMS_WITH_BROKEN_UNICODE=('vscode')
 # https://unix.stackexchange.com/a/411307
 if [[ ${TERMS_WITH_BROKEN_UNICODE[(ie)$TERM_PROGRAM]} -le ${#TERMS_WITH_BROKEN_UNICODE} ]]; then

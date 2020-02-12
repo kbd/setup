@@ -201,7 +201,7 @@ prompt_command_is_readonly() {
 prompt_initialize_vars() {
   dt='D{%m/%d@%H:%M}'
   _LAST_RETURN_CODE=0  # initialize
-  case $(current_shell) in
+  case $1 in
     bash)
       eo='\['  # 'escape open'
       ec='\]'  # 'escape close'
@@ -228,25 +228,25 @@ prompt_initialize_vars() {
 }
 
 register_prompt(){
-  prompt_initialize_vars
+  prompt_initialize_vars "$1"
 
-  # work around the PROMPT_COMMAND being read-only and use basic prompt
-  if prompt_command_is_readonly; then
-    ercho "Prompt command is readonly"
-    PS1="$user@$short_host:$ppath$ "
-  else
-    case $(current_shell) in
-      bash)
+  case $1 in
+    bash)
+      # work around the PROMPT_COMMAND being read-only and use basic prompt
+      if prompt_command_is_readonly; then
+        ercho "Prompt command is readonly"
+        PS1="$user@$short_host:$ppath$ "
+      else
         PROMPT_COMMAND='PS1="$(generate_ps1)"'
-      ;;
-      zsh)
-        # shellcheck disable=SC2016 disable=SC2034
-        # 2016 = unexpanded in single quotes = intended bc prompt_subst
-        # 2034 = 'PROMPT unused'. Shellcheck doesn't support zsh.
-        PROMPT='$(generate_ps1)'
-      ;;
-    esac
-  fi
+      fi
+    ;;
+    zsh)
+      # shellcheck disable=SC2016 disable=SC2034
+      # 2016 = unexpanded in single quotes = intended bc prompt_subst
+      # 2034 = 'PROMPT unused'. Shellcheck doesn't support zsh.
+      PROMPT='$(generate_ps1)'
+    ;;
+  esac
 }
 
 # http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3

@@ -53,7 +53,7 @@ done
 export PROMPT_SHORT_DISPLAY=1
 
 # register command prompt (prompt.sh)
-register_prompt
+register_prompt bash
 
 # source my bashrc even when su-ing, derived from http://superuser.com/a/636475
 # note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
