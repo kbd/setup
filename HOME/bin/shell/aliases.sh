@@ -18,7 +18,6 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
-export GREP_OPTIONS='--color=auto'
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export ERL_AFLAGS="-kernel shell_history enabled"  # remember Elixir iex history across sessions
 export FZF_DEFAULT_COMMAND='fd -tf -HL'
@@ -122,6 +121,7 @@ alias pym='py -ic "import pandas as pd; import re; import datetime as dt; from p
 alias x='chmod +x'
 alias d='docker'
 alias hex='hexyl'
+alias grep='grep --color=auto'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
 alias fdu='fd -uu'  # fd, but don't ignore any files
 alias fu='fdu'  # fd, but don't ignore any files
