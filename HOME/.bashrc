@@ -28,26 +28,15 @@ if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
   # unicode character prompt prefix works fine locally but
   # always seems to cause problems on servers, so disable it
   export PROMPT_PREFIX=''
-else
+elif is_local; then
   SOURCE_DIR="$HOME/bin/shell"
   SELF="$HOME/.bashrc"
 
-  # COMPLETIONS
-  source /usr/local/etc/bash_completion
-  complete -cf sudo  # allow autocompletions after sudo
-
-  # 3rd party software config (only local)
-  eval "$(thefuck --alias)"
-  source "$HOME/.config/fzf/fzf.bash"
+  # SOURCES
+  for file in "$SOURCE_DIR"/**/*.sh; do
+    source "$file"
+  done
 fi
-
-# 3rd party software config
-eval "$(fasd --init auto)"
-
-# SOURCES
-for file in "$SOURCE_DIR"/**/*.sh; do
-  source "$file"
-done
 
 # configure prompt
 export PROMPT_SHORT_DISPLAY=1
@@ -70,6 +59,6 @@ _prompt_precmd() {
   echo -n "$eo$(tabtitle '\w')$ec"
 }
 
-if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
+if is_not_local; then
   if alias | grep -qE '^(alias )?cat='; then unalias cat; fi  # locally aliased to bat
 fi

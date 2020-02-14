@@ -86,8 +86,8 @@ _prompt_path() {
 
 # source control information in prompt
 _prompt_repo() {
-  if [[ -n "$SSHHOME" ]]; then
-    # skip repo support over ssh(rc) because repo status won't be able to run
+  if is_not_local; then
+    # skip repo support because repo_status won't be able to run
     return 0
   fi
   local repostr="$(repo_status)"
@@ -97,7 +97,7 @@ _prompt_repo() {
 }
 
 running_suspended() {
-  jobs | perl -ne 'BEGIN{%c=qw(r 0 s 0)}$c{lc $1}++ if /^\[\d+\]\s*[+-]?\s*(\w)/i;END{print "@c{qw(r s)}"}'
+  jobs | PERL_SKIP_LOCALE_INIT=1 perl -ne 'BEGIN{%c=qw(r 0 s 0)}$c{lc $1}++ if /^\[\d+\]\s*[+-]?\s*(\w)/i;END{print "@c{qw(r s)}"}'
 }
 
 # running and stopped jobs
@@ -163,7 +163,7 @@ _prompt_filter() {
   local funcs="$1"
   if [[ $PROMPT_SHORT_DISPLAY ]]; then
     # showing the host (and user, if not su/root) is unnecessary if local
-    if ! is_remote; then
+    if is_local; then
       funcs=$(filter "$funcs" "at|host")
 
       if ! (is_su || is_root); then

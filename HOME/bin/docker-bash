@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+dir=/tmp
+cat ~/bin/shell/**/*.sh ~/.bashrc > $dir/.bashrc
+docker run -it -v $dir:$dir "$@" /bin/bash --init-file $dir/.bashrc

@@ -133,20 +133,6 @@ alias goog='googler -n5 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias pe=path-extractor
 
-# git
-alias g=git
-# create aliases for all short (<= 4 character) git aliases
-for gitalias in $(git alias | grep -E '^.{0,4}$'); do
-  # shellcheck disable=SC2139
-  alias "g$gitalias=g $gitalias"
-done
-alias g-='gw-'
-alias ga='g af'
-alias gaf='g a -f'
-alias p='gpg'
-alias s='gs'
-gccb() { git clone "$@" -- "$(cb)" && cd "$(basename "$_" .git)" || return; }
-
 # django
 alias da='django-admin'
 alias dm='python3 manage.py'  # "django manage"
@@ -159,10 +145,29 @@ alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash'
 exists() { type "$1" &>/dev/null; } # check if a program exists
 printv() { printf '%q\n' "$1"; } # v for verbatim
 is_remote() { [[ $SSH_TTY || $SSH_CLIENT ]]; }
+is_docker() { [[ -f '/.dockerenv' ]]; }
+is_not_local() { is_remote || is_docker; }
+is_local() { ! is_not_local; }
 is_su() { [[ $(whoami) != $(logname) ]]; } # if current user != login user
 is_root() { [[ $EUID == 0 ]]; }
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 my_home() { user_home "$(logname)"; }
+
+if is_local; then
+  # git
+  alias g=git
+  # create aliases for all short (<= 4 character) git aliases
+  for gitalias in $(git alias | grep -E '^.{0,4}$'); do
+    # shellcheck disable=SC2139
+    alias "g$gitalias=g $gitalias"
+  done
+  alias g-='gw-'
+  alias ga='g af'
+  alias gaf='g a -f'
+  alias p='gpg'
+  alias s='gs'
+  gccb() { git clone "$@" -- "$(cb)" && cd "$(basename "$_" .git)" || return; }
+fi
 
 # mkdir + cd
 mcd() {
