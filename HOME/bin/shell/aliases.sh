@@ -132,6 +132,7 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias goog='googler -n5 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias pe=path-extractor
+alias dp='cd "$(dirs -pl | fzi)"'
 
 # django
 alias da='django-admin'
