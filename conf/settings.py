@@ -5,8 +5,6 @@
             'post_install': (
                 # set shell to homebrew'd shell
                 'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',
-                # symlink zsh autosuggestions
-                'ln -sf `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh ~/bin/shell/3rdparty',
                 # install fzf
                 "$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg",
                 # patch fzf's history format to include timestamp
