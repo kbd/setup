@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+dir=/tmp
+rc="$(cat ~/bin/shell/**/*.(ba|)sh ~/.bashrc | gzip | base64)"
+ssh -t "$@" "echo '$rc' | base64 --decode | gunzip > $dir/.bashrc; bash --init-file $dir/.bashrc"

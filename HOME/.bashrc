@@ -15,27 +15,31 @@ export HISTFILE=~/.bash_history
 # key binds
 stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
 
-if [[ -n "$SSHHOME" ]]; then  # if ssh'd using sshrc
-  SOURCE_DIR="$SSHHOME/.sshrc.d/sources"
-  SELF="$SSHHOME/.sshrc"
+if ! declare -f is_remote > /dev/null; then
+  # source files if running locally, otherwise everything is sourced in a bundle
+  for file in "$HOME/bin/shell"/**/*.sh; do
+    source "$file"
+  done
+else
+  unalias cat  # locally aliased to bat
+fi
 
-  export PATH="$SSHHOME/.sshrc.d/bin:$PATH"
-  export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/.vimrc' | source \$MYVIMRC"
-
+if is_remote; then
+  # TODO: bundle other configs like vimrc and inputrc
+  # export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/.vimrc' | source \$MYVIMRC"
   # bind my keyboard shortcuts
-  bind -f "$SSHHOME/.sshrc.d/.inputrc"
+  # bind -f "$SSHHOME/.sshrc.d/.inputrc"
 
   # unicode character prompt prefix works fine locally but
   # always seems to cause problems on servers, so disable it
   export PROMPT_PREFIX=''
-elif is_local; then
-  SOURCE_DIR="$HOME/bin/shell"
-  SELF="$HOME/.bashrc"
 
-  # SOURCES
-  for file in "$SOURCE_DIR"/**/*.sh; do
-    source "$file"
-  done
+  [[ ! -e ~/.hushlogin && -e /etc/motd ]] && cat /etc/motd
+  [ -r /etc/profile ] && source /etc/profile
+  if [ -r ~/.bash_profile ]; then source ~/.bash_profile
+  elif [ -r ~/.bash_login ]; then source ~/.bash_login
+  elif [ -r ~/.profile ]; then source ~/.profile
+  fi
 fi
 
 # configure prompt
@@ -58,7 +62,3 @@ _prompt_precmd() {
   # http://tldp.org/HOWTO/Xterm-Title-4.html
   echo -n "$eo$(tabtitle '\w')$ec"
 }
-
-if is_not_local; then
-  if alias | grep -qE '^(alias )?cat='; then unalias cat; fi  # locally aliased to bat
-fi
