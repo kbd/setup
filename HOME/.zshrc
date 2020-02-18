@@ -96,6 +96,7 @@ hash -d H=~S/HOME
 # machine-specific config
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
 
-source `brew --prefix`/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# syntax highlighting needs to be sourced last
-source `brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source zsh plugins. syntax highlighting must be sourced last.
+brew_share="$(brew --prefix)/share"
+source "$brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$brew_share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
