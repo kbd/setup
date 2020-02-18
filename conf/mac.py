@@ -67,6 +67,8 @@ defaults.g['KeyRepeat'] = 2
 # turn on "shake mouse pointer to locate"
 defaults.g['CGDisableCursorLocationMagnification'] = False
 
+defaults['com.apple.screencapture']['show-thumbnail'] = False
+
 # set file-type associations
 associations = {
     'com.microsoft.vscode': [
