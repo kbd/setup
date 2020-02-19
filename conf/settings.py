@@ -14,7 +14,6 @@
                     etc=/Applications/Docker.app/Contents/Resources/etc;
                     sf=`brew --prefix`/share/zsh/site-functions;
                     ln -sf $etc/docker.zsh-completion $sf/_docker;
-                    ln -sf $etc/docker-machine.zsh-completion $sf/_docker-machine;
                     ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose;
                 """,
             ),
