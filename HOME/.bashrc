@@ -33,13 +33,6 @@ if is_remote; then
   # unicode character prompt prefix works fine locally but
   # always seems to cause problems on servers, so disable it
   export PROMPT_PREFIX=''
-
-  [[ ! -e ~/.hushlogin && -e /etc/motd ]] && cat /etc/motd
-  [ -r /etc/profile ] && source /etc/profile
-  if [ -r ~/.bash_profile ]; then source ~/.bash_profile
-  elif [ -r ~/.bash_login ]; then source ~/.bash_login
-  elif [ -r ~/.profile ]; then source ~/.profile
-  fi
 fi
 
 # configure prompt

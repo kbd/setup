@@ -1,4 +1,13 @@
 #!/usr/bin/env zsh
+read -rd '' init <<'EOF'
+  [[ ! -e ~/.hushlogin && -e /etc/motd ]] && cat /etc/motd
+  [ -r /etc/profile ] && source /etc/profile
+  if [ -r ~/.bash_profile ]; then source ~/.bash_profile
+  elif [ -r ~/.bash_login ]; then source ~/.bash_login
+  elif [ -r ~/.profile ]; then source ~/.profile
+  fi
+EOF
+
 dir=/tmp
-rc="$(cat ~/bin/shell/**/*.(ba|)sh ~/.bashrc | gzip | base64)"
+rc="$(cat <(echo "$init") ~/bin/shell/**/*.(ba|)sh ~/.bashrc | gzip | base64)"
 ssh -t "$@" "echo '$rc' | base64 --decode | gunzip > $dir/.bashrc; bash --init-file $dir/.bashrc"
