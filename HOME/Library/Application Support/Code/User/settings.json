@@ -151,7 +151,6 @@
     // language-specific
     "[typescript]": {
         "editor.formatOnSave": true,
-        "editor.formatOnSaveTimeout": 2000,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
             "source.fixAll.tslint": true
