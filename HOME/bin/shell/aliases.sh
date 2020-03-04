@@ -252,7 +252,7 @@ rls() {
   # make it easier to reload shell config
   if [[ $ZSH_VERSION ]]; then
     echo "Reloading zsh config"
-    source "$HOME/.zshrc"  # not perfect, doesn't get all files
+    source "$HOME/.zshrc"
   elif [[ $BASH_VERSION ]]; then
     echo "Reloading bash config"
     source "$HOME/.bashrc"
