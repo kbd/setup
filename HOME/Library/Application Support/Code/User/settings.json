@@ -170,7 +170,11 @@
     "[python]": {
         "editor.formatOnSave": false,
         "editor.tabSize": 4,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
     },
+    "python.sortImports.args": ["-m3"],
     "python.pythonPath": "/usr/local/bin/python3",
     "python.jediEnabled": false,
     "python.globalModuleInstallation": true,
