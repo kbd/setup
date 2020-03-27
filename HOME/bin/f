@@ -5,6 +5,7 @@ Split stdin on fields.
 Like awk -F[delim] '{print $1; $print $2, ...}', but shorter.
 """
 import fileinput
+import os
 import sys
 
 
@@ -32,4 +33,11 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    try:
+        main(sys.argv)
+        sys.stdout.flush()
+    except (KeyboardInterrupt, BrokenPipeError):
+        # https://docs.python.org/3/library/signal.html#note-on-sigpipe
+        devnull = os.open(os.devnull, os.O_WRONLY)
+        os.dup2(devnull, sys.stdout.fileno())
+        sys.exit(1)
