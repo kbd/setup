@@ -1,3 +1,0 @@
-#!/bin/sh
-# fzi = "fuzzy inline"
-fzf --height 30% --reverse --multi "$@"

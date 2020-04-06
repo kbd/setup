@@ -21,6 +21,7 @@ export GOBIN="$GOPATH/bin"
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export ERL_AFLAGS="-kernel shell_history enabled"  # remember Elixir iex history across sessions
 export FZF_DEFAULT_COMMAND='fd -tf -HL'
+export FZF_DEFAULT_OPTS='--height 30% --reverse --multi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd -td -HL'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
@@ -29,7 +30,7 @@ _fzf_compgen_dir() { fd -td -HL . "$1"; }
 
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
-  alias -g FZF='$(`last_command` | fzi)'
+  alias -g FZF='$(`last_command` | fzf)'
   alias -g L='| $PAGER'
   alias -g H='| head'
 fi
@@ -131,7 +132,7 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias goog='googler -n5 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias pe=path-extractor
-alias dp='cd "$(dirs -pl | fzi)"'
+alias dp='cd "$(dirs -pl | fzf)"'
 
 # django
 alias da='django-admin'

@@ -65,8 +65,8 @@
 	bv = !git b --sort=-creatordate | cut -c3- | xargs git commit-info
 	brv = !git br --sort=-creatordate | rg -v ' -> ' | cut -c3- | xargs git commit-info
 	bf = !git pick-branch | xargs -t git w
-	brf = !git brv --color=always | fzi --ansi | awk '{print $2}' | xargs -t git w -t
-	pick-branch = !git bv --color=always | fzi --ansi | awk '{print $2}'
+	brf = !git brv --color=always | fzf --ansi | awk '{print $2}' | xargs -t git w -t
+	pick-branch = !git bv --color=always | fzf --ansi | awk '{print $2}'
 	# 'xargs -n1 | tac' reverses the output from fzf into the natural order of the commits
 	# since fzf shows the commits in "--reverse" order (newest commits at top)
 	cp = !git pick-branch | xargs git pick-commits | xargs -n1 | tac | xargs -t git cherry-pick
@@ -97,8 +97,8 @@
 	ds = d --staged
 	dts = dt --staged
 	dst = dts
-	delete-branch = !git b | rg -v 'master|^\\*' | fzi | xargs -tp -L1 git b --delete
-	delete-remote = !git br | rg -v 'HEAD|master' | fzi | awk -F/ '{print \"git push \" $1 \" --delete \" $2}' | xargs -I% -tp -L1 sh -c '%'
+	delete-branch = !git b | rg -v 'master|^\\*' | fzf | xargs -tp -L1 git b --delete
+	delete-remote = !git br | rg -v 'HEAD|master' | fzf | awk -F/ '{print \"git push \" $1 \" --delete \" $2}' | xargs -I% -tp -L1 sh -c '%'
 	e = restore
 	ef = !git pick-status-files e
 	email = config user.email
@@ -127,9 +127,9 @@
 	pl = pull
 	pg = !git pl && git lgo
 	pr = pl --rebase
-	pick-commits = "!f() { git l1 \"${1:-.}\" | fzi --ansi | cut -d' ' -f2; }; f"
+	pick-commits = "!f() { git l1 \"${1:-.}\" | fzf --ansi | cut -d' ' -f2; }; f"
 	pc = pick-commits
-	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzi --print0 --preview='git d --color=always -- {} | $(git config core.pager || echo cat)' | xargs -0t git
+	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzf --print0 --preview='git d --color=always -- {} | $(git config core.pager || echo cat)' | xargs -0t git
 	psf = pick-status-files
 	sf = psf
 	r = rebase --rebase-merges
