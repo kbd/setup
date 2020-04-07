@@ -12,7 +12,6 @@ from lib import setup
 from lib.mac import restart_os_functions
 from lib.setup.packages import install_packages
 
-
 log = logging.getLogger()
 
 
@@ -55,7 +54,7 @@ def status(settings, args):
 
 def pull(settings, args):
     """Pull repository from server"""
-    repo('pull')
+    repo('pg')
 
 
 def push(settings, args):
