@@ -95,7 +95,7 @@ alias et2='et -L2'
 alias et3='et -L3'
 
 # edit/open
-alias edit=\$EDITOR "$@"
+alias edit=\$EDITOR
 alias e=edit
 alias e.='e .'
 alias o=open
