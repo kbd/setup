@@ -174,7 +174,7 @@
             "source.organizeImports": true
         }
     },
-    "python.sortImports.args": ["-m3", "-tc"],
+    "python.sortImports.args": ["-m3", "-tc", "-ca"],
     "python.pythonPath": "/usr/local/bin/python3",
     "python.jediEnabled": false,
     "python.globalModuleInstallation": true,

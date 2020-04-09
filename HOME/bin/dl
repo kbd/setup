@@ -3,10 +3,10 @@
 """dl = download"""
 
 import argparse
+import shlex
 import sys
 
-from lib import utils, colors as c
-import shlex
+from lib import colors as c, utils
 
 BINARY_EXTENSIONS = ('.zip', '.tar.gz')
 

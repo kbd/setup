@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 from lib import mac
 
+
 def test_defaults_write():
     with patch('lib.mac.run') as run:
         mac.defaults['com.apple.menuextra.clock']['DateFormat'] = "EEE MMM d  h:mm a"

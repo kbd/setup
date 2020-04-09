@@ -4,7 +4,6 @@ from unittest.mock import patch
 
 from lib import utils
 
-
 EXECUTABLE = '/bin/bash'
 
 

@@ -36,4 +36,5 @@ Show how 'python' and 'ipython' process arguments differently:
 
 """
 from sys import argv
+
 print(argv)

@@ -1,4 +1,4 @@
-from unittest.mock import patch, DEFAULT
+from unittest.mock import DEFAULT, patch
 
 import pytest
 

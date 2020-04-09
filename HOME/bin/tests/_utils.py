@@ -1,9 +1,8 @@
 """Utility functions to aid in testing."""
 
 import sys
-
 from imp import load_source
-from os.path import abspath, join, dirname
+from os.path import abspath, dirname, join
 
 
 def get_bin_path():

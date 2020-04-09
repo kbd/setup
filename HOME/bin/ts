@@ -9,6 +9,7 @@ from datetime import datetime
 
 from dateutil import parser as dtp, tz
 
+
 def isfloat(arg):
     """If only there was str.isfloat like str.isdigit"""
     try:

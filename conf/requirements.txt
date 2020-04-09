@@ -12,6 +12,7 @@ flask-socketio
 ftfy
 ipdb
 ipython
+isort
 jupyter
 mycli
 mypy

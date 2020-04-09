@@ -6,7 +6,7 @@ from pathlib import Path
 
 from lib import homebrew, setup
 from lib.mac import defaults
-from lib.utils import run, read_config_file
+from lib.utils import read_config_file, run
 
 log = logging.getLogger()
 
