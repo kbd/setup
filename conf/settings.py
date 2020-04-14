@@ -69,6 +69,7 @@
                 },
                 'repo_status': {
                     'url': 'https://github.com/kbd/repo_status.git',
+                    'cmd': 'nim c -d:release repo_status.nim',
                     'bin': 'repo_status'
                 }
             }
