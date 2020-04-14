@@ -28,16 +28,16 @@ def install_packages(settings, args, **kwargs):
         install_package(name, settings)
 
 
-def run_commands(cmd):
+def run_commands(cmd, cwd=None):
     """Take one or more commands to run as a subprocess.
 
     * 'cmd' be one command or a tuple of commands
     * each command can be a string or a list of strings, passed to utils.run
     """
     if isinstance(cmd, tuple):
-        return [run(c) for c in cmd]
+        return [run(c, cwd=cwd) for c in cmd]
 
-    return run(cmd)
+    return run(cmd, cwd=cwd)
 
 
 def install_package(name, settings):
@@ -152,7 +152,7 @@ def manual(settings):
 
         # run any build commands
         if cmd:
-            run_commands(cmd)
+            run_commands(cmd, path)
 
         # link any binaries specified
         if bin:
