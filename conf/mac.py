@@ -72,11 +72,14 @@ defaults['com.apple.screencapture']['show-thumbnail'] = False
 # set file-type associations
 associations = {
     'com.microsoft.vscode': [
-        # plain-text association has the side-effect of
-        # controlling the default text editor (open -t)
+        # plain-text association also sets default text editor (open -t)
         'public.plain-text',
         'public.python-script',
     ],
+    'org.videolan.vlc': [
+        'public.mp3',
+        'public.mp4',
+    ]
 }
 for program, types in associations.items():
     for type in types:
