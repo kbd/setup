@@ -46,11 +46,6 @@ if [[ $PLATFORM == 'Darwin' ]]; then
   alias tar=gtar
   alias ls='/usr/local/bin/gls -F --color=auto'
 
-  # have sshrc use GNU tar because tar-ing on Mac (with BSD tar) makes GNU tar
-  # spit out a bunch of warnings on the server from extended stuff it doesn't
-  # understand - https://github.com/Russell91/sshrc/pull/76
-  alias sshrc='PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH" sshrc'
-
   alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
 
