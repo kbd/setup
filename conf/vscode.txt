@@ -15,6 +15,7 @@ ms-python.python
 ms-vscode.cpptools
 ms-vscode.Go
 ms-vscode.vscode-typescript-tslint-plugin
+ms-vsliveshare.vsliveshare-pack
 pnp.polacode
 rust-lang.rust
 ryanluker.vscode-coverage-gutters
