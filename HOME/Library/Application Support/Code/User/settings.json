@@ -27,7 +27,6 @@
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useIgnoreFiles": true,
-    "search.enableSearchEditorPreview": true,
 
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
     "window.restoreWindows": "all",
