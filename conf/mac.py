@@ -79,7 +79,10 @@ associations = {
     'org.videolan.vlc': [
         'public.mp3',
         'public.mp4',
-    ]
+    ],
+    'org.libreoffice.script': [
+        'public.comma-separated-values-text',
+    ],
 }
 for program, types in associations.items():
     for type in types:
