@@ -1,3 +1,2 @@
 broot
-nu
 pyoxidizer
