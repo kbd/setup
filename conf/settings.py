@@ -31,6 +31,10 @@
         'go': {
             'cmd': "cat conf/go.txt | xargs -t -L1 go get -v -u"
         },
+        'nim': {
+            'skip_if_not_requested': True,
+            'cmd': "cat conf/nimble.txt | xargs -to nimble install"
+        },
         'rust': {
             'skip_if_not_requested': True,
             'cmd': (
