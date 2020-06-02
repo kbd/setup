@@ -149,7 +149,7 @@
 	std = st drop
 	sts = st show
 	stsp = st show -p
-	w = switch
+	w = switch-autostash
 	w- = w -
 	wc = w -c
 	wm = w master

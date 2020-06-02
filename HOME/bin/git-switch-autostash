@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+import re
+import sys
+from subprocess import run
+
+
+def get_conflicted_files(error_msg):
+    return re.findall(r"\t([^\n]+)\n", error_msg)
+
+
+def stash_conflicted_files(branch, files):
+    cmd = [
+        'git', '--literal-pathspecs',
+        'stash', 'push', '-m', f'**AUTOSTASH**',
+        '--include-untracked', '--'
+    ] + files
+    print("Running:", cmd)
+    return run(cmd, check=True)
+
+
+def git_switch(args):
+    cmd = ['git','switch'] + args
+    return run(cmd, capture_output=True)
+
+
+def get_git_branch():
+    cmd = ['git', 'symbolic-ref', 'HEAD', '--short']
+    result = run(cmd, capture_output=True, check=True)
+    return result.stdout.decode().strip()
+
+
+def unstash_autostashes(branch):
+    result = run(['git', 'stash', 'list'], capture_output=True, check=True)
+    stashes = result.stdout.decode()
+    regex = r'^stash@\{(\d+)\}: On ' + branch + r': \*\*AUTOSTASH\*\*$'
+    match = re.match(regex, stashes, re.M)
+    if not match:
+        return 0
+
+    stash_num = match.group(1)
+    print(f"Autostash found, popping stash: {stash_num}")
+    cmd = ['git', 'stash', 'pop', stash_num]
+    return run(cmd).returncode
+
+
+def confirm_stash_files(files):
+    print("The following files are in conflict:")
+    for file in files:
+        print(' ', file)
+    return input("Stash them? (y/N) ").strip().lower() == 'y'
+
+
+def main(args):
+    result = git_switch(args)
+    branch = get_git_branch()
+    if result.returncode == 0:
+        return unstash_autostashes(branch)
+    else:
+        stderr = result.stderr.decode()
+        files = get_conflicted_files(stderr)
+        if not confirm_stash_files(files):
+            return 2
+
+        stash_conflicted_files(branch, files)
+        return git_switch(args).returncode
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
