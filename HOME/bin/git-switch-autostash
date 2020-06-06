@@ -14,7 +14,6 @@ def stash_conflicted_files(branch, files):
         'stash', 'push', '-m', f'**AUTOSTASH**',
         '--include-untracked', '--'
     ] + files
-    print("Running:", cmd)
     return run(cmd, check=True)
 
 
@@ -44,10 +43,10 @@ def unstash_autostashes(branch):
 
 
 def confirm_stash_files(files):
-    print("The following files are in conflict:")
-    for file in files:
-        print(' ', file)
-    return input("Stash them? (y/N) ").strip().lower() == 'y'
+    if files:
+        print("Stashing the following conflicted files:", file=sys.stderr)
+        for file in files:
+            print(' ', file, file=sys.stderr)
 
 
 def main(args):
@@ -58,9 +57,7 @@ def main(args):
     else:
         stderr = result.stderr.decode()
         files = get_conflicted_files(stderr)
-        if not confirm_stash_files(files):
-            return 2
-
+        confirm_stash_files(files)
         stash_conflicted_files(branch, files)
         return git_switch(args).returncode
 
