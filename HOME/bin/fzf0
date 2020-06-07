@@ -1,0 +1,3 @@
+#!/bin/sh
+# requires gnu 'cut', macos cut doesn't support null delimiters
+fzf -d'\0' --with-nth 2.. "$@" | gcut -d '' -f1
