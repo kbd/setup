@@ -78,7 +78,7 @@ associations = {
     ],
     'org.videolan.vlc': [
         'public.mp3',
-        'public.mp4',
+        'public.mpeg-4',
     ],
     'org.libreoffice.script': [
         'public.comma-separated-values-text',
@@ -126,7 +126,7 @@ dash['syncFolderPath'] = "~/Documents/Dash"
 dash['snippetSQLPath'] = "~/Documents/Dash/snippets.dash"
 
 # startup items - https://apple.stackexchange.com/a/310502/
-required_login_apps = {'Flycut', 'SpotMenu', 'Flux', 'iTerm', 'Alfred 4'}
+required_login_apps = {'Flycut', 'SpotMenu', 'Flux', 'iTerm', 'Alfred 4', 'Horo'}
 current_login_apps = set(
     filter(None,
         run(['osascript', '-e' 'tell application "System Events" to get the name of every login item'], cap='stdout').strip().split(', ')
