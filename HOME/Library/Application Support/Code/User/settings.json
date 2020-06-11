@@ -15,7 +15,6 @@
     "editor.renderLineHighlight": "all",
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
-    "editor.wordWrap": "bounded",
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
@@ -195,6 +194,7 @@
 
     "[plaintext]": {
         "editor.wordBasedSuggestions": false,
+        "editor.wordWrap": "bounded",
     },
 
     "[elixir]": {
