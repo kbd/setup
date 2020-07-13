@@ -128,6 +128,7 @@ alias goog='googler -n5 --np'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias pe=path-extractor
 alias dp='cd "$(dirs -pl | fzf)"'
+alias ssh='sshrc'  # always sshrc
 
 # django
 alias da='django-admin'
