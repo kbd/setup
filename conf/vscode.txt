@@ -5,7 +5,7 @@ deerawan.vscode-dash
 eamodio.gitlens
 esbenp.prettier-vscode
 formulahendry.code-runner
-golang.Go
+golang.go
 ionutvmi.spacegray-vscode
 JakeBecker.elixir-ls
 johnpapa.vscode-peacock
