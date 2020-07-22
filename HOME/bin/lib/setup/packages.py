@@ -79,8 +79,7 @@ def vscode(settings):
         run(['code', '--install-extension', package])
 
     # report any extensions that are installed that aren't in source control
-    unexpected = current_extensions - expected_extensions
-    if unexpected:
+    if unexpected := current_extensions - expected_extensions:
         log.info(f"The following extensions are installed but not in source control: {fmt(unexpected)}")
 
 
