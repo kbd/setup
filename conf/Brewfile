@@ -87,6 +87,7 @@ brew "zsh-syntax-highlighting"
 
 cask "alfred"
 cask "appcleaner"
+cask "caffeine"
 cask "coconutbattery"
 cask "cyberduck"
 cask "dash"
