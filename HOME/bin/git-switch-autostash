@@ -42,11 +42,10 @@ def unstash_autostashes(branch):
     return run(cmd).returncode
 
 
-def confirm_stash_files(files):
-    if files:
-        print("Stashing the following conflicted files:", file=sys.stderr)
-        for file in files:
-            print(' ', file, file=sys.stderr)
+def display_stash_files(files):
+    print("Stashing the following conflicted files:", file=sys.stderr)
+    for file in files:
+        print(' ', file, file=sys.stderr)
 
 
 def main(args):
@@ -56,10 +55,11 @@ def main(args):
         return unstash_autostashes(branch)
     else:
         stderr = result.stderr.decode()
-        files = get_conflicted_files(stderr)
-        confirm_stash_files(files)
-        stash_conflicted_files(branch, files)
-        return git_switch(args).returncode
+        if files := get_conflicted_files(stderr):
+            display_stash_files(files)
+            stash_conflicted_files(branch, files)
+
+        git_switch(args).returncode
 
 
 if __name__ == "__main__":
