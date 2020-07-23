@@ -11,6 +11,8 @@
 	autoStash = true
 [status]
 	showUntrackedFiles = all
+[apply]
+	whitespace = nowarn
 
 [diff]
 	tool = kdiff3
