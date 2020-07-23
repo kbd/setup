@@ -18,7 +18,7 @@ def stash_conflicted_files(branch, files):
 
 
 def git_switch(args):
-    cmd = ['git','switch'] + args
+    cmd = ['git', 'switch'] + args
     return run(cmd, capture_output=True)
 
 
