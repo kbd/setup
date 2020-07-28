@@ -59,7 +59,7 @@ def main(args):
             display_stash_files(files)
             stash_conflicted_files(branch, files)
 
-        git_switch(args).returncode
+        return git_switch(args).returncode
 
 
 if __name__ == "__main__":
