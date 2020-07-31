@@ -25,7 +25,7 @@ for key in (
 defaults['com.apple.dashboard']['mcx-disabled'] = True
 
 dock = defaults['com.apple.dock']
-dock['autohide'] = True
+dock['autohide'] = False
 dock['autohide-delay'] = .05
 dock['autohide-time-modifier'] = 0.4
 dock['show-recents'] = False
