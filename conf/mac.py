@@ -153,3 +153,8 @@ menu_items_to_remove = set(current_menus) - set(menus)
 if menu_items_to_remove:
     print("Removing:", menu_items_to_remove)
 defaults['com.apple.systemuiserver']['menuExtras'] = menus
+
+# change screenshots location
+screenshot_dir = '~/Desktop/Screenshots'
+run(f"mkdir -p {screenshot_dir}")
+defaults['com.apple.screencapture']['location'] = screenshot_dir
