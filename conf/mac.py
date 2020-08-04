@@ -31,7 +31,11 @@ dock['autohide-time-modifier'] = 0.4
 dock['show-recents'] = False
 # http://www.defaults-write.com/enable-highlight-hover-effect-for-grid-view-stacks/
 dock['mouse-over-hilite-stack'] = True
+
+# Spaces
 dock['mru-spaces'] = False  # don't reorder spaces based on use
+defaults.g['AppleSpacesSwitchOnActivate'] = False  # don't switch to another space when alt tabbing
+
 # hot corners
 # Possible values:
 #  0: no-op
@@ -97,14 +101,8 @@ defaults['com.apple.menuextra.clock']['DateFormat'] = "EEE MMM d  h:mm a"
 # use function keys as function keys
 defaults.g['com.apple.keyboard.fnState'] = True
 
-# don't switch to another space when alt tabbing
-defaults.g['AppleSpacesSwitchOnActivate'] = False
-
 # don't close windows when quitting program (required for iterm2 to restore windows)
 defaults.g['NSQuitAlwaysKeepsWindows'] = True
-
-# change spaces shortcuts away from ctrl + <- etc.
-# todo
 
 # zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
 defaults['com.apple.universalaccess']['closeViewScrollWheelToggle'] = True
