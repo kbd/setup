@@ -7,7 +7,7 @@ if [[ -z "$PATH_SET" ]]; then
 fi
 export PLATFORM="$(uname)"
 export PAGER=less
-export LESS='-iM --mouse'  # smart-case searches and status bar
+export LESS='-iMFx4 --mouse' # smart-case, status bar, quit 1 screen, 4sp tabs
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
