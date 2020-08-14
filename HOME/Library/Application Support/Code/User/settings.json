@@ -53,6 +53,8 @@
 
     "debug.showBreakpointsInOverviewRuler": true,
 
+    "scm.alwaysShowRepositories": true,
+
     // colors
     "workbench.colorCustomizations": {
         // selection
@@ -170,7 +172,7 @@
         "editor.formatOnSave": false,
         "editor.tabSize": 4,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true
+            "source.organizeImports": false // broken right now in vscode extension
         }
     },
     "python.sortImports.args": ["-m3", "-tc", "--ca"],
