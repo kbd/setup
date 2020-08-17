@@ -88,6 +88,7 @@ brew "zsh-syntax-highlighting"
 
 cask "alfred"
 cask "appcleaner"
+cask "arq-cloud-backup"
 cask "caffeine"
 cask "coconutbattery"
 cask "cyberduck"
