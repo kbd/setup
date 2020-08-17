@@ -156,3 +156,6 @@ defaults['com.apple.systemuiserver']['menuExtras'] = menus
 screenshot_dir = '~/Desktop/Screenshots'
 run(f"mkdir -p {screenshot_dir}")
 defaults['com.apple.screencapture']['location'] = screenshot_dir
+
+# turn off "hey Siri" (on Mac, triggers more by accident than on purpose)
+defaults['com.apple.Siri']['VoiceTriggerUserEnabled'] = False
