@@ -51,11 +51,11 @@ def create_ssh_key():
 def upload_ssh_key(key_path, dest_path, host, user=None, port=None):
     """Copy the public key to the remote host"""
     remote_cmd = [
-        'key="$(cat)"',        # save your key in an env var
+        'key="$(cat)"',      # save your key in an env var
         'mkdir -p {dir}',    # ensure the directory exists
         'touch {path}',      # ensure the file exists
         'chmod go-w {dir}',  # ensure correct permissions,
-        'chmod 600 {path}',  # https://www.complang.tuwien.ac.at/doc/openssh-server/faq.html#3.14
+        'chmod 600 {path}',  # http://lira.no-ip.org:8080/doc/openssh-client/faq.html#3.14
 
         # base command without being particular about error codes:
         # 'grep -qx "$key" {path} || echo $key >> {path}'  # write key if it doesn't exist
