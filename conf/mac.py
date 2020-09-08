@@ -118,6 +118,7 @@ flycut['savePreference'] = 2  # "after each clip"
 iterm = defaults['com.googlecode.iterm2']
 iterm['PrefsCustomFolder'] = '~/.config/iterm2'
 iterm['LoadPrefsFromCustomFolder'] = True
+iterm['HotkeyTermAnimationDuration'] = 0
 
 dash = defaults['com.kapeli.dashdoc']
 dash['syncFolderPath'] = "~/Documents/Dash"
