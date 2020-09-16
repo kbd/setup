@@ -94,6 +94,18 @@
                 "scope": ["string.quoted.docstring.multi.python", "string.quoted.docstring.raw.multi.python"],
                 "settings": {"foreground": "#27bd2f", "fontStyle": "bold"}
             },
+            {
+                "scope": ["entity.name.tag"],
+                "settings": {"foreground": "#99F"}
+            },
+            {
+                "scope": ["entity.other.attribute-name"],
+                "settings": {"foreground": "#cc6"}
+            },
+            {
+                "scope": ["punctuation.section.embedded"],
+                "settings": {"foreground": "#0f0"}
+            }
         ]
     },
 
