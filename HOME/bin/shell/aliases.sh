@@ -163,7 +163,10 @@ if is_local; then
   alias gaf='g a -f'
   alias p='gpg'
   alias s='gs'
-  gccb() { git clone "$@" -- "$(cb)" && cd "$(basename "$_" .git)" || return; }
+  gccb() {
+    local url="$(cb)"
+    git clone -- "$url" "${@:-.}" && cd "$(basename "$url" .git)" || return;
+  }
 fi
 
 # mkdir + cd
