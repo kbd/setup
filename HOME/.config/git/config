@@ -33,11 +33,27 @@
 [difftool "vscode"]
 	cmd = code -nwd $LOCAL $REMOTE
 
-# below settings for pager + colors suggested by diff-so-fancy
-# https://github.com/so-fancy/diff-so-fancy
 [core]
-	pager = diff-so-fancy | less -R
 	editor = code -nw
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	features = side-by-side line-numbers decorations
+	whitespace-error-style = 22 reverse
+	syntax-theme = OneHalfDark
+
+[delta "line-numbers"]
+	line-numbers-zero-style = white
+	line-numbers-plus-style = green
+	line-numbers-minus-style = red
+
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
 
 [color "diff"]
 	meta = yellow
