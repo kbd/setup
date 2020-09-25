@@ -10,6 +10,7 @@ flask
 flask-restful
 flask-socketio
 ftfy
+gomp
 ipdb
 ipython
 isort
