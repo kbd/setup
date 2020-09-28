@@ -80,15 +80,26 @@
 	b = branch
 	br = b -r
 	ba = b -a
-	bv = !git b --sort=-creatordate | cut -c3- | xargs git commit-info
-	brv = !git br --sort=-creatordate | rg -v ' -> ' | cut -c3- | xargs git commit-info
+
+	bvb = "!f() { git b \"$@\" --format='%(refname:short)' --sort=-creatordate | xargs git commit-info --color=always; }; f" # "bv base"
+	bv = "!f() { git bvb \"$@\" | perl -pe 's/^[^\\0]+\\0//'; }; f" # strip off the branch name for non-fzf display
+	brv = !git bv -r
+	bav = !git bv -a
+
+	pick-branch = "!f() { git bvb \"$@\" | fzf0 --ansi; }; f"
+	commit-info = show --no-patch --date=short --format='%S%x00%C(green)%ad%C(reset) %C(magenta)%C(italic)%<(40,trunc)%S%C(reset) %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%D%C(reset)'
+
 	bf = !git pick-branch | xargs -t git w
-	brf = !git brv --color=always | fzf0 --ansi | xargs -t git w -t
-	pick-branch = !git bv --color=always | fzf0 --ansi
+	brf = !git pick-branch -r | xargs -t git w -t
+	# baf = !git pick-branch -a | xargs -t git w -t
+
+	bfc = !git bvb | fzf0 --ansi --multi=2 | xargs -t gomp
+	brfc = !git bvb -r | fzf0 --ansi --multi=2 | xargs -t gomp
+	bafc = !git bvb -a | fzf0 --ansi --multi=2 | xargs -t gomp
+
 	# tac to reverse the output from fzf (defaulted to --reverse, i.e. newest
 	# commits at the top) into the natural order of the commits for cherry-pick
 	cp = !git pick-branch | xargs git pick-commits | tac | xargs -t git cherry-pick
-	commit-info = show --no-patch --date=short --pretty=format:'%S%x00%C(green)%ad%C(reset) %C(magenta)%C(italic)%<(40,trunc)%S%C(reset) %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%D%C(reset)'
 	current-branch = symbolic-ref --short HEAD
 	current-tags = tag --list --points-at HEAD
 	c = commit
