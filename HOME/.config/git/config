@@ -76,7 +76,8 @@
 	au = a -u
 	ap = a -p
 	rp = reset -p # reset --patch is the opposite of add --patch
-	rpc = !git pick-commits | xargs -toI% git rp %~  # "oops that shouldn't be in that commit"
+	rpc = !git pick-commits | xargs -toI% git rp %~ # "oops that shouldn't be in that commit"
+
 	b = branch
 	br = b -r
 	ba = b -a
