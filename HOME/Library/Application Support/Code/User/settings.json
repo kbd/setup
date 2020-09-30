@@ -184,10 +184,10 @@
         "editor.formatOnSave": false,
         "editor.tabSize": 4,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": false // broken right now in vscode extension
+            "source.organizeImports": true
         }
     },
-    "python.sortImports.args": ["-m3", "-tc", "--ca"],
+    "python.sortImports.args": ["-m3", "--tc", "--ca"],
     "python.pythonPath": "/usr/local/bin/python3",
     "python.languageServer": "Microsoft",
     "python.globalModuleInstallation": true,
