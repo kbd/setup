@@ -79,6 +79,7 @@ associations = {
         # plain-text association also sets default text editor (open -t)
         'public.plain-text',
         'public.python-script',
+        'public.yaml',
     ],
     'org.videolan.vlc': [
         'public.mp3',
