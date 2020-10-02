@@ -1,0 +1,9 @@
+reporting: "off"
+startuppopupversion: 1
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never --24-bit-color=never
+os:
+  openCommand: 'code -g {{filename}}'
+
