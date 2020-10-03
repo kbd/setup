@@ -14,12 +14,31 @@ $ echo "['echo', 'hello', 'world']" | cmdstr
 echo hello world
 
 """
+import argparse
 import shlex
-import sys
 from pathlib import *
+from subprocess import run
+from sys import stderr, stdin
 
-cmd = sys.stdin.read()
-if sys.argv[1:2] == ['-r']: # 'reverse': shell to python
-    print(repr(shlex.split(cmd)), end='')
-else: # normal: python to shell
-    print(' '.join(map(shlex.quote, map(str, eval(cmd)))), end='')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Convert a command from a source language to shell, or vice versa")
+    parser.add_argument('operation', choices=('s','p'), help='Convert from shell or python', default='p', nargs='?')
+    parser.add_argument('-c', '--clipboard', action='store_true', help="Take from and output to the clipboard")
+    args = parser.parse_args()
+
+    if args.clipboard:
+        cmd = run(['cb'], capture_output='True', check=True).stdout.decode()
+    else:
+        cmd = stdin.read()
+
+    print(cmd, file=stderr)
+    if args.operation == 's': # shell -> python
+        print("Converting to Python:", file=stderr)
+        result = repr(shlex.split(cmd))
+    else: # normal: python to shell
+        print("Converting to shell:", file=stderr)
+        result = ' '.join(map(shlex.quote, map(str, eval(cmd))))
+
+    print(result, end='')
+    if args.clipboard:
+        run(['cb'], input=result.encode(), check=True)
