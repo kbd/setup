@@ -6,7 +6,6 @@ setopt pushd_ignore_dups
 setopt pushd_minus
 setopt pushd_silent
 setopt prompt_subst  # execute the contents of PROMPT
-setopt sh_word_split  # "open -t" is two words
 
 # history
 setopt extended_history

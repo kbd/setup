@@ -37,7 +37,6 @@ fi
 
 # PLATFORM SPECIFIC
 if [[ $PLATFORM == 'Darwin' ]]; then
-  export EDITOR='open -t'  # use default text file association
   # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
   # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
@@ -90,7 +89,7 @@ alias et2='et -L2'
 alias et3='et -L3'
 
 # edit/open
-alias edit=\$EDITOR
+alias edit=code
 alias e=edit
 alias e.='e .'
 alias o=open

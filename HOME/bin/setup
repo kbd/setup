@@ -79,7 +79,7 @@ def debug(settings, args):
 
 def edit(settings, args):
     """Open the setup directory in your editor"""
-    subprocess.call('$EDITOR .', shell=True)  # works because cwd is set
+    subprocess.call(['bash', '-ic', 'edit .'])
 
 
 def restart_os_funcs(settings, args):
