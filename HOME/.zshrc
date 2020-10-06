@@ -28,7 +28,7 @@ autoload -Uz compinit
 zmodload zsh/complist
 compinit
 
-# remove error-causing zsh completion
+# remove zsh completion that conflicts with my alias
 # https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 compdef -d mcd
 
