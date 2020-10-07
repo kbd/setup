@@ -96,6 +96,10 @@ alias o=open
 alias o.='o .'
 alias a='o -a'
 
+# personal
+alias notes='e ~/notes/'
+
+# shortcuts/defaults
 alias wcl='wc -l'
 alias du='du -h'
 alias dud='du -d0 .'
@@ -124,10 +128,12 @@ alias yaegi='rlwrap $GOBIN/yaegi'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias goog='googler -n5 --np'
-alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias pe=path-extractor
-alias dp='cd "$(dirs -pl | fzf)"'
 alias ssh='sshrc'  # always sshrc
+
+# "functions"
+alias dp='cd "$(dirs -pl | fzf)"'
+alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
 # django
 alias da='django-admin'
