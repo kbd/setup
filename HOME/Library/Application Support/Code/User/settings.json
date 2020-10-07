@@ -128,8 +128,8 @@
     "gitlens.views.lineHistory.enabled": true,
 
     "peacock.surpriseMeOnStartup": false,
-    "peacock.affectStatusBar": false,
-    "peacock.affectActivityBar": false,
+    "peacock.affectStatusBar": true,
+    "peacock.affectActivityBar": true,
     "peacock.affectAccentBorders": false,
     "peacock.affectTabActiveBorder": true,
     "peacock.favoriteColors": [
