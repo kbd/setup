@@ -97,7 +97,7 @@ alias o.='o .'
 alias a='o -a'
 
 # personal
-alias notes='e ~/notes/'
+alias notes='mkdir -p ~/notes/ && e ~/notes/'
 
 # shortcuts/defaults
 alias wcl='wc -l'
