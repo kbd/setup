@@ -18,7 +18,6 @@
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
-    "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
 
     "breadcrumbs.enabled": true,
 
