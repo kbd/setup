@@ -114,5 +114,14 @@
 			"#!/usr/bin/env "
 		],
 		"description": "shebang!"
+	},
+	"bash strict mode": {
+		"prefix": "bashstrict",
+		"body": [
+			"#!/usr/bin/env bash",
+			"",
+			"set -Eeuxo pipefail",
+			"",
+		]
 	}
 }
