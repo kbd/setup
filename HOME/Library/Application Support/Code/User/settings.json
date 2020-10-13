@@ -200,6 +200,7 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+    "debug.javascript.autoAttachFilter": "smart",
 
     "[python]": {
         "editor.formatOnSave": false,
