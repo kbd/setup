@@ -15,7 +15,6 @@
     "editor.renderLineHighlight": "all",
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
-    "editor.formatOnSaveMode": "modifications",
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
