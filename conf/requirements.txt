@@ -17,6 +17,7 @@ isort
 jupyter
 mycli
 mypy
+openpyxl
 pandas
 pgcli
 pip
@@ -44,5 +45,6 @@ sqlalchemy
 sqlite-utils
 tmuxp
 virtualenv
+visidata
 xlrd
 xonsh
