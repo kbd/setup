@@ -79,10 +79,11 @@
 	rpc = !git pick-commits | xargs -toI% git rp %~ # "oops that shouldn't be in that commit"
 
 	b = branch
+	bs = b --format='%(refname:short)'
 	br = b -r
 	ba = b -a
 
-	bvb = "!f() { git b \"$@\" --format='%(refname:short)' --sort=-creatordate | xargs git commit-info --color=always; }; f" # "bv base"
+	bvb = "!f() { git bs \"$@\" --sort=-creatordate | xargs git commit-info --color=always; }; f" # "bv base"
 	bv = "!f() { git bvb \"$@\" | perl -pe 's/^[^\\0]+\\0//'; }; f" # strip off the branch name for non-fzf display
 	brv = !git bv -r
 	bav = !git bv -a
@@ -128,8 +129,8 @@
 	ds = d --staged
 	dts = dt --staged
 	dst = dts
-	delete-branch = !git b | rg -v 'master|^\\*' | fzf | xargs -tp -L1 git b --delete
-	delete-remote = !git br | rg -v 'HEAD|master' | fzf | awk -F/ '{print \"git push \" $1 \" --delete \" $2}' | xargs -I% -tp -L1 sh -c '%'
+	delete-branch = !git bs | rg -vx $(git main-branch) | fzf | xargs -tp -L1 git b --delete
+	delete-remote = !git br | rg -vw \"HEAD|$(git main-branch)\" | fzf | awk -F/ '{print \"git push \" $1 \" --delete \" $2}' | xargs -I% -tp -L1 sh -c '%'
 	e = restore
 	ef = !git pick-status-files e
 	email = config user.email
@@ -183,7 +184,8 @@
 	w = switch-autostash
 	w- = w -
 	wc = w -c
-	wm = w master
+	main-branch = !basename $(git symbolic-ref refs/remotes/origin/HEAD)
+	wm = !git w $(git main-branch)
 	unstage = reset --
 	uns = unstage
 	uncommit = reset @~ --
@@ -207,7 +209,7 @@
 	lo = !git l ORIG_HEAD..
 	lgo = !git lg ORIG_HEAD..
 	l1o = !git l1 ORIG_HEAD..
-	prune-merged = !git branch --merged | grep -Ev '^\\*' | grep -Evx '\\s*(master|develop)\\s*' | xargs -n1 git branch -d
+	prune-merged = "!f() { b=$(git main-branch); bs=\"$(git bs --merged $b | rg -vx $b)\"; if [[ \"$bs\" ]]; then; echo \"Branches to delete:\\n\\n$bs\\n\"; echo \"$bs\" | xargs -pn1 git branch -d; fi; }; f"
 	prune-remote = remote prune origin # prune branches deleted from remote
 	prune-branches = !git prune-merged && git prune-remote
 	pb = prune-branches
