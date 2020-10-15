@@ -177,7 +177,7 @@
 	stf = !git pick-status-files st push
 	stfm = !git pick-status-files st push -m
 	stp = st pop
-	stl = st list --pretty=format:'%C(yellow)%gd%C(reset) %C(green)(%cr)%C(reset) %s'
+	stl = st list --format='%C(yellow)%gd%C(reset) %C(green)(%cr)%C(reset) %s'
 	std = st drop
 	sts = st show
 	stsp = st show -p
@@ -202,10 +202,10 @@
 	repo-parent = rev-parse --show-superproject-working-tree # for submodules
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
-	l = log --date=format:'%a %Y-%m-%d %k:%M' --color=always --pretty=format:'%C(green)%ad %C(blue)%an <%ae> %C(auto)%h%d%n %s%n%w(0,4,4)%+b%C(reset)' --stat
+	l = log --date=format:'%a %Y-%m-%d %k:%M' --color=always --format='%C(green)%ad %C(blue)%an <%ae> %C(auto)%h%d%n %s%n%w(0,4,4)%+b%C(reset)' --stat
 	lp = l -p
-	lg = "!f() { git log --color=always --graph --pretty=format:'%C(auto)%h %C(green)@%ar@%C(auto)%d %s %C(blue)<%an>%C(reset)' \"$@\" | perl -pe 's/@(\\d+)\\s+(\\w{2})[^@]+@/\"(\".sprintf(\"%02d\", $1).$2.\")\"/e' | less -R; }; f"
-	l1 = log --date=short --color=always --pretty=format:'%C(green)%ad %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%d%C(reset)'
+	lg = "!f() { git log --color=always --graph --format='%C(auto)%h %C(green)@%ar@%C(auto)%d %s %C(blue)<%an>%C(reset)' \"$@\" | perl -pe 's/@(\\d+)\\s+(\\w{2})[^@]+@/\"(\".sprintf(\"%02d\", $1).$2.\")\"/e' | less -R; }; f"
+	l1 = log --date=short --color=always --format='%C(green)%ad %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%d%C(reset)'
 	lo = !git l ORIG_HEAD..
 	lgo = !git lg ORIG_HEAD..
 	l1o = !git l1 ORIG_HEAD..
@@ -213,7 +213,7 @@
 	prune-remote = remote prune origin # prune branches deleted from remote
 	prune-branches = !git prune-merged && git prune-remote
 	pb = prune-branches
-	most-edited = !git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -20
+	most-edited = !git log --format= --name-only | sort | uniq -c | sort -rg | head -20
 	authors = shortlog -sne
 	fl = commit --amend -C@ # fix last
 	al = commit --amend -c@ # amend last
