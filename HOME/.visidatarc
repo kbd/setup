@@ -1,0 +1,2 @@
+XlsxIndexSheet.columns += [Column('active', getter=lambda col,row: row.source is col.sheet.workbook.active)]
+XlsxIndexSheet.columns += [Column('state', getter=lambda col,row: row.source.sheet_state)]
