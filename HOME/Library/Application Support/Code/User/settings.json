@@ -7,6 +7,7 @@
     "editor.renderWhitespace": "all",
     "editor.tabCompletion": "on",
     "editor.suggest.localityBonus": true,
+    "editor.suggest.showStatusBar": true,
     "editor.minimap.enabled": true,
     "editor.minimap.showSlider": "always",
     "editor.snippetSuggestions": "top",

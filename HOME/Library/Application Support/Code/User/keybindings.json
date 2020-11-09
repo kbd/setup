@@ -78,10 +78,6 @@
     "command": "workbench.action.gotoSymbol"
   },
   {
-    "key": "cmd+i",
-    "command": "actions.find"
-  },
-  {
     "key": "shift+cmd+space",
     "command": "editor.action.smartSelect.grow",
     "when": "editorTextFocus"
