@@ -115,12 +115,12 @@ cask "sourcetree"
 cask "spotify"
 cask "spotmenu"
 cask "sublime-text"
-# cask "vagrant"  # requires package installer, disable by default
-# cask "virtualbox"  # requires kernel extensions, disable by default
 cask "visual-studio-code"
 cask "vlc"
 cask "xquartz"
-cask "font-fantasque-sans-mono"  # cask-fonts tap
+
+# cask-fonts tap
+cask "font-fantasque-sans-mono"
 
 mas "Xcode", id: 497799835
 mas "Clear", id: 504544917
