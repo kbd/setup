@@ -228,6 +228,7 @@
     ],
     "python.formatting.provider": "black",
     "python.dataScience.sendSelectionToInteractiveWindow": false,
+    "jupyter.sendSelectionToInteractiveWindow": false,
     "python.showStartPage": false,
 
     "[plaintext]": {
