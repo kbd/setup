@@ -65,6 +65,8 @@ fi
 
 # directory/navigation
 alias   -- -='cd -'
+alias  -- --='cd -2'
+alias -- ---='cd -3'
 alias     ..='cd ..'
 alias    ...='cd ../..'
 alias   ....='cd ../../..'
@@ -100,6 +102,7 @@ alias a='o -a'
 alias notes='mkdir -p ~/notes/ && e ~/notes/'
 
 # shortcuts/defaults
+alias dh='dirs -v'
 alias wcl='wc -l'
 alias du='du -h'
 alias dud='du -d0 .'

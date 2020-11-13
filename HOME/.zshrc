@@ -1,11 +1,15 @@
 #!/usr/bin/env zsh
 # options
-setopt auto_cd
-setopt auto_pushd
+setopt auto_cd # cd to the directory by executing its name
+setopt prompt_subst # execute the contents of PROMPT
+
+# directory stacks
+# http://zsh.sourceforge.net/Intro/intro_6.html
+setopt auto_pushd # automatically pushd when cd-ing
+setopt pushd_silent # don't print out 'dirs' after pushd
 setopt pushd_ignore_dups
-setopt pushd_minus
-setopt pushd_silent
-setopt prompt_subst  # execute the contents of PROMPT
+setopt pushd_minus # sensible direction for cd using the dir stack
+setopt pushd_to_home # pushd with no args behaves like cd with no args
 
 # history
 setopt extended_history
