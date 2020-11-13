@@ -1,7 +1,7 @@
 {
-    "editor.fontFamily": "Fantasque Sans Mono",
+    "editor.fontFamily": "Victor Mono Medium",
     "editor.fontSize": 13,
-    "editor.lineHeight": 14,
+    "editor.lineHeight": 15,
     "editor.fontLigatures": true,
     "editor.rulers": [80, 100],
     "editor.renderWhitespace": "all",

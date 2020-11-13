@@ -121,6 +121,7 @@ cask "xquartz"
 
 # cask-fonts tap
 cask "font-fantasque-sans-mono"
+cask "font-victor-mono"
 
 mas "Xcode", id: 497799835
 mas "Clear", id: 504544917
