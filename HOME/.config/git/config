@@ -157,7 +157,9 @@
 	mf = m --ff-only
 	mn = m --no-ff
 	p = "!f() { if git upstream; then git push; else git push -u; fi }; f" # push, set upstream if necessary
-	pf = "!f() { echo \"On branch $(git current-branch)\"; echo push | xargs -p -I% git % --force; }; f" # push --force, requiring confirmation
+	# "push --force", requiring confirmation. AFAIK, you ~always want --force-with-lease over plain --force
+	# https://git-scm.com/docs/git-push#Documentation/git-push.txt---no-force-with-lease
+	pf = "!f() { echo \"On branch $(git current-branch)\"; echo push | xargs -p -I% git % --force-with-lease; }; f"
 	pl = pull
 	pg = !git pl && git lgo
 	pr = pl --rebase
