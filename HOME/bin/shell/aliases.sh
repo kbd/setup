@@ -118,7 +118,7 @@ alias chn='bat --style=header,numbers'
 alias cnh='bat --style=header,numbers'
 alias py=ipython
 alias pyc='py -c'
-alias pym='py -ic "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
+alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias x='chmod +x'
 alias d='docker'
 alias hex='hexyl'
