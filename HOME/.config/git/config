@@ -213,7 +213,7 @@
 	lo = !git l ORIG_HEAD..
 	lgo = !git lg ORIG_HEAD..
 	l1o = !git l1 ORIG_HEAD..
-	prune-merged = "!f() { b=$(git main-branch); bs=\"$(git bs --merged $b | rg -vx $b)\"; if [[ \"$bs\" ]]; then; echo \"Branches to delete:\\n\\n$bs\\n\"; echo \"$bs\" | xargs -pn1 git branch -d; fi; }; f"
+	prune-merged = "!f() { b=$(git main-branch); bs=\"$(git bs --merged $b | rg -vx $b)\"; if [[ \"$bs\" ]]; then echo \"Branches to delete:\\n\\n$bs\\n\"; echo \"$bs\" | xargs -pn1 git branch -d; fi; }; f"
 	prune-remote = remote prune origin # prune branches deleted from remote
 	prune-branches = !git prune-merged && git prune-remote
 	pb = prune-branches
