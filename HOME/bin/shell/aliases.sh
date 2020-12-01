@@ -133,6 +133,8 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias goog='googler -n5 --np'
 alias pe=path-extractor
 alias ssh='sshrc'  # always sshrc
+jqpager() { jq -C "$@" | less -FR; }
+alias jq='jqpager'
 
 # "functions"
 alias dp='cd "$(dirs -pl | fzf)"'
