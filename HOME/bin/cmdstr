@@ -33,10 +33,10 @@ if __name__ == "__main__":
 
     print(cmd, file=stderr)
     if args.operation == 's': # shell -> python
-        print("Converting to Python:", file=stderr)
+        print("Converting to Python", file=stderr)
         result = repr(shlex.split(cmd))
     else: # normal: python to shell
-        print("Converting to shell:", file=stderr)
+        print("Converting to shell", file=stderr)
         result = ' '.join(map(shlex.quote, map(str, eval(cmd))))
 
     print(result, end='')
