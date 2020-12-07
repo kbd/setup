@@ -62,6 +62,7 @@ bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete
 
 # 3rd party software config
+eval "$(direnv hook zsh)"
 eval "$(thefuck --alias)"
 eval "$(fasd --init auto)"
 unalias a s sd sf d f zz 2>/dev/null # unalias all fasd aliases but 'z'
