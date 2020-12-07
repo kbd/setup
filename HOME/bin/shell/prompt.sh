@@ -161,7 +161,7 @@ _prompt_venv() {
 
 _prompt_direnv() {
   if [[ -n "$DIRENV_DIR" ]]; then
-    echo -n "$eo${COL[blue]}$ec✚$eo${COL[reset]}$ec"
+    echo -n "$eo${COL[blue]}$ec‡$eo${COL[reset]}$ec"
   fi
 }
 
