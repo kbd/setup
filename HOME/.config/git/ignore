@@ -4,6 +4,7 @@ __*
 .DS_Store
 .git/
 .vscode/
+.envrc
 
 *.bak.*
 *.pyc
@@ -12,7 +13,6 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ipynb_checkpoints/
-
 *.ipynb
 
 scratch
