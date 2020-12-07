@@ -64,8 +64,7 @@ bindkey "\e[3~" delete-char # delete
 # 3rd party software config
 eval "$(direnv hook zsh)"
 eval "$(thefuck --alias)"
-eval "$(fasd --init auto)"
-unalias a s sd sf d f zz 2>/dev/null # unalias all fasd aliases but 'z'
+eval "$(zoxide init zsh)"
 # pyenv is badly behaved and will repeatedly add itself to the path on initialization
 [[ "$PYENV_SHELL" ]] || eval "$(pyenv init -)"
 source "$HOME/.config/fzf/fzf.zsh"

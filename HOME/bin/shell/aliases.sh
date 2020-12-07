@@ -109,7 +109,6 @@ alias dud='du -d0 .'
 alias ncdu='ncdu --color=dark'
 alias curl='curl -L'  # follow redirects by default
 alias map='parallel'
-alias v='f -e vim'  # from https://github.com/clvv/fasd#examples
 alias vless=vimpager
 alias c=cat
 alias cat=bat
