@@ -33,6 +33,11 @@ def create_command_line_parser(settings):
     )
     subparser.set_defaults(func=install_packages)
 
+    # bless
+    subparser = subparsers.add_parser('bless', help="'Bless' a file or files into setup")
+    subparser.add_argument('files', help="Files to bless", nargs='+')
+    subparser.set_defaults(func=bless)
+
     # export every "setup packages foo" as "setup foo"
     for name in settings['packages']:
         subparser = subparsers.add_parser(name, help=f"Install/update {name} packages")
@@ -87,6 +92,19 @@ def restart_os_funcs(settings, args):
     restart_os_functions()
 
 
+def bless(settings, args):
+    """'Bless' files; "bless" means to put a file on the system somewhere
+    under the control of 'setup', i.e. in the repository."""
+    for file in args.files:
+        dest_dir = setup.home() / Path(ORIGINAL_CWD).relative_to(Path.home())
+        log.debug(f"Ensuring parent destination dir {dest_dir} exists")
+        dest_dir.mkdir(parents=True, exist_ok=True)
+
+        cmd = ['symgr', file, dest_dir]
+        log.debug(f"Executing {cmd}")
+        subprocess.run(cmd, check=True, cwd=ORIGINAL_CWD)
+
+
 def main():
     repo_root_dir = setup.root()
     os.chdir(repo_root_dir)  # set the cwd to the root of the repository
@@ -116,4 +134,5 @@ def main():
 
 
 if __name__ == '__main__':
+    ORIGINAL_CWD = os.getcwd()
     sys.exit(main())
