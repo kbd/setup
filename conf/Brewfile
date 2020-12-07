@@ -29,15 +29,15 @@ brew "gnu-tar"
 brew "go"
 brew "googler"
 brew "hexyl"
-brew "httpie"
 brew "htop"
+brew "httpie"
 brew "hyperfine"
 brew "jq"
+brew "kakoune"
 brew "lazydocker"
 brew "lazygit"
 brew "less"
 brew "libgit2"
-brew "kakoune"
 brew "mas"
 brew "micro"
 brew "minimal-racket"
@@ -94,8 +94,8 @@ cask "dash"
 cask "dbeaver-community"
 cask "docker"
 cask "firefox"
-cask "flycut"
 cask "flux"
+cask "flycut"
 cask "google-chrome"
 cask "grandperspective"
 cask "iina"
@@ -123,8 +123,8 @@ cask "xquartz"
 cask "font-fantasque-sans-mono"
 cask "font-victor-mono"
 
-mas "Xcode", id: 497799835
 mas "Clear", id: 504544917
-mas "Tweetbot", id: 1384080005
-mas "Horo", id: 1437226581
 mas "Fantastical", id: 975937182
+mas "Horo", id: 1437226581
+mas "Tweetbot", id: 1384080005
+mas "Xcode", id: 497799835
