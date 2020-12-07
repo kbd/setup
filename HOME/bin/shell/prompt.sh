@@ -159,6 +159,12 @@ _prompt_venv() {
   fi
 }
 
+_prompt_direnv() {
+  if [[ -n "$DIRENV_DIR" ]]; then
+    echo -n "$eo${COL[blue]}$ec✚$eo${COL[reset]}$ec"
+  fi
+}
+
 _prompt_filter() {
   local funcs="$1"
   if [[ $PROMPT_SHORT_DISPLAY ]]; then
@@ -188,7 +194,7 @@ _prompt_filter() {
 
 generate_ps1() {
   _LAST_RETURN_CODE=$?
-  local funcs="precmd prefix script venv date user at host screen sep path repo jobs char"
+  local funcs="precmd prefix script venv date user at host screen sep path repo jobs direnv char"
   for f in $(_prompt_filter "$funcs"); do
     "_prompt_$f"
   done
