@@ -155,7 +155,7 @@ _prompt_venv() {
   # VIRTUAL_ENV=/Users/kbd/.local/share/virtualenvs/pipenvtest-vxNzUMMM
   if [[ -n "$VIRTUAL_ENV" ]]; then
     local venv_id=$(basename -- "$VIRTUAL_ENV")
-    echo -n "[$eo${COL[green]}$ec$venv_id$eo${COL[reset]}$ec]"
+    echo -n "[$eo${COL[green]}$ec🐍$venv_id$eo${COL[reset]}$ec]"
   fi
 }
 
