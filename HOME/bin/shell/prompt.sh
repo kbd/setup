@@ -187,7 +187,7 @@ _prompt_filter() {
     funcs=$(filter "$funcs" "date")
   fi
   if [[ $PROMPT_BARE ]]; then
-    funcs=$(filter "$funcs" "prefix|script|venv|user|at|host|screen|sep|path|repo|jobs")
+    funcs=$(filter "$funcs" "prefix|script|venv|user|at|host|screen|sep|path|repo|jobs|direnv")
   fi
   echo -n "$funcs"
 }
