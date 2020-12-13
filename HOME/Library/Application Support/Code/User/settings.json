@@ -30,7 +30,7 @@
     "search.useIgnoreFiles": true,
 
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
-    "window.restoreWindows": "all",
+    "window.restoreWindows": "preserve",
     "window.closeWhenEmpty": true,
     "window.zoomLevel": 0,
 
