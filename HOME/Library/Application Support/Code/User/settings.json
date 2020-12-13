@@ -23,6 +23,8 @@
 
     "breadcrumbs.enabled": true,
 
+    "explorer.openEditors.sortOrder": "alphabetical",
+
     "problems.showCurrentInStatus": true,
 
     "search.showLineNumbers": true,
