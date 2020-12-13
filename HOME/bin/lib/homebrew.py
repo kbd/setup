@@ -91,16 +91,16 @@ def clean_cache():
 
 
 def brew_cachedir():
-    return run("echo -n $(brew --cache)", cap=True)
+    return run(['brew', '--cache'], cap=True).strip()
 
 
 def get_space_used(dir):
     # output looks like "3.6G   /directory" so just get the first column
-    return run(f'du -hd0 "{dir}"', cap=True).split()[0]
+    return run(['du', '-hd0', dir], cap=True).split()[0]
 
 
 def delete_dir(dir):
-    run(f"rm -rf '{dir}'")
+    run(['rm', '-rf', dir])
 
 
 def update():
