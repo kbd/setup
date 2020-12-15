@@ -194,7 +194,7 @@ _prompt_filter() {
 
 generate_ps1() {
   _LAST_RETURN_CODE=$?
-  local funcs="precmd prefix script venv date user at host screen sep path repo jobs direnv char"
+  local funcs="precmd prefix script screen venv date user at host sep path repo jobs direnv char"
   for f in $(_prompt_filter "$funcs"); do
     "_prompt_$f"
   done
