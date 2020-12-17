@@ -231,11 +231,9 @@ rep() {
 }
 
 filter() {
-  # take a space-separated string of words and filter it
-  # based on a filter expression (like "word" or "word1|word2").
-  # This seems goofy but at least it's a simple one-liner.
-  # note I *don't* want to quote $1, since this is meant to operate on "words"
-  echo $1 | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
+  # take a space-separated string of words ($1)
+  # and filter out words that match the regex ($2)
+  echo "$1" | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
 }
 
 join_by() {
