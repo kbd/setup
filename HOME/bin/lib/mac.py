@@ -104,6 +104,14 @@ class DefaultsValue:
     def write(self, value):
         return run(["defaults", "write", self.domain, self.key, *flatten(value)])
 
+    @staticmethod
+    def _get_plist(value):
+        return run(["json-to-plist"], cap=True, input=json.dumps(value))
+
+    def write_plist(self, value):
+        return run(["defaults", "write", self.domain, self.key, self._get_plist(value)])
+
+
     __str__ = read_str
 
 
