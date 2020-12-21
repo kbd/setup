@@ -250,6 +250,7 @@
 
     "[zig]": {
         "editor.formatOnSave": true,
+        "editor.tabSize": 4,
     },
 
     "go.useLanguageServer": true,
