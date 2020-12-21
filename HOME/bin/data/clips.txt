@@ -106,3 +106,4 @@ cl 🄯
 mask 😷
 robot 🤖
 fistbump 🤜🤛
+snake 🐍
