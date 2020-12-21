@@ -18,7 +18,7 @@
 # $PROMPT_BARE
 #   set to enable a very minimal prompt, useful for copying exmaples
 #
-# note: this code depends on colors.sh and aliases.sh (for filter function)
+# note: this code depends on colors.sh and on 'filter' program in path
 _prompt_date() {
   echo -n "$eo${COL[grey]}$ec$dt$eo${COL[reset]}$ec:"
 }
@@ -240,7 +240,7 @@ register_prompt(){
     bash)
       # work around the PROMPT_COMMAND being read-only and use basic prompt
       if prompt_command_is_readonly; then
-        ercho "Prompt command is readonly"
+        echo >&2 "Prompt command is readonly"
         PS1="$user@$short_host:$ppath$ "
       else
         PROMPT_COMMAND='PS1="$(generate_ps1)"'

@@ -1,0 +1,4 @@
+#!/bin/sh
+# take a space-separated string of words ($1)
+# and filter out words that match the regex ($2)
+echo "$1" | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '

@@ -1,0 +1,7 @@
+#!/bin/sh
+# bundleid/uti funcs from https://superuser.com/a/341429/
+f="/tmp/me.lri.getuti.${1##*.}"
+touch "$f"
+mdimport "$f"
+mdls -name kMDItemContentTypeTree "$f"
+rm "$f"

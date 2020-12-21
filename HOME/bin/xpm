@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# {x}, creating directories if necessary
+# ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to {x}.
+d="$(dirnameslash "${@: -1}")"
+if [[ ! -d "$d" ]]; then
+  echo "Creating '$d'"  # -v on Mac's mkdir -p does nothing
+  mkdir -p -- "$d"
+fi
+cmd="$1"
+shift
+$cmd "$@"

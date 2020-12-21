@@ -47,20 +47,6 @@ if [[ $PLATFORM == 'Darwin' ]]; then
 
   alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
-
-  # bundleid/uti funcs from https://superuser.com/a/341429/
-  # useful with 'duti' to set file associations
-  bundleid() {
-    osascript -e "id of app \"$*\""
-  }
-
-  uti() {
-    local f="/tmp/me.lri.getuti.${1##*.}"
-    touch "$f"
-    mdimport "$f"
-    mdls -name kMDItemContentTypeTree "$f"
-    rm "$f"
-  }
 fi
 
 # directory/navigation
@@ -137,7 +123,6 @@ alias jq='jqpager'
 
 # "functions"
 alias dp='cd "$(dirs -pl | fzf)"'
-alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
 # django
 alias da='django-admin'
@@ -186,63 +171,6 @@ mcd() {
     return 1
   fi
   mkdir -p -- "$1" && cl "$@" -A
-}
-
-# dirname, but treat paths that end in slash as a directory
-dirnameslash() {
-  if [[ "$1" == */ ]]; then
-    echo "$1"
-  else
-    dirname -- "$1"
-  fi
-}
-
-# {x}, creating directories if necessary
-xpm() {
-  # ${@: -1} is a bash/zsh-ism for the last arg. Enables passing args to {x}.
-  local d="$(dirnameslash "${@: -1}")"
-  if [[ ! -d "$d" ]]; then
-    echo "Creating '$d'"  # -v on Mac's mkdir -p does nothing
-    mkdir -p -- "$d"
-  fi
-  local cmd="$1"
-  shift
-  $cmd "$@"
-}
-cpm() { xpm cp "$@"; }
-mvm() { xpm mv "$@"; }
-
-# touch, creating intermediate directories
-t() {
-  if [[ -z "$1" ]]; then
-    ercho "missing argument"
-    return 1
-  fi
-
-  for f in "$@"; do
-    mkdir -p -- "$(dirnameslash "$f")" && touch -- "$f"
-  done
-}
-
-# repeat
-rep() {
-  # https://stackoverflow.com/a/5349842
-  printf -- "$1%.s" $(seq 1 ${2-$(tput cols)})
-}
-
-filter() {
-  # take a space-separated string of words ($1)
-  # and filter out words that match the regex ($2)
-  echo "$1" | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
-}
-
-join_by() {
-  # usage: join_by delim list of strings
-  # join_by - a b c de => a-b-c-de
-  local d=$1
-  local f=$2
-  shift 2
-  printf "%s" "$f${@/#/$d}";
 }
 
 # "reload history"

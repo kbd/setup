@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# dirname, but treat paths that end in slash as a directory
+if [[ "$1" == */ ]]; then
+  echo "$1"
+else
+  dirname -- "$1"
+fi

@@ -1,0 +1,3 @@
+#!/bin/sh
+# bundleid/uti funcs from https://superuser.com/a/341429/
+osascript -e "id of app \"$*\""
