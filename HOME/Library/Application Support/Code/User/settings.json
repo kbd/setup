@@ -248,6 +248,10 @@
         "editor.formatOnSave": true,
     },
 
+    "[zig]": {
+        "editor.formatOnSave": true,
+    },
+
     "go.useLanguageServer": true,
 
     "terraform.indexing": {
