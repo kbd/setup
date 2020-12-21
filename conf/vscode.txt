@@ -21,6 +21,7 @@ pnp.polacode
 rust-lang.rust
 ryanluker.vscode-coverage-gutters
 stkb.rewrap
+tiehuis.zig
 timonwong.shellcheck
 usernamehw.errorlens
 wholroyd.jinja
