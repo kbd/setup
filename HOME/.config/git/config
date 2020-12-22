@@ -117,6 +117,9 @@
 	cof = !git pick-status-files co
 	cf = !git cof
 	cob = co -b
+	conflicts = diff --name-only --diff-filter=U
+	con = conflicts
+	cone = !git conflicts | xargs code -n
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
 	dt = difftool
