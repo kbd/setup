@@ -212,11 +212,8 @@
             "source.organizeImports": true
         }
     },
+    "python.formatting.provider": "black",
     "python.sortImports.args": ["-m3", "--tc", "--ca"],
-    "python.pythonPath": "/usr/local/bin/python3",
-    "python.languageServer": "Microsoft",
-    "python.globalModuleInstallation": true,
-    "python.autoComplete.addBrackets": false,
     "python.testing.pytestEnabled": true,
     "python.linting.enabled": true,
     "python.linting.mypyEnabled": true,
@@ -228,9 +225,11 @@
         "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode",
         "--enable=unused-import",
     ],
-    "python.formatting.provider": "black",
-    "jupyter.sendSelectionToInteractiveWindow": false,
+    "python.autoComplete.addBrackets": false,
+    "python.globalModuleInstallation": true,
+    "python.languageServer": "Microsoft",
     "python.showStartPage": false,
+    "jupyter.sendSelectionToInteractiveWindow": false,
 
     "[plaintext]": {
         "editor.wordBasedSuggestions": false,
