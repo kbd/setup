@@ -71,8 +71,6 @@ defaults.g['KeyRepeat'] = 2
 # turn on "shake mouse pointer to locate"
 defaults.g['CGDisableCursorLocationMagnification'] = False
 
-defaults['com.apple.screencapture']['show-thumbnail'] = False
-
 # set file-type associations
 associations = {
     'com.microsoft.vscode': [
@@ -154,10 +152,13 @@ if menu_items_to_remove:
     print("Removing:", menu_items_to_remove)
 defaults['com.apple.systemuiserver']['menuExtras'] = menus
 
-# change screenshots location
+# screenshots
 screenshot_dir = '~/Desktop/Screenshots'
 run(f"mkdir -p {screenshot_dir}")
-defaults['com.apple.screencapture']['location'] = screenshot_dir
+screenshots = defaults['com.apple.screencapture']
+screenshots['location'] = screenshot_dir
+screenshots['show-thumbnail'] = False
+screenshots['disable-shadow'] = True
 
 # turn off "hey Siri" (on Mac, triggers more by accident than on purpose)
 defaults['com.apple.Siri']['VoiceTriggerUserEnabled'] = False
