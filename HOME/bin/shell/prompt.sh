@@ -52,6 +52,13 @@ _prompt_host() {
   echo -n "$eo${COL[blue]}$ec$host$eo${COL[reset]}$ec"
 }
 
+# tab - https://github.com/austinjones/tab-rs
+_prompt_tab() {
+  if [[ -n "$TAB" ]]; then
+    echo -n "[$TAB]"
+  fi
+}
+
 # screen/tmux status in prompt
 _prompt_screen() {
   if [[ $TERM == "screen" ]]; then
@@ -187,14 +194,14 @@ _prompt_filter() {
     funcs=$(filter "$funcs" "date")
   fi
   if [[ $PROMPT_BARE ]]; then
-    funcs=$(filter "$funcs" "prefix|script|venv|user|at|host|screen|sep|path|repo|jobs|direnv")
+    funcs=$(filter "$funcs" "prefix|script|venv|user|at|host|screen|sep|path|repo|jobs|direnv|tab")
   fi
   echo -n "$funcs"
 }
 
 generate_ps1() {
   _LAST_RETURN_CODE=$?
-  local funcs="precmd prefix script screen venv date user at host sep path repo jobs direnv char"
+  local funcs="precmd prefix script tab screen venv date user at host sep path repo jobs direnv char"
   for f in $(_prompt_filter "$funcs"); do
     "_prompt_$f"
   done
