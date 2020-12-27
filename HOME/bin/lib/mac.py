@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 
 
 def restart_os_functions(*args, **kwargs):
-    for item in ('Finder', 'Dock', 'SystemUIServer'):
+    for item in ('Finder', 'Dock', 'SystemUIServer', 'cfprefsd'):
         cmd = ['killall', item]
         log.info(f"Executing command: {cmd!r}")
         subprocess.check_call(cmd)
