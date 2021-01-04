@@ -61,7 +61,7 @@ _prompt_tab() {
 
 # screen/tmux status in prompt
 _prompt_screen() {
-  if [[ $TERM == "screen" ]]; then
+  if [[ $TERM == screen* ]]; then
     # figure out whether 'screen' or 'tmux'
     if [[ -n "$TMUX" ]]; then
       local screen='tmux'
@@ -72,8 +72,8 @@ _prompt_screen() {
       local name="$STY"
       local window="$WINDOW"
     fi
-    echo -n "[$eo${COL[green]}$ec$screen$eo${COL[default]}$ec"
-    echo -n ":$eo${COL[blue]}$ec$name$eo${COL[default]}$ec"
+    echo -n "[$eo${COL[green]}$ec$screen$eo${COL[reset]}$ec"
+    echo -n ":$eo${COL[blue]}$ec$name$eo${COL[reset]}$ec"
     echo -n ":$eo${COL[purple]}$ec$window$eo${COL[reset]}$ec]"
   fi
 }
