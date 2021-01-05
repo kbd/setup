@@ -144,7 +144,7 @@ for app in required_login_apps - current_login_apps:
 # menubar items
 menus = [
     '/System/Library/CoreServices/Menu Extras/{}.menu'.format(m)
-    for m in ['Bluetooth', 'Volume', 'AirPort', 'TextInput', 'Battery', 'Clock', 'User']
+    for m in ['Bluetooth', 'Volume', 'AirPort', 'TextInput', 'Battery', 'Clock', 'Displays', 'User']
 ]
 current_menus = defaults['com.apple.systemuiserver']['menuExtras'].read()
 menu_items_to_remove = set(current_menus) - set(menus)
