@@ -145,6 +145,19 @@ is_root() { [[ $EUID == 0 ]]; }
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 my_home() { user_home "$(logname)"; }
 
+# window titles
+# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
+alias title='printf "\e]0;%s\a"'  # both window and tab
+alias tabtitle='printf "\e]1;%s\a"'
+alias wintitle='printf "\e]2;%s\a"'
+
+# http://invisible-island.net/xterm/xterm.faq.html
+# http://www.opensource.apple.com/source/X11apps/X11apps-30.1/xterm/xterm-251/ctlseqs.txt
+# http://stackoverflow.com/questions/4471278/how-to-capture-the-title-of-a-terminal-window-in-bash-using-ansi-escape-sequence
+# I think these only work on linux, can't test atm
+alias getwintitle='printf "\e[21t"'
+alias gettabtitle='printf "\e[20t"'
+
 if is_local; then
   # git
   alias g=git
