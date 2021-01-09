@@ -18,7 +18,12 @@
 # $PROMPT_BARE
 #   set to enable a very minimal prompt, useful for copying exmaples
 #
-# note: this code depends on colors.sh and on 'filter' program in path
+# note: this code depends on colors.sh
+
+filter() {
+  echo "$1" | tr ' ' '\n' | grep -Ewv "$2" | tr '\n' ' '
+}
+
 _prompt_date() {
   echo -n "$eo${COL[grey]}$ec$dt$eo${COL[reset]}$ec:"
 }
