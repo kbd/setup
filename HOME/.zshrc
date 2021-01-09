@@ -75,8 +75,13 @@ for file in "$HOME"/bin/shell/**/*.(z|)sh; do
 done
 
 # 1st party software config
-export PROMPT_SHORT_DISPLAY=1
-register_prompt zsh
+zigprompt() {
+  export PROMPT_RETURN_CODE=$?
+  export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running} ${(M)#${jobstates%%:*}:#suspended}
+  export PROMPT_PATH="$(print -P '%~')"
+  prompt
+}
+PROMPT='$(zigprompt)'
 
 precmd() {
   local s="$TABTITLE"

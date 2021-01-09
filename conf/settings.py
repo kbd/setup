@@ -75,6 +75,11 @@
                     'url': 'https://github.com/kbd/repo_status.git',
                     'cmd': 'nim c -d:release repo_status.nim',
                     'bin': 'repo_status'
+                },
+                'prompt': {
+                    'url': 'https://github.com/kbd/prompt.git',
+                    'cmd': 'zig build-exe -OReleaseFast prompt.zig',
+                    'bin': 'prompt',
                 }
             }
         }
