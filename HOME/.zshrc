@@ -75,18 +75,16 @@ for file in "$HOME"/bin/shell/**/*.(z|)sh; do
 done
 
 # 1st party software config
-zigprompt() {
+PROMPT='$(prompt)'
+
+precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running} ${(M)#${jobstates%%:*}:#suspended}
   export PROMPT_PATH="$(print -P '%~')"
-  prompt
-}
-PROMPT='$(zigprompt)'
 
-precmd() {
   local s="$TABTITLE"
   if [[ "$s" ]]; then s=" — $s"; fi
-  tabtitle "$(print -P '%~')$s";
+  tabtitle "$PROMPT_PATH$s";
 }
 tt() { TABTITLE="$@"; }
 ttl() { TABTITLE="⚡$@⚡"; }
