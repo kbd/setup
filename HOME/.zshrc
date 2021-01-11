@@ -79,7 +79,7 @@ PROMPT='$(prompt)'
 
 precmd() {
   export PROMPT_RETURN_CODE=$?
-  export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running} ${(M)#${jobstates%%:*}:#suspended}
+  export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
   export PROMPT_PATH="$(print -P '%~')"
 
   local s="$TABTITLE"
