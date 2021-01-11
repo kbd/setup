@@ -1,1 +1,3 @@
-startup = ["alias spl [] { cat | lines | split column ' ' }"]
+path = ["~/bin"]
+prompt = "echo $(prompt)"
+startup = ["def spl [] { cat | lines | split column ' ' }"]
