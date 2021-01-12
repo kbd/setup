@@ -7,6 +7,7 @@ eamodio.gitlens
 esbenp.prettier-vscode
 formulahendry.code-runner
 golang.go
+hashicorp.terraform
 ionutvmi.spacegray-vscode
 JakeBecker.elixir-ls
 johnpapa.vscode-peacock
