@@ -81,13 +81,10 @@ precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
   export PROMPT_PATH="$(print -P '%~')"
-
-  local s="$TABTITLE"
-  if [[ "$s" ]]; then s=" — $s"; fi
-  tabtitle "$PROMPT_PATH$s";
+  tabtitle "$PROMPT_PATH${TABTITLE:+" — $TABTITLE"}"
 }
 tt() { TABTITLE="$@"; }
-ttl() { TABTITLE="⚡$@⚡"; }
+ttl() { tt "⚡$@⚡"; }
 
 # hashed directories
 hash -d P=~/proj
