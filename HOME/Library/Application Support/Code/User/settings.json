@@ -227,7 +227,7 @@
     ],
     "python.autoComplete.addBrackets": false,
     "python.globalModuleInstallation": true,
-    "python.languageServer": "Microsoft",
+    "python.languageServer": "Pylance",
     "python.showStartPage": false,
     "jupyter.sendSelectionToInteractiveWindow": false,
 
