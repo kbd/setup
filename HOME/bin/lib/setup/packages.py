@@ -130,7 +130,8 @@ def manual(settings):
     dir = setup.root() / settings['dir']  # directory to download / checkout to
     for name, params in settings['packages'].items():
         log.info(f"Running setup for {name!r}")
-        url = params['url']  # url of git repository
+        git = params.get('git')  # url of git repository to clone
+        url = params.get('url')  # url of file to download
         cmd = params.get('cmd')  # commands to run after cloning
         bin = params.get('bin')  # path to the executable to install in ~/bin
 
@@ -145,15 +146,22 @@ def manual(settings):
                 log.info(f"Skipping {name}")
                 continue
 
-        # clone repo
-        git_clone = ['git', 'clone', '--depth', '1', url, path]
-        run(git_clone)
+        # get something
+        if git:
+            log.info(f"Cloning {git} to {path}")
+            git_clone = ['git', 'clone', '--depth', '1', git, path]
+            run(git_clone)
+        if url:
+            log.info(f"Downloading {url} to {path}")
+            wget = ['wget', '--directory-prefix', path, url]
+            run(wget)
 
-        # run any build commands
+        # run any build/extract commands
         if cmd:
+            log.info(f"Running {cmd}")
             run_commands(cmd, path)
 
-        # link any binaries specified
+        # symlink any binaries specified to ~/bin
         if bin:
             # accept either a string or a sequence of strings
             if isinstance(bin, str):

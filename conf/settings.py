@@ -62,24 +62,29 @@
             'dir': '3rdparty',  # 3rdparty is already in gitignore
             'packages': {
                 'symgr': {
-                    'url': 'https://github.com/kbd/symgr.git',
+                    'git': 'https://github.com/kbd/symgr.git',
                     # this command is equivalent to setting 'bin' to 'symgr',
                     # but this is bootstrapping the symlinking done for 'bin'
                     'cmd': 'ln -sf $(setup --root)/3rdparty/symgr/symgr ~/bin/symgr'
                 },
                 'bak': {
-                    'url': 'https://github.com/kbd/bak.git',
+                    'git': 'https://github.com/kbd/bak.git',
                     'bin': 'bak'
                 },
                 'repo_status': {
-                    'url': 'https://github.com/kbd/repo_status.git',
+                    'git': 'https://github.com/kbd/repo_status.git',
                     'cmd': 'nim c -d:release repo_status.nim',
                     'bin': 'repo_status'
                 },
                 'prompt': {
-                    'url': 'https://github.com/kbd/prompt.git',
+                    'git': 'https://github.com/kbd/prompt.git',
                     'cmd': 'zig build-exe -OReleaseFast prompt.zig',
                     'bin': 'prompt',
+                },
+                'zls': {
+                    'url': 'https://github.com/zigtools/zls/releases/download/0.1.0/x86_64-macos.tar.xz',
+                    'cmd': 'dtrx x86_64-macos.tar.xz',
+                    'bin': 'x86_64-macos/zls',
                 }
             }
         }

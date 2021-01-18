@@ -1,4 +1,5 @@
 alefragnani.Bookmarks
+AugusteRame.zls-vscode
 bungcip.better-toml
 CoenraadS.bracket-pair-colorizer-2
 dbaeumer.vscode-eslint
