@@ -21,12 +21,6 @@
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.splitCwd": "workspaceRoot",
 
-    "breadcrumbs.enabled": true,
-
-    "explorer.openEditors.sortOrder": "alphabetical",
-
-    "problems.showCurrentInStatus": true,
-
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useIgnoreFiles": true,
@@ -41,6 +35,12 @@
     "files.insertFinalNewline": true,
     "files.hotExit": "onExitAndWindowClose",
 
+    "breadcrumbs.enabled": true,
+    "explorer.openEditors.sortOrder": "alphabetical",
+    "problems.showCurrentInStatus": true,
+    "debug.showBreakpointsInOverviewRuler": true,
+    "scm.alwaysShowRepositories": true,
+
     "workbench.editor.showTabs": true,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.colorTheme": "Spacegray Eighties Dark",
@@ -52,11 +52,6 @@
     "workbench.list.keyboardNavigation": "filter",
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
-
-    "debug.showBreakpointsInOverviewRuler": true,
-
-    "scm.alwaysShowRepositories": true,
-
     "workbench.editorAssociations": [
         {
             // disable fancy git rebase gui
@@ -173,6 +168,11 @@
     ],
 
     // language-specific
+    "[plaintext]": {
+        "editor.wordBasedSuggestions": false,
+        "editor.wordWrap": "bounded",
+    },
+
     "[typescript]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -239,20 +239,15 @@
     "python.showStartPage": false,
     "jupyter.sendSelectionToInteractiveWindow": false,
 
-    "[plaintext]": {
-        "editor.wordBasedSuggestions": false,
-        "editor.wordWrap": "bounded",
-    },
-
     "[elixir]": {
+        "editor.formatOnSave": true,
         "editor.wordBasedSuggestions": true,
         "editor.acceptSuggestionOnEnter": "on",
-        "editor.formatOnSave": true,
     },
 
     "[nim]": {
-        "editor.acceptSuggestionOnEnter": "smart",
         "editor.formatOnSave": true,
+        "editor.acceptSuggestionOnEnter": "smart",
     },
 
     "[zig]": {
