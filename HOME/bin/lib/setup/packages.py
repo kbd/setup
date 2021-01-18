@@ -131,6 +131,7 @@ def manual(settings):
     for name, params in settings['packages'].items():
         log.info(f"Running setup for {name!r}")
         git = params.get('git')  # url of git repository to clone
+        branch = params.get('branch') # branch of git repo to get
         url = params.get('url')  # url of file to download
         cmd = params.get('cmd')  # commands to run after cloning
         bin = params.get('bin')  # path to the executable to install in ~/bin
@@ -149,7 +150,10 @@ def manual(settings):
         # get something
         if git:
             log.info(f"Cloning {git} to {path}")
-            git_clone = ['git', 'clone', '--depth', '1', git, path]
+            git_clone = ['git', 'clone', '--depth', '1', '--recurse-submodules']
+            if branch:
+                git_clone += ['--branch', branch]
+            git_clone += [git, path]
             run(git_clone)
         if url:
             log.info(f"Downloading {url} to {path}")

@@ -82,9 +82,10 @@
                     'bin': 'prompt',
                 },
                 'zls': {
-                    'url': 'https://github.com/zigtools/zls/releases/download/0.1.0/x86_64-macos.tar.xz',
-                    'cmd': 'dtrx x86_64-macos.tar.xz',
-                    'bin': 'x86_64-macos/zls',
+                    'git': 'https://github.com/zigtools/zls.git',
+                    'branch': '0.1.0',
+                    'cmd': 'zig build -Drelease-safe',
+                    'bin': 'zig-cache/bin/zls',
                 }
             }
         }
