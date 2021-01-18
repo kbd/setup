@@ -176,6 +176,8 @@
 	rc = rebase --continue
 	ri = r -i
 	ric = !git pick-commits | xargs -tI% git ri %~
+	v = revert
+	vc = !git pick-commits | xargs -tI% git v -m1 %
 	s = status
 	st = stash
 	stm = st push -m
