@@ -57,6 +57,14 @@
 
     "scm.alwaysShowRepositories": true,
 
+    "workbench.editorAssociations": [
+        {
+            // disable fancy git rebase gui
+            "viewType": "default",
+            "filenamePattern": "git-rebase-todo"
+        }
+    ],
+
     // colors
     "workbench.colorCustomizations": {
         // selection
