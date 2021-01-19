@@ -83,7 +83,7 @@
                 },
                 'zls': {
                     'git': 'https://github.com/zigtools/zls.git',
-                    'branch': '0.1.0',
+                    'tag': '0.1.0',
                     'cmd': 'zig build -Drelease-safe',
                     'bin': 'zig-cache/bin/zls',
                 }
