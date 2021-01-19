@@ -13,6 +13,8 @@
 	showUntrackedFiles = all
 [apply]
 	whitespace = nowarn
+[advice]
+	detachedHead = false
 
 [diff]
 	tool = kdiff3
