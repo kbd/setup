@@ -149,6 +149,7 @@ def manual(settings):
 
         # get something
         if any([git, url]):
+            c = None  # suppress Pylance "c is possibly unbound" errors
             if git:
                 log.info(f"Cloning {git} to {path}")
                 c = ['git', 'clone', '--depth', '1', '--recurse-submodules']
