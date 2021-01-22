@@ -1,1 +1,15 @@
-$PROMPT = lambda: $(prompt)
+# prompt
+def prmpt():
+  # $PROMPT_RETURN_CODE = __xonsh__.history.last_cmd_rtn  # always zero?
+  $PROMPT_PATH = "{short_cwd}"
+  return $(prompt)
+
+$PROMPT = prmpt
+
+# third party
+execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
+
+# import my bash/zsh aliases
+source-bash ~/bin/shell/aliases.sh
+
+# xontrib load bashisms direnv kitty
