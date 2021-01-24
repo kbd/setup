@@ -39,6 +39,7 @@ python-dateutil
 PyYAML
 requests
 rethinkdb
+rich
 setuptools
 Sphinx
 sqlalchemy
