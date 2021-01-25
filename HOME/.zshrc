@@ -81,7 +81,7 @@ precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
   export PROMPT_PATH="$(print -P '%~')"
-  tabtitle "$PROMPT_PATH${TABTITLE:+" — $TABTITLE"}"
+  title "$PROMPT_PATH${TABTITLE:+" — $TABTITLE"}"
 }
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
