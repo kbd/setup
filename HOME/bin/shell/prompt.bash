@@ -25,7 +25,7 @@ filter() {
 }
 
 _prompt_date() {
-  echo -n "$eo${COL[grey]}$ec$dt$eo${COL[reset]}$ec:"
+  echo -n "$eo${COL[white]}$ec$dt$eo${COL[reset]}$ec:"
 }
 
 _prompt_user() {
@@ -79,7 +79,7 @@ _prompt_screen() {
     fi
     echo -n "[$eo${COL[green]}$ec$screen$eo${COL[reset]}$ec"
     echo -n ":$eo${COL[blue]}$ec$name$eo${COL[reset]}$ec"
-    echo -n ":$eo${COL[purple]}$ec$window$eo${COL[reset]}$ec]"
+    echo -n ":$eo${COL[magenta]}$ec$window$eo${COL[reset]}$ec]"
   fi
 }
 
@@ -93,7 +93,7 @@ _prompt_sep() {
 }
 
 _prompt_path() {
-  echo -n "$eo${COL[purple]}${COL[bold]}$ec$ppath$eo${COL[reset]}$ec"
+  echo -n "$eo${COL[magenta]}${COL[bold]}$ec$ppath$eo${COL[reset]}$ec"
 }
 
 # source control information in prompt
@@ -157,7 +157,7 @@ _prompt_prefix() {
 _prompt_script() {
   # report if the session is being recorded
   if [[ -n "$SCRIPT" ]]; then
-    echo -n "$eo${COL[grey]}$ec{$SCRIPT}$eo${COL[reset]}$ec"
+    echo -n "$eo${COL[white]}$ec{$SCRIPT}$eo${COL[reset]}$ec"
   fi
 }
 
