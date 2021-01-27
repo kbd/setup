@@ -161,18 +161,18 @@ alias getwintitle='printf "\e[21t"'
 alias gettabtitle='printf "\e[20t"'
 
 # git
+# create aliases for all short (<= 4 character) git aliases
+for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
+  # shellcheck disable=SC2139
+  alias "g$gitalias=g $gitalias"
+done
+
 alias g=git
 alias s='gs'   # status
 alias p='gpg'  # pull and show graph of recent changes
 alias g-='gw-' # switch to most recent branch
 alias ga='gaf' # add files with fuzzy finder
 alias gb='gbf' # show/switch branches using fuzzy finder
-
-# create aliases for all short (<= 4 character) git aliases
-for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
-  # shellcheck disable=SC2139
-  alias "g$gitalias=g $gitalias"
-done
 
 # check out a repository from the url in the clipboard and cd into it
 gccb() {
