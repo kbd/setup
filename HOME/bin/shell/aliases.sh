@@ -160,25 +160,26 @@ alias wintitle='printf "\e]2;%s\a"'
 alias getwintitle='printf "\e[21t"'
 alias gettabtitle='printf "\e[20t"'
 
-if is_local; then
-  # git
-  alias g=git
-  # create aliases for all short (<= 4 character) git aliases
-  for gitalias in $(git alias | grep -E '^.{0,4}$'); do
-    # shellcheck disable=SC2139
-    alias "g$gitalias=g $gitalias"
-  done
-  alias g-='gw-'
-  alias ga='g af'
-  alias gb='g bf'
-  alias p='gpg'
-  alias s='gs'
-  gccb() {
-    local url="$(cb)"
-    local dir="${@:-$(basename "$url" .git)}"
-    git clone -- "$url" "$dir" && cd "$dir" || return;
-  }
-fi
+# git
+alias g=git
+alias s='gs'   # status
+alias p='gpg'  # pull and show graph of recent changes
+alias g-='gw-' # switch to most recent branch
+alias ga='gaf' # add files with fuzzy finder
+alias gb='gbf' # show/switch branches using fuzzy finder
+
+# create aliases for all short (<= 4 character) git aliases
+for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
+  # shellcheck disable=SC2139
+  alias "g$gitalias=g $gitalias"
+done
+
+# check out a repository from the url in the clipboard and cd into it
+gccb() {
+  local url="$(cb)"
+  local dir="${@:-$(basename "$url" .git)}"
+  git clone -- "$url" "$dir" && cd "$dir" || return;
+}
 
 # mkdir + cd
 mcd() {
