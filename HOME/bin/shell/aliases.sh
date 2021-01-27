@@ -170,7 +170,7 @@ if is_local; then
   done
   alias g-='gw-'
   alias ga='g af'
-  alias gaf='g a -f'
+  alias gb='g bf'
   alias p='gpg'
   alias s='gs'
   gccb() {
