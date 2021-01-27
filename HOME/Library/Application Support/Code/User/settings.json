@@ -220,6 +220,7 @@
             "source.organizeImports": true
         }
     },
+    "python.pythonPath": "/Users/kbd/.pyenv/shims/python3",
     "python.formatting.provider": "black",
     "python.sortImports.args": ["-m3", "--tc", "--ca"],
     "python.testing.pytestEnabled": true,
