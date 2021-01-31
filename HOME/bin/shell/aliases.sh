@@ -217,4 +217,5 @@ fi
 # TERMINAL SPECIFIC
 if [[ $TERM == 'xterm-kitty' ]]; then
   alias tab="TERM=xterm-256color tab"
+  alias icat="kitty +kitten icat --align=left"
 fi
