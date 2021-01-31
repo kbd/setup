@@ -55,8 +55,10 @@ bindplugin "\e[A" up-line-or-beginning-search # ↑ (bash:history-search-backwar
 bindplugin "\e[B" down-line-or-beginning-search # ↓ (bash:history-search-forward)
 bindkey "\e[1;5D" backward-word # ⌃←
 bindkey "\e[1;5C" forward-word # ⌃→
-bindkey "\e\e[D" backward-word # ⌥←
+bindkey "\e\e[D" backward-word # ⌥← iterm
 bindkey "\e\e[C" forward-word # ⌥→
+bindkey "\e[1;3D" backward-word # ⌥← kitty
+bindkey "\e[1;3C" forward-word # ⌥→
 bindkey "\e[H" beginning-of-line # home
 bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete

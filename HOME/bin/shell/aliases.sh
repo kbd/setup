@@ -213,3 +213,8 @@ if [[ $ZSH_VERSION ]]; then
   alias -g L='| $PAGER'
   alias -g H='| head'
 fi
+
+# TERMINAL SPECIFIC
+if [[ $TERM == 'xterm-kitty' ]]; then
+  alias tab="TERM=xterm-256color tab"
+fi
