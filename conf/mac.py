@@ -82,6 +82,8 @@ associations = {
     'org.videolan.vlc': [
         'public.mp3',
         'public.mpeg-4',
+        'org.matroska.mkv',
+        'org.videolan.webm',
     ],
     'org.libreoffice.script': [
         'public.comma-separated-values-text',
