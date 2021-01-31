@@ -86,7 +86,10 @@
                     'tag': '0.1.0',
                     'cmd': 'zig build -Drelease-safe',
                     'bin': 'zig-cache/bin/zls',
-                }
+                },
+                'zsh-prompt-benchmark': {
+                    'git': 'https://github.com/romkatv/zsh-prompt-benchmark.git'
+                },
             }
         }
     }
