@@ -256,6 +256,4 @@
         "editor.tabSize": 4,
     },
     "zigLanguageClient.path": "zls",
-
-    "go.useLanguageServer": true,
 }
