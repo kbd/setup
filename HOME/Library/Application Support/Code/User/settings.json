@@ -123,15 +123,11 @@
         "suppressGitVersionWarning": false,
         "suppressLineUncommittedWarning": false,
         "suppressNoRepositoryWarning": false,
-        "suppressResultsExplorerNotice": false,
-        "suppressShowKeyBindingsNotice": true
     },
     "gitlens.codeLens.scopes": [
         "document",
         "containers"
     ],
-    "gitlens.views.fileHistory.enabled": true,
-    "gitlens.views.lineHistory.enabled": true,
 
     "peacock.surpriseMeOnStartup": false,
     "peacock.affectStatusBar": true,
