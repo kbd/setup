@@ -123,5 +123,13 @@
 			"set -Eeuxo pipefail",
 			"",
 		]
-	}
+	},
+	"python main": {
+		"scope": "python",
+		"prefix": "main",
+		"body": [
+			"if __name__ == '__main__':",
+			"\t$0"
+		]
+	},
 }
