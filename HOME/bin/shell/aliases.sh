@@ -8,6 +8,7 @@ fi
 export PLATFORM="$(uname)"
 export PAGER=less
 export LESS='-iMFx4 --mouse' # smart-case, status bar, quit 1 screen, 4sp tabs
+export VISUAL=code
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -56,7 +57,7 @@ alias et2='et -L2'
 alias et3='et -L3'
 
 # edit/open
-alias edit=code
+alias edit=\$VISUAL
 alias e=edit
 alias e.='e .'
 alias o=open
