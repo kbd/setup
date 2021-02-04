@@ -42,7 +42,10 @@
     "scm.alwaysShowRepositories": true,
 
     "workbench.editor.showTabs": true,
+    "workbench.editor.wrapTabs": true,
     "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.decorations.colors": true,
+    "workbench.editor.decorations.badges": true,
     "workbench.colorTheme": "Spacegray Eighties Dark",
     "workbench.startupEditor": "newUntitledFile",
     "workbench.quickOpen.closeOnFocusLost": false,
