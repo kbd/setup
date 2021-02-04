@@ -110,7 +110,7 @@ def _format_manual_packages_table(packages, dir):
     return table
 
 
-def _get_packages_to_install(packages, dir):
+def _get_manual_packages_to_install(packages, dir):
     if not Path(dir, 'symgr').exists():
         # special-case symgr, since everything else depends on it.
         # if not installed, we're bootstrapping, so install everything.
@@ -143,7 +143,7 @@ def manual(settings):
 
     packages = settings['packages']
     dir = setup.root() / settings['dir']  # directory to download / checkout to
-    keys = _get_packages_to_install(packages, dir)
+    keys = _get_manual_packages_to_install(packages, dir)
 
     if not keys:
         return
