@@ -122,7 +122,7 @@ def _get_manual_packages_to_install(packages, dir):
     if result.returncode == 130:  # quit fzf, take no action
         return []
 
-    keys = [line.split()[0].strip().decode() for line in result.stdout.splitlines()]
+    keys = [line.decode().split()[0] for line in result.stdout.splitlines()]
     return keys
 
 
