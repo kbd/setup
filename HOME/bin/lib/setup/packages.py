@@ -2,11 +2,14 @@ import logging
 import re
 import runpy
 import shutil
+import subprocess
 from pathlib import Path
 
 from lib import homebrew, setup
+from lib.colors import fg, s
 from lib.mac import defaults
 from lib.utils import read_config_file, run
+from tabulate import tabulate
 
 log = logging.getLogger()
 
@@ -93,31 +96,37 @@ def mac(settings):
     runpy.run_path(path, {'defaults': defaults, 'run': run})
 
 
+def _format_manual_packages_table(packages, dir):
+    items = [
+        [
+            f"{fg.yellow}{key}{s.reset}",
+            params.get('git', params.get('url')), # source
+            f'{fg.green}yes{s.reset}' if Path(dir, key).exists() else f'{fg.red}no{s.reset}'
+        ]
+        for key, params in packages.items()
+    ]
+    headers = [f"{fg.blue}{s.bold}{k}{s.reset}" for k in ["key","source","installed"]]
+    table = tabulate(items, headers=headers, tablefmt="plain")
+    return table
+
+
+def _get_packages_to_install(packages, dir):
+    cmd = ["fzf", "--ansi", "--header-lines=1"]
+    table = _format_manual_packages_table(packages, dir)
+    result = run(cmd, input=table, stdout=subprocess.PIPE, check=False)
+    if result.returncode == 130:  # quit fzf, take no action
+        return []
+
+    keys = [line.split()[0].strip().decode() for line in result.stdout.splitlines()]
+    return keys
+
+
 def manual(settings):
     """Set up software that is more manual.
 
     For example, software that isn't configured with a package manager like
     Homebrew, where an archive needs to be downloaded and unpacked, or a repo
     needs to be checked out from git and a program manually built.
-
-    Conventions:
-        * if git, shallow check out into __deps/{name}
-        * if archive, download into __deps/{name}/{archive_name},
-          extract and process from there
-
-    Note that 'setup' automatically sets the cwd to the root of the repo, so
-    __deps == repo_root/__deps.
-
-    Could be clever and, with git, for example:
-        * check if dir exists
-        * and is a git repo
-        * and remote = the same as is currently specified in the config
-        * if so, git pull
-        * else, blow away and re-get
-
-    Instead, at least to start with, each time just get from scratch.
-
-    For now, just support git.
     """
     def create_symlink(dir, relative_path):
         """Create symlink in ~/bin to binary at dir/relative_path"""
@@ -127,9 +136,22 @@ def manual(settings):
         to = setup.root() / dir / relative_path
         run(['symgr', frm, to])
 
+    packages = settings['packages']
     dir = setup.root() / settings['dir']  # directory to download / checkout to
-    for name, params in settings['packages'].items():
-        log.info(f"Running setup for {name!r}")
+    if not Path(dir, 'symgr').exists():
+        # special-case symgr, since everything else depends on it.
+        # if not installed, we're bootstrapping, so install everything.
+        keys = packages.keys()
+    else:
+        keys = _get_packages_to_install(packages, dir)
+
+    if not keys:
+        return
+
+    log.info(f"Installing packages: {', '.join(keys)}")
+    for key in keys:
+        log.info(f"Installing: {key}")
+        params = packages[key]
         git = params.get('git')  # url of git repository to clone
         tag = params.get('tag')  # tag of git repo to get
         url = params.get('url')  # url of file to download
@@ -137,15 +159,11 @@ def manual(settings):
         bin = params.get('bin')  # path to the executable to install in ~/bin
 
         # remove if exists
-        path = Path(dir, name)
+        path = Path(dir, key)
         assert Path.home() in path.parents, f"path ({path}) must be under $HOME"
         if path.exists():
             log.info(f"Deleting existing directory: {path}")
-            if input(f"rm -rf '{path}' ok? (y/N) ").upper() == 'Y':
-                shutil.rmtree(path)
-            else:
-                log.info(f"Skipping {name}")
-                continue
+            shutil.rmtree(path)
 
         # get something
         if any([git, url]):
@@ -175,4 +193,4 @@ def manual(settings):
                 bin = [bin]
 
             for b in bin:
-                create_symlink(dir, Path(name, b))
+                create_symlink(dir, Path(key, b))
