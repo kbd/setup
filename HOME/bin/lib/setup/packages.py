@@ -111,6 +111,11 @@ def _format_manual_packages_table(packages, dir):
 
 
 def _get_packages_to_install(packages, dir):
+    if not Path(dir, 'symgr').exists():
+        # special-case symgr, since everything else depends on it.
+        # if not installed, we're bootstrapping, so install everything.
+        return packages.keys()
+
     cmd = ["fzf", "--ansi", "--header-lines=1"]
     table = _format_manual_packages_table(packages, dir)
     result = run(cmd, input=table, stdout=subprocess.PIPE, check=False)
@@ -138,12 +143,7 @@ def manual(settings):
 
     packages = settings['packages']
     dir = setup.root() / settings['dir']  # directory to download / checkout to
-    if not Path(dir, 'symgr').exists():
-        # special-case symgr, since everything else depends on it.
-        # if not installed, we're bootstrapping, so install everything.
-        keys = packages.keys()
-    else:
-        keys = _get_packages_to_install(packages, dir)
+    keys = _get_packages_to_install(packages, dir)
 
     if not keys:
         return
