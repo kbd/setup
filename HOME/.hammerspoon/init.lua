@@ -1,9 +1,23 @@
 hs.alert.show("Hammerspoon config loaded")
 
+browser = "Google Chrome"
+editor = "Visual Studio Code"
+terminal = "Kitty"
+
 hyper = {"cmd", "alt", "ctrl", "shift"}
 
 hs.hotkey.bind(hyper, "R", function()
   hs.reload()
+end)
+
+hs.hotkey.bind(hyper, "B", function()
+  hs.application.launchOrFocus(browser)
+end)
+hs.hotkey.bind(hyper, "E", function()
+  hs.application.launchOrFocus(editor)
+end)
+hs.hotkey.bind(hyper, "T", function()
+  hs.application.launchOrFocus(terminal)
 end)
 
 function move(axis, increment)
