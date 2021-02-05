@@ -6,11 +6,11 @@ hs.hotkey.bind(hyper, "R", function()
   hs.reload()
 end)
 
-function move(direction, increment)
+function move(axis, increment)
   return function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
-    f[direction] = f[direction] + increment
+    f[axis] = f[axis] + increment
     win:setFrame(f)
   end
 end
