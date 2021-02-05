@@ -38,3 +38,6 @@ hs.hotkey.bind(hyper, "Right", right, nil, right)
 hs.hotkey.bind(hyper, "Left", left, nil, left)
 hs.hotkey.bind(hyper, "Up", up, nil, up)
 hs.hotkey.bind(hyper, "Down", down, nil, down)
+
+hs.grid.setGrid("9x6")
+hs.hotkey.bind(hyper, "G", hs.grid.show)
