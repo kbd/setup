@@ -113,7 +113,7 @@ alias dm='python3 manage.py'  # "django manage"
 
 # "system"
 alias ercho='>&2 echo'  # echo to stderr
-alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || PROMPT_BARE=1'
+alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias last_command='fc -nl -1'
 alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
 exists() { type "$1" &>/dev/null; } # check if a program exists
