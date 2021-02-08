@@ -22,9 +22,19 @@ def git_switch(args):
     return run(cmd, capture_output=True)
 
 
+def git_switch_show_error(args):
+    result = git_switch(args)
+    if result.returncode:
+        print(result.stderr.decode(), file=sys.stderr, end='')
+
+    return result.returncode
+
+
 def get_git_branch():
-    cmd = ['git', 'symbolic-ref', 'HEAD', '--short']
-    result = run(cmd, capture_output=True, check=True)
+    cmd = ['git', 'symbolic-ref', '--short', 'HEAD']
+    result = run(cmd, capture_output=True)
+    if result.returncode:
+        return None
     return result.stdout.decode().strip()
 
 
@@ -51,6 +61,10 @@ def display_stash_files(files):
 def main(args):
     result = git_switch(args)
     branch = get_git_branch()
+    if not branch:
+        print("git-switch-autostash: not on a branch, not stashing", file=sys.stderr)
+        return git_switch_show_error(args)
+
     if result.returncode == 0:
         return unstash_autostashes(branch)
     else:
@@ -59,10 +73,7 @@ def main(args):
             display_stash_files(files)
             stash_conflicted_files(branch, files)
 
-        result = git_switch(args)
-        if result.returncode:
-            print(result.stderr.decode(), file=sys.stderr, end='')
-        return result.returncode
+        return git_switch_show_error(args)
 
 
 if __name__ == "__main__":
