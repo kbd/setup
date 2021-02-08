@@ -28,7 +28,6 @@
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
     "window.restoreWindows": "preserve",
     "window.closeWhenEmpty": true,
-    "window.zoomLevel": 0,
 
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
@@ -253,5 +252,10 @@
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
     },
-    "zigLanguageClient.path": "zls",
+    "zigLanguageClient.path": "zls", // compiled into path at ~/bin
+
+    "[rust]": {
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+    },
 }
