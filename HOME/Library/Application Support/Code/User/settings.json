@@ -42,7 +42,7 @@
     "scm.alwaysShowRepositories": true,
 
     "workbench.editor.showTabs": true,
-    "workbench.editor.wrapTabs": true,
+    "workbench.editor.wrapTabs": false, // buggy
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.decorations.colors": true,
     "workbench.editor.decorations.badges": true,
