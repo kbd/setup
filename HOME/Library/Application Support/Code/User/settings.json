@@ -1,5 +1,6 @@
 {
-    "editor.fontFamily": "Victor Mono Medium",
+    "editor.fontFamily": "Victor Mono",
+    "editor.fontWeight": 500,
     "editor.fontSize": 13,
     "editor.lineHeight": 15,
     "editor.fontLigatures": true,
@@ -99,7 +100,7 @@
             },
             {
                 "scope": ["string.quoted.docstring.multi.python", "string.quoted.docstring.raw.multi.python"],
-                "settings": {"foreground": "#27bd2f"}
+                "settings": {"foreground": "#27bd2f", "fontStyle": "bold"}
             },
             {
                 "scope": ["entity.name.tag"],
