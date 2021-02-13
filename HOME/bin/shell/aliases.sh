@@ -153,6 +153,7 @@ alias p='gpg'  # pull and show graph of recent changes
 alias g-='gw-' # switch to most recent branch
 alias ga='gaf' # add files with fuzzy finder
 alias gb='gbf' # show/switch branches using fuzzy finder
+alias gbr='gbrf' # show/switch remote branches using fuzzy finder
 
 # check out a repository from the url in the clipboard and cd into it
 gccb() {
