@@ -12,9 +12,16 @@ function bindApp(char, app)
   end)
 end
 
+function bindCmd(char, cmd)
+  hs.hotkey.bind(hyper, char, function()
+    hs.execute(cmd, true)
+  end)
+end
+
 bindApp("B", "Google Chrome")
 bindApp("E", "Visual Studio Code")
 bindApp("T", "Kitty")
+bindCmd("C", "setup edit")
 
 function move(axis, increment)
   return function()
