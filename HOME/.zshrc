@@ -77,12 +77,9 @@ for file in "$HOME"/bin/shell/**/*.(z|)sh; do
 done
 
 # 1st party software config
-PROMPT='$(prompt)'
+PROMPT='$(PROMPT_RETURN_CODE=$? PROMPT_PATH="$(print -P '%~')" PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended} prompt)'
 
 precmd() {
-  export PROMPT_RETURN_CODE=$?
-  export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
-  export PROMPT_PATH="$(print -P '%~')"
   title "$PROMPT_PATH${TABTITLE:+" — $TABTITLE"}"
 }
 tt() { TABTITLE="$@"; }

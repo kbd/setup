@@ -101,8 +101,8 @@ alias ssh='sshrc'  # always sshrc
 jqpager() { command jq -C "$@" | less -FR; }
 alias jq='jqpager'
 alias b='tab'
-alias nu='env -u PROMPT_JOBS -u PROMPT_PATH -u PROMPT_RETURN_CODE -u SHELL nu'
-alias xonsh='env -u PROMPT_JOBS -u PROMPT_PATH -u PROMPT_RETURN_CODE -u SHELL xonsh'
+alias nu='env -u SHELL nu'
+alias xonsh='env -u SHELL xonsh'
 
 # "functions"
 alias dp='cd "$(dirs -pl | fzf)"'
