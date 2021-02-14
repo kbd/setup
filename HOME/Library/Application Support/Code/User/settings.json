@@ -17,6 +17,7 @@
     "editor.renderLineHighlight": "all",
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
+    "editor.wrappingIndent": "indent",
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
