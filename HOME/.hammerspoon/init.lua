@@ -22,6 +22,7 @@ bindApp("B", "Google Chrome")
 bindApp("E", "Visual Studio Code")
 bindApp("T", "Kitty")
 bindCmd("C", "setup edit")
+bindCmd("N", "notes")
 
 function move(axis, increment)
   return function()
