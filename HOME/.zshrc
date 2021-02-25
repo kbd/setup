@@ -77,11 +77,17 @@ for file in "$HOME"/bin/shell/**/*.(z|)sh; do
 done
 
 # 1st party software config
-PROMPT='$(PROMPT_RETURN_CODE=$? PROMPT_PATH="$(print -P '%~')" prompt zsh)'
+PROMPT='$(prompt zsh)'
 
 precmd() {
+  export PROMPT_RETURN_CODE=$?
+  export PROMPT_PATH="$(print -P '%~')"
   export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
   title "$PROMPT_PATH${TABTITLE:+" — $TABTITLE"}"
+}
+preexec(){
+  # unset variables set in precmd
+  unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS
 }
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
