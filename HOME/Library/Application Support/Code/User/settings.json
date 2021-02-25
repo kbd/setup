@@ -260,4 +260,9 @@
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
     },
+
+    "[go]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4,
+    },
 }
