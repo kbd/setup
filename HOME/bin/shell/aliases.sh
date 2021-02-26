@@ -49,8 +49,8 @@ alias llt='ll -t'
 alias llat='ll -At'
 alias lsd='ls -d --indicator-style=none -- */'
 alias lld='ll -d --indicator-style=none -- */'
-cl() { cd -- "$1" && l "${@:2}"; }
-cll() { cd -- "$1" && ll "${@:2}"; }
+cl() { cd -- "${1-$HOME}" && l "${@:2}"; }
+cll() { cd -- "${1-$HOME}" && ll "${@:2}"; }
 et() { exa -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache' --color=always "$@" | less -R; }
 alias et1='et -L1'
 alias et2='et -L2'
