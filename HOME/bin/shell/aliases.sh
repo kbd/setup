@@ -29,6 +29,32 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 _fzf_compgen_path() { fd -tf -HL . "$1"; }
 _fzf_compgen_dir() { fd -td -HL . "$1"; }
 
+# PLATFORM SPECIFIC
+if [[ $PLATFORM == 'Darwin' ]]; then
+  # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+  alias awk=gawk
+  alias sed=gsed
+  alias tar=gtar
+  alias ls='/usr/local/bin/gls -F --color=auto'
+
+  alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
+  alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
+fi
+
+# SHELL SPECIFIC
+if [[ $ZSH_VERSION ]]; then
+  alias -g FZF='$(`last_command` | fzf)'
+  alias -g L='| $PAGER'
+  alias -g H='| head'
+fi
+
+# TERMINAL SPECIFIC
+if [[ $TERM == 'xterm-kitty' ]]; then
+  alias icat="kitty +kitten icat --align=left"
+fi
+
 # directory/navigation
 alias   -- -='cd -'
 alias  -- --='cd -2'
@@ -192,29 +218,3 @@ rls() {
     echo "Unknown shell, can't reload config"
   fi
 }
-
-# PLATFORM SPECIFIC
-if [[ $PLATFORM == 'Darwin' ]]; then
-  # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-  alias awk=gawk
-  alias sed=gsed
-  alias tar=gtar
-  alias ls='/usr/local/bin/gls -F --color=auto'
-
-  alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
-  alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
-fi
-
-# SHELL SPECIFIC
-if [[ $ZSH_VERSION ]]; then
-  alias -g FZF='$(`last_command` | fzf)'
-  alias -g L='| $PAGER'
-  alias -g H='| head'
-fi
-
-# TERMINAL SPECIFIC
-if [[ $TERM == 'xterm-kitty' ]]; then
-  alias icat="kitty +kitten icat --align=left"
-fi
