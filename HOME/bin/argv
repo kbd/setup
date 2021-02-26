@@ -35,6 +35,24 @@ Show how 'python' and 'ipython' process arguments differently:
 
 
 """
-from sys import argv
+import os
+from sys import argv, stderr
 
-print(argv)
+if file := os.environ.get("ARGV_FILE"):
+    file = os.path.expanduser(file)
+
+def myprint(*args, **kwargs):
+    print(*args, **kwargs)
+    if file:
+        with open(file, "a") as f:
+            print(*args, **{**kwargs, "file": f})
+
+vars = {
+    k: v
+    for k, v in os.environ.items()
+    if k.lower().startswith("argv_")
+}
+myprint(f"CWD: {os.getcwd()}", file=stderr)
+if vars:
+    myprint(vars, file=stderr)
+myprint(argv)
