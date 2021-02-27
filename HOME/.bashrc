@@ -25,11 +25,6 @@ else
 fi
 
 if is_remote; then
-  # TODO: bundle other configs like vimrc and inputrc
-  # export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/.vimrc' | source \$MYVIMRC"
-  # bind my keyboard shortcuts
-  # bind -f "$SSHHOME/.sshrc.d/.inputrc"
-
   # unicode character prompt prefix works fine locally but
   # always seems to cause problems on servers, so disable it
   export PROMPT_PREFIX=''
