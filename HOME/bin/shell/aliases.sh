@@ -125,8 +125,6 @@ alias ssh='sshrc'  # always sshrc
 jqpager() { command jq -C "$@" | less -FR; }
 alias jq='jqpager'
 alias b='tab'
-
-# "functions"
 alias dp='cd "$(dirs -pl | fzf)"'
 
 # django
