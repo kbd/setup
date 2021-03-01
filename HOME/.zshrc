@@ -65,7 +65,6 @@ bindkey "\e[3~" delete-char # delete
 
 # 3rd party software config
 eval "$(direnv hook zsh)"
-eval "$(thefuck --alias)"
 eval "$(zoxide init zsh)"
 # pyenv is badly behaved and will repeatedly add itself to the path on initialization
 [[ "$PYENV_SHELL" ]] || eval "$(pyenv init -)"
