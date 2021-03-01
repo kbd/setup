@@ -214,3 +214,9 @@ rls() {
     echo "Unknown shell, can't reload config"
   fi
 }
+
+pyenv() {
+  # pyenv is badly behaved and will repeatedly add itself to the path on initialization
+  [[ "$PYENV_SHELL" ]] || eval "$(command pyenv init -)"
+  pyenv "$@"
+}

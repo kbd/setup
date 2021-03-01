@@ -66,8 +66,6 @@ bindkey "\e[3~" delete-char # delete
 # 3rd party software config
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
-# pyenv is badly behaved and will repeatedly add itself to the path on initialization
-[[ "$PYENV_SHELL" ]] || eval "$(pyenv init -)"
 source "$HOME/.config/fzf/fzf.zsh"
 
 # source after 3rd party config so you can override (eg. aliases) if needed
