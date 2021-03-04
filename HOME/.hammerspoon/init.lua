@@ -2,9 +2,7 @@ hs.alert.show("Hammerspoon config loaded")
 
 hyper = {"cmd", "alt", "ctrl", "shift"}
 
-hs.hotkey.bind(hyper, "R", function()
-  hs.reload()
-end)
+hs.hotkey.bind(hyper, "R", hs.reload)
 
 function bindApp(char, app)
   hs.hotkey.bind(hyper, char, function()
