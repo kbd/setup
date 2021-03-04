@@ -24,18 +24,18 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "left_shift",
+                                        "key_code": "right_shift",
                                         "lazy": true,
                                         "modifiers": [
-                                            "left_command",
-                                            "left_control",
-                                            "left_option"
+                                            "right_command",
+                                            "right_control",
+                                            "right_option"
                                         ]
                                     }
                                 ],
                                 "to_if_alone": [
                                     {
-                                        "key_code": "f13"
+                                        "key_code": "f13" // map to alfred
                                     }
                                 ],
                                 "to_if_held_down": [
