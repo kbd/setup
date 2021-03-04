@@ -1,8 +1,0 @@
-* set keyboard shortcuts, like F19 to Mission Control
-* get ctrl/opt del/backspace deleting whole words. Apparently this is complicated:
-  http://superuser.com/questions/212446/binding-backward-kill-word-to-ctrlw
-* figure out how to fill the built in Mac keyboard shortcuts with the values in
-  'clips'. That way you can get automatic shortcuts in most forms *and* it syncs
-  to iphone.
-* include other type of file support in 'manual', like .tar.gz archives, etc.
-  * allow you to specify a hash: (type, value) tuple to verify the downloaded file
