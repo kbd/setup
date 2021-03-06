@@ -62,6 +62,7 @@ bindkey "\e[1;3C" forward-word # ⌥→
 bindkey "\e[H" beginning-of-line # home
 bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete
+bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 
 # 3rd party software config
 eval "$(direnv hook zsh)"
