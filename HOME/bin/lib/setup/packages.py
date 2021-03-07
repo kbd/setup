@@ -50,15 +50,9 @@ def install_package(name, settings):
         # if the name matches a function in this module, call it and pass settings
         log.debug(f"Found package function for {name}")
         module[name](settings)
-    else:
-        # otherwise, expect a cmd to run
-        run_commands(settings['cmd'])
 
-    # run post-install operations, if present
-    post_install = settings.get('post_install')
-    if post_install:
-        log.info("Running post-install operations")
-        run_commands(post_install)
+    # run any commands provided
+    run_commands(settings.get('cmd', ()))
 
 
 def vscode(settings):

@@ -2,7 +2,7 @@
     'packages': {
         'brew': {
             'bundle': 'conf/Brewfile',
-            'post_install': (
+            'cmd': (
                 # set shell to homebrew'd shell
                 'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',
                 # install fzf
@@ -19,10 +19,10 @@
             ),
         },
         'python': {
-            'cmd': ['pip3', 'install', '--upgrade', '-r', 'conf/requirements.txt'],
-            'post_install': (
+            'cmd': (
+                ['pip3', 'install', '--upgrade', '-r', 'conf/requirements.txt'],
                 'poetry completions zsh > `brew --prefix`/share/zsh/site-functions/_poetry',
-            )
+            ),
         },
         'node': {
             'skip_if_not_requested': True,
@@ -45,8 +45,8 @@
         },
         'cargo': {
             'skip_if_not_requested': True,
-            'cmd': "cat conf/cargo.txt | xargs -t cargo install",
-            'post_install': (
+            'cmd': (
+                "cat conf/cargo.txt | xargs -t cargo install",
                 'broot --set-install-state refused --print-shell-function zsh > ~/bin/shell/3rdparty/br.zsh',
             )
         },
