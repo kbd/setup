@@ -81,7 +81,7 @@ alias et2='et -L2'
 alias et3='et -L3'
 
 # edit/open
-alias edit=\$VISUAL
+alias edit=code
 alias e=edit
 alias e.='e .'
 alias o=open
