@@ -58,9 +58,12 @@
     "workbench.settings.useSplitJSON": true,
     "workbench.editorAssociations": [
         {
-            // disable fancy git rebase gui
             "viewType": "default",
             "filenamePattern": "git-rebase-todo"
+        },
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
         }
     ],
 
