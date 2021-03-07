@@ -35,6 +35,7 @@ def main():
     print("Installing git and Python 3")
     subprocess.check_call(['brew', 'install', 'git'])
     subprocess.check_call(['brew', 'install', 'python'])
+    subprocess.check_call(['pip3', 'install', 'click'])  # required for 'setup'
 
     setup_path = os.path.expanduser('~/setup')
     if os.path.exists(setup_path):
@@ -47,12 +48,9 @@ def main():
     setup_exe = os.path.join(setup_path, 'HOME/bin/setup')
 
     print("Installing all the things")
-    subprocess.check_call([setup_exe, 'brew'])
-    subprocess.check_call([setup_exe, 'manual'])
-    subprocess.check_call([setup_exe, 'packages'])
-    subprocess.check_call([setup_exe, 'symlinks'])
-    subprocess.check_call([setup_exe, 'mac'])
-    subprocess.check_call([setup_exe, 'restart_os_funcs'])
+    subprocess.check_call(
+        [setup_exe, 'brew', 'manual', 'python', 'symlinks', 'mac', 'restart-os-funcs']
+    )
     print("Done installing all the things. Restart your terminal.")
 
 

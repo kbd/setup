@@ -1,5 +1,4 @@
 import logging
-import re
 import runpy
 import shutil
 import subprocess
@@ -14,24 +13,7 @@ from tabulate import tabulate
 log = logging.getLogger()
 
 
-def install_packages(settings, args, **kwargs):
-    log.info("Installing/upgrading packages")
-    filter = kwargs.get('filter') or args.filter
-    for name, settings in settings['packages'].items():
-        if filter and not re.search(filter, name):
-            log.debug(f"Skipping {name}")
-            continue
-
-        if settings.get('skip_if_not_requested') and (
-            not filter or (filter and not re.fullmatch(filter, name))
-        ):
-            log.info(f"Skipping {name}; not specifically requested")
-            continue
-
-        install_package(name, settings)
-
-
-def run_commands(cmd, cwd=None):
+def _run_commands(cmd, cwd=None):
     """Take one or more commands to run as a subprocess.
 
     * 'cmd' be one command or a tuple of commands
@@ -43,8 +25,8 @@ def run_commands(cmd, cwd=None):
     return run(cmd, cwd=cwd)
 
 
-def install_package(name, settings):
-    log.info(f"Installing packages for: {name}")
+def install(name, settings):
+    log.info(f"Setting up: {name}")
     module = globals()
     if name in module:
         # if the name matches a function in this module, call it and pass settings
@@ -52,7 +34,7 @@ def install_package(name, settings):
         module[name](settings)
 
     # run any commands provided
-    run_commands(settings.get('cmd', ()))
+    _run_commands(settings.get('cmd', ()))
 
 
 def vscode(settings):
@@ -178,7 +160,7 @@ def manual(settings):
         # run any build/extract commands
         if cmd:
             log.info(f"Running {cmd}")
-            run_commands(cmd, path)
+            _run_commands(cmd, path)
 
         # symlink any binaries specified to ~/bin
         if bin:
