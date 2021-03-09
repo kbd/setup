@@ -271,7 +271,7 @@
         "editor.tabSize": 4,
     },
     "go.lintOnSave": "file",
-    "go.lintTool":"golangci-lint",
+    "go.lintTool": "golangci-lint",
     "go.lintFlags": [
         "--fast"
     ],
