@@ -2,7 +2,7 @@
 
 # VARS
 if [[ -z "$PATH_SET" ]]; then
-  export PATH="$HOME/bin:$PATH:$HOME/.cargo/bin:$HOME/.nimble/bin"
+  export PATH="$HOME/bin:$PATH:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.nimble/bin"
   export PATH_SET=1
 fi
 export PLATFORM="$(uname)"
@@ -116,7 +116,7 @@ alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yell
 alias fdu='fd -uu'  # fd, but don't ignore any files
 alias fu='fdu'  # fd, but don't ignore any files
 alias tcl='rlwrap tclsh'
-alias yaegi='rlwrap $GOBIN/yaegi'
+alias yaegi='rlwrap yaegi'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias goog='googler -n5 --np'
