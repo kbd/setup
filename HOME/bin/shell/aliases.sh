@@ -126,6 +126,7 @@ jqpager() { command jq -C "$@" | less -FR; }
 alias jq='jqpager'
 alias b='tab'
 alias dp='cd "$(dirs -pl | fzf)"'
+alias dtrx='dtrx --one=inside'
 
 # django
 alias da='django-admin'
