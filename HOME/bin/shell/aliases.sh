@@ -117,6 +117,7 @@ alias fdu='fd -uu'  # fd, but don't ignore any files
 alias fu='fdu'  # fd, but don't ignore any files
 alias tcl='rlwrap tclsh'
 alias yaegi='rlwrap yaegi'
+go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias goog='googler -n5 --np'
