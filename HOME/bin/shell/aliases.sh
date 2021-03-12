@@ -113,8 +113,7 @@ alias d='docker'
 alias hex='hexyl'
 alias grep='grep --color=auto'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
-alias fdu='fd -uu'  # fd, but don't ignore any files
-alias fu='fdu'  # fd, but don't ignore any files
+alias fu='fd -uu'  # fd, but don't ignore any files
 alias tcl='rlwrap tclsh'
 alias yaegi='rlwrap yaegi'
 go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
