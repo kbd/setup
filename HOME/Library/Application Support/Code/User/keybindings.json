@@ -253,11 +253,6 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "shift+enter",
-        "command": "-nim.execSelectionInTerminal",
-        "when": "editorFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'nim'"
-    },
-    {
         "key": "alt+5",
         "command": "editor.action.jumpToBracket",
         "when": "editorTextFocus"
@@ -287,6 +282,11 @@
     },
     {
         "key": "shift+enter",
+        "command": "-nim.execSelectionInTerminal",
+        "when": "editorFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'nim'"
+    },
+    {
+        "key": "shift+enter",
         "command": "-python.execSelectionInTerminal",
         "when": "editorFocus && !findInputFocussed && !python.datascience.ownsSelection && !replaceInputFocussed && editorLangId == 'python'"
     },
@@ -296,9 +296,9 @@
         "when": "editorFocus && !findInputFocussed && !python.datascience.hascodecells && !replaceInputFocussed && editorLangId == 'python'"
     },
     {
-        "key": "shift+ctrl+enter",
-        "command": "jupyter.runcurrentcell",
-        "when": "editorFocus && jupyter.featureenabled && jupyter.hascodecells && !editorHasSelection"
+        "key": "shift+enter",
+        "command": "-python.execSelectionInTerminal",
+        "when": "editorTextFocus && !findInputFocussed && !jupyter.ownsSelection && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'"
     },
     {
         "key": "shift+enter",
@@ -306,14 +306,19 @@
         "when": "editorTextFocus && jupyter.featureenabled && jupyter.ownsSelection && !findInputFocussed && !replaceInputFocussed && editorLangId == 'python'"
     },
     {
-        "key": "ctrl+enter",
-        "command": "jupyter.execSelectionInteractive",
-        "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'python'"
-    },
-    {
         "key": "shift+enter",
         "command": "-python.execSelectionInTerminal",
         "when": "editorTextFocus && !findInputFocussed && !python.datascience.ownsSelection && !replaceInputFocussed && editorLangId == 'python'"
+    },
+    {
+        "key": "shift+ctrl+enter",
+        "command": "jupyter.runcurrentcell",
+        "when": "editorFocus && jupyter.featureenabled && jupyter.hascodecells && !editorHasSelection"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "jupyter.execSelectionInteractive",
+        "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'python'"
     },
     {
         "key": "shift+cmd+u",
