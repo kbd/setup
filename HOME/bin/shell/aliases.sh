@@ -89,7 +89,7 @@ alias o.='o .'
 alias a='o -a'
 
 # personal
-alias notes='mkdir -p ~/notes/ && subl -a ~/notes/'
+alias notes='mkdir -p ~/notes/ && e ~/notes/'
 
 # shortcuts/defaults
 alias dh='dirs -v'
