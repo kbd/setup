@@ -130,6 +130,7 @@ b() {
   local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
   if [[ "$tab" ]]; then kitty @ focus-tab -m "id:$tab"; fi
 }
+alias 1p='eval $(op signin my --session=$OP_SESSION_my)'
 
 # django
 alias da='django-admin'
