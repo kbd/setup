@@ -124,9 +124,12 @@ alias pe=path-extractor
 alias ssh='sshrc'  # always sshrc
 jqpager() { command jq -C "$@" | less -FR; }
 alias jq='jqpager'
-alias b='tab'
 alias dp='cd "$(dirs -pl | fzf)"'
 alias dtrx='dtrx --one=inside'
+b() {
+  local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
+  if [[ "$tab" ]]; then kitty @ focus-tab -m "id:$tab"; fi
+}
 
 # django
 alias da='django-admin'
