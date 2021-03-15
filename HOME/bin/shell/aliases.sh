@@ -87,6 +87,7 @@ alias e.='e .'
 alias o=open
 alias o.='o .'
 alias a='o -a'
+te(){ t "$@" && e "$@"; }
 
 # personal
 alias notes='mkdir -p ~/notes/ && e ~/notes/'
