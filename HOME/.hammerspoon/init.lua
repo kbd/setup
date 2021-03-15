@@ -50,3 +50,15 @@ hs.hotkey.bind(hyper, "Down", down, nil, down)
 
 hs.grid.setGrid("9x6")
 hs.hotkey.bind(hyper, "G", hs.grid.show)
+
+function setlayout()
+  local main = hs.screen.allScreens()[1]:name()
+  local windowLayout = {
+      {"Firefox", nil, main, hs.layout.left30,         nil, nil},
+      {"Code",    nil, main, {x=0.3, y=0, w=0.4, h=1}, nil, nil},
+      {"kitty",   nil, main, hs.layout.right30,        nil, nil},
+  }
+  hs.layout.apply(windowLayout)
+end
+
+hs.hotkey.bind(hyper, "L", setlayout)
