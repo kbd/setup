@@ -10,14 +10,21 @@ function bindApp(char, app)
   end)
 end
 
+function bindAppByUti(char, uti)
+  hs.hotkey.bind(hyper, char, function()
+    local bundleid = hs.application.defaultAppForUTI(uti)
+    hs.application.launchOrFocusByBundleID(bundleid)
+  end)
+end
+
 function bindCmd(char, cmd)
   hs.hotkey.bind(hyper, char, function()
     hs.execute(cmd, true)
   end)
 end
 
-bindApp("B", "Google Chrome")
-bindApp("E", "Visual Studio Code")
+bindAppByUti("B", "public.html")
+bindAppByUti("E", "public.plain-text")
 bindApp("T", "Kitty")
 bindCmd("C", "setup edit")
 bindCmd("N", "notes")
