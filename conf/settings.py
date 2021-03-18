@@ -74,7 +74,7 @@
                 'git': 'https://github.com/kbd/symgr.git',
                 # this command is equivalent to setting 'bin' to 'symgr',
                 # but this is bootstrapping the symlinking done for 'bin'
-                'cmd': 'ln -sf $(setup --root)/3rdparty/symgr/symgr ~/bin/symgr'
+                'cmd': 'ln -sf $(setup root)/3rdparty/symgr/symgr ~/bin/symgr'
             },
             'bak': {
                 'git': 'https://github.com/kbd/bak.git',
