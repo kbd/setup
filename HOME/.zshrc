@@ -21,9 +21,6 @@ export HISTSIZE=50000
 export SAVEHIST=$HISTSIZE
 export HISTFILE="$HOME/.history"
 
-# this behavior of zsh is annoying: https://superuser.com/a/613817/
-ZLE_REMOVE_SUFFIX_CHARS=''
-
 # load LS_COLORS. Needs to precede zsh completion so it can use the same colors.
 eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
 
@@ -31,14 +28,13 @@ eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
 autoload -Uz compinit
 zmodload zsh/complist
 compinit
-
-# remove zsh completion that conflicts with my alias
-# https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
-compdef -d mcd
-
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-bindkey -M menuselect '\e[Z' reverse-menu-complete  # menuselect from complist
+bindkey -M menuselect '\e[Z' reverse-menu-complete # shift tab to go backwards
+
+# turn off bad Zsh defaults
+compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
+ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/
 
 # key binds
 stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
@@ -50,7 +46,6 @@ bindplugin() {
   bindkey "$1" "$2"
 }
 
-# Zsh's built-in ↑ and ↓ leave you at the start of the line instead of the end
 bindplugin "\e[A" up-line-or-beginning-search # ↑ (bash:history-search-backward)
 bindplugin "\e[B" down-line-or-beginning-search # ↓ (bash:history-search-forward)
 bindkey "\e[1;5D" backward-word # ⌃←
@@ -66,7 +61,7 @@ bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^E^E" edit-command-line
 TMPSUFFIX='.zsh' # for syntax highlighting
 
-# 3rd party software config
+# 3rd party config
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 source "$HOME/.config/fzf/fzf.zsh"
@@ -76,7 +71,7 @@ for file in "$HOME"/bin/shell/**/*.(z|)sh; do
   source "$file";
 done
 
-# 1st party software config
+# 1st party config
 PROMPT='$(prompt zsh)'
 
 precmd() {
