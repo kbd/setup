@@ -90,7 +90,8 @@ alias a='o -a'
 te(){ t "$@" && e "$@"; }
 
 # personal
-alias notes='mkdir -p ~/notes/ && e ~/notes/'
+alias notes='te ~/notes/'
+alias nt='te ~/notes/$(date +%Y/%m/%d.txt)'
 
 # shortcuts/defaults
 alias dh='dirs -v'
