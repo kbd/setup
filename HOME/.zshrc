@@ -96,6 +96,7 @@ ttl() { tt "⚡$@⚡"; }
 hash -d P=~/proj
 hash -d S=~/setup
 hash -d H=~S/HOME
+hash -d N=~/notes
 
 # machine-specific config
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
