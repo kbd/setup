@@ -8,7 +8,6 @@ from lib import homebrew, setup
 from lib.colors import fg, s
 from lib.mac import defaults
 from lib.utils import read_config_file, run
-from tabulate import tabulate
 
 log = logging.getLogger()
 
@@ -73,6 +72,7 @@ def mac(settings):
 
 
 def _format_manual_packages_table(packages, dir):
+    import tabulate
     items = [
         [
             f"{fg.yellow}{key}{s.reset}",
@@ -82,7 +82,7 @@ def _format_manual_packages_table(packages, dir):
         for key, params in packages.items()
     ]
     headers = [f"{fg.blue}{s.bold}{k}{s.reset}" for k in ["key","source","installed"]]
-    table = tabulate(items, headers=headers, tablefmt="plain")
+    table = tabulate.tabulate(items, headers=headers, tablefmt="plain")
     return table
 
 
