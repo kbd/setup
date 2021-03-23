@@ -5,6 +5,7 @@ import functools
 import logging
 import os
 import subprocess
+from contextlib import contextmanager
 from pathlib import Path
 
 import click
@@ -37,13 +38,24 @@ def restart_os_funcs():
     restart_os_functions()
 
 
+@contextmanager
+def chdir(dir: Path):
+    original = os.getcwd()
+    os.chdir(dir)
+    try:
+        yield
+    finally:
+        os.chdir(original)
+
+
 @cli.command()
 @click.argument("files", nargs=-1, required=True)
 def bless(files):
     """'Bless' files; "bless" means to put a file on the system somewhere
     under the control of 'setup', i.e. in the repository."""
     for file in files:
-        dest_dir = setup.home() / Path(ORIGINAL_CWD).relative_to(Path.home())
+        with chdir(ORIGINAL_CWD):  # resolve relative paths relative to the original cwd
+            dest_dir = setup.home() / Path(file).resolve().relative_to(Path.home())
         log.debug(f"Ensuring parent destination dir {dest_dir} exists")
         dest_dir.mkdir(parents=True, exist_ok=True)
 
