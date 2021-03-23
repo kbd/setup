@@ -2,6 +2,7 @@ alefragnani.Bookmarks
 AugusteRame.zls-vscode
 bungcip.better-toml
 CoenraadS.bracket-pair-colorizer-2
+crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
 deerawan.vscode-dash
 eamodio.gitlens
