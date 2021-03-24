@@ -177,6 +177,10 @@
         "editor.wordWrap": "bounded",
     },
 
+    "[markdown]": {
+        "editor.wordWrap": "bounded",
+    },
+
     "[typescript]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
