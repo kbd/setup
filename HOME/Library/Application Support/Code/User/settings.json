@@ -5,6 +5,7 @@
     "editor.lineHeight": 15,
     "editor.fontLigatures": true,
     "editor.rulers": [80, 100],
+    "editor.wordWrapColumn": 80,
     "editor.renderWhitespace": "all",
     "editor.tabCompletion": "on",
     "editor.suggest.localityBonus": true,
