@@ -24,8 +24,8 @@ function bindCmd(char, cmd)
 end
 
 bindAppByUti("B", "public.html")
-bindAppByUti("E", "public.plain-text")
-bindApp("T", "Kitty")
+bindAppByUti("T", "public.plain-text")
+bindApp("S", "Kitty")
 bindCmd("C", "setup edit")
 bindCmd("N", "notes")
 
