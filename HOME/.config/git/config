@@ -177,7 +177,8 @@
 	sf = psf
 	r = rebase --rebase-merges
 	ra = rebase --abort
-	rc = rebase --continue
+	rc = !GIT_EDITOR=true git rebase --continue
+	rcn = rebase --continue
 	ri = r -i
 	ric = !git pick-commits | xargs -tI% git ri %~
 	v = revert
