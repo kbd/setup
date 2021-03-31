@@ -163,6 +163,7 @@
 	mc = m --continue
 	mf = m --ff-only
 	mn = m --no-ff
+	mb = !git pick-branch | xargs git mn
 	p = "!f() { if git upstream; then git push \"$@\"; else git push -u \"$@\"; fi }; f" # push, set upstream if necessary
 	# "push --force", requiring confirmation. AFAIK, you ~always want --force-with-lease over plain --force
 	# https://git-scm.com/docs/git-push#Documentation/git-push.txt---no-force-with-lease
