@@ -115,17 +115,26 @@ alias dtrx='dtrx --one=inside'
 alias du='du -h'
 alias dud='du -d0 .'
 alias ercho='>&2 echo'  # echo to stderr
+alias exists='type &>/dev/null' # check if a program exists
 alias fu='fd -uu'  # fd, but don't ignore any files
 alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
 alias hex='hexyl'
+alias is_docker='[[ -f "/.dockerenv" ]]'
+alias is_local='! is_not_local'
+alias is_not_local='is_remote || is_docker'
+alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
+alias is_root='[[ $EUID == 0 ]]'
+alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
 alias jq='jqpager'
 alias map='parallel'
+alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias pe=path-extractor
+alias printv='printf "%q\n"' # v for verbatim
 alias py=ipython
 alias pyc='py -c'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
@@ -140,17 +149,8 @@ b() {
   local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
   if [[ "$tab" ]]; then kitty @ focus-tab -m "id:$tab"; fi
 }
-exists() { type "$1" &>/dev/null; } # check if a program exists
 go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
-is_docker() { [[ -f '/.dockerenv' ]]; }
-is_local() { ! is_not_local; }
-is_not_local() { is_remote || is_docker; }
-is_remote() { [[ $SSH_TTY || $SSH_CLIENT ]]; }
-is_root() { [[ $EUID == 0 ]]; }
-is_su() { [[ $(whoami) != $(logname) ]]; } # if current user != login user
 jqpager() { command jq -C "$@" | less -FR; }
-my_home() { user_home "$(logname)"; }
-printv() { printf '%q\n' "$1"; } # v for verbatim
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 
 # window titles - https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
