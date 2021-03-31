@@ -18,7 +18,7 @@ export PIPENV_SHELL_FANCY=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-export ERL_AFLAGS="-kernel shell_history enabled"  # remember Elixir iex history across sessions
+export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
 export FZF_DEFAULT_COMMAND='fd -tf -HL'
 export FZF_DEFAULT_OPTS='--height 30% --reverse --multi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -96,17 +96,17 @@ alias cat=bat
 alias chn='bat --style=header,numbers'
 alias cn='bat --style=numbers'
 alias cnh='bat --style=header,numbers'
-alias curl='curl -L'  # follow redirects by default
+alias curl='curl -L' # follow redirects by default
 alias d='docker'
 alias da='django-admin'
-alias dm='python3 manage.py'  # "django manage"
+alias dm='python3 manage.py' # "django manage"
 alias dp='cd "$(dirs -pl | fzf)"'
 alias dtrx='dtrx --one=inside'
 alias du='du -h'
 alias dud='du -d0 .'
-alias ercho='>&2 echo'  # echo to stderr
+alias ercho='>&2 echo' # echo to stderr
 alias exists='type &>/dev/null' # check if a program exists
-alias fu='fd -uu'  # fd, but don't ignore any files
+alias fu='fd -uu' # fd, but don't ignore any files
 alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
 alias hex='hexyl'
@@ -129,11 +129,27 @@ alias py=ipython
 alias pyc='py -c'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
-alias ssh='sshrc'  # always sshrc
+alias ssh='sshrc' # always sshrc
 alias tcl='rlwrap tclsh'
 alias wcl='wc -l'
 alias x='chmod +x'
+alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
+alias title-tab='printf "\e]1;%s\a"'
+alias title-win='printf "\e]2;%s\a"'
 alias yaegi='rlwrap yaegi'
+
+# git: create aliases for all short (<= 4 character) git aliases
+for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
+  # shellcheck disable=SC2139
+  alias "g$gitalias=g $gitalias"
+done
+alias g=git
+alias s='gs' # status
+alias p='gpg' # pull and show graph of recent changes
+alias g-='gw-' # switch to most recent branch
+alias ga='gaf' # add files with fuzzy finder
+alias gb='gbf' # show/switch branches using fuzzy finder
+alias gbr='gbrf' # show/switch remote branches using fuzzy finder
 
 b() {
   local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
@@ -142,26 +158,6 @@ b() {
 go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
 jqpager() { command jq -C "$@" | less -FR; }
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
-
-# window titles - https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
-alias title='printf "\e]0;%s\a"'  # both window and tab
-alias title-tab='printf "\e]1;%s\a"'
-alias title-win='printf "\e]2;%s\a"'
-
-# git
-# create aliases for all short (<= 4 character) git aliases
-for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
-  # shellcheck disable=SC2139
-  alias "g$gitalias=g $gitalias"
-done
-
-alias g=git
-alias s='gs' # status
-alias p='gpg' # pull and show graph of recent changes
-alias g-='gw-' # switch to most recent branch
-alias ga='gaf' # add files with fuzzy finder
-alias gb='gbf' # show/switch branches using fuzzy finder
-alias gbr='gbrf' # show/switch remote branches using fuzzy finder
 
 # check out a repository from the url in the clipboard and cd into it
 gccb() {
