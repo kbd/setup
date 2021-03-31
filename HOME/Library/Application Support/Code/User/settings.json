@@ -281,4 +281,11 @@
     "go.lintFlags": [
         "--fast"
     ],
+    "go.coverOnSingleTest": true,
+    "go.coverOnSingleTestFile": true,
+    "go.coverageDecorator": {
+        "type": "gutter",
+        "coveredGutterStyle": "blockgreen",
+        "uncoveredGutterStyle": "blockred"
+    },
 }
