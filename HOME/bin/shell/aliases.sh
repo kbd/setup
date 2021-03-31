@@ -100,78 +100,63 @@ nt(){
 }
 
 # shortcuts/defaults
-alias dh='dirs -v'
-alias wcl='wc -l'
-alias du='du -h'
-alias dud='du -d0 .'
-alias ncdu='ncdu --color=dark'
-alias curl='curl -L'  # follow redirects by default
-alias map='parallel'
-alias vless=vimpager
+alias 1p='eval $(op signin my --session=$OP_SESSION_my)'
 alias c=cat
 alias cat=bat
-alias cn='bat --style=numbers'
 alias chn='bat --style=header,numbers'
+alias cn='bat --style=numbers'
 alias cnh='bat --style=header,numbers'
+alias curl='curl -L'  # follow redirects by default
+alias d='docker'
+alias da='django-admin'
+alias dm='python3 manage.py'  # "django manage"
+alias dp='cd "$(dirs -pl | fzf)"'
+alias dtrx='dtrx --one=inside'
+alias du='du -h'
+alias dud='du -d0 .'
+alias ercho='>&2 echo'  # echo to stderr
+alias fu='fd -uu'  # fd, but don't ignore any files
+alias goog='googler -n5 --np'
+alias grep='grep --color=auto'
+alias hex='hexyl'
+alias jq='jqpager'
+alias map='parallel'
+alias ncdu='ncdu --color=dark'
+alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
+alias node="env NODE_NO_READLINE=1 rlwrap node"
+alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
+alias pe=path-extractor
 alias py=ipython
 alias pyc='py -c'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
-alias x='chmod +x'
-alias d='docker'
-alias hex='hexyl'
-alias grep='grep --color=auto'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
-alias fu='fd -uu'  # fd, but don't ignore any files
-alias tcl='rlwrap tclsh'
-alias yaegi='rlwrap yaegi'
-go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
-alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
-alias node="env NODE_NO_READLINE=1 rlwrap node"
-alias goog='googler -n5 --np'
-alias pe=path-extractor
 alias ssh='sshrc'  # always sshrc
-jqpager() { command jq -C "$@" | less -FR; }
-alias jq='jqpager'
-alias dp='cd "$(dirs -pl | fzf)"'
-alias dtrx='dtrx --one=inside'
+alias tcl='rlwrap tclsh'
+alias wcl='wc -l'
+alias x='chmod +x'
+alias yaegi='rlwrap yaegi'
+
 b() {
   local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
   if [[ "$tab" ]]; then kitty @ focus-tab -m "id:$tab"; fi
 }
-alias 1p='eval $(op signin my --session=$OP_SESSION_my)'
-
-# django
-alias da='django-admin'
-alias dm='python3 manage.py'  # "django manage"
-
-# "system"
-alias ercho='>&2 echo'  # echo to stderr
-alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
-alias last_command='fc -nl -1'
-alias history_unique="history | sed 's/.*\\] //' | sort | uniq"  # because bash's history is abominable
 exists() { type "$1" &>/dev/null; } # check if a program exists
-printv() { printf '%q\n' "$1"; } # v for verbatim
-is_remote() { [[ $SSH_TTY || $SSH_CLIENT ]]; }
+go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
 is_docker() { [[ -f '/.dockerenv' ]]; }
-is_not_local() { is_remote || is_docker; }
 is_local() { ! is_not_local; }
-is_su() { [[ $(whoami) != $(logname) ]]; } # if current user != login user
+is_not_local() { is_remote || is_docker; }
+is_remote() { [[ $SSH_TTY || $SSH_CLIENT ]]; }
 is_root() { [[ $EUID == 0 ]]; }
-user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
+is_su() { [[ $(whoami) != $(logname) ]]; } # if current user != login user
+jqpager() { command jq -C "$@" | less -FR; }
 my_home() { user_home "$(logname)"; }
+printv() { printf '%q\n' "$1"; } # v for verbatim
+user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 
-# window titles
-# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#s3
+# window titles - https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 alias title='printf "\e]0;%s\a"'  # both window and tab
-alias tabtitle='printf "\e]1;%s\a"'
-alias wintitle='printf "\e]2;%s\a"'
-
-# http://invisible-island.net/xterm/xterm.faq.html
-# http://www.opensource.apple.com/source/X11apps/X11apps-30.1/xterm/xterm-251/ctlseqs.txt
-# http://stackoverflow.com/questions/4471278/how-to-capture-the-title-of-a-terminal-window-in-bash-using-ansi-escape-sequence
-# I think these only work on linux, can't test atm
-alias getwintitle='printf "\e[21t"'
-alias gettabtitle='printf "\e[20t"'
+alias title-tab='printf "\e]1;%s\a"'
+alias title-win='printf "\e]2;%s\a"'
 
 # git
 # create aliases for all short (<= 4 character) git aliases
@@ -181,8 +166,8 @@ for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
 done
 
 alias g=git
-alias s='gs'   # status
-alias p='gpg'  # pull and show graph of recent changes
+alias s='gs' # status
+alias p='gpg' # pull and show graph of recent changes
 alias g-='gw-' # switch to most recent branch
 alias ga='gaf' # add files with fuzzy finder
 alias gb='gbf' # show/switch branches using fuzzy finder

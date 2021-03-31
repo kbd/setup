@@ -46,7 +46,5 @@ alias sudosu="export PROMPT_COMMAND='source $SELF; $PROMPT_COMMAND' && sudo -E s
 
 # override prompt precmd (prompt.sh)
 _prompt_precmd() {
-  # set tab title to the current directory
-  # http://tldp.org/HOWTO/Xterm-Title-4.html
-  echo -n "$eo$(tabtitle '\w')$ec"
+  echo -n "$eo$(title '\w')$ec"
 }
