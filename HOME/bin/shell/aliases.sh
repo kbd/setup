@@ -89,16 +89,6 @@ alias o.='o .'
 alias a='o -a'
 te(){ t "$@" && e "$@"; }
 
-# personal
-alias notes='te ~/notes/'
-# alias nt='te ~/notes/$(date +%Y/%m/%d.txt)'
-nt(){
-  local y="$(if [[ $3 ]]; then printf %02d $3; else echo %Y; fi)"
-  local m="$(if [[ $2 ]]; then printf %02d $2; else echo %m; fi)"
-  local d="$(if [[ $1 ]]; then printf %02d $1; else echo %d; fi)"
-  te ~/notes/$(date +$y/$m/$d.txt)
-}
-
 # shortcuts/defaults
 alias 1p='eval $(op signin my --session=$OP_SESSION_my)'
 alias c=cat
@@ -217,4 +207,14 @@ pyenv() {
   # pyenv is badly behaved and will repeatedly add itself to the path on initialization
   [[ "$PYENV_SHELL" ]] || eval "$(command pyenv init -)"
   pyenv "$@"
+}
+
+# personal
+alias notes='te ~/notes/'
+# alias nt='te ~/notes/$(date +%Y/%m/%d.txt)'
+nt(){
+  local y="$(if [[ $3 ]]; then printf %02d $3; else echo %Y; fi)"
+  local m="$(if [[ $2 ]]; then printf %02d $2; else echo %m; fi)"
+  local d="$(if [[ $1 ]]; then printf %02d $1; else echo %d; fi)"
+  te ~/notes/$(date +$y/$m/$d.txt)
 }
