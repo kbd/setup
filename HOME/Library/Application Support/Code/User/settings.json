@@ -253,6 +253,7 @@
         "editor.wordBasedSuggestions": true,
         "editor.acceptSuggestionOnEnter": "on",
     },
+    "elixirLS.suggestSpecs": false,
 
     "[nim]": {
         "editor.formatOnSave": true,
