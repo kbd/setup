@@ -2,6 +2,7 @@
 *~
 __*
 .DS_Store
+.*.swp
 .git/
 .vscode/
 .envrc
