@@ -2,6 +2,7 @@
 # options
 setopt auto_cd # cd to the directory by executing its name
 setopt prompt_subst # execute the contents of PROMPT
+setopt interactive_comments # allows a comment after a command
 
 # directory stacks
 # http://zsh.sourceforge.net/Intro/intro_6.html
@@ -65,6 +66,8 @@ TMPSUFFIX='.zsh' # for syntax highlighting
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 source "$HOME/.config/fzf/fzf.zsh"
+typeset -A ZSH_HIGHLIGHT_STYLES # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
+ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
