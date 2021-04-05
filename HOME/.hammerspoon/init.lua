@@ -50,7 +50,7 @@ down = move("y", 10)
 
 bindAppByUti("B", "public.html")
 bindAppByUti("T", "public.plain-text")
-bindApp("S", "Kitty")
+bindApp("S", "kitty")
 bindCmd("C", "setup edit")
 bindCmd("N", "notes")
 hs.grid.setGrid("9x6")
