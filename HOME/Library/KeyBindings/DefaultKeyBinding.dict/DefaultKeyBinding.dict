@@ -1,4 +1,11 @@
 {
+  /* make home/end, shift+home/end work properly */
+  "\UF729" = "moveToBeginningOfLine:";
+  "\UF72B" = "moveToEndOfLine:";
+  "$\UF729" = "moveToBeginningOfLineAndModifySelection:";
+  "$\UF72B" = "moveToEndOfLineAndModifySelection:";
+
+  /* fix cmd+ctrl left/right/down */
   "^@\UF701" = "noop:";
   "^@\UF702" = "noop:";
   "^@\UF703" = "noop:";
