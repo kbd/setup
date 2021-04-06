@@ -43,6 +43,21 @@ function setlayout()
   hs.layout.apply(windowLayout)
 end
 
+function setWindowFraction(app, window, num, den, screen)
+  local windowLayout = {
+    {app, window, screen, {x=(num-1)/den, y=0, w=1/den, h=1}, nil, nil},
+  }
+  hs.layout.apply(windowLayout)
+end
+
+function moveActiveWindow(num, den, screen)
+  return function()
+    local app = hs.application.frontmostApplication()
+    local window = hs.window.focusedWindow()
+    setWindowFraction(app, window, num, den, screen)
+  end
+end
+
 right = move("x", 10)
 left = move("x", -10)
 up = move("y", -10)
@@ -60,3 +75,8 @@ hs.hotkey.bind(hyper, "Right", right, nil, right)
 hs.hotkey.bind(hyper, "Left", left, nil, left)
 hs.hotkey.bind(hyper, "Up", up, nil, up)
 hs.hotkey.bind(hyper, "Down", down, nil, down)
+hs.hotkey.bind(hyper, "1", moveActiveWindow(1, 2))
+hs.hotkey.bind(hyper, "2", moveActiveWindow(2, 2))
+hs.hotkey.bind(hyper, "3", moveActiveWindow(1, 3))
+hs.hotkey.bind(hyper, "4", moveActiveWindow(2, 3))
+hs.hotkey.bind(hyper, "5", moveActiveWindow(3, 3))
