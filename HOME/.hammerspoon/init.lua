@@ -36,9 +36,9 @@ end
 function setlayout()
   local main = hs.screen.allScreens()[1]:name()
   local windowLayout = {
-      {"Firefox", nil, main, {x=0,     y=0, w=0.275, h=1}, nil, nil},
-      {"Code",    nil, main, {x=0.275, y=0, w=0.5,   h=1}, nil, nil},
-      {"kitty",   nil, main, {x=0.775, y=0, w=0.225, h=1}, nil, nil},
+    {"Firefox", nil, main, {x=0,     y=0, w=0.275, h=1}, nil, nil},
+    {"Code",    nil, main, {x=0.275, y=0, w=0.5,   h=1}, nil, nil},
+    {"kitty",   nil, main, {x=0.775, y=0, w=0.225, h=1}, nil, nil},
   }
   hs.layout.apply(windowLayout)
 end
