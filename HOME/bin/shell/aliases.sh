@@ -39,6 +39,9 @@ if [[ $PLATFORM == 'Darwin' ]]; then
 
   alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
+
+  alias switch-output="SwitchAudioSource -a -t output | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t output -s '%'"
+  alias switch-input="SwitchAudioSource -a -t input | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t input -s '%'"
 fi
 
 # SHELL SPECIFIC

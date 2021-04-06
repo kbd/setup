@@ -58,6 +58,40 @@ function moveActiveWindow(num, den, screen)
   end
 end
 
+function inspect(value)
+  hs.alert.show(hs.inspect(value))
+end
+
+function fuzzy(choices, func)
+  local chooser = hs.chooser.new(func)
+  chooser:choices(choices)
+  chooser:width(25)
+  chooser:show()
+end
+
+function showAudioFuzzy()
+  local devices = hs.audiodevice.allDevices()
+  local choices = {}
+  for i=1, #devices do
+    choices[i] = {
+      text = devices[i]:name(),
+      uid = devices[i]:uid(),
+      subText = devices[i]:isOutputDevice() and "output" or "input"
+    }
+  end
+  fuzzy(choices, selectAudio)
+end
+
+function selectAudio(audio)
+  device = hs.audiodevice.findDeviceByUID(audio.uid)
+  hs.alert.show("Setting "..audio.subText.." device: "..device:name())
+  if device:isOutputDevice() then
+    device:setDefaultOutputDevice()
+  else
+    device:setDefaultInputDevice()
+  end
+end
+
 right = move("x", 10)
 left = move("x", -10)
 up = move("y", -10)
@@ -80,3 +114,4 @@ hs.hotkey.bind(hyper, "2", moveActiveWindow(2, 2))
 hs.hotkey.bind(hyper, "3", moveActiveWindow(1, 3))
 hs.hotkey.bind(hyper, "4", moveActiveWindow(2, 3))
 hs.hotkey.bind(hyper, "5", moveActiveWindow(3, 3))
+hs.hotkey.bind(hyper, "A", showAudioFuzzy)
