@@ -100,7 +100,6 @@ cask "appcleaner"
 cask "arq-cloud-backup"
 cask "caffeine"
 cask "coconutbattery"
-cask "cyberduck"
 cask "dash"
 cask "dbeaver-community"
 cask "docker"
@@ -136,6 +135,7 @@ cask "font-fantasque-sans-mono"
 cask "font-victor-mono"
 
 mas "Clear", id: 504544917
+mas "Cyberduck", id: 409222199
 mas "Fantastical", id: 975937182
 mas "Horo", id: 1437226581
 mas "Tweetbot", id: 1384080005
