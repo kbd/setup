@@ -122,7 +122,7 @@ caffeine['ActivateOnLaunch'] = False
 caffeine['SuppressLaunchMessage'] = True
 
 # startup items - https://apple.stackexchange.com/a/310502/
-required_login_apps = {'SpotMenu', 'Flux', 'Alfred 4', 'Horo', 'Caffeine'}
+required_login_apps = {'SpotMenu', 'Flux', 'Alfred 4', 'Horo', 'Caffeine', 'Hammerspoon'}
 current_login_apps = set(
     filter(None,
         run(['osascript', '-e' 'tell application "System Events" to get the name of every login item'], cap='stdout').strip().split(', ')
