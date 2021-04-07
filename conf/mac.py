@@ -108,14 +108,6 @@ defaults.g['NSQuitAlwaysKeepsWindows'] = True
 # zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
 defaults['com.apple.universalaccess']['closeViewScrollWheelToggle'] = True
 
-flycut = defaults['com.generalarcade.flycut']
-# shortcut to ctrl+cmd v
-flycut["ShortcutRecorder mainHotkey"] = {'keyCode': 47, 'modifierFlags': 1310720}
-flycut['loadOnStartup'] = 1
-flycut['pasteMovesToTop'] = 1
-flycut['removeDuplicates'] = 1
-flycut['savePreference'] = 2  # "after each clip"
-
 iterm = defaults['com.googlecode.iterm2']
 iterm['PrefsCustomFolder'] = '~/.config/iterm2'
 iterm['LoadPrefsFromCustomFolder'] = True
@@ -130,7 +122,7 @@ caffeine['ActivateOnLaunch'] = False
 caffeine['SuppressLaunchMessage'] = True
 
 # startup items - https://apple.stackexchange.com/a/310502/
-required_login_apps = {'Flycut', 'SpotMenu', 'Flux', 'Alfred 4', 'Horo', 'Caffeine'}
+required_login_apps = {'SpotMenu', 'Flux', 'Alfred 4', 'Horo', 'Caffeine'}
 current_login_apps = set(
     filter(None,
         run(['osascript', '-e' 'tell application "System Events" to get the name of every login item'], cap='stdout').strip().split(', ')
