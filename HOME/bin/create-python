@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -Eeuxo pipefail
+
+mkdir "$1" && cd "$1"
+
+poetry init \
+  --no-interaction \
+  --name="$1" \
+  --author="$(git config --get --global user.name)" \
+  --dev-dependency=black \
+  --dev-dependency=ipython \
+  --dev-dependency=mypy \
+  --dev-dependency=pylint \
+  --dev-dependency=pytest \
+
+poetry install
+
+echo "layout poetry" > .envrc
+direnv allow
+
+git init
+git add --all
