@@ -10,24 +10,40 @@ import sys
 
 
 def usage():
-    print("f [delim] index[,index2,...]")
+    print("f [delim] index[,index2,...] (index is int, or Python-like slice: eg 0:10:2)")
+
+
+def parse_index(index):
+    result = []
+    for items in index.split(','):
+        range_ = items.split(':')
+        if len(range_) > 3:
+            print(f"Invalid slice: '{range_}'", file=sys.stderr)
+            continue
+
+        if len(range_) == 1:  # no range
+            result.append(int(*range_))
+        else:
+            result.append(slice(*(int(i) if i else None for i in range_)))
+
+    return result
 
 
 def main(args):
-    if len(args) < 2 or len(args) > 3:
+    if not 2 <= len(args) <= 3:
         usage()
         sys.exit(1)
-    elif len(args) == 2:
-        delim, index = None, args[1]
-    elif len(args) == 3:
-        delim, index = args[1:3]
 
-    index = list(map(int, index.split(',')))
-    for line in fileinput.input(files=[]):
+    delim, index = [None] * (3 - len(args)) + args[1:]
+    index = parse_index(index)
+    for line in fileinput.input('-'):
         parts = line.rstrip().split(delim)
         for i in index:
             try:
-                print(parts[i])
+                if isinstance(i, int):
+                    print(parts[i])
+                else:
+                    print(*parts[i])
             except IndexError:
                 print()
 
