@@ -18,40 +18,57 @@ def parse_index(index):
     for items in index.split(','):
         range_ = items.split(':')
         if len(range_) > 3:
-            print(f"Invalid slice: '{range_}'", file=sys.stderr)
-            continue
+            print(f"Invalid slice: '{items}'", file=sys.stderr)
+            return None
 
-        if len(range_) == 1:  # no range
-            result.append(int(*range_))
-        else:
-            result.append(slice(*(int(i) if i else None for i in range_)))
+        try:
+            if len(range_) == 1:  # no range
+                result.append(int(*range_))
+            else:
+                result.append(slice(*(int(i) if i else None for i in range_)))
+        except Exception as e:
+            print(e, file=sys.stderr)
+            return None
 
     return result
+
+
+def print_parts(parts, index):
+    for i in index:
+        try:
+            if isinstance(i, int):
+                print(parts[i])
+            else:
+                for p in parts[i]:
+                    print(p)
+        except IndexError:
+            print()
 
 
 def main(args):
     if not 2 <= len(args) <= 3:
         usage()
-        sys.exit(1)
+        return 1
 
     delim, index = [None] * (3 - len(args)) + args[1:]
-    index = parse_index(index)
-    for line in fileinput.input('-'):
-        parts = line.rstrip().split(delim)
-        for i in index:
-            try:
-                if isinstance(i, int):
-                    print(parts[i])
-                else:
-                    print(*parts[i])
-            except IndexError:
-                print()
+    if not (index := parse_index(index)):
+        return 1
+
+    if delim == '\n':
+        # note: reads all of stdin!
+        input = [sys.stdin.read().rstrip().splitlines()]
+    else:
+        input = (line.rstrip().split(delim) for line in fileinput.input('-'))
+
+    for parts in input:
+        print_parts(parts, index)
 
 
 if __name__ == "__main__":
     try:
-        main(sys.argv)
+        result = main(sys.argv)
         sys.stdout.flush()
+        sys.exit(result)
     except (KeyboardInterrupt, BrokenPipeError):
         # https://docs.python.org/3/library/signal.html#note-on-sigpipe
         devnull = os.open(os.devnull, os.O_WRONLY)
