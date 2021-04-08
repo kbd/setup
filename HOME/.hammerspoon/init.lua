@@ -83,7 +83,7 @@ function showAudioFuzzy()
       active = devices[i]:uid() == active_output:uid()
       subtext = "output"
     else
-      active = devices[i]:uid() ~= active_input:uid()
+      active = devices[i]:uid() == active_input:uid()
       subtext = "input"
     end
     if active then subtext = subtext .. " (active)" end
