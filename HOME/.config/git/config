@@ -48,16 +48,12 @@
 	features = side-by-side line-numbers decorations
 	whitespace-error-style = 22 reverse
 	syntax-theme = OneHalfDark
-
-[delta "line-numbers"]
 	line-numbers-zero-style = white
 	line-numbers-plus-style = green
 	line-numbers-minus-style = red
-
-[delta "decorations"]
 	commit-decoration-style = bold blue box ul
-	file-style = bold yellow ul
-	file-decoration-style = none
+	file-style = brightmagenta
+	file-decoration-style = magenta box
 
 [color "diff"]
 	meta = yellow
