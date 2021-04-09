@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+bundle="${1:-}"
+
+if [[ -z "$bundle" ]]; then
+  echo >&2 "Must specify brew bundle file"
+  exit 1
+fi
+
+if which brew > /dev/null; then
+  echo "Confirmed Homebrew is installed"
+else
+  echo "Installing Homebrew"
+  # command from https://brew.sh/
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+echo "Ensuring command line tools are installed"
+if ! xcode-select --install; then
+  echo "Command line tools are installed"
+else
+  echo "Installing command line tools. Hit enter when installer is finished, or ctrl+c to quit "
+  read
+fi
+
+echo "Updating Homebrew"
+brew update
+
+echo "Executing brew bundle"
+brew bundle -v --file="$bundle"
+
+echo "Running cleanup"
+HOMEBREW_CLEANUP_MAX_AGE_DAYS=0 brew cleanup -s
