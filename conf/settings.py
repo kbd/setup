@@ -1,6 +1,6 @@
 {
     'brew': {
-        'bundle': 'conf/Brewfile',
+        'exec': 'from lib import homebrew; homebrew.workflow("conf/Brewfile")',
         'cmd': (
             # set shell to homebrew'd shell
             'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',
@@ -46,7 +46,7 @@
         )
     },
     'mac': {
-        'path': 'conf/mac.py'
+        'exec': 'import runpy; runpy.run_path("conf/mac.py")'
     },
     'vscode': {
         'extensions': 'conf/vscode.txt',

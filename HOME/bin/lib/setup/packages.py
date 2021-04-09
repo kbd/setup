@@ -1,10 +1,9 @@
 import logging
-import runpy
 import shutil
 import subprocess
 from pathlib import Path
 
-from lib import homebrew, setup
+from lib import setup
 from lib.colors import fg, s
 from lib.utils import read_config_file, run
 
@@ -30,8 +29,13 @@ def install(name, settings):
         log.debug(f"Found package function for {name}")
         func(settings)
 
-    # run any commands provided
-    _run_commands(settings.get('cmd', ()))
+    if code := settings.get('exec'):
+        log.debug(f"Executing: {code}")
+        exec(code)
+
+    if cmd := settings.get('cmd'):
+        log.debug(f"Running: {cmd}")
+        _run_commands(cmd)
 
 
 def vscode(settings):
@@ -57,14 +61,6 @@ def vscode(settings):
     # report any extensions that are installed that aren't in source control
     if unexpected := current_extensions - expected_extensions:
         log.info(f"The following extensions are installed but not in source control: {fmt(unexpected)}")
-
-
-def brew(settings):
-    homebrew.workflow(settings['bundle'])
-
-
-def mac(settings):
-    runpy.run_path(settings['path'])
 
 
 def _format_manual_packages_table(packages, dir):
