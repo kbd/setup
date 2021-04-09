@@ -14,6 +14,7 @@ ionutvmi.spacegray-vscode
 JakeBecker.elixir-ls
 johnpapa.vscode-peacock
 kosz78.nim
+matklad.rust-analyzer
 mechatroner.rainbow-csv
 ms-azuretools.vscode-docker
 ms-python.python
@@ -22,7 +23,6 @@ ms-vscode.cpptools
 ms-vsliveshare.vsliveshare-pack
 msjsdiag.debugger-for-chrome
 pnp.polacode
-rust-lang.rust
 ryanluker.vscode-coverage-gutters
 stkb.rewrap
 tiehuis.zig
