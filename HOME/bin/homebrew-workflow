@@ -23,7 +23,7 @@ if ! xcode-select --install; then
   echo "Command line tools are installed"
 else
   echo "Installing command line tools. Hit enter when installer is finished, or ctrl+c to quit "
-  read
+  read -r
 fi
 
 echo "Updating Homebrew"
