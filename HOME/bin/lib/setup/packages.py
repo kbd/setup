@@ -6,7 +6,6 @@ from pathlib import Path
 
 from lib import homebrew, setup
 from lib.colors import fg, s
-from lib.mac import defaults
 from lib.utils import read_config_file, run
 
 log = logging.getLogger()
@@ -26,11 +25,10 @@ def _run_commands(cmd, cwd=None):
 
 def install(name, settings):
     log.info(f"Setting up: {name}")
-    module = globals()
-    if name in module:
+    if func := globals().get(name):
         # if the name matches a function in this module, call it and pass settings
         log.debug(f"Found package function for {name}")
-        module[name](settings)
+        func(settings)
 
     # run any commands provided
     _run_commands(settings.get('cmd', ()))
@@ -66,9 +64,7 @@ def brew(settings):
 
 
 def mac(settings):
-    path = settings['path']
-    log.info(f"Running {path}")
-    runpy.run_path(path, {'defaults': defaults, 'run': run})
+    runpy.run_path(settings['path'])
 
 
 def _format_manual_packages_table(packages, dir):

@@ -1,8 +1,5 @@
-# type: ignore
-
-# silence linter errors
-defaults = defaults
-run = run
+from lib.mac import defaults
+from lib.utils import run
 
 ### trackpad settings ###
 for key in (
