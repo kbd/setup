@@ -1,7 +1,7 @@
 {
     'brew': {
         'cmd': (
-            'HOME/bin/homebrew-workflow conf/Brewfile',
+            ['HOME/bin/homebrew-workflow', 'conf/Brewfile'],
             # set shell to homebrew'd shell
             'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',
             # install fzf
