@@ -53,12 +53,12 @@
     },
     'root': {
         'help': "Print the path of the setup dir",
-        # this works because this is eval'd in the context of the 'setup' module
-        'cmd': ['echo', root()]
+        # setup module is available because exec'd in context of packages.py
+        'exec': 'print(setup.root())'
     },
     'home': {
         'help': "Print the path of the setup HOME dir",
-        'cmd': ['echo', home()]
+        'exec': 'print(setup.home())'
     },
     'edit': {
         'help': "Open the setup directory in your editor",
