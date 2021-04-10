@@ -48,6 +48,10 @@
     'mac': {
         'exec': 'import runpy; runpy.run_path("conf/mac.py")'
     },
+    'restart_os_funcs': {
+        'help': "Restart Finder, Menubar, Dock, etc.",
+        'exec': 'import lib.mac; lib.mac.restart_os_functions()'
+    },
     'vscode': {
         'extensions': 'conf/vscode.txt',
     },

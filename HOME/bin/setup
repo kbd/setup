@@ -32,12 +32,6 @@ def debug():
     code.interact(local=local)
 
 
-@cli.command()
-def restart_os_funcs():
-    """Restart Finder, Menubar, Dock, etc."""
-    restart_os_functions()
-
-
 @contextmanager
 def chdir(dir: Path):
     original = os.getcwd()
