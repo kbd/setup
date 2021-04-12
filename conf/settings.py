@@ -68,9 +68,6 @@
         'help': "Open the setup directory in your editor",
         'cmd': ['bash', '-ic', 'edit .']
     },
-    'symlinks': {
-        'cmd': 'symgr ~ "$(setup home)"'
-    },
     'manual': {
         'dir': '3rdparty',  # 3rdparty is already in gitignore
         'packages': {

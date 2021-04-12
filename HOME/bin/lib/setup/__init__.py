@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 SETTINGS_PATH = 'conf/settings.py'
@@ -32,3 +33,7 @@ def home_path(path):
 def tilde_path(path):
     """Given a path within setup's HOME dir, return the path relative to ~"""
     return Path('~') / Path(path).relative_to(home())
+
+
+def is_debug():
+    return logging.getLogger().level == logging.DEBUG
