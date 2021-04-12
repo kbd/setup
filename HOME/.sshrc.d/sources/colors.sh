@@ -1,1 +1,0 @@
-../../bin/shell/colors.sh
