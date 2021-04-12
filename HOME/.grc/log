@@ -1,0 +1,8 @@
+regexp=(DEBUG)|(INFO)|(WARNING)|(ERROR)
+colours=default,blue,green,yellow,red
+-
+regexp=[\W]+
+colours=cyan
+-
+regexp=/[\w/\.]+
+colours=magenta
