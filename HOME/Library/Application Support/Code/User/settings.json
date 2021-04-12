@@ -273,7 +273,7 @@
 
     "[go]": {
         "editor.insertSpaces": false,
-        "editor.tabSize": 4,
+        "editor.tabSize": 3,
     },
     "go.lintOnSave": "file",
     "go.lintTool": "golangci-lint",
