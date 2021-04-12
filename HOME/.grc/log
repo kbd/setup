@@ -4,5 +4,5 @@ colours=default,blue,green,yellow,red
 regexp=[\W]+
 colours=cyan
 -
-regexp=/[\w/\.]+
+regexp=/[-\w/\.]+
 colours=magenta
