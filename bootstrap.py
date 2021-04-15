@@ -33,9 +33,9 @@ def main():
         subprocess.check_call(HOMEBREW_INSTALL_CMD, shell=True, executable='/bin/bash')
 
     print("Installing git and Python 3")
-    subprocess.check_call(['brew', 'install', 'git'])
-    subprocess.check_call(['brew', 'install', 'python'])
-    subprocess.check_call(['pip3', 'install', 'click'])  # required for 'setup'
+    subprocess.check_call("brew install git || brew upgrade git", shell=True)
+    subprocess.check_call("brew install python || brew upgrade python", shell=True)
+    subprocess.check_call(['pip3', 'install', '--upgrade', 'click'])  # required for 'setup'
 
     setup_path = os.path.expanduser('~/setup')
     if os.path.exists(setup_path):
