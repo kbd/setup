@@ -172,6 +172,60 @@
         { "name": "Zig orange", "value": "#F7A41D" },
     ],
 
+    // change default regex to require colon after tag
+    "todo-tree.regex.regex": "((//|#|<!--|;|/\\*|^)\\s*($TAGS):|^\\s*- \\[ \\])",
+    "todo-tree.regex.regexCaseSensitive": false,
+    "todo-tree.tree.flat": true,
+    "todo-tree.tree.grouped": false,
+    "todo-tree.general.tags": [
+        "BUG",
+        "FIX", "FIXME",
+        "HACK",
+        "REVIEW", "REV", "R",
+        "TODO",
+        "WARNING", "WARN",
+        "XXX",
+    ],
+    "todo-tree.general.tagGroups": {
+        "FIX": ["FIX", "FIXME"],
+        "WARNING": ["WARNING", "WARN"],
+        "REVIEW": ["REVIEW", "REV", "R"],
+    },
+    "todo-tree.highlights.defaultHighlight": {
+        "foreground": "white",
+    },
+    "todo-tree.highlights.customHighlight": {
+        "BUG": {
+            "background": "red",
+            "foreground": "black",
+            "iconColour": "red",
+            "gutterIcon": true,
+            "type": "text-and-comment",
+        },
+        "FIXME": {
+            "background": "black",
+            "foreground": "yellow",
+            "fontWeight": "bold",
+            "gutterIcon": true,
+        },
+        "REVIEW": {
+            "type": "whole-line",
+            "foreground": "white",
+            "background": "#66f",
+            "gutterIcon": true,
+            "icon": "list-unordered",
+            "rulerLane": "full",
+        },
+        "TODO": {
+            "type": "tag",
+            "foreground": "orange",
+        },
+        "WARNING": {
+            "type": "text-and-comment",
+            "foreground": "red",
+        },
+    },
+
     // language-specific
     "[plaintext]": {
         "editor.wordBasedSuggestions": false,

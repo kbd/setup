@@ -9,6 +9,7 @@ eamodio.gitlens
 esbenp.prettier-vscode
 formulahendry.code-runner
 golang.go
+Gruntfuggly.todo-tree
 hashicorp.terraform
 ionutvmi.spacegray-vscode
 JakeBecker.elixir-ls
