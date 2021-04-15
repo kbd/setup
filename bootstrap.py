@@ -49,7 +49,7 @@ def main():
 
     print("Installing all the things")
     subprocess.check_call(
-        [setup_exe, 'brew', 'manual', 'python', 'symlinks', 'mac', 'restart-os-funcs']
+        [setup_exe, 'brew', 'manual', 'python', 'symlinks', 'mac', 'restartservices']
     )
     print("Done installing all the things. Restart your terminal.")
 

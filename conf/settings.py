@@ -48,7 +48,7 @@
     'mac': {
         'exec': 'import runpy; runpy.run_path("conf/mac.py")'
     },
-    'restart_os_funcs': {
+    'restartservices': {
         'help': "Restart Finder, Menubar, Dock, etc.",
         'exec': 'import lib.mac; lib.mac.restart_os_functions()'
     },
