@@ -153,3 +153,7 @@ screenshots['disable-shadow'] = True
 
 # turn off "hey Siri" (on Mac, triggers more by accident than on purpose)
 defaults['com.apple.Siri']['VoiceTriggerUserEnabled'] = False
+
+# screen settings. screensaver 7 minutes, monitor power 10 minutes
+defaults.currentHost["com.apple.screensaver"]["idleTime"] = 420
+run(['sudo', 'pmset', 'displaysleep', '10'])
