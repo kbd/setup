@@ -136,5 +136,5 @@ class DefaultsValue:
 
 
 defaults = _DefaultsDomain()
-defaults.g = defaults['-g']
-defaults.currentHost = _DefaultsDomain(host=True)
+defaults.g = defaults['-g']  # type: ignore
+defaults.currentHost = _DefaultsDomain(host=True)  # type: ignore
