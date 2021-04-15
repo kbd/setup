@@ -47,20 +47,29 @@ def flatten(value):
     return result
 
 class _DefaultsDomain:
-    def __init__(self, domain=None):
+    def __init__(self, domain=None, host=None):
         self.domain = domain
+        self.host = host
+
+    def command(self, cmd):
+        if self.host is True: # currentHost
+            return ["defaults", "-currentHost", cmd]
+        elif isinstance(self.host, str):
+            return ["defaults", "-host", self.host, cmd]
+        else:
+            return ["defaults", cmd]
 
     def __getitem__(self, key):
         if not self.domain:  # still needs a domain
-            return _DefaultsDomain(key)
+            return _DefaultsDomain(key, self.host)
 
-        return DefaultsValue(self.domain, key)
+        return DefaultsValue(self, key)
 
     def __setitem__(self, key, value):
-        return DefaultsValue(self.domain, key).write(value)
+        return DefaultsValue(self, key).write(value)
 
     def read_str(self):
-        return run(["defaults", "read", self.domain], cap=True).rstrip('\n')
+        return run(self.command("read") + [self.domain], cap=True).rstrip('\n')
 
     def read_json(self):
         return json.loads(run(["plist-to-json"], cap=True, input=self.read_str()))
@@ -69,18 +78,24 @@ class _DefaultsDomain:
 
 
 class DefaultsValue:
-    def __init__(self, domain, key):
-        self.domain = domain
+    def __init__(self, parent, key):
+        self.parent = parent
         self.key = key
 
     def type(self):
-        typestr = run(["defaults", "read-type", self.domain, self.key], cap=True)
+        typestr = run(
+            self.parent.command("read-type") + [self.parent.domain, self.key],
+            cap=True
+        )
         # read-type returns (literally) "Type is {typename}\n".
         # Pull the last word from the string to get the type.
         return REVERSE_TYPE_MAP[typestr.split()[-1]]
 
     def read_str(self):
-        return run(["defaults", "read", self.domain, self.key], cap=True).rstrip('\n')
+        return run(
+            self.parent.command("read") + [self.parent.domain, self.key],
+            cap=True
+        ).rstrip('\n')
 
     def read_json(self):
         return json.loads(run(["plist-to-json"], cap=True, input=self.read_str()))
@@ -102,18 +117,24 @@ class DefaultsValue:
         }
 
     def write(self, value):
-        return run(["defaults", "write", self.domain, self.key, *flatten(value)])
+        return run(
+            self.parent.command("write") +
+            [self.parent.domain, self.key, *flatten(value)]
+        )
 
     @staticmethod
     def _get_plist(value):
         return run(["json-to-plist"], cap=True, input=json.dumps(value))
 
     def write_plist(self, value):
-        return run(["defaults", "write", self.domain, self.key, self._get_plist(value)])
-
+        return run(
+            self.parent.command("write") +
+            [self.parent.domain, self.key, self._get_plist(value)]
+        )
 
     __str__ = read_str
 
 
 defaults = _DefaultsDomain()
 defaults.g = defaults['-g']
+defaults.currentHost = _DefaultsDomain(host=True)
