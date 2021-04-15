@@ -156,4 +156,5 @@ defaults['com.apple.Siri']['VoiceTriggerUserEnabled'] = False
 
 # screen settings. screensaver 7 minutes, monitor power 10 minutes
 defaults.currentHost["com.apple.screensaver"]["idleTime"] = 420
+defaults.currentHost["com.apple.screensaver"]["showClock"] = True
 run(['sudo', 'pmset', 'displaysleep', '10'])
