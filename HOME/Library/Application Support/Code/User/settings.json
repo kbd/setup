@@ -287,4 +287,5 @@
         "coveredGutterStyle": "blockgreen",
         "uncoveredGutterStyle": "blockred"
     },
+    "go.toolsManagement.autoUpdate": true,
 }
