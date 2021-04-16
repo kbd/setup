@@ -107,7 +107,8 @@ def manual(settings):
         assert not relative_path.is_absolute(), f"relative path ({relative_path}) can't be absolute"
         to = Path('~/bin').expanduser() / relative_path.name
         frm = setup.root() / dir / relative_path
-        run(['symgr', frm, to])
+        # don't respect ignores because you're linking from an ignored 'dir'
+        run(['symgr', '-I', frm, to])
 
     packages = settings['packages']
     dir = setup.root() / settings['dir']  # directory to download / checkout to
