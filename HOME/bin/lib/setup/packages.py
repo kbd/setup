@@ -105,8 +105,8 @@ def manual(settings):
         """Create symlink in ~/bin to binary at dir/relative_path"""
         # no funny stuff, also ensures relative_path is a Path
         assert not relative_path.is_absolute(), f"relative path ({relative_path}) can't be absolute"
-        frm = Path('~/bin').expanduser() / relative_path.name
-        to = setup.root() / dir / relative_path
+        to = Path('~/bin').expanduser() / relative_path.name
+        frm = setup.root() / dir / relative_path
         run(['symgr', frm, to])
 
     packages = settings['packages']
