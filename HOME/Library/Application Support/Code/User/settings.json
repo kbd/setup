@@ -176,7 +176,6 @@
     "todo-tree.regex.regex": "((//|#|<!--|;|/\\*|^)\\s*($TAGS):|^\\s*- \\[ \\])",
     "todo-tree.regex.regexCaseSensitive": false,
     "todo-tree.tree.flat": true,
-    "todo-tree.tree.grouped": false,
     "todo-tree.general.tags": [
         "BUG",
         "FIX", "FIXME",
