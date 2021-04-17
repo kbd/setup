@@ -10,7 +10,7 @@ import sys
 
 
 def usage():
-    print("f [delim] index[,index2,...] (index is int, or Python-like slice: eg 0:10:2)")
+    print("usage: f [delim] index[,index2,...] (index is int, or Python-like slice: eg 0:10:2)")
 
 
 def parse_index(index):
