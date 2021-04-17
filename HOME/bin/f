@@ -15,9 +15,11 @@ def usage():
     print(
 """usage: f [delim] index[,index2,...] [flags]
 
-index is an int, or Python-like slice: eg 1: or 0:10:2
+index is an int, or Python-like slice (eg :1 or 0:10:2)
+
 flags:
-    'r' to treat delim as a regular expression""")
+    'r' to treat delim as a regular expression
+    'z' to use the null character as output separator""")
 
 
 def parse_index(index):
@@ -40,20 +42,21 @@ def parse_index(index):
     return result
 
 
-def print_parts(parts, index):
+def print_parts(parts, index, end='\n'):
+    echo = partial(print, end=end)
     for i in index:
         try:
             if isinstance(i, int):
-                print(parts[i])
+                echo(parts[i])
             else:
                 for p in parts[i]:
-                    print(p)
+                    echo(p)
         except IndexError:
-            print()
+            echo()
 
 
 def main(args):
-    valid_flags = 'r'
+    valid_flags = 'rz'
     flags = ''
     delim = None
     if len(args) == 2:
@@ -85,7 +88,7 @@ def main(args):
         input = (split(line.rstrip()) for line in fileinput.input('-'))
 
     for parts in input:
-        print_parts(parts, index)
+        print_parts(parts, index, '\0' if 'z' in flags else "\n")
 
 
 if __name__ == "__main__":
