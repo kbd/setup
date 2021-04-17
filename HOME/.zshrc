@@ -1,11 +1,10 @@
 #!/usr/bin/env zsh
 # options
-setopt auto_cd # cd to the directory by executing its name
 setopt prompt_subst # execute the contents of PROMPT
 setopt interactive_comments # allows a comment after a command
 
-# directory stacks
-# http://zsh.sourceforge.net/Intro/intro_6.html
+# directories - http://zsh.sourceforge.net/Intro/intro_6.html
+setopt auto_cd # cd to the directory by executing its name
 setopt auto_pushd # automatically pushd when cd-ing
 setopt pushd_silent # don't print out 'dirs' after pushd
 setopt pushd_ignore_dups
