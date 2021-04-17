@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -Eeuxo pipefail
+
+# create project
+mix phx.new "$1" && cd "$1"
+
+# create database
+mix ecto.create
+
+# add files to git
+git init
+git add --all
