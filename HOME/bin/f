@@ -6,11 +6,18 @@ Like awk -F[delim] '{print $1; $print $2, ...}', but shorter.
 """
 import fileinput
 import os
+import re
 import sys
+from functools import partial
 
 
 def usage():
-    print("usage: f [delim] index[,index2,...] (index is int, or Python-like slice: eg 0:10:2)")
+    print(
+"""usage: f [delim] index[,index2,...] [flags]
+
+index is an int, or Python-like slice: eg 1: or 0:10:2
+flags:
+    'r' to treat delim as a regular expression""")
 
 
 def parse_index(index):
@@ -46,11 +53,27 @@ def print_parts(parts, index):
 
 
 def main(args):
-    if not 2 <= len(args) <= 3:
-        usage()
-        return 1
+    valid_flags = 'r'
+    flags = ''
+    delim = None
+    if len(args) == 2:
+        index = args[1]
+    elif 2 < len(args) <= 4:
+        delim, index = args[1:3]
+        if not delim:
+            delim = None  # empty string is an alias for default separator
+        if len(args) == 4:
+            flags = args[3]
+            if any(f not in valid_flags for f in flags or ''):
+                print(
+                    f"{flags!r} contained invalid flags. "
+                    f"Allowed flags: {valid_flags!r}",
+                    file=sys.stderr
+                )
+                return 1
+    else:
+        return usage()
 
-    delim, index = [None] * (3 - len(args)) + args[1:]
     if not (index := parse_index(index)):
         return 1
 
@@ -58,7 +81,8 @@ def main(args):
         # note: reads all of stdin!
         input = [sys.stdin.read().rstrip().splitlines()]
     else:
-        input = (line.rstrip().split(delim) for line in fileinput.input('-'))
+        split = re.compile(delim).split if 'r' in flags else partial(str.split, sep=delim)
+        input = (split(line.rstrip()) for line in fileinput.input('-'))
 
     for parts in input:
         print_parts(parts, index)
