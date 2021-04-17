@@ -26,33 +26,17 @@ def parse_index(index):
     result = []
     for items in index.split(','):
         range_ = items.split(':')
-        if len(range_) > 3:
-            print(f"Invalid slice: '{items}'", file=sys.stderr)
-            return None
-
         try:
-            if len(range_) == 1:  # no range
-                result.append(int(*range_))
-            else:
-                result.append(slice(*(int(i) if i else None for i in range_)))
+            if len(range_) == 1: # turn single index into valid slice
+                i = int(range_[0])
+                range_ = (i, i + 1)
+
+            result.append(slice(*(int(i) if i else None for i in range_)))
         except Exception as e:
-            print(e, file=sys.stderr)
+            print("Invalid slice:", e, file=sys.stderr)
             return None
 
     return result
-
-
-def print_parts(parts, index, end='\n'):
-    echo = partial(print, end=end)
-    for i in index:
-        try:
-            if isinstance(i, int):
-                echo(parts[i])
-            else:
-                for p in parts[i]:
-                    echo(p)
-        except IndexError:
-            echo()
 
 
 def main(args):
@@ -80,15 +64,19 @@ def main(args):
     if not (index := parse_index(index)):
         return 1
 
+    end = '\0' if 'z' in flags else "\n"
+    def print_parts(parts):
+        for slice in index:
+            for part in parts[slice]:
+                print(part, end=end)
+
+    input = (line.rstrip() for line in fileinput.input('-'))
     if delim == '\n':
-        # note: reads all of stdin!
-        input = [sys.stdin.read().rstrip().splitlines()]
+        print_parts(list(input))
     else:
         split = re.compile(delim).split if 'r' in flags else partial(str.split, sep=delim)
-        input = (split(line.rstrip()) for line in fileinput.input('-'))
-
-    for parts in input:
-        print_parts(parts, index, '\0' if 'z' in flags else "\n")
+        for line in map(split, input):
+            print_parts(line)
 
 
 if __name__ == "__main__":
