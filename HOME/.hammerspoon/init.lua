@@ -6,6 +6,7 @@ hyper = {"cmd", "alt", "ctrl", "shift"}
 hs.hotkey.bind(hyper, "R", hs.reload)
 hs.hotkey.bind(hyper, "Y", hs.toggleConsole)
 hs.ipc.cliInstall()
+hs.ipc.cliSaveHistory(true)
 
 function bindApp(char, app)
   hs.hotkey.bind(hyper, char, function()
