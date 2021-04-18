@@ -4,6 +4,8 @@ hyper = {"cmd", "alt", "ctrl", "shift"}
 
 -- bind reload at start in case of error later in config
 hs.hotkey.bind(hyper, "R", hs.reload)
+hs.hotkey.bind(hyper, "Y", hs.toggleConsole)
+hs.ipc.cliInstall()
 
 function bindApp(char, app)
   hs.hotkey.bind(hyper, char, function()
