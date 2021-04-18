@@ -35,14 +35,24 @@ function move(axis, increment)
   end
 end
 
-function setlayout()
-  local main = hs.screen.allScreens()[1]:name()
-  local windowLayout = {
-    {"Firefox", nil, main, {x=0,     y=0, w=0.275, h=1}, nil, nil},
-    {"Code",    nil, main, {x=0.275, y=0, w=0.5,   h=1}, nil, nil},
-    {"kitty",   nil, main, {x=0.775, y=0, w=0.225, h=1}, nil, nil},
+function lo(app, x, w)
+  return {app, nil, nil, {x=x, y=0, w=w, h=1}, nil, nil}
+end
+
+layouts = {
+  ["DELL U3818DW"] = {
+    lo("Firefox", 0, .275), lo("Code", 0.275, 0.5), lo("kitty", 0.775, 0.225)
+  },
+  ["Built-in Retina Display"] = {
+    lo("Firefox", 0, 0.3), lo("Code", 0.3, 0.4), lo("kitty", 0.7, 0.3)
   }
-  hs.layout.apply(windowLayout)
+}
+layouts["default"] = layouts["DELL U3818DW"]
+
+function setlayout()
+  name = hs.screen.primaryScreen():name()
+  layout = layouts[name] or layouts["default"]
+  hs.layout.apply(layout)
 end
 
 function setWindowFraction(app, window, num, den, screen)
