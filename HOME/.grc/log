@@ -1,5 +1,5 @@
-regexp=(DEBUG)|(INFO)|(WARNING)|(ERROR)
-colours=default,blue,green,yellow,red
+regexp=(DEBUG)|(INFO)|(WARNING)|(ERROR)|(CRITICAL)
+colours=default,blue,green,yellow,magenta,red
 -
 regexp=[\W]+
 colours=cyan
