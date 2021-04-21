@@ -123,6 +123,21 @@ function selectAudio(audio)
   end
 end
 
+caffeine = hs.menubar.new()
+function showCaffeine(awake)
+  title = awake and '☕' or '🍵'
+  caffeine:setTitle(title)
+end
+
+function toggleCaffeine()
+  showCaffeine(hs.caffeinate.toggle("displayIdle"))
+end
+
+if caffeine then
+  caffeine:setClickCallback(toggleCaffeine)
+  showCaffeine(hs.caffeinate.get("displayIdle"))
+end
+
 right = move("x", 10)
 left = move("x", -10)
 up = move("y", -10)
