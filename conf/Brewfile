@@ -128,7 +128,6 @@ cask "spotmenu"
 cask "sublime-text"
 cask "visual-studio-code"
 cask "vlc"
-cask "xquartz"
 
 # cask-fonts tap
 cask "font-fantasque-sans-mono"
