@@ -32,6 +32,17 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 bindkey -M menuselect '\e[Z' reverse-menu-complete # shift tab to go backwards
 
+# following settings are from fzf-tab
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# preview directory's content with exa when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
+source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
+
 # turn off bad Zsh defaults
 compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/

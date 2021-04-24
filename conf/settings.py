@@ -97,6 +97,9 @@
                 'cmd': 'zig build -Drelease-safe',
                 'bin': 'zig-cache/bin/zls',
             },
+            'fzf-tab': {
+                'git': 'https://github.com/Aloxaf/fzf-tab',
+            },
             'zsh-prompt-benchmark': {
                 'git': 'https://github.com/romkatv/zsh-prompt-benchmark.git'
             },
