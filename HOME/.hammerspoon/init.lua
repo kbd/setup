@@ -36,13 +36,29 @@ function move(axis, increment)
   end
 end
 
+function getWindowsForAppOnScreen(appname, screen)
+  local app = hs.application.get(appname)
+  if app == nil then
+    return
+  end
+  local scr = screen or hs.screen.mainScreen()
+  local wins = app:allWindows()
+  local result = {}
+  for i, win in pairs(wins) do
+    if win:screen() == scr then
+      table.insert(result, win)
+    end
+  end
+  return result
+end
+
 function lo(app, x, w)
-  return {app, nil, nil, {x=x, y=0, w=w, h=1}, nil, nil}
+  return {app, getWindowsForAppOnScreen, hs.screen.mainScreen, {x=x, y=0, w=w, h=1}, nil, nil}
 end
 
 layouts = {
   ["DELL U3818DW"] = {
-    lo("Firefox", 0, .275), lo("Code", 0.275, 0.5), lo("kitty", 0.775, 0.225)
+    lo("Firefox", 0, 0.275), lo("Code", 0.275, 0.5), lo("kitty", 0.775, 0.225)
   },
   ["Built-in Retina Display"] = {
     lo("Firefox", 0, 0.3), lo("Code", 0.3, 0.4), lo("kitty", 0.7, 0.3)
