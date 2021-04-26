@@ -18,6 +18,7 @@ isort
 jupyter
 mycli
 mypy
+nbterm
 openpyxl
 pandas
 pgcli
