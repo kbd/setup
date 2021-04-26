@@ -83,7 +83,8 @@ function moveActiveWindow(num, den, screen)
   return function()
     local app = hs.application.frontmostApplication()
     local window = hs.window.focusedWindow()
-    setWindowFraction(app, window, num, den, screen)
+    local scr = screen or hs.screen.mainScreen()
+    setWindowFraction(app, window, num, den, scr)
   end
 end
 
@@ -176,4 +177,5 @@ hs.hotkey.bind(hyper, "2", moveActiveWindow(2, 2))
 hs.hotkey.bind(hyper, "3", moveActiveWindow(1, 3))
 hs.hotkey.bind(hyper, "4", moveActiveWindow(2, 3))
 hs.hotkey.bind(hyper, "5", moveActiveWindow(3, 3))
+hs.hotkey.bind(hyper, "6", moveActiveWindow(1, 1))
 hs.hotkey.bind(hyper, "A", showAudioFuzzy)
