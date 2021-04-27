@@ -83,4 +83,4 @@ if __name__ == '__main__':
         func.__doc__ = settings.get('help', f"Setup {name}")
         cli.command(name)(func)
 
-    cli()
+    cli()  # pylint: disable=no-value-for-parameter
