@@ -39,6 +39,7 @@
 
     "breadcrumbs.enabled": true,
     "explorer.openEditors.sortOrder": "alphabetical",
+    "explorer.openEditors.visible": 0,
     "problems.showCurrentInStatus": true,
     "debug.showBreakpointsInOverviewRuler": true,
     "scm.alwaysShowRepositories": true,
