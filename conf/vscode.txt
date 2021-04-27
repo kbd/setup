@@ -26,6 +26,7 @@ ms-vsliveshare.vsliveshare-pack
 msjsdiag.debugger-for-chrome
 pnp.polacode
 ryanluker.vscode-coverage-gutters
+serayuzgur.crates
 stkb.rewrap
 tiehuis.zig
 timonwong.shellcheck
