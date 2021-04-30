@@ -2,6 +2,9 @@
     'brew': {
         'cmd': (
             ['HOME/bin/homebrew-workflow', 'conf/Brewfile'],
+            # brew bundle has no link https://github.com/Homebrew/homebrew-bundle/issues/84
+            # so you need to do this if you want an old version to take precedence
+            ['brew', 'link', 'node@14'],
             # set shell to homebrew'd shell
             'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',
             # install fzf
