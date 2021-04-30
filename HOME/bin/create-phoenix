@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 set -Eeuxo pipefail
 
+[[ "${1:-}" ]] || (echo >&2 "Must provide project name" && exit 1)
+
 # create project
-mix phx.new "$1" && cd "$1"
+(echo yes | mix phx.new --live "$1") && cd "$1"
+
+# default database user:pass is user:''
+perl -pi -e "s/(?<=username: \")([^\"]+)/$(whoami)/" config/dev.exs
+perl -pi -e "s/(?<=password: \")([^\"]+)//" config/dev.exs
 
 # create database
 mix ecto.create
 
-# add files to git
+# stage files in git
 git init
 git add --all
