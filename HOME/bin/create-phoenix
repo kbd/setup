@@ -10,6 +10,9 @@ set -Eeuxo pipefail
 perl -pi -e "s/(?<=username: \")([^\"]+)/$(whoami)/" config/dev.exs
 perl -pi -e "s/(?<=password: \")([^\"]+)//" config/dev.exs
 
+# get dependencies
+mix deps.get
+
 # create database
 mix ecto.create
 
