@@ -45,7 +45,6 @@ fi
 
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
-  alias -g FZF='$(`last_command` | fzf)'
   alias -g L='| $PAGER'
   alias -g H='| head'
   alias -g C='| grcat log'
