@@ -92,6 +92,19 @@ alias o.='o .'
 alias a='o -a'
 te(){ t "$@" && e "$@"; }
 
+# git: create aliases for all short (<= 4 character) git aliases
+for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
+  # shellcheck disable=SC2139
+  alias "g$gitalias=g $gitalias"
+done
+alias g=git
+alias s='gs' # status
+alias p='gpg' # pull and show graph of recent changes
+alias g-='gw-' # switch to most recent branch
+alias ga='gaf' # add files with fuzzy finder
+alias gb='gbf' # show/switch branches using fuzzy finder
+alias gbr='gbrf' # show/switch remote branches using fuzzy finder
+
 # shortcuts/defaults
 alias 1p='eval $(op signin my --session=$OP_SESSION_my)'
 alias c=cat
@@ -141,19 +154,6 @@ alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3
 alias title-tab='printf "\e]1;%s\a"'
 alias title-win='printf "\e]2;%s\a"'
 alias yaegi='rlwrap yaegi'
-
-# git: create aliases for all short (<= 4 character) git aliases
-for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
-  # shellcheck disable=SC2139
-  alias "g$gitalias=g $gitalias"
-done
-alias g=git
-alias s='gs' # status
-alias p='gpg' # pull and show graph of recent changes
-alias g-='gw-' # switch to most recent branch
-alias ga='gaf' # add files with fuzzy finder
-alias gb='gbf' # show/switch branches using fuzzy finder
-alias gbr='gbrf' # show/switch remote branches using fuzzy finder
 
 b() {
   local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
