@@ -83,10 +83,7 @@ alias et2='et -L2'
 alias et3='et -L3'
 mcd() {
   # mkdir + cd
-  if [[ -z "$1" ]]; then
-    ercho "missing argument"
-    return 1
-  fi
+  [[ -z "$1" ]] && echo >&2 "missing argument" && return 1
   mkdir -p -- "$1" && cl "$@" -A
 }
 
