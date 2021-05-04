@@ -66,7 +66,7 @@ alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
-# ls
+# ls/cd
 alias l=ls
 alias la='ls -A'
 alias lt='ls -t'
@@ -82,6 +82,14 @@ et() { exa -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache' --color=al
 alias et1='et -L1'
 alias et2='et -L2'
 alias et3='et -L3'
+mcd() {
+  # mkdir + cd
+  if [[ -z "$1" ]]; then
+    ercho "missing argument"
+    return 1
+  fi
+  mkdir -p -- "$1" && cl "$@" -A
+}
 
 # edit/open
 alias edit=code
@@ -104,6 +112,12 @@ alias g-='gw-' # switch to most recent branch
 alias ga='gaf' # add files with fuzzy finder
 alias gb='gbf' # show/switch branches using fuzzy finder
 alias gbr='gbrf' # show/switch remote branches using fuzzy finder
+gccb() {
+  # check out a repository from the url in the clipboard and cd into it
+  local url="$(cb)"
+  local dir="${@:-$(basename "$url" .git)}"
+  git clone -- "$url" "$dir" && cd "$dir" || return;
+}
 
 # shortcuts/defaults
 alias 1p='eval $(op signin my --session=$OP_SESSION_my)'
@@ -124,6 +138,7 @@ alias ercho='>&2 echo' # echo to stderr
 alias exists='type &>/dev/null' # check if a program exists
 alias fu='fd -uu' # fd, but don't ignore any files
 alias gh='PAGER= gh' # use gh default pager; gh needs 'less -R' for colors
+go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
 alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
 alias hex='hexyl'
@@ -134,6 +149,7 @@ alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is_root='[[ $EUID == 0 ]]'
 alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
 alias jq='jqpager'
+jqpager() { command jq -C "$@" | less -FR; }
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
@@ -148,6 +164,7 @@ alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
 alias ssh='sshrc' # always sshrc
 alias tcl='rlwrap tclsh'
+user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
 alias x='chmod +x'
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
@@ -156,31 +173,13 @@ alias title-win='printf "\e]2;%s\a"'
 alias yaegi='rlwrap yaegi'
 
 b() {
+  # switch to kitty taB
   local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
   if [[ "$tab" ]]; then kitty @ focus-tab -m "id:$tab"; fi
 }
-go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
-jqpager() { command jq -C "$@" | less -FR; }
-user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 
-# check out a repository from the url in the clipboard and cd into it
-gccb() {
-  local url="$(cb)"
-  local dir="${@:-$(basename "$url" .git)}"
-  git clone -- "$url" "$dir" && cd "$dir" || return;
-}
-
-# mkdir + cd
-mcd() {
-  if [[ -z "$1" ]]; then
-    ercho "missing argument"
-    return 1
-  fi
-  mkdir -p -- "$1" && cl "$@" -A
-}
-
-# "reload history"
 rlh() {
+  # reload history
   if [[ $ZSH_VERSION ]]; then
     fc -R
   else
@@ -189,9 +188,8 @@ rlh() {
   echo "History reloaded"
 }
 
-# "reload shell"
 rls() {
-  # make it easier to reload shell config
+  # "reload shell" config
   if [[ $ZSH_VERSION ]]; then
     echo "Reloading zsh config"
     source "$HOME/.zshrc"
