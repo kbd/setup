@@ -50,3 +50,15 @@ def read_config_file(path, comment='#'):
             line for line in (line.rstrip() for line in file)
             if line and not (comment and line.startswith(comment))
         ]
+
+
+def run_commands(cmd, *args, **kwargs):
+    """Take one or more commands to run as a subprocess.
+
+    * 'cmd' be one command or a tuple of commands
+    * each command can be a string or a list of strings, passed to run
+    """
+    if isinstance(cmd, tuple):
+        return [run(c, *args, **kwargs) for c in cmd]
+
+    return run(cmd, *args, **kwargs)

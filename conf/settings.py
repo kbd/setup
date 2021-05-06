@@ -72,40 +72,6 @@
         'cmd': ['bash', '-ic', 'edit .']
     },
     'manual': {
-        'dir': '3rdparty',  # 3rdparty is already in gitignore
-        'packages': {
-            'symgr': {
-                'git': 'https://github.com/kbd/symgr.git',
-                # this command is equivalent to setting 'bin' to 'symgr',
-                # but this is bootstrapping the symlinking done for 'bin'
-                'cmd': 'ln -sf $(setup root)/3rdparty/symgr/symgr ~/bin/symgr'
-            },
-            'bak': {
-                'git': 'https://github.com/kbd/bak.git',
-                'bin': 'bak'
-            },
-            'repo_status': {
-                'git': 'https://github.com/kbd/repo_status.git',
-                'cmd': 'nim c -d:release repo_status.nim',
-                'bin': 'repo_status'
-            },
-            'prompt': {
-                'git': 'https://github.com/kbd/prompt.git',
-                'cmd': 'zig build-exe -OReleaseFast prompt.zig',
-                'bin': 'prompt',
-            },
-            'zls': {
-                'git': 'https://github.com/zigtools/zls.git',
-                'tag': '0.1.0',
-                'cmd': 'zig build -Drelease-safe',
-                'bin': 'zig-cache/bin/zls',
-            },
-            'fzf-tab': {
-                'git': 'https://github.com/Aloxaf/fzf-tab',
-            },
-            'zsh-prompt-benchmark': {
-                'git': 'https://github.com/romkatv/zsh-prompt-benchmark.git'
-            },
-        }
+        'cmd': ['install-manual', setup.root() / '3rdparty', 'conf/manual.toml']
     }
 }

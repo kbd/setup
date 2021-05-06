@@ -48,6 +48,7 @@ sqlalchemy
 sqlite-utils
 tabulate
 tmuxp
+toml
 virtualenv
 visidata
 xlrd
