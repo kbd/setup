@@ -60,11 +60,11 @@
     },
     'root': {
         'help': "Print the path of the setup dir",
-        'exec': 'print(setup.root())'
+        'exec': 'print(root())'
     },
     'home': {
         'help': "Print the path of the setup HOME dir",
-        'exec': 'print(setup.home())'
+        'exec': 'print(home())'
     },
     'edit': {
         'help': "Open the setup directory in your editor",
