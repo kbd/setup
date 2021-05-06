@@ -5,7 +5,7 @@ from pathlib import Path
 
 from lib import setup
 from lib.colors import fg, s
-from lib.utils import read_config_file, run
+from lib.utils import run
 
 log = logging.getLogger()
 
@@ -36,31 +36,6 @@ def install(name, settings):
     if cmd := settings.get('cmd'):
         log.debug(f"Running: {cmd}")
         _run_commands(cmd)
-
-
-def vscode(settings):
-    config_path = settings['extensions']
-    log.info("Updating Visual Studio Code extensions")
-
-    # get installed/expected extensions
-    cmd = ['code', '--list-extensions']
-    current_extensions = set(map(str.strip, run(cmd, cap='stdout').splitlines()))
-    expected_extensions = set(read_config_file(config_path))
-
-    fmt = lambda s: ', '.join(sorted(s, key=str.lower))
-
-    log.debug(f"Current extensions are: {fmt(current_extensions)}")
-    log.debug(f"Expected extensions are: {fmt(expected_extensions)}")
-
-    # install any missing extensions
-    missing = expected_extensions - current_extensions
-    for package in sorted(missing):
-        log.info(f"Installing missing package: {package}")
-        run(['code', '--install-extension', package])
-
-    # report any extensions that are installed that aren't in source control
-    if unexpected := current_extensions - expected_extensions:
-        log.info(f"The following extensions are installed but not in source control: {fmt(unexpected)}")
 
 
 def _format_manual_packages_table(packages, dir):

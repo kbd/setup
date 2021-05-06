@@ -56,7 +56,7 @@
         'exec': 'import lib.mac; lib.mac.restart_os_functions()'
     },
     'vscode': {
-        'extensions': 'conf/vscode.txt',
+        'cmd': ['install-vscode-extensions', 'conf/vscode.txt'],
     },
     'root': {
         'help': "Print the path of the setup dir",

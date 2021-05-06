@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+import sys
+
+from lib.utils import read_config_file, run
+
+
+def vscode(config_path):
+    print("Updating Visual Studio Code extensions\n")
+
+    # get installed/expected extensions
+    cmd = ['code', '--list-extensions']
+    current_extensions = set(map(str.strip, run(cmd, cap='stdout').splitlines()))
+    expected_extensions = set(read_config_file(config_path))
+
+    fmt = lambda s: ', '.join(sorted(s, key=str.lower))
+
+    print(f"Current extensions are: {fmt(current_extensions)}\n")
+    print(f"Expected extensions are: {fmt(expected_extensions)}\n")
+
+    # install any missing extensions
+    missing = expected_extensions - current_extensions
+    for package in sorted(missing):
+        print(f"Installing missing package: {package}")
+        run(['code', '--install-extension', package])
+
+    # report any extensions that are installed that aren't in source control
+    if unexpected := current_extensions - expected_extensions:
+        print(f"The following extensions are installed but not specified in config: {fmt(unexpected)}")
+
+
+if __name__ == '__main__':
+    if not len(sys.argv) > 1:
+        print(f"Usage: {sys.argv[0]} config-path", file=sys.stderr)
+        sys.exit(1)
+
+    vscode(sys.argv[1])
