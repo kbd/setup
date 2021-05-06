@@ -60,7 +60,6 @@
     },
     'root': {
         'help': "Print the path of the setup dir",
-        # setup module is available because exec'd in context of packages.py
         'exec': 'print(setup.root())'
     },
     'home': {
@@ -72,6 +71,6 @@
         'cmd': ['bash', '-ic', 'edit .']
     },
     'manual': {
-        'cmd': ['install-manual', setup.root() / '3rdparty', 'conf/manual.toml']
+        'cmd': 'install-manual conf/manual.toml "$(setup root)/3rdparty"'
     }
 }

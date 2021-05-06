@@ -11,7 +11,7 @@ from pathlib import Path
 import click
 
 from lib import setup
-from lib.setup import packages
+from lib.utils import run_commands
 
 log = logging.getLogger()
 
@@ -71,6 +71,17 @@ def bless(files):
         subprocess.run(cmd, check=True)
 
 
+def install(name, settings):
+    log.info(f"Setting up: {name}")
+    if code := settings.get('exec'):
+        log.debug(f"Executing: {code}")
+        exec(code)
+
+    if cmd := settings.get('cmd'):
+        log.debug(f"Running: {cmd}")
+        run_commands(cmd)
+
+
 if __name__ == '__main__':
     # manipulate cwd and load settings
     ORIGINAL_CWD = os.getcwd()
@@ -79,7 +90,7 @@ if __name__ == '__main__':
 
     # dynamically add options to the cli
     for name, settings in SETTINGS.items():
-        func = functools.partial(packages.install, name, settings)
+        func = functools.partial(install, name, settings)
         func.__doc__ = settings.get('help', f"Setup {name}")
         cli.command(name)(func)
 

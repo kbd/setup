@@ -1,3 +1,5 @@
+#!/usr/local/bin/python3
+# ^ intentionally use system Python vs /usr/bin/env
 import argparse
 import shutil
 import subprocess
@@ -8,8 +10,6 @@ import toml
 
 from lib.colors import fg, s
 from lib.utils import run, run_commands
-
-BIN_PATH = Path('~/bin').expanduser()
 
 
 def _format_manual_packages_table(packages, dir):
@@ -42,17 +42,7 @@ def _get_manual_packages_to_install(packages, dir):
     return keys
 
 
-def create_symlink(dir, relative_path):
-    """Create symlink in ~/bin to binary at dir/relative_path"""
-    # no funny stuff, also ensures relative_path is a Path
-    assert not relative_path.is_absolute(), f"relative path ({relative_path}) can't be absolute"
-    to = BIN_PATH / relative_path.name
-    frm = dir / relative_path
-    # don't respect ignores because you're linking from an ignored 'dir'
-    run(['symgr', '-I', frm, to])
-
-
-def manual(packages, dir):
+def manual(packages, dir, bin_path):
     """Set up software that is more manual.
 
     For example, software that isn't configured with a package manager like
@@ -60,11 +50,11 @@ def manual(packages, dir):
     needs to be checked out from git and a program manually built.
     """
     keys = _get_manual_packages_to_install(packages, dir)
-
     if not keys:
         return
 
     print(f"Installing packages: {', '.join(keys)}")
+    return
     for key in keys:
         print(f"Installing: {key}")
         params = packages[key]
@@ -102,21 +92,22 @@ def manual(packages, dir):
             print(f"Running {cmd}")
             run_commands(cmd, cwd=path)
 
-        # symlink any binaries specified to ~/bin
+        # symlink any binaries specified to bin_path
         if bin:
             # accept either a string or a sequence of strings
-            if isinstance(bin, str):
-                bin = [bin]
-
-            for b in bin:
-                create_symlink(dir, Path(key, b))
+            binaries = [bin] if isinstance(bin, str) else bin
+            print(f"Linking binaries: {', '.join(binaries)}")
+            for b in binaries:
+                run(['symgr', '-I', Path(dir, key, b), bin_path])
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Install manually-installed software")
+    parser.add_argument("config_path", help="Path to config file")
     parser.add_argument("dir", help="Directory to install software to")
-    parser.add_argument("config-path", help="Path to config file")
+    parser.add_argument("bin_path", default=Path('~/bin').expanduser(), nargs='?',
+        help=f"Bin path to symlink to (default: ~/bin)")
     args = parser.parse_args()
 
     packages = toml.load(args.config_path)
-    manual(packages, args.dir)
+    manual(packages, args.dir, args.bin_path)
