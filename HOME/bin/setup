@@ -10,10 +10,13 @@ from pathlib import Path
 
 import click
 
-from lib import setup
-from lib.setup import packages
+from lib.utils import run_commands
 
 log = logging.getLogger()
+
+SETTINGS_PATH = 'conf/settings.py'
+HOME_DIR = 'HOME'
+
 
 @click.group(chain=True)
 @click.option("-d", "--debug", is_flag=True, help="Enable debug logging")
@@ -33,8 +36,8 @@ def debug():
 
 @cli.command()
 def symlinks():
-    cmd = ['symgr', setup.home(), Path.home()]
-    if setup.is_debug():
+    cmd = ['symgr', home(), Path.home()]
+    if is_debug():
         cmd.insert(1, '--debug')
     log.info(f"Running: {cmd}")
     subprocess.run(cmd, check=True)
@@ -61,25 +64,70 @@ def bless(files):
 
     for file in files:
         # take the passed-in file, relative to $HOME, and figure out where it
-        # goes relative to setup.home(). Note: can't link if not in $HOME
+        # goes relative to home(). Note: can't link if not in $HOME
         with chdir(ORIGINAL_CWD):
             path = Path(file).resolve()
-        destination = setup.home() / path.relative_to(Path.home())
+        destination = home() / path.relative_to(Path.home())
         log.info(f"Blessing {path} to {destination}")
         cmd = source_cmd + [path, destination]
         log.info(f"Running: {cmd}")
         subprocess.run(cmd, check=True)
 
 
+def load_config(path=SETTINGS_PATH):
+    settings = eval(open(path).read())
+    return settings
+
+
+def root():
+    """Return the path of the root of this setup repository."""
+    # this file is under HOME_DIR. HOME_DIR's parent is the root.
+    # So search backwards for HOME_DIR and get its parent.
+    path = Path(__file__).resolve()  # resolve symlinks (~/bin=setup/HOME/bin)
+    return path.parents[path.parts[::-1].index(HOME_DIR)]
+
+
+def home():
+    return root() / HOME_DIR
+
+
+def home_path(path):
+    """Get the path within setup's HOME for the given path
+
+    Note: no valid setup path for anything outside of $HOME, so throws exception
+    """
+    return home() / Path(path).resolve().relative_to(Path.home())
+
+
+def tilde_path(path):
+    """Given a path within setup's HOME dir, return the path relative to ~"""
+    return Path('~') / Path(path).relative_to(home())
+
+
+def is_debug():
+    return logging.getLogger().level == logging.DEBUG
+
+
+def install(name, settings):
+    log.info(f"Setting up: {name}")
+    if code := settings.get('exec'):
+        log.debug(f"Executing: {code}")
+        exec(code)
+
+    if cmd := settings.get('cmd'):
+        log.debug(f"Running: {cmd}")
+        run_commands(cmd)
+
+
 if __name__ == '__main__':
     # manipulate cwd and load settings
     ORIGINAL_CWD = os.getcwd()
-    os.chdir(setup.root())  # set the cwd to the root of the repository
-    SETTINGS = setup.load_config()
+    os.chdir(root())  # set the cwd to the root of the repository
+    SETTINGS = load_config()
 
     # dynamically add options to the cli
     for name, settings in SETTINGS.items():
-        func = functools.partial(packages.install, name, settings)
+        func = functools.partial(install, name, settings)
         func.__doc__ = settings.get('help', f"Setup {name}")
         cli.command(name)(func)
 
