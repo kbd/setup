@@ -54,7 +54,6 @@ def manual(packages, dir, bin_path):
         return
 
     print(f"Installing packages: {', '.join(keys)}")
-    return
     for key in keys:
         print(f"Installing: {key}")
         params = packages[key]
@@ -98,7 +97,9 @@ def manual(packages, dir, bin_path):
             binaries = [bin] if isinstance(bin, str) else bin
             print(f"Linking binaries: {', '.join(binaries)}")
             for b in binaries:
-                run(['symgr', '-I', Path(dir, key, b), bin_path])
+                cmd = ['symgr', '-I', Path(dir, key, b), bin_path]
+                print(f"Running {cmd}")
+                run(cmd)
 
 
 if __name__ == '__main__':
