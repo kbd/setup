@@ -5,12 +5,11 @@ import functools
 import logging
 import os
 import subprocess
-from contextlib import contextmanager
 from pathlib import Path
 
 import click
 
-from lib.utils import run_commands
+from lib.utils import chdir, run_commands
 
 log = logging.getLogger()
 
@@ -32,16 +31,6 @@ def debug():
     """Start an interactive console"""
     local = {**globals(), 'settings': SETTINGS}
     code.interact(local=local)
-
-
-@contextmanager
-def chdir(dir: Path):
-    original = os.getcwd()
-    os.chdir(dir)
-    try:
-        yield
-    finally:
-        os.chdir(original)
 
 
 @cli.command()
