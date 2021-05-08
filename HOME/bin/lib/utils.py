@@ -1,9 +1,6 @@
 import logging
-import os
 import re
 import subprocess
-from contextlib import contextmanager
-from pathlib import Path
 
 log = logging.getLogger(__name__)
 
@@ -65,13 +62,3 @@ def run_commands(cmd, *args, **kwargs):
         return [run(c, *args, **kwargs) for c in cmd]
 
     return run(cmd, *args, **kwargs)
-
-
-@contextmanager
-def chdir(dir: Path):
-    original = os.getcwd()
-    os.chdir(dir)
-    try:
-        yield
-    finally:
-        os.chdir(original)

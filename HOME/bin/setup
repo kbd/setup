@@ -9,7 +9,7 @@ from pathlib import Path
 
 import click
 
-from lib.utils import chdir, run_commands
+from lib.utils import run_commands
 
 log = logging.getLogger()
 
@@ -45,8 +45,7 @@ def bless(files):
     for file in files:
         # take the passed-in file, relative to $HOME, and figure out where it
         # goes relative to home(). Note: can't link if not in $HOME
-        with chdir(ORIGINAL_CWD):
-            path = Path(file).resolve()
+        path = Path(file).resolve()
         destination = home() / path.relative_to(Path.home())
         log.info(f"Blessing {path} to {destination}")
         cmd = source_cmd + [path, destination]
