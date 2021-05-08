@@ -34,15 +34,6 @@ def debug():
     code.interact(local=local)
 
 
-@cli.command()
-def symlinks():
-    cmd = ['symgr', home(), Path.home()]
-    if is_debug():
-        cmd.insert(1, '--debug')
-    log.info(f"Running: {cmd}")
-    subprocess.run(cmd, check=True)
-
-
 @contextmanager
 def chdir(dir: Path):
     original = os.getcwd()
@@ -72,11 +63,6 @@ def bless(files):
         cmd = source_cmd + [path, destination]
         log.info(f"Running: {cmd}")
         subprocess.run(cmd, check=True)
-
-
-def load_config(path=SETTINGS_PATH):
-    settings = eval(open(path).read())
-    return settings
 
 
 def root():
@@ -123,7 +109,7 @@ if __name__ == '__main__':
     # manipulate cwd and load settings
     ORIGINAL_CWD = os.getcwd()
     os.chdir(root())  # set the cwd to the root of the repository
-    SETTINGS = load_config()
+    SETTINGS = eval(open(SETTINGS_PATH).read())
 
     # dynamically add options to the cli
     for name, settings in SETTINGS.items():
