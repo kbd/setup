@@ -74,6 +74,6 @@
         'cmd': 'install-manual conf/manual.toml "$(setup root)/3rdparty"'
     },
     'symlinks': {
-        'cmd': ['symgr', home(), Path.home()],
+        'exec': "run_commands(['symgr', *filter(lambda x: is_debug(), ['--debug']), home(), Path.home()])",
     },
 }
