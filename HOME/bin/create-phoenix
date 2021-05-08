@@ -10,6 +10,9 @@ set -Eeuxo pipefail
 perl -pi -e "s/(?<=username: \")([^\"]+)/$(whoami)/" config/dev.exs
 perl -pi -e "s/(?<=password: \")([^\"]+)//" config/dev.exs
 
+# install prettier for the project
+# https://github.com/adamzapasnik/prettier-plugin-eex
+
 # get dependencies
 mix deps.get
 
