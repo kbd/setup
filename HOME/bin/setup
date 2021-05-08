@@ -71,13 +71,11 @@ def is_debug():
 
 def install(name, settings):
     log.info(f"Setting up: {name}")
-    if code := settings.get('exec'):
-        log.debug(f"Executing: {code}")
-        exec(code)
-
-    if cmd := settings.get('cmd'):
-        log.debug(f"Running: {cmd}")
-        run_commands(cmd)
+    funcs = {'exec': exec, 'cmd': run_commands}
+    for key, func in funcs.items():
+        if item := settings.get(key):
+            log.debug(f"{key}: {item}")
+            func(item)
 
 
 if __name__ == '__main__':
