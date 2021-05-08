@@ -77,19 +77,6 @@ def home():
     return root() / HOME_DIR
 
 
-def home_path(path):
-    """Get the path within setup's HOME for the given path
-
-    Note: no valid setup path for anything outside of $HOME, so throws exception
-    """
-    return home() / Path(path).resolve().relative_to(Path.home())
-
-
-def tilde_path(path):
-    """Given a path within setup's HOME dir, return the path relative to ~"""
-    return Path('~') / Path(path).relative_to(home())
-
-
 def is_debug():
     return logging.getLogger().level == logging.DEBUG
 
