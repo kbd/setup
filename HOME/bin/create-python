@@ -1,26 +1,35 @@
-#!/usr/bin/env bash
-set -Eeuxo pipefail
+#!/usr/bin/env python3
+import os
+import sys
+from subprocess import run
 
 # create directory
-mkdir "$1" && cd "$1"
+os.mkdir(sys.argv[1])
+os.chdir(sys.argv[1])
 
 # initialize poetry with default dependencies, create virtualenv
-poetry init \
-  --no-interaction \
-  --name="$1" \
-  --author="$(git config --get --global user.name)" \
-  --dev-dependency=black \
-  --dev-dependency=ipython \
-  --dev-dependency=mypy \
-  --dev-dependency=pylint \
-  --dev-dependency=pytest \
+cmd = ['git', 'config', '--get', '--global', 'user.name']
+username = run(cmd, check=True, capture_output=True, text=True).stdout.strip()
 
-poetry install
+cmd = [
+  'poetry', 'init',
+  '--no-interaction',
+  '--name', sys.argv[1],
+  '--author', username,
+  '--dev-dependency=black',
+  '--dev-dependency=ipython',
+  '--dev-dependency=mypy',
+  '--dev-dependency=pylint',
+  '--dev-dependency=pytest',
+]
+run(cmd, check=True)
+run(['poetry', 'install'], check=True)
 
 # set up direnv
-echo "layout poetry" > .envrc
-direnv allow
+with open('.envrc', 'w') as f:
+  f.write("layout poetry\n")
+run(['direnv', 'allow'], check=True)
 
 # add files to git
-git init
-git add --all
+run(['git', 'init'], check=True)
+run(['git', 'add', '--all'], check=True)
