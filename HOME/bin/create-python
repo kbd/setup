@@ -1,29 +1,32 @@
 #!/usr/bin/env python3
+import logging
 import sys
 
-from plumbum.cmd import cd, direnv, echo, git, mkdir, poetry
+import sh
+
+fgsh = sh(_fg=True)
+
+from fgsh import cd, direnv, echo, git, mkdir, poetry
+
+logging.basicConfig(level=logging.INFO)
 
 # create directory
 mkdir(sys.argv[1])
 cd(sys.argv[1])
 
 # initialize poetry with default dependencies, create virtualenv
-poetry('init',
-  '--no-interaction',
-  '--name', sys.argv[1],
-  '--author', git('config', '--get', '--global', 'user.name').strip(),
-  '--dev-dependency=black',
-  '--dev-dependency=ipython',
-  '--dev-dependency=mypy',
-  '--dev-dependency=pylint',
-  '--dev-dependency=pytest',
+poetry.init(
+  no_interaction = True,
+  name = sys.argv[1],
+  author = sh.git.config('--get', '--global', 'user.name').strip(),
+  dev_dependency = ['black', 'ipython', 'mypy', 'pylint', 'pytest'],
 )
-poetry('install')
+poetry.install()
 
 # set up direnv
-(echo > '.envrc')("layout poetry")
-direnv('allow')
+echo("layout poetry", _out='.envrc')
+direnv.allow()
 
 # add files to git
-git('init')
-git('add', '--all')
+git.init()
+git.add('--all')
