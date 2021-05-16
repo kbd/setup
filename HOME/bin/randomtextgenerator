@@ -28,8 +28,11 @@ def main(args):
 
         while True:
             randomtext(style)
-            if args.timeout and datetime.datetime.now() > endtime:
-                break
+            if args.timeout:
+                now = datetime.datetime.now()
+                then = now + datetime.timedelta(seconds=args.interval)
+                if then > endtime:
+                    break
             time.sleep(args.interval)
     else:
         randomtext(style)
