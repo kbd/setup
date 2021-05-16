@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import argparse
+import datetime
+import os
+import random
+import time
+from itertools import product
+
+from lib import colors
+
+
+def randomtext(style):
+    print(*style, os.getpid(), datetime.datetime.now().isoformat(), colors.s.reset)
+
+
+def main(args):
+    all_style_names = list(product(colors.fg, colors.bg))
+    # remove fg=bg so that you don't get eg. white text on white background
+    style_names = [s for s in all_style_names if s[0] != s[1]]
+    style_name = random.choice(style_names)
+    style = (colors.fg[style_name[0]], colors.bg[style_name[1]])
+
+    if args.interval:
+        if args.timeout:
+            endtime = datetime.datetime.now() + datetime.timedelta(seconds=args.timeout)
+        else:
+            endtime = None
+
+        while True:
+            randomtext(style)
+            if args.timeout and datetime.datetime.now() > endtime:
+                break
+            time.sleep(args.interval)
+    else:
+        randomtext(style)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Generate "random" text')
+    parser.add_argument('interval', nargs="?", type=float, default=0)
+    parser.add_argument('timeout', nargs="?", type=float, default=0)
+    args = parser.parse_args()
+    main(args)
