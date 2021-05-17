@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 import argparse
-import datetime
 import os
 import random
 import time
+from datetime import datetime, timedelta
 from itertools import product
 
 from lib import colors
 
 
 def randomtext(style):
-    print(*style, os.getpid(), datetime.datetime.now().isoformat(), colors.s.reset)
+    print(*style, os.getpid(), datetime.now().isoformat(), colors.s.reset)
 
 
 def main(args):
@@ -20,22 +20,18 @@ def main(args):
     style_name = random.choice(style_names)
     style = (colors.fg[style_name[0]], colors.bg[style_name[1]])
 
-    if args.interval:
-        if args.timeout:
-            endtime = datetime.datetime.now() + datetime.timedelta(seconds=args.timeout)
-        else:
-            endtime = None
+    if not args.interval:
+        return randomtext(style)
 
-        while True:
-            randomtext(style)
-            if args.timeout:
-                now = datetime.datetime.now()
-                then = now + datetime.timedelta(seconds=args.interval)
-                if then > endtime:
-                    break
-            time.sleep(args.interval)
-    else:
+    endtime = datetime.now() + timedelta(seconds=args.timeout) if args.timeout else None
+    while True:
         randomtext(style)
+        if args.timeout:
+            now = datetime.now()
+            then = now + timedelta(seconds=args.interval)
+            if then > endtime:
+                break
+        time.sleep(args.interval)
 
 
 if __name__ == '__main__':
@@ -43,4 +39,7 @@ if __name__ == '__main__':
     parser.add_argument('interval', nargs="?", type=float, default=0)
     parser.add_argument('timeout', nargs="?", type=float, default=0)
     args = parser.parse_args()
-    main(args)
+    try:
+        main(args)
+    except KeyboardInterrupt:
+        pass
