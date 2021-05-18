@@ -41,7 +41,8 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
-source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
+# fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
+[[ "$FZF_TAB_HOME" ]] || source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
 
 # turn off bad Zsh defaults
 compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
