@@ -27,7 +27,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.clipboard:
-        cmd = run(['cb'], capture_output='True', check=True).stdout.decode()
+        cmd = run(['cb'], capture_output=True, check=True).stdout.decode()
     else:
         cmd = stdin.read()
 
