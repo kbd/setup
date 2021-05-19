@@ -23,7 +23,7 @@ def parse_index(index):
     result = []
     for items in index.split(','):
         range_ = items.split(':')
-        if len(range_) == 1: # turn single index into valid slice
+        if len(range_) == 1:  # turn single index into valid slice
             i = int(range_[0])
             range_ = (i, i + 1)
 
