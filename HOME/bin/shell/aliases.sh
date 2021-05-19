@@ -145,7 +145,11 @@ alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is_root='[[ $EUID == 0 ]]'
 alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
 alias jq='jqpager'
-jqpager() { command jq -C "$@" | less -FR; }
+jqpager() {
+  local args=()
+  if [[ -t 1 ]]; then args+=('-C'); fi # force color if not in pipeline
+  command jq "${args[@]}" "$@" | less -FR;
+}
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
