@@ -111,7 +111,7 @@ alias gbr='gbrf' # show/switch remote branches using fuzzy finder
 gccb() {
   # check out a repository from the url in the clipboard and cd into it
   local url="$(cb)"
-  local dir="${*:-$(basename "$url" .git)}"
+  local dir="${1:-$(basename "$url" .git)}"
   git clone -- "$url" "$dir" && cd "$dir" || return
 }
 
