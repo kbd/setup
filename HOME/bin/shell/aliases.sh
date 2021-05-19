@@ -111,8 +111,8 @@ alias gbr='gbrf' # show/switch remote branches using fuzzy finder
 gccb() {
   # check out a repository from the url in the clipboard and cd into it
   local url="$(cb)"
-  local dir="${@:-$(basename "$url" .git)}"
-  git clone -- "$url" "$dir" && cd "$dir" || return;
+  local dir="${*:-$(basename "$url" .git)}"
+  git clone -- "$url" "$dir" && cd "$dir" || return
 }
 
 # shortcuts/defaults
@@ -148,7 +148,7 @@ alias jq='jqpager'
 jqpager() {
   local args=()
   if [[ -t 1 ]]; then args+=('-C'); fi # force color if not in pipeline
-  command jq "${args[@]}" "$@" | less -FR;
+  command jq "${args[@]}" "$@" | less -FR
 }
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
