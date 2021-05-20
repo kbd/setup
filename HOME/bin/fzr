@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+# idea from: https://github.com/DanielFGray/fzf-scripts/blob/master/fzrepl
+import argparse
+import sys
+from pathlib import Path
+from subprocess import PIPE, run
+from tempfile import NamedTemporaryFile
+
+HISTORY_PATH = Path.home() / '.config/fzr/history'
+
+def get_fzr_cmd(cmd, temp_path):
+    return [
+        'fzf',
+        '--sync',
+        '--ansi',
+        '--read0',
+        '--no-info',
+        '--disabled',
+        '--height=100%',
+        '--print-query',
+        '--history', HISTORY_PATH,
+        '--preview', f"{cmd} <{temp_path} {{q}}",
+        '--preview-window=down,99%',
+        '--bind=up:previous-history,down:next-history'
+    ]
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Interactive fzf repl")
+    parser.add_argument('command')
+    args = parser.parse_args()
+
+    if not HISTORY_PATH.exists():
+        HISTORY_PATH.parent.mkdir(exist_ok=True)
+
+    with NamedTemporaryFile() as tmp:
+        cmd = get_fzr_cmd(args.command, tmp.name)
+        tmp.write(sys.stdin.read().encode())
+        tmp.seek(0)
+        result = run(cmd, stdin=tmp, stdout=PIPE)
+        if not result.returncode:
+            # upon accepted query, print it (first line)
+            print(args.command, repr(result.stdout.splitlines()[0].decode()))
+
+            # remove adjacent duplicates in the history file
+            run(f'echo "$(uniq {HISTORY_PATH})" > {HISTORY_PATH}', shell=True)
+        elif result.returncode == 130:
+            pass
+        else:
+            print(f"{result.stdout=}")
+            print(f"{result.stderr=}")
+            sys.exit(result.returncode)
