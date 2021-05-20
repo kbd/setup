@@ -88,7 +88,7 @@
 	brv = !git bv -r
 	bav = !git bv -a
 
-	pick-branch = "!f() { git bvb \"$@\" | fzf0 --ansi; }; f"
+	pick-branch = "!f() { git bvb \"$@\" | fzf0 --tiebreak=begin --ansi; }; f"
 	commit-info = show --no-patch --date=short --format='%S%x00%C(green)%ad%C(reset) %C(magenta)%C(italic)%<(40,trunc)%S%C(reset) %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%D%C(reset)'
 
 	bf = !git pick-branch | xargs -t git w
