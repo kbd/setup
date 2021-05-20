@@ -8,6 +8,7 @@ fi
 export PLATFORM="$(uname)"
 export PAGER=less
 export LESS='-iMFx4 --mouse' # smart-case, status bar, quit 1 screen, 4sp tabs
+export DELTA_PAGER="less $LESS -R"
 export VISUAL='code -nw'
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
