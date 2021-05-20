@@ -19,7 +19,6 @@ def get_fzr_cmd(cmd, temp_path):
         '--height=100%',
         '--print-query',
         '--header', cmd,
-        '--header-lines=1',  # all input is one line; effectively removes search
         '--history', HISTORY_PATH,
         '--preview', f"{cmd} <{temp_path} {{q}}",
         '--preview-window=down,99%',
