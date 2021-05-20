@@ -33,14 +33,14 @@ if __name__ == '__main__':
     if not HISTORY_PATH.exists():
         HISTORY_PATH.parent.mkdir(exist_ok=True)
 
-    with NamedTemporaryFile() as tmp:
+    with NamedTemporaryFile('w') as tmp:
         cmd = get_fzr_cmd(args.command, tmp.name)
-        tmp.write(sys.stdin.read().encode())
+        tmp.write(sys.stdin.read())
         tmp.seek(0)
-        result = run(cmd, stdin=tmp, stdout=PIPE)
+        result = run(cmd, stdin=tmp, stdout=PIPE, text=True)
         if not result.returncode:
             # upon accepted query, print it (first line)
-            print(args.command, repr(result.stdout.splitlines()[0].decode()))
+            print(args.command, repr(result.stdout.splitlines()[0]))
 
             # remove adjacent duplicates in the history file
             run(f'echo "$(uniq {HISTORY_PATH})" > {HISTORY_PATH}', shell=True)
