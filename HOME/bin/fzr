@@ -21,7 +21,7 @@ def get_fzr_cmd(cmd, temp_path):
         '--history', HISTORY_PATH,
         '--preview', f"{cmd} <{temp_path} {{q}}",
         '--preview-window=down,99%',
-        '--bind=up:previous-history,down:next-history'
+        '--bind=up:previous-history,down:next-history,alt-left:backward-word,alt-right:forward-word'
     ]
 
 
