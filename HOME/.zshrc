@@ -2,6 +2,7 @@
 # options
 setopt prompt_subst # execute the contents of PROMPT
 setopt interactive_comments # allows a comment after a command
+unsetopt beep # don't beep at me
 
 # directories - http://zsh.sourceforge.net/Intro/intro_6.html
 setopt auto_cd # cd to the directory by executing its name
@@ -32,15 +33,10 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 bindkey -M menuselect '\e[Z' reverse-menu-complete # shift tab to go backwards
 
-# following settings are from fzf-tab
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-zstyle ':completion:*:descriptions' format '[%d]'
-# preview directory's content with exa when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# switch group using `,` and `.`
+# fzf-tab
+zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
 [[ "$FZF_TAB_HOME" ]] || source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
 
