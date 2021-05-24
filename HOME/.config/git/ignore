@@ -15,6 +15,7 @@ __pycache__/
 .mypy_cache/
 .ipynb_checkpoints/
 *.ipynb
+*.sqlite3
 
 scratch
 scratch.*
