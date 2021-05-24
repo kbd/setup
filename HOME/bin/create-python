@@ -28,6 +28,7 @@ poetry.init(
     '--dev-dependency=pylint',
     '--dev-dependency=mypy',
     '--dev-dependency=black',
+    '--dev-dependency=pudb',
     no_interaction = True,
     name = args.name,
     author = sh.git.config('--get', 'user.name').strip(),
