@@ -16,10 +16,14 @@ cd(sys.argv[1])
 
 # initialize poetry with default dependencies, create virtualenv
 poetry.init(
+  '--dev-dependency=pytest',
+  '--dev-dependency=ipython',
+  '--dev-dependency=pylint',
+  '--dev-dependency=mypy',
+  '--dev-dependency=black',
   no_interaction = True,
   name = sys.argv[1],
   author = sh.git.config('--get', '--global', 'user.name').strip(),
-  dev_dependency = ['black', 'ipython', 'mypy', 'pylint', 'pytest'],
 )
 poetry.install()
 
