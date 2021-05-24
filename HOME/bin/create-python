@@ -1,36 +1,63 @@
 #!/usr/bin/env python3
+import argparse
 import logging
-import sys
+import os
 
 import sh
 
 fgsh = sh(_fg=True)
 
-from fgsh import cd, direnv, echo, git, mkdir, poetry
+from fgsh import cd, direnv, django_admin, git, mkdir, poetry
 
 logging.basicConfig(level=logging.INFO)
 
+# parse args
+parser = argparse.ArgumentParser(description="Start a Python project")
+parser.add_argument("name", help="The name of the project")
+parser.add_argument("-d", "--django", action="store_true", help="Add Django to the project")
+args = parser.parse_args()
+
 # create directory
-mkdir(sys.argv[1])
-cd(sys.argv[1])
+mkdir("-p", args.name)
+cd(args.name)
 
 # initialize poetry with default dependencies, create virtualenv
 poetry.init(
-  '--dev-dependency=pytest',
-  '--dev-dependency=ipython',
-  '--dev-dependency=pylint',
-  '--dev-dependency=mypy',
-  '--dev-dependency=black',
-  no_interaction = True,
-  name = sys.argv[1],
-  author = sh.git.config('--get', '--global', 'user.name').strip(),
+    '--dev-dependency=pytest',
+    '--dev-dependency=ipython',
+    '--dev-dependency=pylint',
+    '--dev-dependency=mypy',
+    '--dev-dependency=black',
+    no_interaction = True,
+    name = args.name,
+    author = sh.git.config('--get', 'user.name').strip(),
 )
 poetry.install()
 
 # set up direnv
-echo("layout poetry", _out='.envrc')
+sh.echo("layout poetry", _out='.envrc')
 direnv.allow()
 
 # add files to git
 git.init()
+sh.echo("*.sqlite3", _out='.gitignore')
 git.add('--all')
+git.commit('-m', "Initial commit")
+
+# add django
+if args.django:
+    from fgsh import python3
+    django_manage = python3.bake("manage.py")
+    poetry.add("django")
+    django_admin.startproject("src")
+    cd("src")
+    django_manage.startapp(args.name)
+    django_manage.migrate()
+    django_manage.createsuperuser(
+        noinput = True,
+        username = "admin",
+        email = sh.git.config('--get', 'user.email').strip(),
+        _env=os.environ.copy() | {'DJANGO_SUPERUSER_PASSWORD': 'admin'},
+    )
+    git.add("--all")
+    git.commit('-m', "Add Django")
