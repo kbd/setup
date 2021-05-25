@@ -9,6 +9,10 @@ from tempfile import NamedTemporaryFile
 HISTORY_PATH = Path.home() / '.config/fzr/history'
 
 def get_fzr_cmd(cmd, temp_path):
+    if '{}' not in cmd:
+        cmd += ' {}'
+
+    cmd = cmd.replace('{}', '{q}')
     return [
         'fzf',
         '--sync',
@@ -20,12 +24,12 @@ def get_fzr_cmd(cmd, temp_path):
         '--print-query',
         '--header', cmd,
         '--history', HISTORY_PATH,
-        '--preview', f"{cmd} <{temp_path} {{q}}",
+        '--preview', f"{cmd} <{temp_path}",
         '--preview-window=down,99%',
         '--bind=ctrl-r:refresh-preview',
         '--bind=up:previous-history,down:next-history',
         '--bind=alt-left:backward-word,alt-right:forward-word',
-        f'--bind=ctrl-t:execute-silent({cmd} <{temp_path} {{q}} | code -)',
+        f'--bind=ctrl-t:execute-silent({cmd} <{temp_path} | code -)',
     ]
 
 
