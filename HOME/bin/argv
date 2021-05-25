@@ -43,19 +43,16 @@ def myprint(*args, **kwargs):
     print(*args, **{'file': stderr} | kwargs)
     if FILE:
         with open(FILE, "a") as f:
-            print(*args, **{**kwargs, "file": f})
+            print(*args, **kwargs | {'file': f})
 
 if __name__ == '__main__':
     # if ARGV_FILE set, also write output to that file
     if FILE := os.environ.get("ARGV_FILE"):
         FILE = os.path.expanduser(FILE)
 
-    code = int(os.environ.get("ARGV_RETURN", 0))
-    tty = int(os.environ.get("ARGV_TTY", 0))
-
     myprint(f"{os.getcwd()=}")
 
-    if tty:
+    if int(os.environ.get("ARGV_TTY", 0)):
         myprint(f"{stdin.isatty()=}")
         myprint(f"{stdout.isatty()=}")
         myprint(f"{stderr.isatty()=}")
@@ -66,9 +63,9 @@ if __name__ == '__main__':
     if vars := {
         k: v
         for k, v in os.environ.items()
-        if k.lower().startswith("argv_")
+        if k.upper().startswith("ARGV_")
     }:
         myprint("VARS:", vars)
 
     myprint(argv, file=stdout)
-    exit(code)
+    exit(int(os.environ.get("ARGV_RETURN", 0)))
