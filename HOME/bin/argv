@@ -36,7 +36,7 @@ Show how 'python' and 'ipython' process arguments differently:
 
 """
 import os
-from sys import argv, exit, stderr, stdin
+from sys import argv, exit, stderr, stdin, stdout
 
 
 def myprint(*args, **kwargs):
@@ -51,10 +51,16 @@ if __name__ == '__main__':
         FILE = os.path.expanduser(FILE)
 
     code = int(os.environ.get("ARGV_RETURN", 0))
+    tty = int(os.environ.get("ARGV_TTY", 0))
 
     myprint(f"{os.getcwd()=}", file=stderr)
 
-    if not os.isatty(stdin.fileno()):  # if pipeline
+    if tty:
+        myprint(f"{stdin.isatty()=}", file=stderr)
+        myprint(f"{stdout.isatty()=}", file=stderr)
+        myprint(f"{stderr.isatty()=}", file=stderr)
+
+    if not stdin.isatty():  # if pipeline
         myprint(f"{stdin.read()=}", file=stderr)
 
     if vars := {
