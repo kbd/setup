@@ -30,6 +30,7 @@ def get_fzr_cmd(cmd, temp_path):
         '--bind=up:previous-history,down:next-history',
         '--bind=alt-left:backward-word,alt-right:forward-word',
         f'--bind=ctrl-t:execute-silent({cmd} <{temp_path} | code -)',
+        f'--bind=ctrl-c:execute-silent({cmd} <{temp_path} | cb)',
     ]
 
 
