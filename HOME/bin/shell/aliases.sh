@@ -166,12 +166,12 @@ alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yell
 alias ssh='sshrc' # always sshrc
 alias stripansi="perl -pe 's/\e\[?.*?[\@-~]//g'" # https://unix.stackexchange.com/a/4529
 alias tcl='rlwrap tclsh'
-user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
-alias wcl='wc -l'
-alias x='chmod +x'
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 alias title-tab='printf "\e]1;%s\a"'
 alias title-win='printf "\e]2;%s\a"'
+user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
+alias wcl='wc -l'
+alias x='chmod +x'
 alias yaegi='rlwrap yaegi'
 
 b() {
