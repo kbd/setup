@@ -50,6 +50,7 @@ if args.django:
     from fgsh import python3
     django_manage = python3.bake("manage.py")
     poetry.add("django")
+    poetry.add("--dev", "django-debug-toolbar", "django-extensions")
     django_admin.startproject("src")
     cd("src")
     django_manage.startapp(args.name)
