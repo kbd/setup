@@ -164,6 +164,7 @@ alias pyc='py -c'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
 alias ssh='sshrc' # always sshrc
+alias stripansi="perl -pe 's/\e\[?.*?[\@-~]//g'" # https://unix.stackexchange.com/a/4529
 alias tcl='rlwrap tclsh'
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
