@@ -40,7 +40,7 @@ from sys import argv, exit, stderr, stdin, stdout
 
 
 def myprint(*args, **kwargs):
-    print(*args, **kwargs)
+    print(*args, **{'file': stderr} | kwargs)
     if FILE:
         with open(FILE, "a") as f:
             print(*args, **{**kwargs, "file": f})
@@ -53,22 +53,22 @@ if __name__ == '__main__':
     code = int(os.environ.get("ARGV_RETURN", 0))
     tty = int(os.environ.get("ARGV_TTY", 0))
 
-    myprint(f"{os.getcwd()=}", file=stderr)
+    myprint(f"{os.getcwd()=}")
 
     if tty:
-        myprint(f"{stdin.isatty()=}", file=stderr)
-        myprint(f"{stdout.isatty()=}", file=stderr)
-        myprint(f"{stderr.isatty()=}", file=stderr)
+        myprint(f"{stdin.isatty()=}")
+        myprint(f"{stdout.isatty()=}")
+        myprint(f"{stderr.isatty()=}")
 
     if not stdin.isatty():  # if pipeline
-        myprint(f"{stdin.read()=}", file=stderr)
+        myprint(f"{stdin.read()=}")
 
     if vars := {
         k: v
         for k, v in os.environ.items()
         if k.lower().startswith("argv_")
     }:
-        myprint("VARS:", vars, file=stderr)
+        myprint("VARS:", vars)
 
-    myprint(argv)
+    myprint(argv, file=stdout)
     exit(code)
