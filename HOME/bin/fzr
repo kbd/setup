@@ -13,6 +13,7 @@ HISTORY_DIR = CONFIG_DIR / 'history'
 
 SPECIAL_CASES = [
     (r'^jq(?!\s+(?:-C|--color-output))', 'jq -C'),  # auto-color jq
+    (r'^rg(?!\s+(?:--color=always))', 'rg --color=always'),  # auto-color rg
 ]
 
 
