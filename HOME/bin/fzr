@@ -3,12 +3,17 @@
 import argparse
 import re
 import sys
+from functools import reduce
 from pathlib import Path
 from subprocess import PIPE, run
 from tempfile import NamedTemporaryFile
 
 CONFIG_DIR = Path.home() / '.config/fzr'
 HISTORY_DIR = CONFIG_DIR / 'history'
+
+SPECIAL_CASES = [
+    (r'^jq(?!\s+(?:-C|--color-output))', 'jq -C'),  # auto-color jq
+]
 
 
 def get_history_path(parent_dir, cmd):
@@ -17,7 +22,7 @@ def get_history_path(parent_dir, cmd):
     return parent_dir / history_filename
 
 
-def get_fzr_cmd(cmd, temp_path, history_path):
+def get_fzf_cmd(cmd, temp_path, history_path):
     if '{}' not in cmd:
         cmd += ' {}'
 
@@ -57,13 +62,13 @@ if __name__ == '__main__':
     if not HISTORY_DIR.exists():
         HISTORY_DIR.mkdir(parents=True)
 
-    history_path = get_history_path(HISTORY_DIR, args.command)
-
+    cmd = reduce(lambda s, r: re.sub(*r, s), SPECIAL_CASES, args.command)
+    history_path = get_history_path(HISTORY_DIR, cmd)
     with NamedTemporaryFile('w') as tmp:
-        cmd = get_fzr_cmd(args.command, tmp.name, history_path)
         tmp.write(sys.stdin.read())
         tmp.seek(0)
-        result = run(cmd, stdin=tmp, stdout=PIPE, text=True)
+        fzf_cmd = get_fzf_cmd(cmd, tmp.name, history_path)
+        result = run(fzf_cmd, stdin=tmp, stdout=PIPE, text=True)
         if i := result.returncode:
             sys.exit((i ^ 130) and i)  # 130 from fzf means "cancelled"
 
