@@ -58,13 +58,11 @@ if __name__ == '__main__':
         tmp.write(sys.stdin.read())
         tmp.seek(0)
         result = run(cmd, stdin=tmp, stdout=PIPE, text=True)
-        if not result.returncode:
-            # upon accepted query, print it (first line)
-            print(args.command, repr(result.stdout.splitlines()[0]))
+        if i := result.returncode:
+            sys.exit((i ^ 130) and i)  # 130 from fzf means "cancelled"
 
-            # remove adjacent duplicates in the history file
-            run(f'echo "$(uniq {history_path})" > {history_path}', shell=True)
-        elif result.returncode == 130:
-            pass
-        else:
-            sys.exit(result.returncode)
+        # print command & query (fzf --print-query)
+        print(args.command, repr(result.stdout.splitlines()[0]))
+
+        # remove adjacent duplicates in the history file
+        run(f'echo "$(uniq {history_path})" > {history_path}', shell=True)
