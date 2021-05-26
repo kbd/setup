@@ -43,9 +43,15 @@ def get_fzr_cmd(cmd, temp_path, history_path):
     ]
 
 
+def command(value):
+    if not value:
+        raise ValueError("Command cannot be blank")
+    return value
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Interactive fzf repl")
-    parser.add_argument('command')
+    parser.add_argument('command', type=command)
     args = parser.parse_args()
 
     if not HISTORY_DIR.exists():
