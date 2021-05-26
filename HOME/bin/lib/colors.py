@@ -1,8 +1,7 @@
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 
 class D(dict):
-  __getattr__ = dict.__getitem__
-
+    __getattr__ = dict.__getitem__
 
 colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 style_codes = dict(reset=0, bold=1, it=3, ul=4, rev=7, it_off=23, ul_off=24, rev_off=27)
