@@ -9,8 +9,8 @@ esc = lambda i: f'\x1b[{i}m'
 
 # s = style, fg = foreground, bg = background
 s = D({name: esc(i) for name, i in style_codes.items()})
-fg = D({colors[i]: esc(30+i) for i in range(8)})
-bg = D({colors[i]: esc(40+i) for i in range(8)})
+fg = D({c: esc(30+i) for i,c in enumerate(colors)})
+bg = D({c: esc(40+i) for i,c in enumerate(colors)})
 
 e = D(  # e = escapes for use within prompt, o=open, c=close
     zsh=D(o='%{', c='%}'),
