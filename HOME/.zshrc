@@ -83,17 +83,17 @@ done
 
 # 1st party config
 PROMPT='$(prompt zsh)'
+export PROMPT_PREFIX='⚡'
 
 precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_PATH="$(print -P '%~')"
   export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
-  export PROMPT_PREFIX='⚡'
   title "$PROMPT_PATH${TABTITLE:+" ($TABTITLE)"}"
 }
 preexec(){
   # unset variables set in precmd
-  unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS PROMPT_PREFIX
+  unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS
 }
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
