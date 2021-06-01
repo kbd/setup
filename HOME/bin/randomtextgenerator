@@ -5,31 +5,32 @@ import random
 import sys
 import time
 from datetime import datetime, timedelta
-from itertools import product
+from itertools import permutations
 
 from lib import colors
 
 
-def randomtext(style, outputs=[sys.stdout, sys.stderr]):
+def randomtext(style, file):
     print(
         *style, os.getpid(), datetime.now().isoformat(), colors.s.reset,
-        file=random.choice(outputs)
+        file=file
     )
 
 
 def main(args):
-    all_style_names = list(product(colors.fg, colors.bg))
-    # remove fg=bg so that you don't get eg. white text on white background
-    style_names = [s for s in all_style_names if s[0] != s[1]]
-    style_name = random.choice(style_names)
-    style = (colors.fg[style_name[0]], colors.bg[style_name[1]])
+    streams = (sys.stdout, sys.stderr)
+    num = len(streams)
+    color_pairs = random.sample(list(permutations(colors.colors, num)), num)
+    styles = [(colors.fg[f], colors.bg[b]) for f,b in color_pairs]
+    streams = dict(zip(streams, styles))
 
     if not args.interval:
-        return randomtext(style)
+        return randomtext(streams[sys.stdout], sys.stdout)
 
     endtime = datetime.now() + timedelta(seconds=args.timeout) if args.timeout else None
     while True:
-        randomtext(style)
+        stream = random.choice(list(streams))
+        randomtext(streams[stream], stream)
         if args.timeout:
             now = datetime.now()
             then = now + timedelta(seconds=args.interval)
