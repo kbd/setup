@@ -2,6 +2,7 @@
 import argparse
 import os
 import random
+import sys
 import time
 from datetime import datetime, timedelta
 from itertools import product
@@ -9,8 +10,11 @@ from itertools import product
 from lib import colors
 
 
-def randomtext(style):
-    print(*style, os.getpid(), datetime.now().isoformat(), colors.s.reset)
+def randomtext(style, outputs=[sys.stdout, sys.stderr]):
+    print(
+        *style, os.getpid(), datetime.now().isoformat(), colors.s.reset,
+        file=random.choice(outputs)
+    )
 
 
 def main(args):
