@@ -20,7 +20,7 @@ def randomtext(style, file):
 def main(args):
     streams = (sys.stdout, sys.stderr)
     num = len(streams)
-    color_pairs = random.sample(list(permutations(colors.colors, num)), num)
+    color_pairs = random.sample(list(permutations(colors.colors, 2)), num)
     styles = [(colors.fg[f], colors.bg[b]) for f,b in color_pairs]
     streams = dict(zip(streams, styles))
 
