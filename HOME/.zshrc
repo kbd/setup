@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # options
 setopt prompt_subst # execute the contents of PROMPT
-setopt interactive_comments # allows a comment after a command
+setopt interactive_comments # allow a comment after a command
 unsetopt beep # don't beep at me
 
 # directories - http://zsh.sourceforge.net/Intro/intro_6.html
