@@ -34,3 +34,6 @@ brew bundle -v --file="$bundle"
 
 echo "Running cleanup"
 HOMEBREW_CLEANUP_MAX_AGE_DAYS=0 brew cleanup -s
+
+echo "Updating App Store"
+mas upgrade
