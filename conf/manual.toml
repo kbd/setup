@@ -29,3 +29,8 @@ git = "https://github.com/Aloxaf/fzf-tab"
 
 [zsh-prompt-benchmark]
 git = "https://github.com/romkatv/zsh-prompt-benchmark.git"
+
+[topfew]
+git = "https://github.com/timbray/topfew.git"
+cmd = "make"
+bin = "bin/tf"
