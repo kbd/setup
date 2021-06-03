@@ -48,9 +48,7 @@ def main():
     setup_exe = os.path.join(setup_path, 'HOME/bin/setup')
 
     print("Installing all the things")
-    subprocess.check_call(
-        [setup_exe, 'brew', 'python', 'manual', 'symlinks', 'mac', 'restartservices']
-    )
+    subprocess.check_call([setup_exe, 'init'])
     print("Done installing all the things. Restart your terminal.")
 
 

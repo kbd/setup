@@ -76,4 +76,19 @@
     'symlinks': {
         'exec': "run_commands(['symgr', *filter(lambda x: is_debug(), ['--debug']), home(), Path.home()])",
     },
+    'pull': {
+        'help': "Update the setup repository",
+        'cmd': ['git', 'pg'],
+    },
+    'init': {
+        'help': "The default commands used on first setup / bootstrap",
+        'cmd': ['setup', 'brew', 'python', 'manual', 'symlinks', 'mac', 'restartservices'],
+    },
+    'update': {
+        'help': "One-stop shopping to update setup repo and most things",
+        'cmd': (
+            ['setup', 'pull'],
+            ['setup', 'brew', 'python', 'symlinks', 'vscode'],
+        ),
+    },
 }
