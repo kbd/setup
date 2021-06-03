@@ -61,7 +61,7 @@ layouts = {
     lo("Firefox", 0, 0.275), lo("Code", 0.275, 0.5), lo("kitty", 0.775, 0.225)
   },
   ["Built-in Retina Display"] = {
-    lo("Firefox", 0, 0.3), lo("Code", 0.3, 0.4), lo("kitty", 0.7, 0.3)
+    lo("Firefox", 0, 0.3), lo("Code", 0.3, 0.38), lo("kitty", 0.68, 0.32)
   }
 }
 layouts["default"] = layouts["DELL U3818DW"]
