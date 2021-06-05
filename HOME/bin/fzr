@@ -17,17 +17,8 @@ SPECIAL_CASES = [
 ]
 
 
-def get_history_path(parent_dir, cmd):
-    # strip and replace anything but [a-zA-Z0-9_-]+ with a single underscore
-    history_filename = re.sub(r'[^\w-]+', '_', cmd.strip(), re.ASCII)
-    return parent_dir / history_filename
-
-
 def get_fzf_cmd(cmd, temp_path, history_path):
-    if '{}' not in cmd:
-        cmd += ' {}'
-
-    cmd = cmd.replace('{}', '{q}')
+    cmd = cmd.replace('{}', '{q}') if '{}' in cmd else cmd + ' {q}'
     return [
         'fzf',
         '--sync',
@@ -49,22 +40,14 @@ def get_fzf_cmd(cmd, temp_path, history_path):
     ]
 
 
-def command(value):
-    if not value:
-        raise ValueError("Command cannot be blank")
-    return value
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Interactive fzf repl")
-    parser.add_argument('command', type=command)
+    parser.add_argument('command', type=lambda x: x or 'echo')  # prevent empty
     args = parser.parse_args()
 
-    if not HISTORY_DIR.exists():
-        HISTORY_DIR.mkdir(parents=True)
-
+    HISTORY_DIR.mkdir(parents=True, exist_ok=True)
     cmd = reduce(lambda s, r: re.sub(*r, s), SPECIAL_CASES, args.command)
-    history_path = get_history_path(HISTORY_DIR, cmd)
+    history_path = HISTORY_DIR / re.sub(r'[^\w-]+', '_', cmd.strip(), re.ASCII)
     with NamedTemporaryFile('w') as tmp:
         tmp.write(sys.stdin.read())
         tmp.seek(0)
