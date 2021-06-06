@@ -12,7 +12,7 @@ from lib import colors
 
 def randomtext(style, file):
     print(
-        *style, os.getpid(), datetime.now().isoformat(), colors.s.reset,
+        *style, os.getpid(), file.name, datetime.now().isoformat(), colors.s.reset,
         file=file
     )
 
