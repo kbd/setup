@@ -1,5 +1,3 @@
-/HOME/.config/.machine/*
-/priv/
 3rdparty/
 .pytest_cache/
 Brewfile.lock.json
