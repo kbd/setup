@@ -67,5 +67,9 @@ if __name__ == '__main__':
     }:
         myprint("VARS:", vars)
 
+    if sleep := float(os.environ.get("ARGV_SLEEP", 0)):
+        import time
+        time.sleep(sleep)
+
     myprint(argv, file=stdout)
     exit(int(os.environ.get("ARGV_RETURN", 0)))
