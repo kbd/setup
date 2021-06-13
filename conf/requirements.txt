@@ -1,6 +1,7 @@
 attrs
 black
 boto3
+bpython
 click
 csvs-to-sqlite
 Django

@@ -6,6 +6,7 @@ if [[ -z "$PATH_SET" ]]; then
   export PATH_SET=1
 fi
 export PLATFORM="$(uname)"
+export XDG_CONFIG_HOME=~/.config
 export PAGER=less
 export LESS='-iMFx4 --mouse' # smart-case, status bar, quit 1 screen, 4sp tabs
 export DELTA_PAGER="less $LESS -R"
@@ -161,7 +162,8 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias pe=path-extractor
 alias printv='printf "%q\n"' # v for verbatim
-alias py=ipython
+alias py='PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython ptpython'
+alias pyi='PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython ptipython'
 alias pyc='py -c'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
