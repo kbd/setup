@@ -59,16 +59,10 @@
     "workbench.list.keyboardNavigation": "filter",
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
-    "workbench.editorAssociations": [
-        {
-            "viewType": "default",
-            "filenamePattern": "git-rebase-todo"
-        },
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "git-rebase-todo": "default",
+        "*.ipynb": "jupyter-notebook"
+    },
 
     // colors
     "workbench.colorCustomizations": {
