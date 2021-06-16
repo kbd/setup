@@ -92,7 +92,7 @@ precmd() {
   title "$PROMPT_PATH${TABTITLE:+" ($TABTITLE)"}"
 }
 preexec(){
-  # unset variables set in precmd
+  title "$PROMPT_PATH ($1)"
   unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS
 }
 tt() { TABTITLE="$@"; }
