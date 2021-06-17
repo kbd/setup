@@ -16,7 +16,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONBREAKPOINT=pudb.set_trace
-export PYTHONASYNCIODEBUG=1
 export PIPENV_SHELL_FANCY=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
