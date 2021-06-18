@@ -43,7 +43,6 @@ PyYAML
 requests
 rethinkdb
 rich
-sh
 setuptools
 Sphinx
 sqlalchemy
