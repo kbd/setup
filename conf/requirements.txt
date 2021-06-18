@@ -41,7 +41,6 @@ pytest-gitignore
 python-dateutil
 PyYAML
 requests
-rethinkdb
 rich
 setuptools
 Sphinx
@@ -50,7 +49,6 @@ sqlite-utils
 tabulate
 tmuxp
 toml
-virtualenv
 visidata
 xlrd
 xonsh
