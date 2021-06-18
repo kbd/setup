@@ -26,14 +26,14 @@ if __name__ == "__main__":
     parser.add_argument('url', nargs='?', help='URL to download')
     args, rest = parser.parse_known_args()
 
-    raw = args.raw
     url = args.url or utils.run(['cb'], cap=True)
-
     fprint("Downloading", url)
 
-    if raw or url.endswith(BINARY_EXTENSIONS):
-        run('wget', *rest, url)
+    if args.raw or url.endswith(BINARY_EXTENSIONS):
+        cmd = 'wget'
     elif url.startswith('magnet:') or url.endswith('.torrent'):
-        run('aria2c', *rest, url)
+        cmd = 'aria2c'
     else:
-        run('youtube-dl', *rest, url)
+        cmd = 'youtube-dl'
+
+    run(cmd, *rest, url)
