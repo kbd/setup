@@ -295,6 +295,10 @@
     "python.languageServer": "Pylance",
     "python.showStartPage": false,
     "jupyter.sendSelectionToInteractiveWindow": false,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
 
     "[elixir]": {
         "editor.formatOnSave": true,
