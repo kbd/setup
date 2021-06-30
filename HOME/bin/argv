@@ -39,6 +39,22 @@ import os
 from sys import argv, exit, stderr, stdin, stdout
 
 
+class Env:
+    def __init__(self):
+        for k, v in os.environ.items():
+            if k.upper().startswith("ARGV_"):
+                if
+                setattr(self, k[5:].lower(), v)
+                setattr(self, k, v)
+
+    def __getitem__(self, name):
+        return self.__dict__.get(name, 0)
+
+    __getattr__ = __getitem__
+
+    def __repr__(self):
+        return repr(self.__dict__)
+
 def myprint(*args, **kwargs):
     print(*args, **{'file': stderr} | kwargs)
     if FILE:
@@ -46,25 +62,23 @@ def myprint(*args, **kwargs):
             print(*args, **kwargs | {'file': f})
 
 if __name__ == '__main__':
+    env = Env()
+
     # if ARGV_FILE set, also write output to that file
-    if FILE := os.environ.get("ARGV_FILE"):
+    if FILE := env.file:
         FILE = os.path.expanduser(FILE)
 
     myprint(f"{os.getcwd()=}")
 
-    if int(os.environ.get("ARGV_TTY", 0)):
-        myprint(f"{stdin.isatty()=}")
-        myprint(f"{stdout.isatty()=}")
-        myprint(f"{stderr.isatty()=}")
-
     if not stdin.isatty():  # if pipeline
         myprint(f"{stdin.read()=}")
 
-    if vars := {
-        k: v
-        for k, v in os.environ.items()
-        if k.upper().startswith("ARGV_")
-    }:
+        if int(os.environ.get("ARGV_TTY", 0)):
+            myprint(f"{stdin.isatty()=}")
+            myprint(f"{stdout.isatty()=}")
+            myprint(f"{stderr.isatty()=}")
+
+
         myprint("VARS:", vars)
 
     if sleep := float(os.environ.get("ARGV_SLEEP", 0)):
