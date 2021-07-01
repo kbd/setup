@@ -39,37 +39,51 @@ import os
 from sys import argv, exit, stderr, stdin, stdout
 
 
+class Env(dict):
+    prefix = "ARGV_"
+    def __init__(self):
+        super().__init__({
+            k[len(self.prefix):].lower(): v
+            for k, v in os.environ.items()
+            if k.upper().startswith(self.prefix)
+        })
+
+    def __getitem__(self, name):
+        return self.get(name, 0)
+
+    __getattr__ = __getitem__
+
+
 def myprint(*args, **kwargs):
-    print(*args, **{'file': stderr} | kwargs)
+    print(*args, **{'file': stderr, **kwargs})
     if FILE:
         with open(FILE, "a") as f:
-            print(*args, **kwargs | {'file': f})
+            print(*args, **{**kwargs, 'file': f})
+
 
 if __name__ == '__main__':
+    env = Env()
+
     # if ARGV_FILE set, also write output to that file
-    if FILE := os.environ.get("ARGV_FILE"):
+    if FILE := env.file:
         FILE = os.path.expanduser(FILE)
 
     myprint(f"{os.getcwd()=}")
 
-    if int(os.environ.get("ARGV_TTY", 0)):
+    if not stdin.isatty():  # if pipeline
+        myprint(f"{stdin.read()=}")
+
+    if env.tty:
         myprint(f"{stdin.isatty()=}")
         myprint(f"{stdout.isatty()=}")
         myprint(f"{stderr.isatty()=}")
 
-    if not stdin.isatty():  # if pipeline
-        myprint(f"{stdin.read()=}")
+    if env:
+        myprint("VARS:", env)
 
-    if vars := {
-        k: v
-        for k, v in os.environ.items()
-        if k.upper().startswith("ARGV_")
-    }:
-        myprint("VARS:", vars)
-
-    if sleep := float(os.environ.get("ARGV_SLEEP", 0)):
+    if sleep := float(env.sleep):
         import time
         time.sleep(sleep)
 
     myprint(argv, file=stdout)
-    exit(int(os.environ.get("ARGV_RETURN", 0)))
+    exit(int(env['return']))
