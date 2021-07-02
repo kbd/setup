@@ -23,6 +23,7 @@
 	renameLimit = 1000
 [merge]
 	tool = kdiff3
+	conflictstyle = diff3 # https://twitter.com/KentonVarda/status/1402340580911427588
 [difftool]
 	prompt = false
 [mergetool]
