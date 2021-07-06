@@ -16,6 +16,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONBREAKPOINT=pudb.set_trace
+export PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython  # defaults to ~/Library/Application Support/... on Mac
 export PIPENV_SHELL_FANCY=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
@@ -164,8 +165,8 @@ alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias pe=path-extractor
 alias printv='printf "%q\n"' # v for verbatim
 alias py='pyt'
-alias pyt='PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython ptpython'
-alias pyi='PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython ptipython'
+alias pyt='ptpython'
+alias pyi='ptipython'
 alias pyc='py -c'
 alias pyb='bpython'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
