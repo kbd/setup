@@ -129,6 +129,7 @@ alias curl='curl -L' # follow redirects by default
 alias d='docker'
 alias da='django-admin'
 alias dm='python3 manage.py' # "django manage"
+alias ds='dm shell_plus --ptpython'
 alias dp='cd "$(dirs -pl | fzf)"'
 alias dtrx='dtrx --one=inside'
 alias du='du -h'
