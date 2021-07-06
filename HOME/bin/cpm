@@ -1,2 +1,2 @@
 #!/bin/sh
-xpm cp "$@"
+xm cp "$@"
