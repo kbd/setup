@@ -26,7 +26,7 @@
             'poetry completions zsh > `brew --prefix`/share/zsh/site-functions/_poetry',
             # Django shell_plus can use ptpython but doesn't respect its config
             # location, so create a symlink at the location it expects
-            "xpm 'ln -sf' $PTPYTHON_CONFIG_HOME ~/.ptpython",
+            "xpm 'ln -sf' ~/.config/ptpython ~/.ptpython",
         ),
     },
     'node': {
