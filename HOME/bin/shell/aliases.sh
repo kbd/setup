@@ -38,7 +38,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
   alias tar=gtar
   alias ls='/usr/local/bin/gls -F --color=auto'
 
-  alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
+  alias lock='pmset displaysleepnow'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
 
   alias switch-output="SwitchAudioSource -a -t output | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t output -s '%'"
