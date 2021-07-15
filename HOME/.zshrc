@@ -62,6 +62,8 @@ bindkey "\e\e[D" backward-word # ⌥← iterm
 bindkey "\e\e[C" forward-word # ⌥→
 bindkey "\e[1;3D" backward-word # ⌥← kitty
 bindkey "\e[1;3C" forward-word # ⌥→
+bindkey "\eb" backward-word # ⌥← vscode
+bindkey "\ef" forward-word # ⌥→
 bindkey "\e[H" beginning-of-line # home
 bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete
