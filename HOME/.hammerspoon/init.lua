@@ -67,8 +67,8 @@ layouts = {
 layouts["default"] = layouts["DELL U3818DW"]
 
 function setlayout()
-  name = hs.screen.primaryScreen():name()
-  layout = layouts[name] or layouts["default"]
+  local name = hs.screen.primaryScreen():name()
+  local layout = layouts[name] or layouts["default"]
   hs.layout.apply(layout)
 end
 
@@ -89,7 +89,7 @@ function moveActiveWindow(num, den, screen)
 end
 
 function moveActiveWindowToNextScreen()
-  w = hs.window.focusedWindow()
+  local w = hs.window.focusedWindow()
   w:moveToScreen(w:screen():next())
 end
 
@@ -136,7 +136,7 @@ function selectAudio(audio)
   if audio == nil then -- nothing selected
     return
   end
-  device = hs.audiodevice.findDeviceByUID(audio.uid)
+  local device = hs.audiodevice.findDeviceByUID(audio.uid)
   hs.alert.show("Setting "..audio.subText.." device: "..device:name())
   if device:isOutputDevice() then
     device:setDefaultOutputDevice()
@@ -147,7 +147,7 @@ end
 
 caffeine = hs.menubar.new()
 function showCaffeine(awake)
-  title = awake and '☕' or '🍵'
+  local title = awake and '☕' or '🍵'
   caffeine:setTitle(title)
 end
 
