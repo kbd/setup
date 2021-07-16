@@ -295,6 +295,7 @@
     "python.globalModuleInstallation": true,
     "python.languageServer": "Pylance",
     "python.showStartPage": false,
+    "python.terminal.activateEnvironment": false,
     "jupyter.sendSelectionToInteractiveWindow": false,
     "notebook.cellToolbarLocation": {
         "default": "right",
