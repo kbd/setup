@@ -19,7 +19,9 @@ poetry.init(
     no_interaction = True,
     name = args.name,
     author = git.config(get='user.name'),
-    dev_dependency = ['pytest', 'ipython', 'pylint', 'mypy', 'black', 'pudb'],
+    dev_dependency = [
+        'pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb'
+    ],
 )
 poetry.install()
 
