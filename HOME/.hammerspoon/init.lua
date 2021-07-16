@@ -88,6 +88,11 @@ function moveActiveWindow(num, den, screen)
   end
 end
 
+function moveActiveWindowToNextScreen()
+  w = hs.window.focusedWindow()
+  w:moveToScreen(w:screen():next())
+end
+
 function inspect(value)
   hs.alert.show(hs.inspect(value))
 end
@@ -164,7 +169,7 @@ bindAppByUti("B", "public.html")
 bindAppByUti("T", "public.plain-text")
 bindApp("S", "kitty")
 bindCmd("C", "setup edit")
-bindCmd("N", "notes")
+bindCmd("O", "notes")
 hs.grid.setGrid("9x6")
 hs.hotkey.bind(hyper, "G", hs.grid.show)
 hs.hotkey.bind(hyper, "L", setlayout)
@@ -178,4 +183,5 @@ hs.hotkey.bind(hyper, "3", moveActiveWindow(1, 3))
 hs.hotkey.bind(hyper, "4", moveActiveWindow(2, 3))
 hs.hotkey.bind(hyper, "5", moveActiveWindow(3, 3))
 hs.hotkey.bind(hyper, "6", moveActiveWindow(1, 1))
+hs.hotkey.bind(hyper, "N", moveActiveWindowToNextScreen)
 hs.hotkey.bind(hyper, "A", showAudioFuzzy)
