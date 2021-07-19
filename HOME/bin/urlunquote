@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+from urllib.parse import unquote
+
+from lib.utils import run_func_on_cmdline_input
+
+run_func_on_cmdline_input(unquote)

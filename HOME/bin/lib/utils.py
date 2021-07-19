@@ -1,6 +1,7 @@
 import logging
 import re
 import subprocess
+import sys
 
 log = logging.getLogger(__name__)
 
@@ -62,3 +63,8 @@ def run_commands(cmd, *args, **kwargs):
         return [run(c, *args, **kwargs) for c in cmd]
 
     return run(cmd, *args, **kwargs)
+
+
+def run_func_on_cmdline_input(func):
+    value = sys.argv[1] if sys.stdin.isatty() else sys.stdin.read()
+    print(func(value), end='')
