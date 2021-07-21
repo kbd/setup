@@ -25,7 +25,6 @@ pandas
 pgcli
 pip
 pipdeptree
-pipenv
 poetry
 psycopg2-binary
 ptpython
