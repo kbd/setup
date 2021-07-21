@@ -167,9 +167,8 @@ down = move("y", 10)
 
 bindAppByUti("B", "public.html")
 bindAppByUti("T", "public.plain-text")
-bindApp("S", "kitty")
-bindCmd("C", "setup edit")
-bindCmd("O", "notes")
+bindApp("S", "kitty") -- "S=shell"
+bindApp("C", "kitty") -- "C=console"
 hs.grid.setGrid("9x6")
 hs.hotkey.bind(hyper, "G", hs.grid.show)
 hs.hotkey.bind(hyper, "L", setlayout)
