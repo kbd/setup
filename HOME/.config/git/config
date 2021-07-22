@@ -197,7 +197,6 @@
 	w = switch-autostash
 	w- = w -
 	wc = w -c
-	main-branch = !basename $(git symbolic-ref refs/remotes/origin/HEAD)
 	set-main-branch = remote set-head origin
 	wm = !git w $(git main-branch)
 	unstage = reset --

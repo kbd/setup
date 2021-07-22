@@ -1,0 +1,37 @@
+#!/usr/local/bin/python3
+import logging
+import os
+import sys
+
+from aush import git
+
+
+def main():
+    # get branch name from remotes/origin/HEAD
+    if branch := git.symbolic_ref('refs/remotes/origin/HEAD'):
+        print(os.path.basename(str(branch)))
+        return 0
+    elif b'not a git repository' in branch.stderr:
+        return branch.code
+
+    # if remote isn't set, look for branches with specific names
+    # if main and master both exist or if neither exist, default to
+    # init.defaultBranch if set, otherwise fail.
+    possible_branches = ['main', 'master']
+    local_branches = set(git.branch(format='%(refname:short)'))
+    possible = set(possible_branches)
+    if possible <= local_branches or possible.isdisjoint(local_branches):
+        if branch := git.config(get='init.defaultBranch'):
+            print(branch)
+            return 0
+
+        return 1
+
+    # one of the possible branches must exist
+    print(next(p for p in possible_branches if p in local_branches))
+    return 0
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.ERROR)
+    sys.exit(main())
