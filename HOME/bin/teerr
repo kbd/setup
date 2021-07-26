@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# https://stackoverflow.com/a/20553986
+tee >(cat 1>&2)
