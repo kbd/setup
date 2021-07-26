@@ -77,6 +77,8 @@ eval "$(zoxide init zsh)"
 source "$HOME/.config/fzf/fzf.zsh"
 typeset -A ZSH_HIGHLIGHT_STYLES # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
 ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
