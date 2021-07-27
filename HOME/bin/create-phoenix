@@ -22,3 +22,4 @@ mix ecto.create
 # stage files in git
 git init
 git add --all
+git commit -m "Initial commit"
