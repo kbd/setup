@@ -120,6 +120,8 @@
     },
 
     // extensions
+    "extensions.ignoreRecommendations": true,
+
     "gitlens.codeLens.enabled": false,
     "gitlens.advanced.messages": {
         "suppressCommitHasNoPreviousCommitWarning": false,
