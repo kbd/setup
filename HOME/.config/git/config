@@ -99,9 +99,9 @@
 	wrf = brf
 	# baf = !git pick-branch -a | xargs -t git w -t
 
-	bc = !git bvb | fzf0 --ansi --multi=2 | xargs -t gomp
-	brc = !git bvb -r | fzf0 --ansi --multi=2 | xargs -t gomp
-	bac = !git bvb -a | fzf0 --ansi --multi=2 | xargs -t gomp
+	bc = !git bvb | fzf0 --tiebreak=begin --ansi --multi=2 | xargs -t gomp
+	brc = !git bvb -r | fzf0 --tiebreak=begin --ansi --multi=2 | xargs -t gomp
+	bac = !git bvb -a | fzf0 --tiebreak=begin --ansi --multi=2 | xargs -t gomp
 
 	# tac to reverse the output from fzf (defaulted to --reverse, i.e. newest
 	# commits at the top) into the natural order of the commits for cherry-pick
