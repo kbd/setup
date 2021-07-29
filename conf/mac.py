@@ -115,7 +115,7 @@ dash['syncFolderPath'] = "~/Documents/Dash"
 dash['snippetSQLPath'] = "~/Documents/Dash/snippets.dash"
 
 # startup items - https://apple.stackexchange.com/a/310502/
-required_login_apps = {'SpotMenu', 'Flux', 'Alfred 4', 'Horo', 'Hammerspoon'}
+required_login_apps = {'SpotMenu', 'Alfred 4', 'Horo', 'Hammerspoon'}
 current_login_apps = set(
     filter(None,
         run(['osascript', '-e' 'tell application "System Events" to get the name of every login item'], cap='stdout').strip().split(', ')
