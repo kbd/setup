@@ -8,6 +8,7 @@ csvs-to-sqlite
 Django
 fabric
 fire
+flameprof
 flask
 flask-restful
 flask-socketio

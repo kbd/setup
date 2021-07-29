@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+import argparse
+import subprocess
+import webbrowser
+from datetime import datetime
+from pathlib import Path
+
+
+def generate_filename(program):
+    return f"{Path(program).name}.{datetime.now().strftime('%Y%m%dT%H%M%S')}.prof"
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Run the provided Python program under profiling")
+    parser.add_argument("program", help="Path to Python program to profile")
+    args = parser.parse_args()
+
+    filename = generate_filename(args.program)
+    cmd = ['python3', '-m', 'cProfile', '-o', filename, args.program]
+    try:
+        subprocess.run(cmd)
+    except KeyboardInterrupt:
+        print("Keyboard interrupt, running flameprof on what's there")
+
+    svg_filename = f'{filename}.svg'
+    cmd = ['flameprof', filename, '-o', svg_filename]
+    subprocess.run(cmd)
+
+    webbrowser.open_new('file://' + str(Path(svg_filename).resolve()))
