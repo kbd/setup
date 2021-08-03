@@ -24,9 +24,6 @@
         'cmd': (
             ['pip3', 'install', '--upgrade', '-r', 'conf/requirements.txt'],
             'poetry completions zsh > `brew --prefix`/share/zsh/site-functions/_poetry',
-            # Django shell_plus can use ptpython but doesn't respect its config
-            # location, so create a symlink at the location it expects
-            "xm 'ln -sf' ~/.config/ptpython ~/.ptpython",
         ),
     },
     'node': {
