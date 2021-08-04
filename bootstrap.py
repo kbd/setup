@@ -23,7 +23,7 @@ import os
 import subprocess
 
 REPO_URL = 'https://github.com/kbd/setup.git'
-HOMEBREW_INSTALL_CMD = '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+HOMEBREW_INSTALL_CMD = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 
 def main():
     print("Installing Homebrew")
