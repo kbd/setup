@@ -24,6 +24,7 @@ nbterm
 openpyxl
 pandas
 pgcli
+pillow
 pip
 pipdeptree
 poetry
@@ -40,6 +41,7 @@ pytest-cov
 pytest-gitignore
 python-dateutil
 PyYAML
+ranger-fm
 requests
 rich
 setuptools
