@@ -48,8 +48,10 @@ def main():
     setup_exe = os.path.join(setup_path, 'HOME/bin/setup')
 
     print("Installing all the things")
-    # add setup dir to path so things can find 'setup'
-    os.environ['PATH'] = os.path.dirname(setup_exe) + ':' + os.environ['PATH']
+    # add dirs to path that aren't yet in path because bootstrapping
+    bin_dir = os.path.expanduser('~/bin')
+    setup_dir = os.path.dirname(setup_exe)
+    os.environ['PATH'] = ':'.join([setup_dir, bin_dir, os.environ['PATH']])
     subprocess.check_call([setup_exe, 'init'])
     print("Done installing all the things. Restart your terminal.")
 
