@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+import argparse
+import logging
+from os import chdir as cd
+
+from aush import crystal, git
+
+logging.basicConfig(level=logging.DEBUG)
+
+# parse args
+parser = argparse.ArgumentParser(description="Start a Crystal project")
+parser.add_argument("name", help="The name of the project")
+args = parser.parse_args()
+
+# create the project. crystal init creates the directory and git repo
+crystal.init.app(args.name)
+cd(args.name)
+git.add(all=True)
+git.commit(m="Initial commit")
