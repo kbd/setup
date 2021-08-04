@@ -129,15 +129,15 @@ for app in required_login_apps - current_login_apps:
     run(['osascript', '-e', script.format(app=app)])
 
 # menubar items
-menus = [
-    '/System/Library/CoreServices/Menu Extras/{}.menu'.format(m)
-    for m in ['Bluetooth', 'Volume', 'AirPort', 'TextInput', 'Battery', 'Clock', 'Displays', 'User']
-]
-current_menus = defaults['com.apple.systemuiserver']['menuExtras'].read()
-menu_items_to_remove = set(current_menus) - set(menus)
-if menu_items_to_remove:
-    print("Removing:", menu_items_to_remove)
-defaults['com.apple.systemuiserver']['menuExtras'] = menus
+# menus = [
+#     '/System/Library/CoreServices/Menu Extras/{}.menu'.format(m)
+#     for m in ['Bluetooth', 'Volume', 'AirPort', 'TextInput', 'Battery', 'Clock', 'Displays', 'User']
+# ]
+# current_menus = defaults['com.apple.systemuiserver']['menuExtras'].read()
+# menu_items_to_remove = set(current_menus) - set(menus)
+# if menu_items_to_remove:
+#     print("Removing:", menu_items_to_remove)
+# defaults['com.apple.systemuiserver']['menuExtras'] = menus
 
 # screenshots
 screenshot_dir = '~/Desktop/Screenshots'
