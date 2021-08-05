@@ -43,7 +43,7 @@ def bless(files):
     for file in files:
         # take the passed-in file, relative to $HOME, and figure out where it
         # goes relative to home(). Note: can't link if not in $HOME
-        path = Path(file).resolve()
+        path = Path(ORIGINAL_CWD, file)
         destination = home() / path.relative_to(Path.home())
         log.info(f"Blessing {path} to {destination}")
         cmd = source_cmd + [path, destination]
