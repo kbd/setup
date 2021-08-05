@@ -1,3 +1,2 @@
 broot
-pyoxidizer
 tab
