@@ -74,7 +74,7 @@
         'cmd': 'install-manual conf/manual.toml "$(setup root)/3rdparty"'
     },
     'symlinks': {
-        'exec': "run_commands(['symgr', *filter(lambda x: is_debug(), ['--debug']), home(), Path.home()])",
+        'exec': "run_commands(['symgr', *debug_if_debug(), home(), Path.home()])"
     },
     'pull': {
         'help': "Update the setup repository",
