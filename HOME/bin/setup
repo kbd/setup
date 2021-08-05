@@ -39,16 +39,14 @@ def debug():
 def bless(files):
     """'Bless' files; "bless" means to put a file on the system somewhere
     under the control of 'setup', i.e. in the repository."""
+    def get_from_to(file):
+        source = Path(ORIGINAL_CWD, file)
+        destination = home() / source.relative_to(Path.home())
+        return [source, destination]
+
     source_cmd = ['symgr', *debug_if_debug(), '--bless']
-    for file in files:
-        # take the passed-in file, relative to $HOME, and figure out where it
-        # goes relative to home(). Note: can't link if not in $HOME
-        path = Path(ORIGINAL_CWD, file)
-        destination = home() / path.relative_to(Path.home())
-        log.info(f"Blessing {path} to {destination}")
-        cmd = source_cmd + [path, destination]
-        log.info(f"Running: {cmd}")
-        subprocess.run(cmd, check=True)
+    commands = tuple(source_cmd + get_from_to(file) for file in files)
+    run_commands(commands)
 
 
 def root():
