@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -Eeuxo pipefail
+set -e
 
 shell=$1
 shellfile=${2-'/etc/shells'}
@@ -9,9 +9,17 @@ if [[ -z "$shell" ]]; then
   exit 1
 fi
 
-echo "Ensuring shell is set to '$shell'"
+get-login-shell() {
+  finger $USER | rg 'Shell:\s+(\S+)' -or '$1'
+}
 
-echo "Ensuring '$shell' is in '$shellfile'"
-grep -Fqx "$shell" "$shellfile" || echo "$shell" | 1>/dev/null sudo tee -a "$shellfile"
-echo "Changing shell to '$shell'"
-chsh -s "$shell"
+echo "Ensuring shell is set to '$shell'"
+if [[ $shell == "$(get-login-shell)" ]]; then
+  echo "Confirmed shell is set to '$shell'"
+else
+  echo "Ensuring '$shell' is in '$shellfile'"
+  grep -Fqx "$shell" "$shellfile" || echo "$shell" | 1>/dev/null sudo tee -a "$shellfile"
+  echo "Changing shell to '$shell'"
+  chsh -s "$shell"
+  echo "Shell changed"
+fi
