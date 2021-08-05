@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+finger "$USER" | rg --color=never 'Shell:\s+(\S+)' -or '$1'
