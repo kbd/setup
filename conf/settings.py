@@ -80,15 +80,22 @@
         'help': "Update the setup repository",
         'cmd': ['git', 'pg'],
     },
+    'packages': {
+        'help': "Install all software packages",
+        'cmd': [
+            'setup',
+            'brew', 'python', 'node', 'go', 'rust', 'cargo', 'nim', 'vscode'
+        ]
+    },
     'init': {
-        'help': "The default commands used on first setup / bootstrap",
-        'cmd': ['setup', 'brew', 'python', 'manual', 'symlinks', 'mac', 'restartservices'],
+        'help': "The full set of commands used on first setup / bootstrap",
+        'cmd': ['setup', 'packages', 'manual', 'symlinks', 'mac', 'restartservices'],
     },
     'update': {
         'help': "One-stop shopping to update setup repo and most things",
         'cmd': (
             ['setup', 'pull'],
-            ['setup', 'brew', 'python', 'symlinks', 'vscode'],
+            ['setup', 'packages', 'symlinks'],
         ),
     },
 }
