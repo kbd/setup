@@ -5,6 +5,7 @@ import functools
 import logging
 import os
 import subprocess
+import textwrap
 from pathlib import Path
 
 import click
@@ -71,7 +72,8 @@ def is_debug():
 
 def install(name, settings):
     log.info(f"Setting up: {name}")
-    funcs = {'exec': exec, 'cmd': run_commands}
+    ex = lambda s: exec(textwrap.dedent(s))
+    funcs = {'exec': ex, 'cmd': run_commands}
     for key, func in funcs.items():
         if item := settings.get(key):
             log.debug(f"{key}: {item}")
