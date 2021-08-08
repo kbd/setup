@@ -128,6 +128,7 @@ alias cn='bat --style=numbers'
 alias cnh='bat --style=header,numbers'
 alias curl='curl -L' # follow redirects by default
 alias d='docker'
+alias dc='docker-compose'
 alias da='django-admin'
 alias dm='python3 manage.py' # "django manage"
 alias ds='dm shell_plus --ptpython'
