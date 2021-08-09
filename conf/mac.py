@@ -105,6 +105,9 @@ defaults.g['NSQuitAlwaysKeepsWindows'] = True
 # zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
 defaults['com.apple.universalaccess']['closeViewScrollWheelToggle'] = True
 
+# turn off touch-bar autocompletion (horrific! distracting!)
+defaults.g['NSAutomaticTextCompletionEnabled'] = False
+
 iterm = defaults['com.googlecode.iterm2']
 iterm['PrefsCustomFolder'] = '~/.config/iterm2'
 iterm['LoadPrefsFromCustomFolder'] = True
