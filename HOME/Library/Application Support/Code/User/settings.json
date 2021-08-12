@@ -23,6 +23,7 @@
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.splitCwd": "workspaceRoot",
+    "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
 
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
