@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 import argparse
+import logging
 from os import chdir as cd
 
-from aush import direnv, django_admin, echo, git, mkdir, poetry, python3
+logging.basicConfig(level=logging.INFO)
+
+from aush import direnv, django_admin, echo, git, ln, mkdir, poetry, python3, t
 
 # parse args
 parser = argparse.ArgumentParser(description="Start a Python project")
@@ -35,11 +38,11 @@ echo("*.sqlite3") > '.gitignore'
 git.add(all=True)
 git.commit(m="Initial commit")
 
-# add django
 if args.django:
+    # add django
     poetry.add("django", dev=["Werkzeug", "django-debug-toolbar", "django-extensions"])
-    django_admin.startproject("src")
-    cd("src")
+    django_admin.startproject(args.name)
+    cd(args.name)
     django_manage = python3["manage.py"]
     django_manage.startapp(args.name)
     django_manage.migrate()
@@ -51,3 +54,31 @@ if args.django:
     )
     git.add(all=True)
     git.commit(m="Add Django")
+else:
+    # create project structure
+    #
+    # source is under src/, tests and library code are at the same level
+    # ./bin is top level; accesses library code via symlink which is git-ignored
+    #
+    # ├── bin
+    # │   └── proj -> ../src/proj
+    # ├── poetry.lock
+    # ├── pyproject.toml
+    # └── src
+    #     ├── proj
+    #     │   └── __init__.py
+    #     └── tests
+    #         └── __init__.py
+
+    t(
+        f'src/{args.name}/__init__.py',
+        'src/tests/__init__.py',
+        'bin/.gitignore',
+    )
+
+    echo(args.name) > 'bin/.gitignore'
+    lib_symlink = f'bin/{args.name}'
+    ln('-s', f'../src/{args.name}', lib_symlink)
+    git.add(all=True)
+    git.add('-f', lib_symlink)
+    git.commit(m="Create project structure")
