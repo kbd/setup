@@ -104,7 +104,9 @@ defaults.g['com.apple.keyboard.fnState'] = True
 defaults.g['NSQuitAlwaysKeepsWindows'] = True
 
 # zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
-defaults['com.apple.universalaccess']['closeViewScrollWheelToggle'] = True
+# commented out because it requires sudo, and then still seems to not take.
+# Must set manually in System Prefs.
+# defaults['com.apple.universalaccess']['closeViewScrollWheelToggle'] = True
 
 # turn off touch-bar autocompletion (horrific! distracting!)
 defaults.g['NSAutomaticTextCompletionEnabled'] = False
