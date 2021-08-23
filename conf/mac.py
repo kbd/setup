@@ -22,12 +22,13 @@ for key in (
 defaults['com.apple.dashboard']['mcx-disabled'] = True
 
 dock = defaults['com.apple.dock']
-dock['autohide'] = False
+dock['autohide'] = True
 dock['autohide-delay'] = .05
 dock['autohide-time-modifier'] = 0.4
 dock['show-recents'] = False
 # http://www.defaults-write.com/enable-highlight-hover-effect-for-grid-view-stacks/
 dock['mouse-over-hilite-stack'] = True
+dock['appswitcher-all-displays'] = True  # show alt-tab chooser on all monitors
 
 # Spaces
 dock['mru-spaces'] = False  # don't reorder spaces based on use
