@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+cmd="$1"
+shift
+colorarg="$1"
+shift
+args=()
+if [[ -t 1 ]]; then  # force color if not in pipeline
+  if [[ "$colorarg" ]]; then
+    args+=("$colorarg")
+  fi
+fi
+command "$cmd" "${args[@]}" "$@" | less -FR

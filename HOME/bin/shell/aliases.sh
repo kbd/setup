@@ -145,6 +145,7 @@ go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
 alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
 alias hex='hexyl'
+alias http='autopager http --pretty=all'
 alias is_docker='[[ -f "/.dockerenv" ]]'
 alias is_local='! is_not_local'
 alias is_not_local='is_remote || is_docker'
@@ -152,20 +153,6 @@ alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is_root='[[ $EUID == 0 ]]'
 alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
 alias jq='autopager jq -C'
-alias http='autopager http --pretty=all'
-autopager() {
-  local cmd="$1"
-  shift
-  local colorarg="$1"
-  shift
-  local args=()
-  if [[ -t 1 ]]; then  # force color if not in pipeline
-    if [[ "$colorarg" ]]; then
-      args+=("$colorarg")
-    fi
-  fi
-  command "$cmd" "${args[@]}" "$@" | less -FR
-}
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
