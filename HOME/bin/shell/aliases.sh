@@ -151,11 +151,20 @@ alias is_not_local='is_remote || is_docker'
 alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is_root='[[ $EUID == 0 ]]'
 alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
-alias jq='jqpager'
-jqpager() {
+alias jq='autopager jq'
+alias http='autopager http'
+autopager() {
+  local cmd="$1"
+  shift
   local args=()
-  if [[ -t 1 ]]; then args+=('-C'); fi # force color if not in pipeline
-  command jq "${args[@]}" "$@" | less -FR
+  if [[ -t 1 ]]; then  # force color if not in pipeline
+    if [[ $cmd == 'jq' ]]; then
+      args+=('-C');
+    elif [[ $cmd == 'http' ]]; then
+      args+=('--pretty=all')
+    fi
+  fi
+  command $cmd "${args[@]}" "$@" | less -FR
 }
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
