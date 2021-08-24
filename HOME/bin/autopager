@@ -10,4 +10,4 @@ args=()
 if [[ -t 1 && "$colorarg" ]]; then  # force color if not in pipeline
   args+=("$colorarg")
 fi
-command "$cmd" "${args[@]}" "$@" | less -FR
+"$cmd" "${args[@]}" "$@" | less -FR
