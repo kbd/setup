@@ -83,7 +83,7 @@ function moveActiveWindow(num, den, screen)
   return function()
     local app = hs.application.frontmostApplication()
     local window = hs.window.focusedWindow()
-    local scr = screen or hs.screen.mainScreen()
+    local scr = screen or window:screen()
     setWindowFraction(app, window, num, den, scr)
   end
 end
