@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
+# usage example: autopager jq -C
+# 2nd arg is what to use for colorization.
+# Pass empty string if tool doesn't support.
 cmd="$1"
 shift
 colorarg="$1"
 shift
 args=()
-if [[ -t 1 ]]; then  # force color if not in pipeline
-  if [[ "$colorarg" ]]; then
-    args+=("$colorarg")
-  fi
+if [[ -t 1 && "$colorarg" ]]; then  # force color if not in pipeline
+  args+=("$colorarg")
 fi
 command "$cmd" "${args[@]}" "$@" | less -FR
