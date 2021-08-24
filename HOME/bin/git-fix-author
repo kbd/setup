@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# usage:
+# sometimes one makes commits to a repo as the wrong author
+# 1. set the correct author for the repo
+# 2. do an interactive rebase as far back as needed
+# 3. mark all commits 'edit'
+# 4. run this on each commit until the rebase is done
+# todo: be able to pass a commit and have it do everything for you
+
+export GIT_COMMITTER_DATE="$(git log -n1 --format=%aD)"
+export GIT_AUTHOR_DATE="$(git log -n1 --format=%aD)"
+git commit --amend --reset-author --no-edit
+git rebase --continue
