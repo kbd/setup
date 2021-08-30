@@ -236,3 +236,4 @@
 	sc = !git pick-commits | xargs -t git squash
 	fixup  = "!f() { git commit --fixup  $1      && GIT_EDITOR=true          git ri --autosquash $1~; }; f"
 	squash = "!f() { git commit --squash $1 -C$1 && GIT_SEQUENCE_EDITOR=true git ri --autosquash $1~; }; f"
+	fix-author = !GIT_AUTHOR_DATE="$(git log -n1 --format=%aD)" GIT_COMMITTER_DATE="$(git log -n1 --format=%cD)" git commit --amend --reset-author --no-edit
