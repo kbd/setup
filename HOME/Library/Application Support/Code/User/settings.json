@@ -19,6 +19,7 @@
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
     "editor.wrappingIndent": "indent",
+    "editor.bracketPairColorization.enabled": true,
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
