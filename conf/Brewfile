@@ -26,7 +26,6 @@ brew "gh"
 brew "git"
 brew "git-delta"
 brew "git-lfs"
-brew "node@14" # 16 breaks Phoenix: https://github.com/phoenixframework/phoenix/issues/4126#issuecomment-827072525
 brew "gnu-sed"
 brew "gnu-tar"
 brew "go"
