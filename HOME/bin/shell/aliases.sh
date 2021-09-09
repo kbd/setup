@@ -2,7 +2,7 @@
 
 # VARS
 if [[ -z "$PATH_SET" ]]; then
-  export PATH="$HOME/bin:$PATH:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.nimble/bin"
+  export PATH="$HOME/bin:$PATH:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.nimble/bin"
   export PATH_SET=1
 fi
 export PLATFORM="$(uname)"

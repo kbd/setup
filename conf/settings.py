@@ -23,6 +23,9 @@
             'poetry completions zsh > `brew --prefix`/share/zsh/site-functions/_poetry',
         ),
     },
+    'pipx': {
+        'cmd': "st <(cat conf/pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys[]') | xargs -t pipx install"
+    },
     'node': {
         'cmd': "cat conf/npm.txt | xargs -t npm install -g",
     },
@@ -81,7 +84,7 @@
         'help': "Install all software packages",
         'cmd': [
             'setup',
-            'brew', 'python', 'node', 'go', 'rust', 'cargo', 'nim', 'vscode'
+            'brew', 'python', 'pipx', 'node', 'go', 'rust', 'cargo', 'nim', 'vscode'
         ]
     },
     'init': {
