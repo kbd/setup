@@ -32,7 +32,7 @@ def _get_manual_packages_to_install(packages, dir):
         # if not installed, we're bootstrapping, so install everything.
         return packages.keys()
 
-    cmd = ["fzf", "--ansi", "--header-lines=1"]
+    cmd = ["fzf", "--multi", "--ansi", "--header-lines=1"]
     table = _format_manual_packages_table(packages, dir)
     result = run(cmd, input=table, stdout=subprocess.PIPE, check=False)
     if result.returncode == 130:  # quit fzf, take no action
