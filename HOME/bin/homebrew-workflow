@@ -18,6 +18,19 @@ else
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# ensure mas installed
+if ! which mas > /dev/null; then
+  brew install mas
+fi
+
+if account="$(mas account)"; then
+  echo "Confirmed signed into Mac app store as $account"
+else
+  echo "Must be signed into Mac app store, hit enter when done"
+  open -a "App Store"
+  read -r
+fi
+
 echo "Ensuring command line tools are installed"
 if ! xcode-select --install; then
   echo "Command line tools are installed"
