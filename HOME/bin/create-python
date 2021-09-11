@@ -34,7 +34,10 @@ direnv.allow()
 
 # add files to git
 git.init()
-echo("*.sqlite3") > '.gitignore'
+echo("""*.sqlite3
+*.db
+.venv/
+__pycache__/""") > '.gitignore'
 git.add(all=True)
 git.commit(m="Initial commit")
 
