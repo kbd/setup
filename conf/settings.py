@@ -36,11 +36,12 @@
         'cmd': "cat conf/nimble.txt | xargs -to nimble install"
     },
     'rust': {
-        'cmd': (
-            ['rustup-init', '-y', '--no-modify-path'],
-            ['rustup', 'update'],
-            ['rustup', 'install', 'nightly'],
-        ),
+        'cmd': """
+            rustup-init -y --no-modify-path;
+            source $HOME/.cargo/env;
+            rustup update;
+            rustup install nightly;
+        """,
     },
     'cargo': {
         'cmd': (
