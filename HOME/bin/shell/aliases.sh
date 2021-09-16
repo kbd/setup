@@ -145,14 +145,12 @@ go(){ if [[ $# -eq 0 ]]; then yaegi; else command go "$@"; fi }
 alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
 alias hex='hexyl'
-alias http='autopager http --pretty=all'
 alias is_docker='[[ -f "/.dockerenv" ]]'
 alias is_local='! is_not_local'
 alias is_not_local='is_remote || is_docker'
 alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is_root='[[ $EUID == 0 ]]'
 alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
-alias jq='autopager jq -C'
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
@@ -177,6 +175,11 @@ user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
 alias x='chmod +x'
 alias yaegi='rlwrap yaegi'
+
+# autopager
+alias http='autopager http --pretty=all'
+alias https='autopager https --pretty=all'
+alias jq='autopager jq -C'
 
 b() {
   # switch to kitty taB
