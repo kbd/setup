@@ -126,7 +126,6 @@ alias cat=bat
 alias chn='bat --style=header,numbers'
 alias cn='bat --style=numbers'
 alias cnh='bat --style=header,numbers'
-alias curl='curl -L' # follow redirects by default
 alias d='docker'
 alias dc='docker-compose'
 alias da='django-admin'
@@ -180,6 +179,7 @@ alias yaegi='rlwrap yaegi'
 alias http='autopager http --pretty=all'
 alias https='autopager https --pretty=all'
 alias jq='autopager jq -C'
+alias curl='autopager curl -L'
 
 b() {
   # switch to kitty taB
