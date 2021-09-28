@@ -18,6 +18,7 @@ ipdb
 ipython
 isort
 jupyter
+litecli
 mycli
 mypy
 nbterm
