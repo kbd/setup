@@ -11,3 +11,4 @@ if [[ -t 1 && "$colorarg" ]]; then  # force color if not in pipeline
   args+=("$colorarg")
 fi
 "$cmd" "${args[@]}" "$@" | less -FR
+exit "${PIPESTATUS[0]}"  # use return code of process piped into less, not less
