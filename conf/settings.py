@@ -71,6 +71,10 @@
         'help': "Print the path of the setup HOME dir",
         'exec': 'print(home())'
     },
+    'debug': {
+        'help': "Start an interactive console",
+        'exec': 'import code; code.interact(local=globals())',
+    },
     'edit': {
         'help': "Open the setup directory in your editor",
         'cmd': ['bash', '-ic', 'edit .']

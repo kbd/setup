@@ -1,10 +1,8 @@
 #!/usr/local/bin/python3
 # ^ intentionally use system Python vs /usr/bin/env
-import code
 import functools
 import logging
 import os
-import subprocess
 import textwrap
 from pathlib import Path
 
@@ -25,13 +23,6 @@ def cli(debug):
     loglevel = logging.DEBUG if debug else logging.INFO
     logging.basicConfig(level=loglevel)
     logging.getLogger('requests').setLevel(logging.WARNING)
-
-
-@cli.command()
-def debug():
-    """Start an interactive console"""
-    local = {**globals(), 'settings': SETTINGS}
-    code.interact(local=local)
 
 
 @cli.command()
@@ -63,7 +54,7 @@ def home():
 
 
 def is_debug():
-    return logging.getLogger().level == logging.DEBUG
+    return log.level == logging.DEBUG
 
 
 def debug_if_debug(flag='--debug'):
