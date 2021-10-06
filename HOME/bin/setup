@@ -58,6 +58,7 @@ def root():
 
 
 def home():
+    """Return the path of the setup HOME dir"""
     return root() / HOME_DIR
 
 
