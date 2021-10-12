@@ -348,4 +348,8 @@
         "uncoveredGutterStyle": "blockred"
     },
     "go.toolsManagement.autoUpdate": true,
+
+    "[terraform]": {
+        "editor.formatOnSave": true,
+    },
 }
