@@ -12,9 +12,12 @@ from lib.utils import run_commands
 
 log = logging.getLogger()
 
-SETTINGS_PATH = 'conf/settings.py'
-HOME_DIR = 'HOME'
-
+# called as ~/bin/setup -> points to ~/setup/HOME/bin/setup -> repo root ~/setup
+ROOT = Path(__file__).resolve().parents[2]
+HOME = ROOT / 'HOME'
+SETTINGS_PATH = ROOT / 'conf' / 'settings.py'
+ORIGINAL_CWD = Path(os.getcwd())
+FUNCS = {'cmd': run_commands, 'exec': lambda s: exec(dedent(s))}
 
 @click.group(chain=True)
 @click.option("-d", "--debug", is_flag=True, help="Enable debug logging")
@@ -32,25 +35,12 @@ def bless(files):
     under the control of 'setup', i.e. in the repository."""
     def from_to(file):
         src = ORIGINAL_CWD / file
-        dest = home() / src.relative_to(Path.home())
+        dest = HOME / src.relative_to(Path.home())
         return [src, dest]
 
     source_cmd = ['symgr', *debug_if_debug(), '--bless']
     commands = tuple(source_cmd + from_to(f) for f in files)
     run_commands(commands)
-
-
-def root():
-    """Return the path of the root of this setup repository."""
-    # this file is under HOME_DIR. HOME_DIR's parent is the root.
-    # So search backwards for HOME_DIR and get its parent.
-    path = Path(__file__).resolve()  # resolve symlinks (~/bin=setup/HOME/bin)
-    return path.parents[path.parts[::-1].index(HOME_DIR)]
-
-
-def home():
-    """Return the path of the setup HOME dir"""
-    return root() / HOME_DIR
 
 
 def is_debug():
@@ -61,7 +51,6 @@ def debug_if_debug(flag='--debug'):
     return [flag] if is_debug() else []
 
 
-FUNCS = {'cmd': run_commands, 'exec': lambda s: exec(dedent(s))}
 def install(name, settings):
     log.info(f"Setting up: {name}")
     for key in set(FUNCS) & set(settings):
@@ -71,8 +60,7 @@ def install(name, settings):
 
 if __name__ == '__main__':
     # manipulate cwd and load settings
-    ORIGINAL_CWD = Path(os.getcwd())
-    os.chdir(root())  # set the cwd to the root of the repository
+    os.chdir(ROOT)  # set the cwd to the root of the repository
     SETTINGS = eval(open(SETTINGS_PATH).read())
 
     # dynamically add options to the cli

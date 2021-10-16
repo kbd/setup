@@ -65,11 +65,11 @@
     },
     'root': {
         'help': "Print the path of the setup dir",
-        'exec': 'print(root())'
+        'exec': 'print(ROOT)'
     },
     'home': {
         'help': "Print the path of the setup HOME dir",
-        'exec': 'print(home())'
+        'exec': 'print(HOME)'
     },
     'debug': {
         'help': "Start an interactive console",
@@ -83,7 +83,7 @@
         'cmd': 'install-manual conf/manual.toml "$(setup root)/3rdparty"'
     },
     'symlinks': {
-        'exec': "run_commands(['symgr', *debug_if_debug(), home(), Path.home()])"
+        'exec': "run_commands(['symgr', *debug_if_debug(), HOME, Path.home()])"
     },
     'pull': {
         'help': "Update the setup repository",
