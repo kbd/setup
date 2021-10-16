@@ -1,9 +1,9 @@
 {
     'brew': {
         'cmd': (
-            ['HOME/bin/homebrew-workflow', 'conf/Brewfile'],
+            [BIN/'homebrew-workflow', 'Brewfile'],
             # set shell to homebrew'd shell
-            'HOME/bin/update_shell.sh `brew --prefix`/bin/zsh',
+            f"{BIN}/update_shell.sh `brew --prefix`/bin/zsh",
             # install fzf
             "$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg",
             # patch fzf's history format to include timestamp
@@ -19,21 +19,21 @@
     },
     'python': {
         'cmd': (
-            ['pip3', 'install', '--upgrade', '-r', 'conf/requirements.txt'],
+            ['pip3', 'install', '--upgrade', '-r', 'requirements.txt'],
             'poetry completions zsh > `brew --prefix`/share/zsh/site-functions/_poetry',
         ),
     },
     'pipx': {
-        'cmd': "st <(cat conf/pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys[]') | xargs -t pipx install"
+        'cmd': "st <(cat pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys[]') | xargs -t pipx install"
     },
     'node': {
-        'cmd': "cat conf/npm.txt | xargs -t npm install -g",
+        'cmd': "cat npm.txt | xargs -t npm install -g",
     },
     'go': {
-        'cmd': "cat conf/go.txt | xargs -t -L1 go get -v -u"
+        'cmd': "cat go.txt | xargs -t -L1 go get -v -u"
     },
     'nim': {
-        'cmd': "cat conf/nimble.txt | xargs -to nimble install"
+        'cmd': "cat nimble.txt | xargs -to nimble install"
     },
     'rust': {
         'cmd': """
@@ -45,7 +45,7 @@
     },
     'cargo': {
         'cmd': (
-            "cat conf/cargo.txt | xargs -t cargo install",
+            "cat cargo.txt | xargs -t cargo install",
             # create directory in case bootstrapping when symlinks not yet created
             """
                 mkdir -p ~/bin/shell/3rdparty/;
@@ -54,22 +54,14 @@
         )
     },
     'mac': {
-        'exec': 'import runpy; runpy.run_path("conf/mac.py")'
+        'exec': 'import runpy; runpy.run_path("mac.py")'
     },
     'restartservices': {
         'help': "Restart Finder, Menubar, Dock, etc.",
         'exec': 'import lib.mac; lib.mac.restart_os_functions()'
     },
     'vscode': {
-        'cmd': ['install-vscode-extensions', 'conf/vscode.txt'],
-    },
-    'root': {
-        'help': "Print the path of the setup dir",
-        'exec': 'print(ROOT)'
-    },
-    'home': {
-        'help': "Print the path of the setup HOME dir",
-        'exec': 'print(HOME)'
+        'cmd': ['install-vscode-extensions', 'vscode.txt'],
     },
     'debug': {
         'help': "Start an interactive console",
@@ -80,7 +72,7 @@
         'cmd': ['bash', '-ic', 'edit .']
     },
     'manual': {
-        'cmd': 'install-manual conf/manual.toml "$(setup root)/3rdparty"'
+        'cmd': ['install-manual', 'manual.toml', VENDOR],
     },
     'symlinks': {
         'exec': "run_commands(['symgr', *debug_if_debug(), HOME, Path.home()])"

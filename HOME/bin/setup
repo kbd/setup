@@ -15,7 +15,10 @@ log = logging.getLogger()
 # called as ~/bin/setup -> points to ~/setup/HOME/bin/setup -> repo root ~/setup
 ROOT = Path(__file__).resolve().parents[2]
 HOME = ROOT / 'HOME'
-SETTINGS_PATH = ROOT / 'conf' / 'settings.py'
+BIN = HOME/ 'bin'
+CONF = ROOT / 'conf'
+VENDOR = ROOT / '3rdparty'
+SETTINGS_PATH = CONF / 'settings.py'
 ORIGINAL_CWD = Path(os.getcwd())
 FUNCS = {'cmd': run_commands, 'exec': lambda s: exec(dedent(s))}
 
@@ -60,7 +63,7 @@ def install(name, settings):
 
 if __name__ == '__main__':
     # manipulate cwd and load settings
-    os.chdir(ROOT)  # set the cwd to the root of the repository
+    os.chdir(CONF)
     SETTINGS = eval(open(SETTINGS_PATH).read())
 
     # dynamically add options to the cli
@@ -68,5 +71,10 @@ if __name__ == '__main__':
         func = partial(install, name, settings)
         func.__doc__ = settings.get('help', f"Setup {name}")
         cli.command(name)(func)
+
+    for d in 'ROOT', 'HOME', 'CONF', 'BIN', 'VENDOR':
+        func = lambda d=d: print(globals()[d])
+        func.__doc__ = f"Print the path to the setup {d} dir"
+        cli.command(d.lower())(func)
 
     cli()  # pylint: disable=no-value-for-parameter
