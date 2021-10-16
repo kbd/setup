@@ -23,6 +23,8 @@
     'node': "cat npm.txt | xargs -t npm install -g",
     'go': "cat go.txt | xargs -t -L1 go get -v -u",
     'nim': "cat nimble.txt | xargs -to nimble install",
+    'vscode': ['install-vscode-extensions', 'vscode.txt'],
+    'manual': ['install-manual', 'manual.toml', VENDOR],
     'rust': """
         rustup-init -y --no-modify-path;
         source $HOME/.cargo/env;
@@ -44,7 +46,6 @@
         'help': "Restart Finder, Menubar, Dock, etc.",
         'exec': 'import lib.mac; lib.mac.restart_os_functions()'
     },
-    'vscode': ['install-vscode-extensions', 'vscode.txt'],
     'debug': {
         'help': "Start an interactive console",
         'exec': 'import code; code.interact(local=globals())',
@@ -53,7 +54,6 @@
         'help': "Open the setup directory in your editor",
         'cmd': ['bash', '-ic', 'edit .']
     },
-    'manual': ['install-manual', 'manual.toml', VENDOR],
     'symlinks': {
         'exec': "run_commands(['symgr', *debug_if_debug(), HOME, Path.home()])"
     },
