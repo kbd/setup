@@ -68,6 +68,9 @@ if __name__ == '__main__':
 
     # dynamically add options to the cli
     for name, settings in SETTINGS.items():
+        if not isinstance(settings, dict):  # default option is 'cmd'
+            settings = {'cmd': settings}
+
         func = partial(install, name, settings)
         func.__doc__ = settings.get('help', f"Setup {name}")
         cli.command(name)(func)
