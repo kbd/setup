@@ -30,13 +30,13 @@ def cli(debug):
 def bless(files):
     """'Bless' files; "bless" means to put a file on the system somewhere
     under the control of 'setup', i.e. in the repository."""
-    def get_from_to(file):
-        source = Path(ORIGINAL_CWD, file)
-        destination = home() / source.relative_to(Path.home())
-        return [source, destination]
+    def from_to(file):
+        src = ORIGINAL_CWD / file
+        dest = home() / src.relative_to(Path.home())
+        return [src, dest]
 
     source_cmd = ['symgr', *debug_if_debug(), '--bless']
-    commands = tuple(source_cmd + get_from_to(file) for file in files)
+    commands = tuple(source_cmd + from_to(f) for f in files)
     run_commands(commands)
 
 
@@ -71,7 +71,7 @@ def install(name, settings):
 
 if __name__ == '__main__':
     # manipulate cwd and load settings
-    ORIGINAL_CWD = os.getcwd()
+    ORIGINAL_CWD = Path(os.getcwd())
     os.chdir(root())  # set the cwd to the root of the repository
     SETTINGS = eval(open(SETTINGS_PATH).read())
 
