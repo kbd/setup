@@ -39,7 +39,6 @@
 	cmd = code -nwd $LOCAL $REMOTE
 
 [core]
-	editor = code -nw
 	pager = delta
 
 [interactive]

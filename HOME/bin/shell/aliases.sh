@@ -12,6 +12,7 @@ export LESS='-iMFx4 --mouse' # smart-case, status bar, quit 1 screen, 4sp tabs
 export DELTA_PAGER="less $LESS -R"
 export VISUAL='code -nw'
 export EDITOR=vim
+export GIT_EDITOR='kw vim'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PYTHONDONTWRITEBYTECODE=1
