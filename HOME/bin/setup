@@ -61,14 +61,15 @@ def debug_if_debug(flag='--debug'):
     return [flag] if is_debug() else []
 
 
+FUNCS = {
+    'exec': lambda s: exec(textwrap.dedent(s)),
+    'cmd': run_commands
+}
 def install(name, settings):
     log.info(f"Setting up: {name}")
-    ex = lambda s: exec(textwrap.dedent(s))
-    funcs = {'exec': ex, 'cmd': run_commands}
-    for key, func in funcs.items():
-        if item := settings.get(key):
-            log.debug(f"{key}: {item}")
-            func(item)
+    for key in set(FUNCS) & set(settings):
+        log.debug(f"{key}: {settings[key]}")
+        FUNCS[key](settings[key])
 
 
 if __name__ == '__main__':
