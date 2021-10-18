@@ -52,7 +52,7 @@
     },
     'edit': {
         'help': "Open the setup directory in your editor",
-        'cmd': ['bash', '-ic', 'edit .']
+        'cmd': ['code', ROOT]
     },
     'symlinks': {
         'exec': "run_commands(['symgr', *debug_if_debug(), HOME, Path.home()])"
