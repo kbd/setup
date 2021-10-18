@@ -275,6 +275,7 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+    "json.schemas": [],
     "debug.javascript.autoAttachFilter": "smart",
 
     "[python]": {
