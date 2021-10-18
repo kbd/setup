@@ -14,6 +14,14 @@ set smartcase
 set incsearch
 set hlsearch
 
+" colors
+hi Search cterm=NONE
+hi Search ctermbg=Green
+hi Search ctermfg=Black
+hi IncSearch cterm=NONE
+hi IncSearch ctermbg=Cyan
+hi IncSearch ctermfg=Black
+
 " keyboard shortcuts
 inoremap <C-s> <esc>:w<cr>    " save
 nnoremap <C-s> :w<cr>
