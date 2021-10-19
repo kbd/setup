@@ -1,2 +1,2 @@
-github.com/traefik/yaegi/cmd/yaegi
-github.com/ayoisaiah/f2/cmd/...
+github.com/traefik/yaegi/cmd/yaegi@latest
+github.com/ayoisaiah/f2/cmd/f2@latest

@@ -21,7 +21,7 @@
     ),
     'pipx': "st <(cat pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys[]') | xargs -t pipx install",
     'node': "cat npm.txt | xargs -t npm install -g",
-    'go': "cat go.txt | xargs -t -L1 go get -v -u",
+    'go': "cat go.txt | xargs -t -L1 go install",
     'nim': "cat nimble.txt | xargs -to nimble install",
     'vscode': ['install-vscode-extensions', 'vscode.txt'],
     'manual': ['install-manual', 'manual.toml', VENDOR],
