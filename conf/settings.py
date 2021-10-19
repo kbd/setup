@@ -65,7 +65,7 @@
         'help': "Install all software packages",
         'cmd': [
             'setup',
-            'brew', 'python', 'node', 'go', 'rust', 'cargo', 'nim', 'vscode'
+            'brew', 'python', 'node', 'go', 'rust', 'cargo', 'vscode'
         ]
     },
     'init': {
