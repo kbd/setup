@@ -19,6 +19,7 @@ export PYTHONDONTWRITEBYTECODE=1
 export PYTHONBREAKPOINT=pudb.set_trace
 export PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython  # defaults to ~/Library/Application Support/... on Mac
 export PIPENV_SHELL_FANCY=1
+export HOMEBREW_NO_AUTO_UPDATE=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
