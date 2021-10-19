@@ -120,6 +120,7 @@ cask "sourcetree"
 cask "spotify"
 cask "spotmenu"
 cask "sublime-text"
+cask "tableplus"
 cask "visual-studio-code"
 cask "vlc"
 
