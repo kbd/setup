@@ -24,6 +24,7 @@ import subprocess
 
 REPO_URL = 'https://github.com/kbd/setup.git'
 HOMEBREW_INSTALL_CMD = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+SETUP_PATH = os.path.expanduser('~/setup')
 
 def main():
     print("Installing Homebrew")
@@ -32,26 +33,26 @@ def main():
     else:
         subprocess.check_call(HOMEBREW_INSTALL_CMD, shell=True, executable='/bin/bash')
 
-    print("Installing git and Python 3")
-    subprocess.check_call("brew install git || brew upgrade git", shell=True)
-    subprocess.check_call("brew install python || brew upgrade python", shell=True)
+    print("Installing dependencies")
+    for cmd in 'git', 'python':
+        subprocess.check_call("brew install {0} || brew upgrade {0}".format(cmd), shell=True)
     subprocess.check_call(['pip3', 'install', '--upgrade', 'click'])  # required for 'setup'
 
-    setup_path = os.path.expanduser('~/setup')
-    if os.path.exists(setup_path):
+    if os.path.exists(SETUP_PATH):
         print("Setup location already exists, updating")
-        subprocess.check_call(['git', 'pull'], cwd=setup_path)
+        subprocess.check_call(['git', 'pull'], cwd=SETUP_PATH)
     else:
         print("Checking out setup repo")
-        subprocess.check_call(['git', 'clone', REPO_URL], cwd=os.path.dirname(setup_path))
-
-    setup_exe = os.path.join(setup_path, 'HOME/bin/setup')
+        subprocess.check_call(['git', 'clone', REPO_URL], cwd=os.path.dirname(SETUP_PATH))
 
     print("Installing all the things")
     # add dirs to path that aren't yet in path because bootstrapping
-    bin_dir = os.path.expanduser('~/bin')
-    setup_dir = os.path.dirname(setup_exe)
-    os.environ['PATH'] = ':'.join([setup_dir, bin_dir, os.environ['PATH']])
+    setup_exe = os.path.join(SETUP_PATH, 'HOME/bin/setup')
+    os.environ['PATH'] = ':'.join([
+        os.path.dirname(setup_exe),
+        os.path.expanduser('~/bin'),
+        os.environ['PATH']
+    ])
     subprocess.check_call([setup_exe, 'init'])
     print("Done installing all the things. Restart your terminal.")
 
