@@ -56,6 +56,9 @@
 	file-decoration-style = magenta box
 	commit-regex = > [0-9a-f]{7,}
 
+[delta "sbs"]
+	side-by-side = true
+
 [color "diff"]
 	meta = yellow
 	frag = magenta bold
@@ -183,6 +186,7 @@
 	v = revert
 	vc = !git pick-commits | xargs -tI% git v -m1 %
 	s = status
+	sbs = !DELTA_FEATURES=sbs git
 	st = stash
 	stm = st push -m
 	stu = stash --include-untracked
