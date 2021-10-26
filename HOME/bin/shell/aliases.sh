@@ -133,7 +133,7 @@ alias dc='docker-compose'
 alias da='django-admin'
 alias dm='python3 manage.py' # "django manage"
 alias ds='dm shell_plus --ptpython'
-alias dp='cd "$(dirs -pl | fzf)"'
+alias dp='cd "$(dirs -pl | tail -n+2 | fzf)"'
 alias dtrx='dtrx --one=inside'
 alias du='du -h'
 alias dud='du -d0 .'
