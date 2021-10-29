@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 # kw = "kitty window"
-# open a new kitty window with the provided command and wait for it to complete
+# open a new kitty window with the provided command
+import argparse
 import functools
 import json
+import os
 import subprocess
 import sys
+import tempfile
+import threading
 
 TAIL = 'gtail'  # gnu tail
+
 
 def find_window_pid(kitty_ls_windows, id):
     for os_window in kitty_ls_windows:
@@ -15,12 +20,56 @@ def find_window_pid(kitty_ls_windows, id):
                 if window['id'] == id:
                     return window['pid']
 
+
+def send_stdin_to_named_pipe(path):
+    with open(path, 'w') as file:
+        try:
+            file.writelines(sys.stdin.readlines())
+            file.flush()
+        except BrokenPipeError:
+            return
+
+
+def wait_for_window_exit(window_id):
+    ls = json.loads(run(['kitty', '@', 'ls']).stdout)
+    pid = find_window_pid(ls, window_id)
+    # https://stackoverflow.com/a/41613532
+    subprocess.run([TAIL, '--pid', str(pid), '-f', '/dev/null'])
+
+
+def kitty_launch(subcmd, wait: bool):
+    cmd = ['kitty', '@', 'launch', '--cwd', 'current', '--copy-env', '--', *subcmd]
+    result = run(cmd)
+    if wait:
+        window_id = int(result.stdout)
+        wait_for_window_exit(window_id)
+
+
+def main(args, rest):
+    if sys.stdin.isatty():
+        return kitty_launch([args.program, *rest], args.wait)
+
+    # if pipeline, pass stdin to subprocess via named pipe
+    temp_dir = tempfile.mkdtemp()
+    path = os.path.join(temp_dir, 'fifo')
+    try:
+        os.mkfifo(path)
+        cmd = ['sh', '-c', f"cat {path} | {args.program} {' '.join(rest)}"]
+        t1 = threading.Thread(target=kitty_launch, args=[cmd, args.wait])
+        t1.start()
+        send_stdin_to_named_pipe(path)
+        t1.join()
+    finally:
+        os.unlink(path)
+        os.rmdir(temp_dir)
+
+
 run = functools.partial(subprocess.run, capture_output=True, check=True)
 
 if __name__ == '__main__':
-    cmd = ['kitty', '@', 'launch', '--cwd', 'current', '--copy-env', '--', *sys.argv[1:]]
-    wid = int(run(cmd).stdout)
-    ls = json.loads(run(['kitty', '@', 'ls']).stdout)
-    pid = find_window_pid(ls, wid)
-    # https://stackoverflow.com/a/41613532
-    subprocess.run([TAIL, '--pid', str(pid), '-f', '/dev/null'])
+    parser = argparse.ArgumentParser(description="Open a kitty window with the provided command")
+    parser.add_argument("program", help="Program to execute")
+    parser.add_argument("-w", "--wait", action="store_true", help="Wait for completion of the subcommand before returning")
+    args, rest = parser.parse_known_args()
+
+    sys.exit(main(args, rest))
