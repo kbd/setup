@@ -124,7 +124,6 @@ gccb() {
 # shortcuts/defaults
 alias 1p='eval $(op signin my --session=$OP_SESSION_my)'
 alias c=cat
-alias cat=bat
 alias chn='bat --style=header,numbers'
 alias cn='bat --style=numbers'
 alias cnh='bat --style=header,numbers'
