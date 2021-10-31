@@ -36,6 +36,7 @@ Show how 'python' and 'ipython' process arguments differently:
 
 """
 import os
+import time
 from sys import argv, exit, stderr, stdin, stdout
 
 
@@ -81,9 +82,9 @@ if __name__ == '__main__':
     if env:
         myprint("VARS:", env)
 
+    myprint(argv, file=stdout)
+
     if sleep := float(env.sleep):
-        import time
         time.sleep(sleep)
 
-    myprint(argv, file=stdout)
     exit(int(env['return']))
