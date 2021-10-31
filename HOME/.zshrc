@@ -102,14 +102,6 @@ preexec(){
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
 
-# hashed directories
-hash -d P=~/proj
-hash -d S=~/setup
-hash -d H=~S/HOME
-hash -d D=~/Downloads
-hash -d T=~/temp
-hash -d N=~/notes
-
 # machine-specific config
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
 

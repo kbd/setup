@@ -50,6 +50,15 @@ fi
 
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
+  # hashed directories
+  hash -d P=~/proj
+  hash -d S=~/setup
+  hash -d H=~S/HOME
+  hash -d D=~/Downloads
+  hash -d T=~/temp
+  hash -d N=~/notes
+
+  # global aliases
   alias -g L='| $PAGER'
   alias -g H='| head'
   alias -g C='| grcat log'
