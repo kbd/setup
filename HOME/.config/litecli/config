@@ -1,0 +1,5 @@
+# vi: ft=dosini
+[main]
+multi_line = False
+pager = kw /usr/local/bin/vd
+table_format = tsv
