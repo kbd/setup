@@ -109,6 +109,7 @@
 	# commits at the top) into the natural order of the commits for cherry-pick
 	cp = !git pick-branch | xargs git pick-commits | tac | xargs -t git cherry-pick
 	cpa = cherry-pick --abort
+	cpc = cherry-pick --continue
 	current-branch = symbolic-ref --short HEAD
 	current-tags = tag --list --points-at HEAD
 	c = commit
