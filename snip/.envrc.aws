@@ -1,0 +1,2 @@
+watch_file ~/.aws/credentials
+export RPROMPT="aws:$(get-aws-profile)"

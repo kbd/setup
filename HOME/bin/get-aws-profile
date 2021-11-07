@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+import configparser
+import os
+
+
+def get_aws_profile_name():
+    if name := os.environ.get('AWS_PROFILE'):
+        return name
+
+    c = configparser.ConfigParser()
+    try:
+        c.read_file(open(os.path.expanduser('~/.aws/credentials')))
+    except Exception:
+        return '∅'
+
+    # reverse-map the sections by their aws_access_key_id
+    # then figure out which one the 'default' points to
+    # if no match, return 'default'. If no 'default' section
+    # or file unreadable, return '∅'
+    k = 'aws_access_key_id'
+    d = 'default'
+    reverse_map = {c[s][k]: s for s in set(c.sections()) - {d} if k in c[s]}
+    return reverse_map.get(c[d][k], '∅')
+
+
+if __name__ == '__main__':
+    print(get_aws_profile_name())
