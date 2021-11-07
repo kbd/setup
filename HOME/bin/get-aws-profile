@@ -4,23 +4,28 @@ import os
 
 
 def get_aws_profile_name():
+    """Get the current default aws profile name.
+
+    If no 'default' section or credentials unreadable, return '∅'
+
+    https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
+    """
     if name := os.environ.get('AWS_PROFILE'):
         return name
 
+    k = 'aws_access_key_id'
+    d = 'default'
     c = configparser.ConfigParser()
     try:
         c.read_file(open(os.path.expanduser('~/.aws/credentials')))
+        if d not in c:
+            return '∅'
     except Exception:
         return '∅'
 
-    # reverse-map the sections by their aws_access_key_id
-    # then figure out which one the 'default' points to
-    # if no match, return 'default'. If no 'default' section
-    # or file unreadable, return '∅'
-    k = 'aws_access_key_id'
-    d = 'default'
+    # look for the the profile whose access key id matches default's
     reverse_map = {c[s][k]: s for s in set(c.sections()) - {d} if k in c[s]}
-    return reverse_map.get(c[d][k], '∅')
+    return reverse_map.get(c[d][k], 'default')
 
 
 if __name__ == '__main__':
