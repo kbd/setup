@@ -37,17 +37,33 @@ def wait_for_window_exit(window_id):
     subprocess.run([TAIL, '--pid', str(pid), '-f', '/dev/null'])
 
 
-def kitty_launch(subcmd, wait: bool):
-    cmd = ['kitty', '@', 'launch', '--cwd', 'current', '--copy-env', '--', *subcmd]
+def kitty_launch(subcmd, wait: bool, launch_args={}):
+    cmd = ['kitty', '@', 'launch', '--cwd', 'current', '--copy-env']
+    for k, v in launch_args.items():
+        cmd += [f'--{k}', v]
+    cmd += ['--', *subcmd]
     result = run(cmd)
     if wait:
         window_id = int(result.stdout)
         wait_for_window_exit(window_id)
 
 
+def get_additional_launch_args(args):
+    kwargs = {}
+    if args.vertical:
+        kwargs['location'] = 'vsplit'
+    elif args.horizontal:
+        kwargs['location'] = 'hsplit'
+    elif args.new:
+        kwargs['type'] = 'os-window'
+    return kwargs
+
+
 def main(args, rest):
+    launch_args = get_additional_launch_args(args)
+
     if sys.stdin.isatty():
-        return kitty_launch([args.program, *rest], args.wait)
+        return kitty_launch([args.program, *rest], args.wait, launch_args)
 
     # if pipeline, pass stdin to subprocess via named pipe
     temp_dir = tempfile.mkdtemp()
@@ -55,7 +71,7 @@ def main(args, rest):
     try:
         os.mkfifo(path)
         cmd = ['sh', '-c', f"cat {path} | {args.program} {' '.join(rest)}"]
-        t1 = threading.Thread(target=kitty_launch, args=[cmd, args.wait])
+        t1 = threading.Thread(target=kitty_launch, args=[cmd, args.wait, launch_args])
         t1.start()
         send_stdin_to_named_pipe(path)
         t1.join()
@@ -70,6 +86,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Open a kitty window with the provided command")
     parser.add_argument("program", help="Program to execute")
     parser.add_argument("-w", "--wait", action="store_true", help="Wait for completion of the subcommand before returning")
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-H", "--horizontal", action="store_true", help="Split window horizontally")
+    group.add_argument("-v", "--vertical", action="store_true", help="Split window vertically")
+    group.add_argument("-n", "--new", action="store_true", help="Open into new kitty os window")
+
     args, rest = parser.parse_known_args()
 
     sys.exit(main(args, rest))
