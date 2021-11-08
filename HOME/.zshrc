@@ -87,6 +87,7 @@ done
 
 # 1st party config
 PROMPT='$(prompt zsh)'
+RPROMPT='$(date +"%m/%d %H:%M:%S")'
 export PROMPT_PREFIX='⚡'
 
 precmd() {
