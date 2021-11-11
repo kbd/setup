@@ -20,6 +20,7 @@
     "editor.insertSpaces": true,
     "editor.wrappingIndent": "indent",
     "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
     "editor.suggest.preview": true,
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
