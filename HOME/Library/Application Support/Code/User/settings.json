@@ -26,7 +26,15 @@
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.splitCwd": "workspaceRoot",
-    "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
+    "terminal.integrated.profiles.osx": {
+        "zsh": {
+            "path": "zsh",
+            "args": [
+                "-l"
+            ]
+        },
+    },
+    "terminal.integrated.defaultProfile.osx": "zsh",
 
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
@@ -299,10 +307,8 @@
         "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode",
         "--enable=unused-import",
     ],
-    "python.autoComplete.addBrackets": false,
     "python.globalModuleInstallation": true,
     "python.languageServer": "Pylance",
-    "python.showStartPage": false,
     "python.terminal.activateEnvironment": false,
     "jupyter.sendSelectionToInteractiveWindow": false,
     "notebook.cellToolbarLocation": {
