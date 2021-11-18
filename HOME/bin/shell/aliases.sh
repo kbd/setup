@@ -224,6 +224,17 @@ rls() {
   fi
 }
 
+create() {
+  # since scripts can't cd, need a function to cd after 'create-' scripts
+  local cmd="create-$1"
+  local project="$2"
+  [[ -z "$cmd" || -z "$project" ]] && echo >&2 "type and project name required" && return 1
+  shift 2
+  ! exists "$cmd" && echo >&2 "'$cmd' doesn't exist" && return 2
+  $cmd "$project" "$@"
+  cd "$project" || return
+}
+
 pyenv() {
   # pyenv is badly behaved and will repeatedly add itself to the path on initialization
   [[ "$PYENV_SHELL" ]] || eval "$(command pyenv init -)"

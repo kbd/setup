@@ -59,29 +59,20 @@ if args.django:
     git.commit(m="Add Django")
 else:
     # create project structure
-    #
-    # source is under src/, tests and library code are at the same level
-    # ./bin is top level; accesses library code via symlink which is git-ignored
-    #
+    # .
+    # ├── README.md
     # ├── bin
-    # │   └── proj -> ../src/proj
+    # │   └── proj -> ../proj
     # ├── poetry.lock
+    # ├── proj
+    # │   └── __init__.py
     # ├── pyproject.toml
-    # └── src
-    #     ├── proj
-    #     │   └── __init__.py
-    #     └── tests
-    #         └── __init__.py
+    # └── tests
+    #     └── __init__.py
 
-    t(
-        f'src/{args.name}/__init__.py',
-        'src/tests/__init__.py',
-        'bin/.gitignore',
-    )
-
-    echo(args.name) > 'bin/.gitignore'
-    lib_symlink = f'bin/{args.name}'
-    ln('-s', f'../src/{args.name}', lib_symlink)
-    git.add(all=True)
-    git.add('-f', lib_symlink)
+    t(f'{args.name}/__init__.py', 'tests/__init__.py', 'bin/')
+    ln('-s', f'../{args.name}', f'bin/{args.name}')  # create package symlink
+    echo(args.name) > 'bin/.gitignore'  # add package symlink to gitignore
+    echo(f"# {args.name}") > 'README.md'  # create readme
+    git.add(all=True, force=True)
     git.commit(m="Create project structure")
