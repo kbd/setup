@@ -34,11 +34,9 @@ direnv.allow()
 
 # add files to git
 git.init()
-echo("""*.sqlite3
-*.db
-.venv/
-__pycache__/""") > '.gitignore'
-git.add(all=True)
+echo('\n'.join(('*.sqlite3', '*.db', '.venv/', '__pycache__/'))) > '.gitignore'
+echo(f"# {args.name}") > 'README.md'
+git.add(all=True, force=True)
 git.commit(m="Initial commit")
 
 if args.django:
@@ -47,15 +45,15 @@ if args.django:
     django_admin.startproject(args.name)
     cd(args.name)
     django_manage = python3["manage.py"]
-    django_manage.startapp(args.name)
+    django_manage.startapp(f"{args.name}_app")
     django_manage.migrate()
     django_manage.createsuperuser(
         noinput = True,
         username = "admin",
-        email = git.config(get='user.email'),
+        email = git.config(get='user.email') or 'admin@localhost',
         _env = dict(DJANGO_SUPERUSER_PASSWORD='admin'),
     )
-    git.add(all=True)
+    git.add(all=True, force=True)
     git.commit(m="Add Django")
 else:
     # create project structure
@@ -69,10 +67,8 @@ else:
     # ├── pyproject.toml
     # └── tests
     #     └── __init__.py
-
     t(f'{args.name}/__init__.py', 'tests/__init__.py', 'bin/')
     ln('-s', f'../{args.name}', f'bin/{args.name}')  # create package symlink
     echo(args.name) > 'bin/.gitignore'  # add package symlink to gitignore
-    echo(f"# {args.name}") > 'README.md'  # create readme
     git.add(all=True, force=True)
     git.commit(m="Create project structure")
