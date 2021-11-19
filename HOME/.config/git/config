@@ -75,7 +75,7 @@
 	# list all aliases
 	alias = !git config --get-regexp '^alias\\.' | perl -pe 's/[^.]+\\.([^=\\s]+).*$/$1/'
 	a = add
-	af = !git pick-status-files a
+	af = with-status-files a
 	aa = a -A
 	au = a -u
 	ap = a -p
@@ -120,7 +120,7 @@
 	cmp  = "!f() { git cm \"$@\" && git p; }; f"
 	camp = "!f() { git cam \"$@\" && git p; }; f"
 	co = checkout
-	cof = !git pick-status-files co
+	cof = with-status-files co
 	cf = !git cof
 	cob = co -b
 	conflicts = diff --name-only --diff-filter=U
@@ -131,8 +131,8 @@
 	dt = difftool
 	dc = !git pick-commits | xargs -t git d
 	dtc = !git pick-commits | xargs -t git dt
-	df = !git pick-status-files d
-	dtf = !git pick-status-files dt
+	df = with-status-files d
+	dtf = with-status-files dt
 	d1  = "!f() { git d  ${1:-@}^!; }; f"
 	dt1 = "!f() { git dt ${1:-@}^!; }; f"
 	d1c = !git pick-commits | xargs -t git d1
@@ -143,7 +143,7 @@
 	delete-branch = !git bs | rg -vx $(git main-branch) | fzf | xargs -tp -L1 git b --delete
 	delete-remote = !git br | rg -vw \"HEAD|$(git main-branch)\" | fzf | awk -F/ '{print \"git push \" $1 \" --delete \" $2}' | xargs -I% -tp -L1 sh -c '%'
 	e = restore
-	ef = !git pick-status-files e
+	ef = with-status-files e
 	email = config user.email
 	exec = "!exec " # git aliases run from repo root, so can exec something from root
 	edit = "!exec $EDITOR ."
@@ -175,7 +175,8 @@
 	pr = pl --rebase
 	pick-commits = "!f() { git l1 \"${1:-.}\" | fzf --ansi | cut -d' ' -f2; }; f"
 	pc = pick-commits
-	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzf --print0 --preview='git d --color=always -- {} | $(git config core.pager || echo cat)' | xargs -0t git
+	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzf --print0 --preview='git d --color=always -- {} | $(git config core.pager || echo cat)'
+	with-status-files = !git pick-status-files | xargs -0t git
 	psf = pick-status-files
 	sf = psf
 	r = rebase --rebase-merges
@@ -192,8 +193,8 @@
 	stm = st push -m
 	stu = stash --include-untracked
 	stum = st push --include-untracked -m
-	stf = !git pick-status-files st push
-	stfm = !git pick-status-files st push -m
+	stf = with-status-files st push
+	stfm = with-status-files st push -m
 	stp = st pop
 	stl = st list --format='%C(yellow)%gd%C(reset) %C(green)(%cr)%C(reset) %s'
 	std = st drop
