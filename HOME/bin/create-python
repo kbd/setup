@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
 import argparse
 import logging
-from os import chdir as cd
 
 logging.basicConfig(level=logging.INFO)
 
-from aush import direnv, django_admin, echo, git, ln, mkdir, poetry, python3, t
+from aush import (
+    cd,
+    direnv,
+    django_admin,
+    echo,
+    git,
+    ln,
+    mkdir,
+    poetry,
+    python3,
+    t,
+)
 
 # parse args
 parser = argparse.ArgumentParser(description="Start a Python project")
