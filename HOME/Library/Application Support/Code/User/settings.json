@@ -39,6 +39,7 @@
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useIgnoreFiles": true,
+    "search.followSymlinks": false,
 
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
     "window.restoreWindows": "preserve",
