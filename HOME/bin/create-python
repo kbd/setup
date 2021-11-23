@@ -2,8 +2,6 @@
 import argparse
 import logging
 
-logging.basicConfig(level=logging.INFO)
-
 from aush import (
     cd,
     direnv,
@@ -16,6 +14,8 @@ from aush import (
     python3,
     t,
 )
+
+logging.basicConfig(level=logging.INFO)
 
 # parse args
 parser = argparse.ArgumentParser(description="Start a Python project")
