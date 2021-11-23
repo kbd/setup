@@ -4,6 +4,7 @@ black
 boto3
 bpython
 click
+cogapp
 csvs-to-sqlite
 Django
 fabric
