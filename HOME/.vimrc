@@ -13,6 +13,7 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+set title
 
 " colors
 hi Search cterm=NONE
