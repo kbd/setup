@@ -243,8 +243,8 @@ pyenv() {
 
 # personal
 alias notes='te ~/notes/'
-# alias nt='te ~/notes/$(date +%Y/%m/%d.txt)'
 nt(){
+  # create and edit a new Note for Today
   local y="$(if [[ $3 ]]; then printf %02d $3; else echo %Y; fi)"
   local m="$(if [[ $2 ]]; then printf %02d $2; else echo %m; fi)"
   local d="$(if [[ $1 ]]; then printf %02d $1; else echo %d; fi)"
