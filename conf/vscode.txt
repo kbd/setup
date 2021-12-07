@@ -3,7 +3,6 @@ AugusteRame.zls-vscode
 bungcip.better-toml
 crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
-deerawan.vscode-dash
 eamodio.gitlens
 esbenp.prettier-vscode
 formulahendry.code-runner
@@ -20,9 +19,9 @@ ms-azuretools.vscode-docker
 ms-python.python
 ms-python.vscode-pylance
 ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
 ms-vscode.cpptools
-ms-vsliveshare.vsliveshare-pack
-msjsdiag.debugger-for-chrome
 pnp.polacode
 ryanluker.vscode-coverage-gutters
 serayuzgur.crates
