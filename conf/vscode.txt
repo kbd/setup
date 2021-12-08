@@ -5,7 +5,6 @@ crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
 eamodio.gitlens
 esbenp.prettier-vscode
-formulahendry.code-runner
 golang.go
 Gruntfuggly.todo-tree
 hashicorp.terraform
@@ -22,7 +21,6 @@ ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
 ms-vscode.cpptools
-pnp.polacode
 ryanluker.vscode-coverage-gutters
 serayuzgur.crates
 stkb.rewrap
