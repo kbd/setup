@@ -153,7 +153,6 @@
     "peacock.surpriseMeOnStartup": false,
     "peacock.affectStatusBar": true,
     "peacock.affectActivityBar": true,
-    "peacock.affectAccentBorders": false,
     "peacock.affectTabActiveBorder": true,
     "peacock.favoriteColors": [
         { "name": "Angular Red", "value": "#b52e31" },
@@ -248,7 +247,7 @@
         "editor.wordWrap": "bounded",
     },
 
-    "[typescript]": {
+    "[typescript][typescriptreact][javascript][javascriptreact]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
@@ -256,34 +255,7 @@
             "source.fixAll": true,
         },
     },
-    "[typescriptreact]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll": true,
-        },
-    },
-    "[javascript]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll": true,
-        },
-    },
-    "[javascriptreact]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll": true,
-        },
-    },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[jsonc]": {
+    "[json][jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "json.schemas": [],
