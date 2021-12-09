@@ -34,6 +34,6 @@ if __name__ == "__main__":
     elif url.startswith('magnet:') or url.endswith('.torrent'):
         cmd = 'aria2c'
     else:
-        cmd = 'youtube-dl'
+        cmd = 'yt-dlp'
 
     run(cmd, *rest, url)

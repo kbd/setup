@@ -56,3 +56,4 @@ toml
 visidata
 xlrd
 xonsh
+yt-dlp
