@@ -121,7 +121,9 @@ function showAudioFuzzy()
       active = devices[i]:uid() == active_input:uid()
       subtext = "input"
     end
-    if active then subtext = subtext .. " (active)" end
+    if active then
+      subtext = subtext .. " (active)"
+    end
     choices[i] = {
       text = devices[i]:name(),
       uid = devices[i]:uid(),
