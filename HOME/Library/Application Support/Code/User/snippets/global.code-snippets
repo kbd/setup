@@ -1,19 +1,4 @@
 {
-	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
-	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
-	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
-	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
-	// Placeholders with the same ids are connected.
-	// Example:
-	"Print to console": {
-		"scope": "javascript,typescript",
-		"prefix": "l",
-		"body": [
-			"console.log('$1')",
-		],
-		"description": "Log output to console"
-	},
 	"Print dir to console": {
 		"scope": "javascript,typescript",
 		"prefix": "d",
@@ -21,11 +6,6 @@
 			"console.dir($1)",
 		],
 		"description": "Log dir output to console"
-	},
-	"log=": {
-		"scope": "python",
-		"prefix": "log=",
-		"body": "log = logging.getLogger(__name__)"
 	},
 	"New Promise": {
 		"scope": "javascript,typescript",
@@ -37,26 +17,6 @@
 		],
 		"description": "Create a new Promise"
 	},
-	"try/catch": {
-		"scope": "javascript,typescript",
-		"prefix": "try {",
-		"body": [
-			"try {",
-				"\t$1",
-			"} catch (err) {",
-				"\t$0",
-			"}"
-		]
-	},
-	"function": {
-		"scope": "javascript,typescript",
-		"prefix": "func",
-		"body": [
-			"function $1 ($2) {",
-				"\t$0",
-			"}"
-		]
-	},
 	"callback": {
 		"scope": "javascript,typescript",
 		"prefix": "fn",
@@ -64,9 +24,9 @@
 			"($1) => { $0 }"
 		]
 	},
-	"throw": {
+	"throw new Error('$0')": {
 		"scope": "javascript,typescript",
-		"prefix": "thr",
+		"prefix": "throw",
 		"body": [
 			"throw new Error('$0')",
 		]
@@ -103,11 +63,6 @@
 		],
 		"description": "Current datetime (ISO)"
 	},
-	"Go printf": {
-		"scope": "go",
-		"prefix": "P",
-		"body": "fmt.Printf(\"$1\", $0)",
-	},
 	"shebang": {
 		"prefix": "env",
 		"body": [
@@ -122,14 +77,6 @@
 			"set -Eeuxo pipefail",
 			"",
 			"",
-		]
-	},
-	"python main": {
-		"scope": "python",
-		"prefix": "main",
-		"body": [
-			"if __name__ == '__main__':",
-			"\t$0"
 		]
 	},
 }

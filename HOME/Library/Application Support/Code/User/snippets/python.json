@@ -1,0 +1,13 @@
+{
+	"log = logging.getLogger(__name__)": {
+		"prefix": "log=",
+		"body": "log = logging.getLogger(__name__)"
+	},
+	"if __name == __main__:": {
+		"prefix": "main",
+		"body": [
+			"if __name__ == '__main__':",
+			"\t$0"
+		]
+	},
+}
