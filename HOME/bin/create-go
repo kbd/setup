@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+import argparse
+import logging
+
+from aush import cd, echo, go, mkdir
+
+logging.basicConfig(level=logging.INFO)
+
+# parse args
+parser = argparse.ArgumentParser(description="Start a Go project")
+parser.add_argument("name", help="The name of the project")
+parser.add_argument("-m", "--module", help="The name of the module")
+args = parser.parse_args()
+
+# create directory
+mkdir("-p", args.name)
+cd(args.name)
+
+# create main
+echo(f"""package main
+
+import "fmt"
+
+func main() {{
+	fmt.Println("{args.name}")
+}}""") > "main.go"
+
+# initialize module
+go.mod.init(args.module or f"example.com/{args.name}")
