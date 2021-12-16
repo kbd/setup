@@ -2,7 +2,7 @@
 import argparse
 import logging
 
-from aush import cd, echo, go, mkdir
+from aush import cd, echo, git, go, mkdir
 
 logging.basicConfig(level=logging.INFO)
 
@@ -27,3 +27,10 @@ func main() {{
 
 # initialize module
 go.mod.init(args.module or f"example.com/{args.name}")
+
+# create git repo and add files
+echo(f"# {args.name}") > 'README.md'
+echo(f"{args.name}") > '.gitignore'  # add binary name to git ignore
+git.init()
+git.add(all=True, force=True)
+git.commit(m="Initial commit")
