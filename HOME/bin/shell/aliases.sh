@@ -235,12 +235,6 @@ create() {
   cd "$project" || return 3
 }
 
-pyenv() {
-  # pyenv is badly behaved and will repeatedly add itself to the path on initialization
-  [[ "$PYENV_SHELL" ]] || eval "$(command pyenv init -)"
-  pyenv "$@"
-}
-
 # personal
 alias notes='te ~/notes/'
 nt(){
