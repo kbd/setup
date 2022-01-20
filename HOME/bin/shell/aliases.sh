@@ -194,6 +194,7 @@ alias http='autopager http --pretty=all'
 alias https='autopager https --pretty=all'
 alias jq='autopager jq -C'
 alias curl='autopager curl -L'
+alias xh='autopager xh --pretty=all'
 
 b() {
   # switch to kitty taB
