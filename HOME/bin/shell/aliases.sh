@@ -70,7 +70,7 @@ fi
 
 # TERMINAL SPECIFIC
 if [[ $TERM == 'xterm-kitty' ]]; then
-  alias icat="kitty +kitten icat --align=left"
+  alias cati="kitty +kitten icat --align=left"
 fi
 
 # directory/navigation
