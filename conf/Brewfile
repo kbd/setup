@@ -87,6 +87,7 @@ brew "wget"
 brew "xh"
 brew "xsv"
 brew "yarn"  # installs Node
+brew "yq"
 brew "zig"
 brew "zoxide"
 brew "zsh"
