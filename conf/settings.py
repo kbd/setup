@@ -2,7 +2,7 @@
     'brew': (
         ['homebrew-workflow', 'Brewfile'],
         # set shell to homebrew'd shell
-        "update_shell.sh `brew --prefix`/bin/zsh",
+        "update-shell `brew --prefix`/bin/zsh",
         # install fzf
         "$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg",
         # patch fzf's history format to include timestamp
