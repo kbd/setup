@@ -1,0 +1,2 @@
+#!/bin/sh
+perl -pe 's/\e\[?.*?[\@-~]//g' # https://unix.stackexchange.com/a/4529

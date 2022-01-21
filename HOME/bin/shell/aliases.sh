@@ -179,7 +179,6 @@ alias pyb='bpython'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
 alias ssh='sshrc' # always sshrc
-alias stripansi="perl -pe 's/\e\[?.*?[\@-~]//g'" # https://unix.stackexchange.com/a/4529
 alias tcl='rlwrap tclsh'
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 alias title-tab='printf "\e]1;%s\a"'
