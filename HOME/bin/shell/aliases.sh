@@ -82,8 +82,6 @@ alias    ...='cd ../..'
 alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
-
-# ls/cd
 alias l=ls
 alias la='ls -A'
 alias lt='ls -t'
@@ -115,7 +113,8 @@ alias o.='o .'
 alias a='o -a'
 te(){ t "$@" && e "$@"; }
 
-# git: create aliases for all short (<= 4 character) git aliases
+# git
+# create aliases for all short (<= 4 character) git aliases
 for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
   # shellcheck disable=SC2139
   alias "g$gitalias=g $gitalias"
