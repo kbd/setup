@@ -169,6 +169,7 @@ alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
+alias notes='te ~/notes/'
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias printv='printf "%q\n"' # v for verbatim
 alias py='pyt'
@@ -235,14 +236,4 @@ create() {
   ! exists "$cmd" && echo >&2 "'$cmd' doesn't exist" && return 2
   $cmd "$project" "$@"
   cd "$project" || return 3
-}
-
-# personal
-alias notes='te ~/notes/'
-nt(){
-  # create and edit a new Note for Today
-  local y="$(if [[ $3 ]]; then printf %02d $3; else echo %Y; fi)"
-  local m="$(if [[ $2 ]]; then printf %02d $2; else echo %m; fi)"
-  local d="$(if [[ $1 ]]; then printf %02d $1; else echo %d; fi)"
-  te ~/notes/$(date +$y/$m/$d.txt)
 }

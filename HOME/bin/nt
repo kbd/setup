@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# create and edit a new Note for Today
+dir=~/notes
+y="$(if [[ $3 ]]; then printf %02d $3; else echo %Y; fi)"
+m="$(if [[ $2 ]]; then printf %02d $2; else echo %m; fi)"
+d="$(if [[ $1 ]]; then printf %02d $1; else echo %d; fi)"
+path=$dir/$(date +$y/$m/$d.txt)
+echo $path
+t $path && code $path
