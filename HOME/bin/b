@@ -1,0 +1,4 @@
+#!/bin/sh
+# switch to kitty taB
+tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
+if [ "$tab" ]; then kitty @ focus-tab -m "id:$tab"; fi

@@ -196,12 +196,6 @@ alias curl='autopager curl -L'
 alias xh='autopager xh --pretty=all'
 alias yq='autopager yq -C'
 
-b() {
-  # switch to kitty taB
-  local tab=$(kitty @ ls | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' | fzf0 --sync)
-  if [[ "$tab" ]]; then kitty @ focus-tab -m "id:$tab"; fi
-}
-
 rlh() {
   # reload history
   if [[ $ZSH_VERSION ]]; then
