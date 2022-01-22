@@ -58,6 +58,7 @@
     "scm.alwaysShowRepositories": true,
     "security.workspace.trust.untrustedFiles": "open",
 
+    "workbench.tree.indent": 15,
     "workbench.editor.showTabs": true,
     "workbench.editor.wrapTabs": false, // buggy
     "workbench.editor.untitled.hint": "hidden",
