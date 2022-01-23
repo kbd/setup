@@ -54,9 +54,7 @@
         'help': "Open the setup directory in your editor",
         'cmd': ['code', ROOT]
     },
-    'symlinks': {
-        'exec': "run_commands(['symgr', *debug_if_debug(), HOME, Path.home()])"
-    },
+    'symlinks': ['symgr', *debug_if_debug(), HOME, Path.home()],
     'pull': {
         'help': "Update the setup repository",
         'cmd': ['git', 'pg'],
