@@ -149,7 +149,7 @@
 	edit = "!exec $EDITOR ."
 	f = fetch
 	g = !lazygit
-	hash = rev-parse
+	hash = "!f() { git rev-parse ${@:-@}; }; f"
 	hide = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
 	unhide-all = update-index --really-refresh
