@@ -9,7 +9,6 @@ import os
 import re
 import sys
 from functools import partial
-from itertools import chain
 
 usage = """usage: f [delim] index[,index2,...] [flags]
 
@@ -53,11 +52,11 @@ def main(args):
         print(f"Invalid index {index!r} {e}", file=sys.stderr)
         return 1
 
-    sep = '\t' if (not delim or 'r' in flags) else delim
     end = '\0' if 'z' in flags else "\n"
     def print_parts(parts):
-        line = sep.join(chain.from_iterable(parts[slice] for slice in index))
-        print(line, end=end)
+        for slice in index:
+            for part in parts[slice]:
+                print(part, end=end)
 
     input = (line.rstrip() for line in fileinput.input('-'))
     if delim == '\n':
