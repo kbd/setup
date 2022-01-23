@@ -25,6 +25,7 @@
     'nim': "cat nimble.txt | xargs -to nimble install",
     'vscode': ['install-vscode-extensions', 'vscode.txt'],
     'manual': ['install-manual', 'manual.toml', VENDOR],
+    'symlinks': ['symgr', *debug_if_debug(), HOME, Path.home()],
     'rust': """
         rustup-init -y --no-modify-path;
         source $HOME/.cargo/env;
@@ -54,17 +55,13 @@
         'help': "Open the setup directory in your editor",
         'cmd': ['code', ROOT]
     },
-    'symlinks': ['symgr', *debug_if_debug(), HOME, Path.home()],
     'pull': {
         'help': "Update the setup repository",
         'cmd': ['git', 'pg'],
     },
     'packages': {
         'help': "Install all software packages",
-        'cmd': [
-            'setup',
-            'brew', 'python', 'node', 'go', 'rust', 'cargo', 'vscode'
-        ]
+        'cmd': ['setup', 'brew', 'python', 'node', 'go', 'rust', 'cargo', 'vscode']
     },
     'init': {
         'help': "The full set of commands used on first setup / bootstrap",
