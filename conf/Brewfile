@@ -2,7 +2,6 @@ tap "homebrew/cask-fonts"
 
 brew "ack"
 brew "aria2"
-brew "asdf"
 brew "asciinema"
 brew "awscli"
 brew "bash"

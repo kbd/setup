@@ -75,7 +75,6 @@ TMPSUFFIX='.zsh' # for syntax highlighting
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 source "$HOME/.config/fzf/fzf.zsh"
-source /usr/local/opt/asdf/libexec/asdf.sh
 typeset -A ZSH_HIGHLIGHT_STYLES # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
 ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
