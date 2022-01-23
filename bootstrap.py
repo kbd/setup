@@ -46,10 +46,10 @@ def main():
         subprocess.check_call(['git', 'clone', REPO_URL], cwd=os.path.dirname(SETUP_PATH))
 
     print("Installing all the things")
-    # add dirs to path that aren't yet in path because bootstrapping
     setup_exe = os.path.join(SETUP_PATH, 'HOME/bin/setup')
+    # add to path because bootstrapping
     os.environ['PATH'] = ':'.join([
-        os.path.dirname(setup_exe),
+        os.path.dirname(setup_exe),  # add repo bin dir to path, symlinks not yet run
         os.path.expanduser('~/bin'),
         os.environ['PATH']
     ])
