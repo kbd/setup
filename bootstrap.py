@@ -25,6 +25,7 @@ import subprocess
 REPO_URL = 'https://github.com/kbd/setup.git'
 HOMEBREW_INSTALL_CMD = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 SETUP_PATH = os.path.expanduser('~/setup')
+SETUP_EXE = os.path.join(SETUP_PATH, 'HOME/bin/setup')
 
 def main():
     print("Installing Homebrew")
@@ -46,14 +47,13 @@ def main():
         subprocess.check_call(['git', 'clone', REPO_URL], cwd=os.path.dirname(SETUP_PATH))
 
     print("Installing all the things")
-    setup_exe = os.path.join(SETUP_PATH, 'HOME/bin/setup')
     # add to path because bootstrapping
     os.environ['PATH'] = ':'.join([
-        os.path.dirname(setup_exe),  # add repo bin dir to path, symlinks not yet run
+        os.path.dirname(SETUP_EXE),  # add repo bin dir to path, symlinks not yet run
         os.path.expanduser('~/bin'),
         os.environ['PATH']
     ])
-    subprocess.check_call([setup_exe, 'init'])
+    subprocess.check_call([SETUP_EXE, 'init'])
     print("Done installing all the things. Restart your terminal.")
 
 
