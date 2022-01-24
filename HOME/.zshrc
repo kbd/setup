@@ -54,8 +54,8 @@ bindplugin() {
   bindkey "$1" "$2"
 }
 
-bindplugin "\e[A" up-line-or-beginning-search # ↑ (bash:history-search-backward)
-bindplugin "\e[B" down-line-or-beginning-search # ↓ (bash:history-search-forward)
+bindkey "\e[A" history-beginning-search-backward # ↑
+bindkey "\e[B" history-beginning-search-forward # ↓
 bindkey "\e[1;5D" backward-word # ⌃←
 bindkey "\e[1;5C" forward-word # ⌃→
 bindkey "\e\e[D" backward-word # ⌥← iterm
