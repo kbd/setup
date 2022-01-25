@@ -23,7 +23,7 @@
 	renameLimit = 1000
 [merge]
 	tool = kdiff3
-	conflictstyle = diff3 # https://twitter.com/KentonVarda/status/1402340580911427588
+	conflictstyle = zdiff3
 [difftool]
 	prompt = false
 [mergetool]
@@ -200,6 +200,7 @@
 	std = st drop
 	sts = st show
 	stsp = st show -p
+	ss = stash --staged
 	w = switch-autostash
 	w- = w -
 	wc = w -c
