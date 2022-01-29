@@ -8,7 +8,7 @@ fi
 export PLATFORM="$(uname)"
 export XDG_CONFIG_HOME=~/.config
 export PAGER=less
-export LESS='-iMFx4 --mouse' # smart-case, status bar, quit 1 screen, 4sp tabs
+export LESS='-iMFx4 --mouse --incsearch' # smart-case, status bar, quit 1 screen, 4sp tabs
 export DELTA_PAGER="less $LESS -R"
 export VISUAL='code -nw'
 export EDITOR=vim
