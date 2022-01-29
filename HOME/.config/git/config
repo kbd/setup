@@ -184,7 +184,7 @@
 	rc = !GIT_EDITOR=true git rebase --continue
 	rcn = rebase --continue
 	ri = r -i
-	ric = !git pick-commits | xargs -tI% git ri %~
+	ric = !git pick-commits | xargs -toI% git ri %~
 	v = revert
 	vc = !git pick-commits | xargs -tI% git v -m1 %
 	s = status
