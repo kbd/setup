@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -eu
+# https://github.com/kovidgoyal/kitty/issues/719
+/usr/local/bin/nvim \
+  -u NORC \
+  -c "set nonumber nolist showtabline=0 foldcolumn=0 laststatus=0 noshowmode noruler noshowcmd ignorecase smartcase incsearch shortmess+=F" \
+  -c "autocmd TermOpen * normal G" \
+  -c "map q :qa!<CR>" \
+  -c "map i <Nop>" \
+  -c "set clipboard+=unnamedplus" \
+  -c "terminal cat "<(cat)" - "
