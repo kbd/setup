@@ -1,25 +1,28 @@
-#!/usr/bin/env bash
-set -Eeuxo pipefail
+#!/usr/bin/env python3
+import argparse
+import logging
 
-[[ "${1:-}" ]] || (echo >&2 "Must provide project name" && exit 1)
+from aush import cd, git, mix, perl
+
+logging.basicConfig(level=logging.INFO)
+
+# parse args
+parser = argparse.ArgumentParser(description="Start a Phoenix project")
+parser.add_argument("name", help="The name of the project")
+args = parser.parse_args()
 
 # create project
-(echo yes | mix phx.new --live "$1") && cd "$1"
+mix['phx.new'](args.name, install=True, live=True)
+cd(args.name)
 
 # default database user:pass is user:''
-perl -pi -e "s/(?<=username: \")([^\"]+)/$(whoami)/" config/dev.exs
-perl -pi -e "s/(?<=password: \")([^\"]+)//" config/dev.exs
+perl['-pi', '-e']("s/(?<=username: \")([^\"]+)/$(whoami)/", 'config/dev.exs')
+perl['-pi', '-e']("s/(?<=password: \")([^\"]+)//", 'config/dev.exs')
 
 # install prettier for the project
 # https://github.com/adamzapasnik/prettier-plugin-eex
 
-# get dependencies
-mix deps.get
-
-# create database
-mix ecto.create
-
 # stage files in git
-git init
-git add --all
-git commit -m "Initial commit"
+git.init()
+git.add(all=True)
+git.commit(m="Initial commit")
