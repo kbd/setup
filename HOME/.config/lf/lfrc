@@ -1,0 +1,3 @@
+# https://github.com/gokcehan/lf/wiki/Previews#with-kitty-and-pistol
+set previewer ~/.config/lf/lf_kitty_preview
+set cleaner ~/.config/lf/lf_kitty_clean
