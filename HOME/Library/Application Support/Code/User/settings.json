@@ -27,12 +27,7 @@
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.splitCwd": "workspaceRoot",
     "terminal.integrated.profiles.osx": {
-        "zsh": {
-            "path": "zsh",
-            "args": [
-                "-l"
-            ]
-        },
+        "zsh": {"path": "zsh", "args": ["-l"]},
     },
     "terminal.integrated.defaultProfile.osx": "zsh",
 
