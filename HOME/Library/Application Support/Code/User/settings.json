@@ -51,6 +51,7 @@
     "files.hotExit": "onExitAndWindowClose",
 
     "breadcrumbs.enabled": true,
+    "outline.showVariables": false,
     "explorer.openEditors.sortOrder": "alphabetical",
     "explorer.openEditors.visible": 0,
     "problems.showCurrentInStatus": true,
