@@ -3,9 +3,9 @@ set -eu
 # https://github.com/kovidgoyal/kitty/issues/719
 /usr/local/bin/nvim \
   -u NORC \
+  -R \
+  -c "map <silent> q :qa!<CR>" \
   -c "set nonumber nolist showtabline=0 foldcolumn=0 laststatus=0 noshowmode noruler noshowcmd ignorecase smartcase incsearch shortmess+=F" \
-  -c "autocmd TermOpen * normal G" \
-  -c "map q :qa!<CR>" \
-  -c "map i <Nop>" \
   -c "set clipboard+=unnamedplus" \
+  -c "autocmd TermOpen * normal G" \
   -c "terminal cat "<(cat)" - "
