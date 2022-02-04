@@ -81,7 +81,7 @@ def manual(packages, dir, bin_path):
                 c += [git, path]
             if url:
                 print(f"Downloading {url} to {path}")
-                c = ['wget', '--directory-prefix', path, url]
+                c = ['aria2c', '-d', path, url]
 
             print(f"Running {c}")
             run(c)

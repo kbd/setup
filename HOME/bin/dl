@@ -8,7 +8,7 @@ import sys
 
 from lib import colors as c, utils
 
-BINARY_EXTENSIONS = ('.zip', '.tar.gz')
+BINARY_EXTENSIONS = ('.zip', '.tar.gz', '.dmg')
 
 
 def run(*args):
@@ -23,17 +23,24 @@ def fprint(action, text, bold=True):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-r', '--raw', action='store_true', help='raw download')
+    parser.add_argument('-d', '--directory', help='Directory to download to')
     parser.add_argument('url', nargs='?', help='URL to download')
     args, rest = parser.parse_known_args()
 
     url = args.url or utils.run(['cb'], cap=True)
     fprint("Downloading", url)
 
-    if args.raw or url.endswith(BINARY_EXTENSIONS):
-        cmd = 'wget'
-    elif url.startswith('magnet:') or url.endswith('.torrent'):
-        cmd = 'aria2c'
+    if (args.raw
+        or url.endswith(BINARY_EXTENSIONS)
+        or url.startswith('magnet:')
+        or url.endswith('.torrent')
+    ):
+        cmd = ['aria2c']
+        if args.directory:
+            cmd += ['-d', args.directory]
     else:
-        cmd = 'yt-dlp'
+        cmd = ['yt-dlp']
+        if args.directory:
+            cmd += ['-P', args.directory]
 
-    run(cmd, *rest, url)
+    run(*cmd, *rest, url)
