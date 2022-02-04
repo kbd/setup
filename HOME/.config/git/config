@@ -128,6 +128,7 @@
 	cone = !git conflicts | xargs $VISUAL -n
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
+	debug = !GIT_TRACE=1 git
 	dt = difftool
 	dc = !git pick-commits | xargs -t git d
 	dtc = !git pick-commits | xargs -t git dt
