@@ -8,7 +8,7 @@ from aush import git
 
 def main():
     # get branch name from remotes/origin/HEAD
-    if branch := git.symbolic_ref('refs/remotes/origin/HEAD'):
+    if branch := git.symbolic_ref('refs/remotes/origin/HEAD', _check=False):
         print(os.path.basename(str(branch)))
         return 0
     elif b'not a git repository' in branch.stderr:
