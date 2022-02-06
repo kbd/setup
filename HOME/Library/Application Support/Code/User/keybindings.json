@@ -333,5 +333,25 @@
         "key": "cmd+k",
         "command": "scrollLineUp",
         "when": "textInputFocus"
-    }
+    },
+    {
+        "key": "ctrl+f",
+        "command": "scrollPageDown",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "scrollPageUp",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "cursorLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "cursorRight",
+        "when": "textInputFocus"
+    },
 ]
