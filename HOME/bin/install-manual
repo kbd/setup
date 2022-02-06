@@ -104,6 +104,7 @@ def manual(packages, dir, bin_path):
                 print(f"Running {cmd}")
                 run(cmd)
 
+        # mount the dmg specified in 'url' and copy the app out of it
         if dmg:
             filename = os.path.basename(urllib.parse.urlparse(url).path)
             run_commands((
