@@ -33,7 +33,7 @@
         "command": "workbench.action.previousEditor"
     },
     {
-        "key": "cmd+j",
+        "key": "shift+cmd+j",
         "command": "editor.action.joinLines",
         "when": "editorTextFocus && !editorReadonly"
     },
@@ -130,10 +130,6 @@
         "key": "ctrl+`",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "terminalFocus"
-    },
-    {
-        "key": "shift+cmd+j",
-        "command": "workbench.action.togglePanel"
     },
     {
         "key": "cmd+j",
@@ -327,5 +323,15 @@
     {
         "key": "shift+cmd+u",
         "command": "-workbench.action.output.toggleOutput"
+    },
+    {
+        "key": "cmd+j",
+        "command": "scrollLineDown",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "cmd+k",
+        "command": "scrollLineUp",
+        "when": "textInputFocus"
     }
 ]
