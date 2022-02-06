@@ -1,8 +1,10 @@
 #!/usr/local/bin/python3
 # ^ intentionally use system Python vs /usr/bin/env
 import argparse
+import os
 import shutil
 import subprocess
+import urllib.parse
 from pathlib import Path
 
 import tabulate
@@ -62,6 +64,7 @@ def manual(packages, dir, bin_path):
         url = params.get('url')  # url of file to download
         cmd = params.get('cmd')  # commands to run after cloning
         bin = params.get('bin')  # path to the executable to install in ~/bin
+        dmg = params.get('dmg')  # if url is dmg, path of app inside dmg
 
         # remove if exists
         path = Path(dir, key)
@@ -100,6 +103,14 @@ def manual(packages, dir, bin_path):
                 cmd = ['symgr', '-I', Path(dir, key, b), bin_path]
                 print(f"Running {cmd}")
                 run(cmd)
+
+        if dmg:
+            filename = os.path.basename(urllib.parse.urlparse(url).path)
+            run_commands((
+                ['hdiutil', 'attach', '-nobrowse', filename],
+                ['cp', '-r', dmg, bin_path],
+                ['hdiutil', 'detach', os.path.dirname(dmg)],
+            ), cwd=path)
 
 
 if __name__ == '__main__':

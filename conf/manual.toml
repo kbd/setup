@@ -34,3 +34,7 @@ git = "https://github.com/romkatv/zsh-prompt-benchmark.git"
 git = "https://github.com/timbray/topfew.git"
 cmd = "make"
 bin = "bin/tf"
+
+[tinkle]
+url = "https://github.com/pqrs-org/Tinkle/releases/download/v2.0.0/Tinkle-2.0.0.dmg"
+dmg = "/Volumes/Tinkle/Tinkle.app"
