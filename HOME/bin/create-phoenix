@@ -2,7 +2,7 @@
 import argparse
 import logging
 
-from aush import cd, git, mix, perl
+from aush import cd, git, mix, perl, whoami
 
 logging.basicConfig(level=logging.INFO)
 
@@ -15,9 +15,12 @@ args = parser.parse_args()
 mix['phx.new'](args.name, install=True, live=True)
 cd(args.name)
 
-# default database user:pass is user:''
-perl['-pi', '-e']("s/(?<=username: \")([^\"]+)/$(whoami)/", 'config/dev.exs')
-perl['-pi', '-e']("s/(?<=password: \")([^\"]+)//", 'config/dev.exs')
+# default database user:pass is $whoami/''
+me = whoami()
+perl['-pi', '-e'](rf"s/(?<=username: \")([^\"]+)/{me}/", 'config/dev.exs')
+perl['-pi', '-e'](r"s/(?<=password: \")([^\"]+)//", 'config/dev.exs')
+
+mix['ecto.create']()
 
 # install prettier for the project
 # https://github.com/adamzapasnik/prettier-plugin-eex
