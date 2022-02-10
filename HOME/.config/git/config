@@ -184,6 +184,7 @@
 	ra = rebase --abort
 	rc = !GIT_EDITOR=true git rebase --continue
 	rcn = rebase --continue
+	rma = !git r "$(git main-branch)"
 	ri = r -i
 	ric = !git pick-commits | xargs -toI% git ri %~
 	v = revert
