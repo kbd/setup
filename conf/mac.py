@@ -64,7 +64,7 @@ defaults['com.apple.menuextra.battery']['ShowPercent'] = True
 
 # key repeat rate and delay
 defaults.g['InitialKeyRepeat'] = 10
-defaults.g['KeyRepeat'] = 2
+defaults.g['KeyRepeat'] = 1  # can this be a float? 1 seems a bit fast and 2 a bit slow
 
 # turn on "shake mouse pointer to locate"
 defaults.g['CGDisableCursorLocationMagnification'] = False
