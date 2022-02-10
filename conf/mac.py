@@ -1,4 +1,4 @@
-from aush import osascript
+from aush import duti, mkdir, osascript, sudo
 from lib.mac import defaults
 from lib.utils import run
 
@@ -90,7 +90,7 @@ associations = {
 }
 for program, types in associations.items():
     for type in types:
-        run(['duti', '-s', program, type, 'all'])
+        duti('-s', program, type, 'all')
 
 # make tab move between "All Controls" (System Prefs -> Keyboard -> Shortcuts)
 defaults.g['AppleKeyboardUIMode'] = 3
@@ -145,7 +145,7 @@ for app in required_login_apps - current_login_apps:
 
 # screenshots
 screenshot_dir = '~/Desktop/Screenshots'
-run(f"mkdir -p {screenshot_dir}")
+mkdir['-p'](screenshot_dir)
 screenshots = defaults['com.apple.screencapture']
 screenshots['location'] = screenshot_dir
 screenshots['show-thumbnail'] = False
@@ -157,4 +157,4 @@ defaults['com.apple.Siri']['VoiceTriggerUserEnabled'] = False
 # screen settings. screensaver 7 minutes, monitor power 10 minutes
 defaults.currentHost["com.apple.screensaver"]["idleTime"] = 420
 defaults.currentHost["com.apple.screensaver"]["showClock"] = True
-run(['sudo', 'pmset', 'displaysleep', '10'])
+sudo.pmset.displaysleep(10)
