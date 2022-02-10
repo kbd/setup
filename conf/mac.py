@@ -1,3 +1,4 @@
+from aush import osascript
 from lib.mac import defaults
 from lib.utils import run
 
@@ -121,18 +122,15 @@ dash['syncFolderPath'] = "~/Documents/Dash"
 dash['snippetSQLPath'] = "~/Documents/Dash/snippets.dash"
 
 # startup items - https://apple.stackexchange.com/a/310502/
-required_login_apps = {'SpotMenu', 'Alfred 4', 'Horo', 'Hammerspoon'}
-current_login_apps = set(
-    filter(None,
-        run(['osascript', '-e' 'tell application "System Events" to get the name of every login item'], cap='stdout').strip().split(', ')
-    )
-)
+required_login_apps = {'SpotMenu', 'Alfred 4', 'Horo', 'Hammerspoon', 'Tinkle'}
+cmd = 'tell application "System Events" to get the name of every login item'
+current_login_apps = set(str(osascript(e=cmd)).split(', '))
 
 script = 'tell application "System Events" to make login item at end with properties {{path:"/Applications/{app}.app", hidden:false}}'
 print(f"Current login apps: {current_login_apps}. Required login apps: {required_login_apps}")
 for app in required_login_apps - current_login_apps:
     print(f"Setting '{app}' to run on login")
-    run(['osascript', '-e', script.format(app=app)])
+    osascript(e=script.format(app=app))
 
 # menubar items
 # menus = [
