@@ -331,4 +331,5 @@
     "[terraform]": {
         "editor.formatOnSave": true,
     },
+    "window.zoomLevel": 0.5,
 }
