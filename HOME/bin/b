@@ -2,7 +2,7 @@
 # switch to kitty taB
 tab=$(
   kitty @ ls \
-  | jq -r '.[].tabs[] | "\(.id)\u0000\(.title)"' \
+  | jq -r '.[].tabs[] | select(.is_focused == false) | "\(.id)\u0000\(.title)"' \
   | fzf0 --sync --tiebreak=begin -q "$*"
 )
 if [ "$tab" ]; then
