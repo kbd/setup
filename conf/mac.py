@@ -101,7 +101,7 @@ defaults['com.apple.menuextra.clock']['DateFormat'] = "EEE MMM d  h:mm a"
 # use function keys as function keys
 defaults.g['com.apple.keyboard.fnState'] = True
 
-# don't close windows when quitting program (required for iterm2 to restore windows)
+# don't close windows when quitting program
 defaults.g['NSQuitAlwaysKeepsWindows'] = True
 
 # zoom with ctrl+mouse wheel (System Prefs -> Accessibility -> Zoom)
@@ -111,11 +111,6 @@ defaults.g['NSQuitAlwaysKeepsWindows'] = True
 
 # turn off touch-bar autocompletion (horrific! distracting!)
 defaults.g['NSAutomaticTextCompletionEnabled'] = False
-
-iterm = defaults['com.googlecode.iterm2']
-iterm['PrefsCustomFolder'] = '~/.config/iterm2'
-iterm['LoadPrefsFromCustomFolder'] = True
-iterm['HotkeyTermAnimationDuration'] = 0
 
 dash = defaults['com.kapeli.dashdoc']
 dash['syncFolderPath'] = "~/Documents/Dash"

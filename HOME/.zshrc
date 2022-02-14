@@ -58,8 +58,6 @@ bindkey "\e[A" history-beginning-search-backward # ↑
 bindkey "\e[B" history-beginning-search-forward # ↓
 bindkey "\e[1;5D" backward-word # ⌃←
 bindkey "\e[1;5C" forward-word # ⌃→
-bindkey "\e\e[D" backward-word # ⌥← iterm
-bindkey "\e\e[C" forward-word # ⌥→
 bindkey "\e[1;3D" backward-word # ⌥← kitty
 bindkey "\e[1;3C" forward-word # ⌥→
 bindkey "\eb" backward-word # ⌥← vscode
