@@ -1,6 +1,5 @@
 from aush import duti, mkdir, osascript, sudo
 from lib.mac import defaults
-from lib.utils import run
 
 ### trackpad settings ###
 for key in (
