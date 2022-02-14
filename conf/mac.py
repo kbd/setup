@@ -1,3 +1,4 @@
+# pylint:disable=no-name-in-module
 from aush import duti, mkdir, osascript, sudo
 from lib.mac import defaults
 
