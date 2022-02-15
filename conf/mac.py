@@ -1,4 +1,6 @@
 # pylint:disable=no-name-in-module
+from os.path import expanduser
+
 from aush import duti, mkdir, osascript, sudo
 from lib.mac import defaults
 
@@ -139,7 +141,7 @@ for app in required_login_apps - current_login_apps:
 # defaults['com.apple.systemuiserver']['menuExtras'] = menus
 
 # screenshots
-screenshot_dir = '~/Desktop/Screenshots'
+screenshot_dir = expanduser('~/Desktop/Screenshots')
 mkdir['-p'](screenshot_dir)
 screenshots = defaults['com.apple.screencapture']
 screenshots['location'] = screenshot_dir
