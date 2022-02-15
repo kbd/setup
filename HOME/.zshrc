@@ -43,6 +43,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # turn off bad Zsh defaults
 compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/
+WORDCHARS=${WORDCHARS/\/} # don't consider slash a word char - https://stackoverflow.com/questions/444951/
 
 # key binds
 stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
