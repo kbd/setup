@@ -1,3 +1,4 @@
 github.com/traefik/yaegi/cmd/yaegi@latest
 github.com/ayoisaiah/f2/cmd/f2@latest
 github.com/doronbehar/pistol/cmd/pistol@latest
+github.com/go-delve/delve/cmd/dlv@latest
