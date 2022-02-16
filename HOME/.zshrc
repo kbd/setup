@@ -33,13 +33,6 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 bindkey -M menuselect '\e[Z' reverse-menu-complete # shift tab to go backwards
 
-# fzf-tab
-zstyle ':completion:*:descriptions' format '[%d]' # enable group support
-zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
-[[ "$FZF_TAB_HOME" ]] || source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
-
 # turn off bad Zsh defaults
 compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/
@@ -70,16 +63,17 @@ bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^E^E" edit-command-line
 TMPSUFFIX='.zsh' # for syntax highlighting
 
-# zsh syntax highlighting - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
-
 # 3rd party config
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 source "$HOME/.config/fzf/fzf.zsh"
+
+# fzf-tab
+zstyle ':completion:*:descriptions' format '[%d]' # enable group support
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
+[[ "$FZF_TAB_HOME" ]] || source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
@@ -103,6 +97,12 @@ preexec(){
 }
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
+
+# zsh syntax highlighting - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
 
 # machine-specific config
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
