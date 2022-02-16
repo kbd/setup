@@ -316,9 +316,6 @@
     },
     "go.lintOnSave": "file",
     "go.lintTool": "golangci-lint",
-    "go.lintFlags": [
-        "--fast"
-    ],
     "go.coverOnSingleTest": true,
     "go.coverOnSingleTestFile": true,
     "go.coverageDecorator": {
