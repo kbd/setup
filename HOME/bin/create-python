@@ -21,6 +21,7 @@ logging.basicConfig(level=logging.INFO)
 parser = argparse.ArgumentParser(description="Start a Python project")
 parser.add_argument("name", help="The name of the project")
 parser.add_argument("-d", "--django", action="store_true", help="Add Django to the project")
+parser.add_argument("-p", "--poetry-config", default=[], action='append', nargs=2, help="Pass config arguments to Poetry")
 args = parser.parse_args()
 
 # create directory
@@ -32,11 +33,14 @@ poetry.init(
     no_interaction = True,
     name = args.name,
     author = git.config(get='user.name'),
-    dev_dependency = [
-        'pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb'
-    ],
 )
-poetry.install()
+
+for (setting, value) in args.poetry_config:
+    poetry.config['--local'](setting, value)
+
+t('poetry.toml')  # ensure the poetry config exists to keep projects consistent
+
+poetry.add('pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb', dev=True)
 
 # set up direnv
 echo("layout poetry") > '.envrc'
@@ -72,6 +76,7 @@ else:
     # ├── bin
     # │   └── proj -> ../proj
     # ├── poetry.lock
+    # ├── poetry.toml
     # ├── proj
     # │   └── __init__.py
     # ├── pyproject.toml
