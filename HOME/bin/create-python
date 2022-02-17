@@ -35,7 +35,17 @@ poetry.init(
     author = git.config(get='user.name'),
 )
 
+def add_source_to_pyproject(name, url):
+    echo (f"""
+[[tool.poetry.source]]
+name = "{name}"
+url = "{url}\"
+default = true""") >> 'pyproject.toml'
+
 for (setting, value) in args.poetry_config:
+    if setting == 'source':  # special-case source
+        add_source_to_pyproject(*value.split('='))
+        continue
     poetry.config['--local'](setting, value)
 
 t('poetry.toml')  # ensure the poetry config exists to keep projects consistent
