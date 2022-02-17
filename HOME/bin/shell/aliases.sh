@@ -148,7 +148,13 @@ alias dp='cd "$(dirs -pl | tail -n+2 | fzf)"'
 alias dtrx='dtrx --one=inside'
 alias du='du -h'
 alias dud='du -d0 .'
-alias dlv='EDITOR=delve-editor dlv'
+dlv() {
+  local args=('debug')
+  if [[ $# != 0 ]]; then
+    args=("$@")
+  fi
+  EDITOR=delve-editor command dlv "${args[@]}"
+}
 alias emoji='uni emoji all | fzf | f 0 | cb'
 alias ercho='>&2 echo' # echo to stderr
 alias exists='type &>/dev/null' # check if a program exists
