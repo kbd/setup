@@ -233,6 +233,5 @@ create() {
   local project="$2"
   shift 2
   ! exists "$cmd" && echo >&2 "'$cmd' doesn't exist" && return 2
-  $cmd "$project" "$@"
-  cd "$project" || return 3
+  $cmd "$project" "$@" && cd "$project" || return 3
 }
