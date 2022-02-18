@@ -79,6 +79,7 @@ associations = {
         'public.plain-text',
         'public.python-script',
         'public.yaml',
+        'net.daringfireball.markdown',
     ],
     'org.videolan.vlc': [
         'public.mp3',
