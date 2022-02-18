@@ -36,6 +36,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
   # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
   # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
+  # prefer GNU versions of common utils
   alias awk=gawk
   alias sed=gsed
   alias tar=gtar
