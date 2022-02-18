@@ -39,7 +39,7 @@ if [[ $PLATFORM == 'Darwin' ]]; then
   alias awk=gawk
   alias sed=gsed
   alias tar=gtar
-  alias ls='/usr/local/bin/gls -F --color=auto --group-directories-first'
+  alias ls='/usr/local/bin/gls'
 
   alias lock='pmset displaysleepnow'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
@@ -82,6 +82,7 @@ alias    ...='cd ../..'
 alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
+alias ls='ls -F --color=auto --group-directories-first'
 alias l=ls
 alias la='ls -A'
 alias lt='ls -t'
