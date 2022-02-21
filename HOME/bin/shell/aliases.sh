@@ -40,16 +40,15 @@ if [[ $PLATFORM == 'Darwin' ]]; then
   alias awk=gawk
   alias sed=gsed
   alias tar=gtar
-  alias ls='/usr/local/bin/gls -F --color=auto --group-directories-first'
+  ls_path='/usr/local/bin/gls'
 
   alias lock='pmset displaysleepnow'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
 
   alias switch-output="SwitchAudioSource -a -t output | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t output -s '%'"
   alias switch-input="SwitchAudioSource -a -t input | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t input -s '%'"
-else
-  alias ls='ls -F --color=auto --group-directories-first'
 fi
+
 
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
@@ -85,6 +84,8 @@ alias    ...='cd ../..'
 alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
+# shellcheck disable=SC2139
+alias ls="${ls_path:-ls} -F --color=auto --group-directories-first"
 alias l=ls
 alias la='ls -A'
 alias lt='ls -t'
