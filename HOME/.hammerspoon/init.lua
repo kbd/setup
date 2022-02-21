@@ -147,6 +147,32 @@ function selectAudio(audio)
   end
 end
 
+function selectWindow(window)
+  if window == nil then -- nothing selected
+    return
+  end
+  hs.window.get(window.id):focus()
+end
+
+function showWindowFuzzy()
+  local app = hs.application.frontmostApplication()
+  local focused_id = app:focusedWindow():id()
+  local windows = app:allWindows()
+  local choices = {}
+  for i=1, #windows do
+    local w = windows[i]
+    local id = w:id()
+    local active = id == focused_id
+    choices[i] = {
+      text = w:title(),
+      id = id,
+      subText = active and " (active)" or "",
+      valid = not active,
+    }
+  end
+  fuzzy(choices, selectWindow)
+end
+
 caffeine = hs.menubar.new()
 function showCaffeine(awake)
   local title = awake and '☕' or '🍵'
@@ -186,3 +212,4 @@ hs.hotkey.bind(hyper, "5", moveActiveWindow(3, 3))
 hs.hotkey.bind(hyper, "6", moveActiveWindow(1, 1))
 hs.hotkey.bind(hyper, "N", moveActiveWindowToNextScreen)
 hs.hotkey.bind(hyper, "A", showAudioFuzzy)
+hs.hotkey.bind(hyper, ",", showWindowFuzzy)
