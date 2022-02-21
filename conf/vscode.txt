@@ -10,6 +10,7 @@ Gruntfuggly.todo-tree
 hashicorp.terraform
 ionutvmi.spacegray-vscode
 JakeBecker.elixir-ls
+janisdd.vscode-edit-csv
 johnpapa.vscode-peacock
 kosz78.nim
 matklad.rust-analyzer
