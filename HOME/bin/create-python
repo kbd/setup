@@ -39,7 +39,7 @@ def add_source_to_pyproject(name, url):
     echo (f"""
 [[tool.poetry.source]]
 name = "{name}"
-url = "{url}\"
+url = "{url}"
 default = true""") >> 'pyproject.toml'
 
 for (setting, value) in args.poetry_config:
