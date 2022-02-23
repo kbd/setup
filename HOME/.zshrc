@@ -60,7 +60,7 @@ bindkey "\e[H" beginning-of-line # home
 bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
-bindplugin "^E^E" edit-command-line
+bindplugin "^[e" edit-command-line
 TMPSUFFIX='.zsh' # for syntax highlighting
 
 # 3rd party config
