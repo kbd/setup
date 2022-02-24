@@ -279,7 +279,11 @@
     ],
     "python.globalModuleInstallation": true,
     "python.languageServer": "Pylance",
-    "python.terminal.activateEnvironment": false,
+    "python.terminal.activateEnvironment": false, // depend on direnv instead
+    "python.venvFolders": [ // unsure why vscode can't find poetry virtualenvs
+        "Library/Caches/pypoetry/virtualenvs/"
+    ],
+
     "jupyter.sendSelectionToInteractiveWindow": false,
     "notebook.cellToolbarLocation": {
         "default": "right",
