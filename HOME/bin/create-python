@@ -22,6 +22,7 @@ parser = argparse.ArgumentParser(description="Start a Python project")
 parser.add_argument("name", help="The name of the project")
 parser.add_argument("-d", "--django", action="store_true", help="Add Django to the project")
 parser.add_argument("-p", "--poetry-config", default=[], action='append', nargs=2, help="Pass config arguments to Poetry")
+parser.add_argument("-n", "--no-dependencies", action='store_true', help="Don't install any dependencies when creating project")
 args = parser.parse_args()
 
 # create directory
@@ -50,7 +51,8 @@ for (setting, value) in args.poetry_config:
 
 t('poetry.toml')  # ensure the poetry config exists to keep projects consistent
 
-poetry.add('pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb', dev=True)
+if not args.no_dependencies:
+    poetry.add('pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb', dev=True)
 
 # set up direnv
 echo("layout poetry") > '.envrc'
