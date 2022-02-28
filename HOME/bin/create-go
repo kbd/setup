@@ -29,8 +29,8 @@ func main() {{
 go.mod.init(args.module or f"example.com/{args.name}")
 
 # create git repo and add files
-echo(f"# {args.name}") > 'README.md'
-echo(f"{args.name}") > '.gitignore'  # add binary name to git ignore
+echo(f"# {args.name}") >> 'README.md'
+echo(f"{args.name}") >> '.gitignore'  # add binary name to git ignore
 git.init()
-git.add(all=True, force=True)
-git.commit(m="Initial commit")
+git.add(all=True)
+git.commit(m="Initial Go commit")
