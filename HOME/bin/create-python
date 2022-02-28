@@ -55,15 +55,15 @@ if not args.no_dependencies:
     poetry.add('pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb', dev=True)
 
 # set up direnv
-echo("layout poetry") > '.envrc'
+echo("layout poetry") >> '.envrc'
 direnv.allow()
 
-# add files to git
+# create repo (if needed) and add/append to files
 git.init()
-echo('\n'.join(('*.sqlite3', '*.db', '.venv/', '__pycache__/'))) > '.gitignore'
-echo(f"# {args.name}") > 'README.md'
-git.add(all=True, force=True)
-git.commit(m="Initial commit")
+echo(f"# {args.name}") >> 'README.md'
+echo('\n'.join(('*.sqlite3', '*.db', '.venv/', '__pycache__/'))) >> '.gitignore'
+git.add(all=True)
+git.commit(m="Initial Python commit")
 
 if args.django:
     # add django
@@ -79,7 +79,7 @@ if args.django:
         email = git.config(get='user.email') or 'admin@localhost',
         _env = dict(DJANGO_SUPERUSER_PASSWORD='admin'),
     )
-    git.add(all=True, force=True)
+    git.add(all=True)
     git.commit(m="Add Django")
 else:
     # create project structure
@@ -94,8 +94,9 @@ else:
     # ├── pyproject.toml
     # └── tests
     #     └── __init__.py
-    t(f'{args.name}/__init__.py', 'tests/__init__.py', 'bin/')
+    files = [f'{args.name}/__init__.py', 'tests/__init__.py']
+    t(*files, 'bin/')
     ln('-s', f'../{args.name}', f'bin/{args.name}')  # create package symlink
-    echo(args.name) > 'bin/.gitignore'  # add package symlink to gitignore
-    git.add(all=True, force=True)
-    git.commit(m="Create project structure")
+    files.append(f'bin/{args.name}')
+    git.add(*files, force=True)
+    git.commit(m="Create Python project structure")
