@@ -66,8 +66,8 @@ layouts = {
 }
 layouts["default"] = layouts["DELL U3818DW"]
 
-function setlayout()
-  local name = hs.screen.primaryScreen():name()
+function setlayout(name)
+  local name = name or hs.screen.primaryScreen():name()
   local layout = layouts[name] or layouts["default"]
   hs.layout.apply(layout)
 end
