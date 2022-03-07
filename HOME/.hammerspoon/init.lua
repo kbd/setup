@@ -165,14 +165,21 @@ function showWindowFuzzy(app)
   end
   local focused_id = hs.window.focusedWindow():id()
   local choices = {}
+  local app_images = {}
   for i=1, #windows do
     local w = windows[i]
     local id = w:id()
     local active = id == focused_id
+    local app = w:application()
+    if app_images[app] == nil then -- cache the app image per app
+      app_images[app] = hs.image.imageFromAppBundle(app:bundleID())
+    end
+    local image = app_images[app]
     choices[i] = {
-      text = (w:application():title()..": "..w:title()),
+      text = w:title(),
       id = id,
       subText = active and " (active)" or "",
+      image = image,
       valid = not active,
     }
   end
