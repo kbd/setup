@@ -154,17 +154,23 @@ function selectWindow(window)
   hs.window.get(window.id):focus()
 end
 
-function showWindowFuzzy()
-  local app = hs.application.frontmostApplication()
-  local focused_id = app:focusedWindow():id()
-  local windows = app:allWindows()
+function showWindowFuzzy(app)
+  local windows = nil
+  if app == nil then -- all windows
+    windows = hs.window.allWindows()
+  elseif app == true then -- focused app windows
+    windows = hs.application.frontmostApplication():allWindows()
+  else -- specific app windows
+    windows = app:allWindows()
+  end
+  local focused_id = hs.window.focusedWindow():id()
   local choices = {}
   for i=1, #windows do
     local w = windows[i]
     local id = w:id()
     local active = id == focused_id
     choices[i] = {
-      text = w:title(),
+      text = (w:application():title()..": "..w:title()),
       id = id,
       subText = active and " (active)" or "",
       valid = not active,
@@ -187,6 +193,8 @@ if caffeine then
   caffeine:setClickCallback(toggleCaffeine)
   showCaffeine(hs.caffeinate.get("displayIdle"))
 end
+
+-- "main"
 
 right = move("x", 50)
 left = move("x", -50)
@@ -212,4 +220,11 @@ hs.hotkey.bind(hyper, "5", moveActiveWindow(3, 3))
 hs.hotkey.bind(hyper, "6", moveActiveWindow(1, 1))
 hs.hotkey.bind(hyper, "N", moveActiveWindowToNextScreen)
 hs.hotkey.bind(hyper, "A", showAudioFuzzy)
-hs.hotkey.bind(hyper, ",", showWindowFuzzy)
+hs.hotkey.bind(hyper, ",", function() showWindowFuzzy(true) end) -- app windows
+hs.hotkey.bind(hyper, ".", showWindowFuzzy) -- all windows
+hs.hotkey.bind('alt', 'tab', hs.window.switcher.nextWindow)
+hs.hotkey.bind('alt-shift', 'tab', hs.window.switcher.previousWindow)
+expose = hs.expose.new() -- default windowfilter, no thumbnails
+expose_app = hs.expose.new(nil, {onlyActiveApplication=true}) -- show windows for the current application
+hs.hotkey.bind(hyper, 'e', function() expose:toggleShow() end)
+hs.hotkey.bind(hyper, 'u', function() expose_app:toggleShow() end)
