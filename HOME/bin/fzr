@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # idea from: https://github.com/DanielFGray/fzf-scripts/blob/master/fzrepl
 import argparse
+import os
 import re
 import sys
 from functools import reduce
@@ -8,7 +9,8 @@ from pathlib import Path
 from subprocess import PIPE, run
 from tempfile import NamedTemporaryFile
 
-CONFIG_DIR = Path.home() / '.config/fzr'
+xdg = Path(os.getenv('XDG_CONFIG_HOME', os.path.expanduser('~/.config')))
+CONFIG_DIR = xdg / 'fzr'
 HISTORY_DIR = CONFIG_DIR / 'history'
 
 SPECIAL_CASES = [
