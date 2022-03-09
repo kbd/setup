@@ -23,6 +23,9 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/rc
+
+# fzf
 export FZF_DEFAULT_COMMAND='fd -tf -HL'
 export FZF_DEFAULT_OPTS='--height 30% --reverse --multi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -48,7 +51,6 @@ if [[ $PLATFORM == 'Darwin' ]]; then
   alias switch-output="SwitchAudioSource -a -t output | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t output -s '%'"
   alias switch-input="SwitchAudioSource -a -t input | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t input -s '%'"
 fi
-
 
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
@@ -188,7 +190,6 @@ alias pyi='ptipython'
 alias pyc='py -c'
 alias pyb='bpython'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
-alias rg='rg --colors=match:fg:green --colors=line:fg:blue --colors=path:fg:yellow --smart-case'
 alias ssh='sshrc' # always sshrc
 alias tcl='rlwrap tclsh'
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1

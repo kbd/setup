@@ -1,0 +1,5 @@
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+--colors=match:fg:green
+--colors=line:fg:blue
+--colors=path:fg:yellow
+--smart-case
