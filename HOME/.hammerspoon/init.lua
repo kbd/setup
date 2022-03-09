@@ -156,7 +156,9 @@ end
 
 function showWindowFuzzy(app)
   local windows = nil
+  local all_apps = false
   if app == nil then -- all windows
+    all_apps = true
     windows = hs.window.allWindows()
   elseif app == true then -- focused app windows
     windows = hs.application.frontmostApplication():allWindows()
@@ -175,8 +177,12 @@ function showWindowFuzzy(app)
       app_images[app] = hs.image.imageFromAppBundle(app:bundleID())
     end
     local image = app_images[app]
+    local text = w:title()
+    if all_apps then
+      text = app:title() .. ": " .. text
+    end
     choices[i] = {
-      text = w:title(),
+      text = text,
       id = id,
       subText = active and " (active)" or "",
       image = image,
