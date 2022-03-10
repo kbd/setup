@@ -188,6 +188,67 @@ function showWindowFuzzy(app)
   fuzzy(choices, selectWindow)
 end
 
+function executeShortcut(shortcut)
+  if shortcut == nil then -- nothing selected
+    return
+  end
+
+  local action = shortcut.action
+  local bundleid = action[1]
+  local app = hs.application.applicationsForBundleID(bundleid)
+  if #app == 0 then
+    hs.application.launchOrFocusByBundleID(bundleid)
+  end
+  hs.eventtap.keyStroke(action[2], action[3], 0, app[1])
+end
+
+-- show a fuzzy finder of app-specific shortcuts
+function showShortcutFuzzy(shortcuts)
+  return function()
+    local choices = {}
+    for i=1, #shortcuts do
+      local shortcut = shortcuts[i]
+      local name = shortcut[1]
+      local action = shortcut[2]
+      local bundleid = action[1]
+      local func = shortcut[3]
+
+      choices[i] = {
+        text = name,
+        subText = func and func(),
+        image = hs.image.imageFromAppBundle(bundleid),
+        valid = true,
+        action = action,
+      }
+    end
+    fuzzy(choices, executeShortcut)
+  end
+end
+
+function isZoomMuted()
+  local apps = hs.application.applicationsForBundleID("us.zoom.xos")
+  if #apps == 0 then
+    return nil
+  end
+
+  local app = apps[1]
+  if app:findMenuItem({"Meeting", "Unmute Audio"}) ~= nil then
+    return true
+  elseif app:findMenuItem({"Meeting", "Mute Audio"}) ~= nil then
+    return false
+  else
+    return nil
+  end
+end
+
+function zoomMuteIcon()
+  local muted = isZoomMuted()
+  if muted == nil then
+    return
+  end
+  return muted and "🔴" or "🟢"
+end
+
 caffeine = hs.menubar.new()
 function showCaffeine(awake)
   local title = awake and '☕' or '🍵'
@@ -237,3 +298,11 @@ expose = hs.expose.new() -- default windowfilter, no thumbnails
 expose_app = hs.expose.new(nil, {onlyActiveApplication=true}) -- show windows for the current application
 hs.hotkey.bind(hyper, 'e', function() expose:toggleShow() end)
 hs.hotkey.bind(hyper, 'u', function() expose_app:toggleShow() end)
+
+shortcuts = {
+  {"Zoom toggle mute", {"us.zoom.xos", {"cmd", "shift"}, "A"}, zoomMuteIcon},
+  {"Zoom toggle screen share", {"us.zoom.xos", {"cmd", "shift"}, "S"}},
+  {"Zoom toggle participants", {"us.zoom.xos", {"cmd"}, "U"}},
+  {"Zoom invite", {"us.zoom.xos", {"cmd"}, "I"}},
+}
+hs.hotkey.bind(hyper, 'K', showShortcutFuzzy(shortcuts))
