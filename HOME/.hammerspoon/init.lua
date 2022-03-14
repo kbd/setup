@@ -215,7 +215,7 @@ function showShortcutFuzzy(shortcuts)
 
       choices[i] = {
         text = name,
-        subText = func and func(),
+        subText = func and func() or nil,
         image = hs.image.imageFromAppBundle(bundleid),
         valid = true,
         action = action,
