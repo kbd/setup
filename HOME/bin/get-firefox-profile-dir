@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+firefox_dir="$HOME/Library/Application Support/Firefox"
+path=$(<"$firefox_dir/profiles.ini" nu -c 'cat | from ini | to json' | jq -r '.[] | select(.Default == "1") | .Path')
+echo "$firefox_dir/$path"
