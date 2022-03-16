@@ -9,7 +9,7 @@ if __name__ == "__main__":
     parser.add_argument("key", help="The name of the account to get the password")
     args = parser.parse_args()
 
-    if result := op.get.item(args.key, fields="password"):
+    if result := op.item.get(args.key, fields="password"):
         print(result)
     else:
         print(result.stderr.decode(), end="", file=sys.stderr)
