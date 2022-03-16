@@ -31,6 +31,7 @@ go.mod.init(args.module or f"example.com/{args.name}")
 # create git repo and add files
 echo(f"# {args.name}") >> 'README.md'
 echo(f"{args.name}") >> '.gitignore'  # add binary name to git ignore
+echo("go.work") >> '.gitignore'  # go 1.18
 git.init()
 git.add(all=True)
 git.commit(m="Initial Go commit")
