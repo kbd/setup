@@ -264,6 +264,18 @@ if caffeine then
   showCaffeine(hs.caffeinate.get("displayIdle"))
 end
 
+function browser()
+  -- activate browser. if already active, bring up vimium tab switcher
+  local browser_bundleid = hs.application.defaultAppForUTI("public.html")
+  -- get active app, if active app bundle id = browser bundle id, then vimium, otherwise activate
+  local focusedApp = hs.application.frontmostApplication()
+  if focusedApp:bundleID() == browser_bundleid then
+    hs.eventtap.keyStroke({"shift"}, "T", 0, focusedApp)
+  else
+    hs.application.launchOrFocusByBundleID(browser_bundleid)
+  end
+end
+
 -- "main"
 
 right = move("x", 50)
@@ -271,7 +283,7 @@ left = move("x", -50)
 up = move("y", -50)
 down = move("y", 50)
 
-bindAppByUti("B", "public.html")
+hs.hotkey.bind(hyper, "B", browser)
 bindAppByUti("T", "public.plain-text")
 bindApp("S", "kitty") -- "S=shell"
 bindApp("C", "kitty") -- "C=console"
