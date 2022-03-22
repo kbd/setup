@@ -269,10 +269,10 @@ function browser()
   local browser_bundleid = hs.application.defaultAppForUTI("public.html")
   -- get active app, if active app bundle id = browser bundle id, then vimium, otherwise activate
   local focusedApp = hs.application.frontmostApplication()
-  if focusedApp:bundleID() == browser_bundleid then
-    hs.eventtap.keyStroke({"shift"}, "T", 0, focusedApp)
-  else
+  if focusedApp:bundleID() ~= browser_bundleid then
     hs.application.launchOrFocusByBundleID(browser_bundleid)
+  else
+    hs.eventtap.keyStroke({"shift"}, "T", 0, focusedApp) -- vimium switch tabs
   end
 end
 
