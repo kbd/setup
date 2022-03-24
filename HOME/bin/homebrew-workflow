@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-export HOMEBREW_NO_INSTALL_CLEANUP=1
-unset HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK
+export HOMEBREW_NO_INSTALL_CLEANUP=1 # ensure cleanup is only run once at end
+unset HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK # do a "full" update
 
 bundle="${1:-}"
 
