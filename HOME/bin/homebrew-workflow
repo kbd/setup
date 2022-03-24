@@ -2,6 +2,7 @@
 set -Eeuo pipefail
 
 export HOMEBREW_NO_INSTALL_CLEANUP=1
+unset HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK
 
 bundle="${1:-}"
 
