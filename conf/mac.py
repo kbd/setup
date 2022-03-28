@@ -115,10 +115,6 @@ defaults.g['NSQuitAlwaysKeepsWindows'] = True
 # turn off touch-bar autocompletion (horrific! distracting!)
 defaults.g['NSAutomaticTextCompletionEnabled'] = False
 
-dash = defaults['com.kapeli.dashdoc']
-dash['syncFolderPath'] = "~/Documents/Dash"
-dash['snippetSQLPath'] = "~/Documents/Dash/snippets.dash"
-
 # startup items - https://apple.stackexchange.com/a/310502/
 required_login_apps = {'SpotMenu', 'Alfred 4', 'Horo', 'Hammerspoon', 'Tinkle'}
 cmd = 'tell application "System Events" to get the name of every login item'
