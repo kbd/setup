@@ -68,7 +68,7 @@ brew "pstree"
 brew "pup"
 brew "pv"
 brew "pypy3"
-brew "python"
+brew "python@3.10", link: true
 brew "rakudo"
 brew "readline"
 brew "ripgrep"
