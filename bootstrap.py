@@ -36,6 +36,7 @@ def main():
         run(HOMEBREW_INSTALL_CMD, shell=True, executable='/bin/bash')
 
     print("Installing dependencies")
+    run(['brew', 'install', 'git'])
     run(['pip3', 'install', '--upgrade', 'click'])  # required for 'setup'
 
     if SETUP_PATH.exists():
