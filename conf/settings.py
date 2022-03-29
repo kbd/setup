@@ -61,11 +61,17 @@
     },
     'packages': {
         'help': "Install all software packages",
-        'cmd': ['setup', 'brew', 'python', 'node', 'go', 'rust', 'cargo', 'vscode']
+        'cmd': ['setup', 'python', 'node', 'go', 'rust', 'cargo', 'vscode']
     },
     'init': {
         'help': "The full set of commands used on first setup / bootstrap",
-        'cmd': ['setup', 'packages', 'manual', 'symlinks', 'mac', 'restartservices'],
+        'cmd': (
+            # ensure current system deps (i.e. Python) are up to date first
+            ['setup', 'brew'],
+            # then subsequent run should have current base deps.
+            # Homebrew's bin (/usr/local/bin/) is in system path by default.
+            ['setup', 'packages', 'manual', 'symlinks', 'mac', 'restartservices'],
+        ),
     },
     'update': {
         'help': "One-stop shopping to update setup repo and most things",

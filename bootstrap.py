@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
 """Bootstrap the setup tool.
-
-This assumes Python is installed on the target os, but not specifically Python3.
 
 What this does (only intended for Mac atm):
 
@@ -21,39 +18,41 @@ You should be able to run this with curl | python shenanigans.
 
 import os
 import subprocess
+from functools import partial
+from pathlib import Path
 
 REPO_URL = 'https://github.com/kbd/setup.git'
 HOMEBREW_INSTALL_CMD = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-SETUP_PATH = os.path.expanduser('~/setup')
-SETUP_EXE = os.path.join(SETUP_PATH, 'HOME/bin/setup')
+SETUP_PATH = Path('~/setup').expanduser()
+SETUP_EXE = SETUP_PATH / 'HOME/bin/setup'
+
+run = partial(subprocess.run, check=True)
 
 def main():
     print("Installing Homebrew")
-    if not subprocess.call(['which', 'brew']):
+    if not subprocess.run(['which', 'brew']).returncode:
         print("Homebrew is installed")
     else:
-        subprocess.check_call(HOMEBREW_INSTALL_CMD, shell=True, executable='/bin/bash')
+        run(HOMEBREW_INSTALL_CMD, shell=True, executable='/bin/bash')
 
     print("Installing dependencies")
-    for cmd in 'git', 'python':
-        subprocess.check_call("brew install {0} || brew upgrade {0}".format(cmd), shell=True)
-    subprocess.check_call(['pip3', 'install', '--upgrade', 'click'])  # required for 'setup'
+    run(['pip3', 'install', '--upgrade', 'click'])  # required for 'setup'
 
-    if os.path.exists(SETUP_PATH):
+    if SETUP_PATH.exists():
         print("Setup location already exists, updating")
-        subprocess.check_call(['git', 'pull'], cwd=SETUP_PATH)
+        run(['git', 'pull'], cwd=SETUP_PATH)
     else:
         print("Checking out setup repo")
-        subprocess.check_call(['git', 'clone', REPO_URL], cwd=os.path.dirname(SETUP_PATH))
+        run(['git', 'clone', REPO_URL], cwd=SETUP_PATH.parent)
 
     print("Installing all the things")
     # add to path because bootstrapping
     os.environ['PATH'] = ':'.join([
-        os.path.dirname(SETUP_EXE),  # add repo bin dir to path, symlinks not yet run
-        os.path.expanduser('~/bin'),
+        str(SETUP_EXE.parent),  # add repo bin dir to path, symlinks not yet run
+        str(Path('~/bin').expanduser()),
         os.environ['PATH']
     ])
-    subprocess.check_call([SETUP_EXE, 'init'])
+    run([SETUP_EXE, 'init'])
     print("Done installing all the things. Restart your terminal.")
 
 

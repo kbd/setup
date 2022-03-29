@@ -11,7 +11,7 @@ matter), and run `~/setup/HOME/bin/setup`.
 
 You can bootstrap this onto a new system with:
 
-```python -c "$(curl -fsSL https://raw.githubusercontent.com/kbd/setup/master/bootstrap.py)"```
+```python3 -c "$(curl -fsSL https://raw.githubusercontent.com/kbd/setup/master/bootstrap.py)"```
 
 ## Details
 
