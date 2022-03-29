@@ -77,6 +77,7 @@
         'help': "One-stop shopping to update setup repo and most things",
         'cmd': (
             ['setup', 'pull'],
+            ['setup', 'brew'],
             ['setup', 'packages', 'symlinks'],
         ),
     },
