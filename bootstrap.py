@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Bootstrap the setup tool.
 
 What this does (only intended for Mac atm):
