@@ -1,16 +1,15 @@
 {
     'brew': (
         ['homebrew-workflow', 'Brewfile'],
-        # set shell to homebrew'd shell
-        "update-shell `brew --prefix`/bin/zsh",
-        # install fzf
+        # zsh: update to homebrew'd shell
+        'update-shell "$(brew --prefix)/bin/zsh"',
+        # fzf: install and patch its history format to include timestamp
         "$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg",
-        # patch fzf's history format to include timestamp
         'perl -pi -e \'s/fc -rl 1/fc -rli 1/\' "$(brew --prefix fzf)/shell/key-bindings.zsh"',
-        # https://docs.docker.com/docker-for-mac/#zsh
+        # docker: https://docs.docker.com/desktop/mac/#zsh
         """
             etc=/Applications/Docker.app/Contents/Resources/etc;
-            sf=`brew --prefix`/share/zsh/site-functions;
+            sf="$(brew --prefix)/share/zsh/site-functions";
             ln -sf $etc/docker.zsh-completion $sf/_docker;
             ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose;
         """,
