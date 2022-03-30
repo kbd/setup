@@ -12,7 +12,7 @@ if [[ -z "$bundle" ]]; then
 fi
 
 if which brew > /dev/null; then
-  echo "Confirmed Homebrew is installed"
+  echo "Homebrew is installed"
 else
   echo "Installing Homebrew"
   # command from https://brew.sh/
@@ -25,7 +25,7 @@ if ! which mas > /dev/null; then
 fi
 
 if account="$(mas account)"; then
-  echo "Confirmed signed into Mac app store as $account"
+  echo "Signed into Mac app store as $account"
 else
   echo "Must be signed into Mac app store, hit enter when done"
   open -a "App Store"

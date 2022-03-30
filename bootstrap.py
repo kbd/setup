@@ -3,14 +3,10 @@
 
 What this does (only intended for Mac atm):
 
-* installs Homebrew
-* Homebrew installs a core set of packages (git and python3)
+* install Homebrew
+* using Homebrew, install a core set of packages
 * git check out the project into ~/setup
-* run
-  - setup (will restart os functions to reflect new settings)
-  - setup brew
-  - setup packages
-* tell the user to restart terminal to get new everything
+* run setup init
 
 You should be able to run this with curl | python shenanigans.
 
@@ -18,7 +14,6 @@ You should be able to run this with curl | python shenanigans.
 
 import os
 import subprocess
-from functools import partial
 from pathlib import Path
 
 REPO_URL = 'https://github.com/kbd/setup.git'
@@ -26,7 +21,9 @@ HOMEBREW_INSTALL_CMD = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent
 SETUP_PATH = Path('~/setup').expanduser()
 SETUP_EXE = SETUP_PATH / 'HOME/bin/setup'
 
-run = partial(subprocess.run, check=True)
+def run(*args, **kwargs):
+    print(f"Executing: {args}")
+    subprocess.run(*args, check=True, **kwargs)
 
 def main():
     print("Installing Homebrew")
