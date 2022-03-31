@@ -31,6 +31,8 @@
     },
     "terminal.integrated.defaultProfile.osx": "zsh",
 
+    "markdown.preview.fontFamily": "Inter",
+
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useIgnoreFiles": true,
