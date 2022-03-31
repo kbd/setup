@@ -44,6 +44,7 @@
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
     "files.hotExit": "onExitAndWindowClose",
+    "files.autoSave": "onWindowChange",
 
     "breadcrumbs.enabled": true,
     "outline.showVariables": false,
