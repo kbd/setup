@@ -56,7 +56,7 @@
     },
     'pull': {
         'help': "Update the setup repository",
-        'cmd': ['git', 'pg'],
+        'cmd': ['git', 'pull'],
     },
     'packages': {
         'help': "Install all software packages",
