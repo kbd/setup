@@ -90,6 +90,9 @@ associations = {
     'org.libreoffice.script': [
         'public.comma-separated-values-text',
     ],
+    'com.flexibits.fantastical2.mac': [
+        'com.apple.ical.ics'
+    ],
 }
 for program, types in associations.items():
     for type in types:
