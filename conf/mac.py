@@ -140,6 +140,37 @@ for app in required_login_apps - current_login_apps:
 #     print("Removing:", menu_items_to_remove)
 # defaults['com.apple.systemuiserver']['menuExtras'] = menus
 
+# set order of menubar items
+# must restart computer for this to take effect
+# to find all values: defaults find "NSStatusItem Preferred Position"
+position_key = "NSStatusItem Preferred Position"
+menuitems = [
+    ('com.apple.controlcenter', 'Clock'),
+    ('com.apple.systemuiserver', 'Siri'),
+    ('com.apple.controlcenter', 'BentoBox'), # control center
+    ('com.apple.TextInputMenuAgent', 'Item-0'), # us/dvorak
+    ('com.apple.Spotlight', 'Item-0'),
+    ('com.apple.controlcenter', 'Battery'),
+    ('com.apple.controlcenter', 'WiFi'),
+    ('com.apple.controlcenter', 'Bluetooth'),
+    ('com.apple.controlcenter', 'Sound'),
+    ('com.apple.controlcenter', 'ScreenMirroring'),
+    ('85C27NK92C.com.flexibits.fantastical2.mac.helper', 'Fantastical'),
+    ('com.agilebits.onepassword7', 'Item-0'),
+    ('org.pqrs.Karabiner-Menu', 'Item-0'),
+    ('org.hammerspoon.Hammerspoon', 'Item-0'),  # must quit hammerspoon before running for this to take effect
+    ('org.pqrs.Tinkle', 'Item-0'),
+    ('com.runningwithcrayons.Alfred', 'Item-0'),
+    ('com.KMikiy.SpotMenu', 'Item-0'),
+]
+increment = 10.0
+value = increment
+for domain, key in menuitems:
+    value += increment
+    item = f"{position_key} {key}"
+    print(f"Setting menubar position {domain} {key} = {value}")
+    defaults[domain][item] = value
+
 # screenshots
 screenshot_dir = expanduser('~/Desktop/Screenshots')
 mkdir['-p'](screenshot_dir)
