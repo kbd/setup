@@ -172,6 +172,7 @@
 	# https://git-scm.com/docs/git-push#Documentation/git-push.txt---no-force-with-lease
 	pf = "!f() { echo \"On branch $(git current-branch)\"; echo push | xargs -p -I% git % --force-with-lease; }; f"
 	pl = pull
+	ps = submodule update --init --recursive  # "pull submodules" - https://git-scm.com/book/en/v2/Git-Tools-Submodules (find "foolproof")
 	pg = "!f() { git pl \"$@\" && git lgo; }; f"
 	pr = pl --rebase
 	pick-commits = "!f() { git l1 \"${1:-.}\" | fzf --ansi | cut -d' ' -f2; }; f"
