@@ -115,7 +115,8 @@ mcd() {
 alias edit=code
 alias e=edit
 alias e.='e .'
-alias e-='edit -'
+alias e-='e -'
+alias eg='e -g'
 alias o=open
 alias o.='o .'
 alias a='o -a'
