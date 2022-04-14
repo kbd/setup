@@ -66,5 +66,8 @@ def run_commands(cmd, *args, **kwargs):
 
 
 def run_func_on_cmdline_input(func):
-    value = sys.argv[1] if sys.stdin.isatty() else sys.stdin.read()
-    print(func(value), end='')
+    for arg in sys.argv[1:]:
+        print(func(arg))
+
+    if not sys.stdin.isatty():
+        print(func(sys.stdin.read()), end='')
