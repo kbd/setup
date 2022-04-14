@@ -363,5 +363,15 @@
         "key": "cmd+enter",
         "command": "renameFile",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "f1",
+        "command": "editor.toggleFold",
+        "when": "editorTextFocus && foldingEnabled"
+    },
+    {
+        "key": "cmd+k cmd+l",
+        "command": "-editor.toggleFold",
+        "when": "editorTextFocus && foldingEnabled"
     }
 ]
