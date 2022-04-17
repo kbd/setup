@@ -69,6 +69,7 @@ def manual(packages, dir, bin_path):
         cmd = params.get('cmd')  # commands to run after cloning
         bin = params.get('bin')  # path to the executable to install in ~/bin
         dmg = params.get('dmg')  # if url is dmg, path of app inside dmg
+        exe = params.get('exe')  # shell executable argument to run(exe=...)
 
         # remove if exists
         path = Path(dir, key)
@@ -96,7 +97,7 @@ def manual(packages, dir, bin_path):
         # run any build/extract commands
         if cmd:
             print(f"Running {cmd}")
-            run_commands(cmd, cwd=path)
+            run_commands(cmd, cwd=path, exe=exe)
 
         # symlink any binaries specified to bin_path
         if bin:
