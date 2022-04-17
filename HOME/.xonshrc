@@ -1,6 +1,7 @@
 # prompt
 def prmpt():
-  # $PROMPT_RETURN_CODE = __xonsh__.history.last_cmd_rtn  # always zero?
+  r = __xonsh__.history.rtns
+  $PROMPT_RETURN_CODE = r[-1] if r else 0
   $PROMPT_PATH = "{short_cwd}"
   return $(prompt)
 
