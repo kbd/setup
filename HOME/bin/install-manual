@@ -18,7 +18,7 @@ def _format_manual_packages_table(packages, dir):
     items = [
         [
             f"{fg.yellow}{key}{s.reset}",
-            params.get('git', params.get('url')), # source
+            params.get('git', params.get('url', params.get('cmd'))), # source
             f'{fg.green}yes{s.reset}' if Path(dir, key).exists() else f'{fg.red}no{s.reset}'
         ]
         for key, params in packages.items()
