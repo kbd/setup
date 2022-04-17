@@ -98,6 +98,14 @@ preexec(){
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
 
+# after cd to
+autoload -U add-zsh-hook
+ls_after_cd() {
+	ls
+}
+
+add-zsh-hook chpwd ls_after_cd
+
 # zsh syntax highlighting - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
