@@ -51,12 +51,9 @@ def manual(packages, packages_dir, bin_dir):
     Homebrew, where an archive needs to be downloaded and unpacked, or a repo
     needs to be checked out from git and a program manually built.
 
-    example setting from settings.py:
-    'manual': ['install-manual', 'manual.toml', VENDOR],
-    dir =
+    packages_dir is where to install packages (eg. ~/setup/3rdparty)
+    bin_dir is your $HOME/bin dir, or wherever to install any binaries to
     """
-    # print(packages, dir, bin_dir)
-    # return
     keys = _get_manual_packages_to_install(packages, bin_dir)
     if not keys:
         return
