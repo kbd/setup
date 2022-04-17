@@ -72,16 +72,17 @@ def manual(packages, packages_dir, bin_dir):
         bin = params.get('bin')  # path to the executable to install in ~/bin
         dmg = params.get('dmg')  # if url is dmg, path of app inside dmg
         exe = params.get('exe')  # shell executable argument to run(exe=...)
-
-        # remove if exists
-        package_dir = Path(packages_dir, key)
-        assert Path.home() in package_dir.parents, f"path ({package_dir}) must be under $HOME"
-        if package_dir.exists():
-            print(f"Deleting existing directory: {package_dir}")
-            shutil.rmtree(package_dir)
+        cwd = bin_dir            # execute in bin_dir by default
 
         # get something and create the destination directory
         if any([git, url]):
+            # remove destination if exists
+            package_dir = Path(packages_dir, key)
+            assert Path.home() in package_dir.parents, f"path ({package_dir}) must be under $HOME"
+            if package_dir.exists():
+                print(f"Deleting existing directory: {package_dir}")
+                shutil.rmtree(package_dir)
+
             c = None  # suppress Pylance "c is possibly unbound" errors
             if git:
                 print(f"Cloning {git} to {package_dir}")
@@ -95,16 +96,13 @@ def manual(packages, packages_dir, bin_dir):
 
             print(f"Running {c}")
             run(c)
-        else:
-            # you didn't download it, i.e. it's part of your repository
-            # so set package dir to your ~/bin dir so that anything generated
-            # winds up there >:D
-            package_dir = bin_dir
+
+            cwd = package_dir  # run in context of new package_dir from here
 
         # run any build/extract commands
         if cmd:
             print(f"Running {cmd}", f" ({exe})" if exe else '')
-            run_commands(cmd, cwd=package_dir, exe=exe)
+            run_commands(cmd, cwd=cwd, exe=exe)
 
         # symlink any binaries specified to bin_dir
         if bin:
@@ -112,7 +110,7 @@ def manual(packages, packages_dir, bin_dir):
             binaries = [bin] if isinstance(bin, str) else bin
             print(f"Linking binaries: {', '.join(binaries)}")
             for b in binaries:
-                cmd = ['symgr', '-I', Path(dir, key, b), bin_dir]
+                cmd = ['symgr', '-I', Path(packages_dir, key, b), bin_dir]
                 print(f"Running {cmd}")
                 run(cmd)
 
@@ -123,7 +121,7 @@ def manual(packages, packages_dir, bin_dir):
                 ['hdiutil', 'attach', '-nobrowse', filename],
                 ['cp', '-r', dmg, bin_dir],
                 ['hdiutil', 'detach', os.path.dirname(dmg)],
-            ), cwd=package_dir)
+            ), cwd=cwd)
 
 
 if __name__ == '__main__':
