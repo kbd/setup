@@ -14,12 +14,12 @@ from lib.colors import fg, s
 from lib.utils import run, run_commands
 
 
-def _format_manual_packages_table(packages, dir):
+def _format_manual_packages_table(packages, bin_dir):
     items = [
         [
             f"{fg.yellow}{key}{s.reset}",
             params.get('git', params.get('url', params.get('cmd'))), # source
-            f'{fg.green}yes{s.reset}' if Path(dir, key).exists() else f'{fg.red}no{s.reset}'
+            f'{fg.green}yes{s.reset}' if (bin_dir/key).exists() else f'{fg.red}no{s.reset}'
         ]
         for key, params in packages.items()
     ]
@@ -28,14 +28,14 @@ def _format_manual_packages_table(packages, dir):
     return table
 
 
-def _get_manual_packages_to_install(packages, dir):
-    if not Path(dir, 'symgr').exists():
+def _get_manual_packages_to_install(packages, bin_dir):
+    if not Path(bin_dir, 'symgr').exists():
         # special-case symgr, since everything else depends on it.
         # if not installed, we're bootstrapping, so install everything.
         return packages.keys()
 
     cmd = ["fzf", "--multi", "--ansi", "--header-lines=1"]
-    table = _format_manual_packages_table(packages, dir)
+    table = _format_manual_packages_table(packages, bin_dir)
     result = run(cmd, input=table, stdout=subprocess.PIPE, check=False)
     if result.returncode == 130:  # quit fzf, take no action
         return []
@@ -44,7 +44,7 @@ def _get_manual_packages_to_install(packages, dir):
     return keys
 
 
-def manual(packages, dir, bin_path):
+def manual(packages, packages_dir, bin_dir):
     """Set up software that is more manual.
 
     For example, software that isn't configured with a package manager like
@@ -55,7 +55,9 @@ def manual(packages, dir, bin_path):
     'manual': ['install-manual', 'manual.toml', VENDOR],
     dir =
     """
-    keys = _get_manual_packages_to_install(packages, dir)
+    # print(packages, dir, bin_dir)
+    # return
+    keys = _get_manual_packages_to_install(packages, bin_dir)
     if not keys:
         return
 
@@ -72,40 +74,45 @@ def manual(packages, dir, bin_path):
         exe = params.get('exe')  # shell executable argument to run(exe=...)
 
         # remove if exists
-        path = Path(dir, key)
-        assert Path.home() in path.parents, f"path ({path}) must be under $HOME"
-        if path.exists():
-            print(f"Deleting existing directory: {path}")
-            shutil.rmtree(path)
+        package_dir = Path(packages_dir, key)
+        assert Path.home() in package_dir.parents, f"path ({package_dir}) must be under $HOME"
+        if package_dir.exists():
+            print(f"Deleting existing directory: {package_dir}")
+            shutil.rmtree(package_dir)
 
-        # get something
+        # get something and create the destination directory
         if any([git, url]):
             c = None  # suppress Pylance "c is possibly unbound" errors
             if git:
-                print(f"Cloning {git} to {path}")
+                print(f"Cloning {git} to {package_dir}")
                 c = ['git', 'clone', '--depth', '1', '--recurse-submodules']
                 if tag:
                     c += ['--branch', tag]
-                c += [git, path]
+                c += [git, package_dir]
             if url:
-                print(f"Downloading {url} to {path}")
-                c = ['aria2c', '-d', path, url]
+                print(f"Downloading {url} to {package_dir}")
+                c = ['aria2c', '-d', package_dir, url]
 
             print(f"Running {c}")
             run(c)
+        else:
+            # you didn't download it, i.e. it's part of your repository
+            # so set package dir to your ~/bin dir so that anything generated
+            # winds up there >:D
+            package_dir = bin_dir
 
         # run any build/extract commands
         if cmd:
-            print(f"Running {cmd}")
-            run_commands(cmd, cwd=path, exe=exe)
+            print(f"Running {cmd}", f" ({exe})" if exe else '')
+            run_commands(cmd, cwd=package_dir, exe=exe)
 
-        # symlink any binaries specified to bin_path
+        # symlink any binaries specified to bin_dir
         if bin:
             # accept either a string or a sequence of strings
             binaries = [bin] if isinstance(bin, str) else bin
             print(f"Linking binaries: {', '.join(binaries)}")
             for b in binaries:
-                cmd = ['symgr', '-I', Path(dir, key, b), bin_path]
+                cmd = ['symgr', '-I', Path(dir, key, b), bin_dir]
                 print(f"Running {cmd}")
                 run(cmd)
 
@@ -114,18 +121,18 @@ def manual(packages, dir, bin_path):
             filename = os.path.basename(urllib.parse.urlparse(url).path)
             run_commands((
                 ['hdiutil', 'attach', '-nobrowse', filename],
-                ['cp', '-r', dmg, bin_path],
+                ['cp', '-r', dmg, bin_dir],
                 ['hdiutil', 'detach', os.path.dirname(dmg)],
-            ), cwd=path)
+            ), cwd=package_dir)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Install manually-installed software")
     parser.add_argument("config_path", help="Path to config file")
     parser.add_argument("dir", help="Directory to install software to")
-    parser.add_argument("bin_path", default=Path('~/bin').expanduser(), nargs='?',
+    parser.add_argument("bin_dir", default=Path('~/bin').expanduser(), nargs='?',
         help=f"Bin path to symlink to (default: ~/bin)")
     args = parser.parse_args()
 
     packages = toml.load(args.config_path)
-    manual(packages, args.dir, args.bin_path)
+    manual(packages, args.dir, args.bin_dir)

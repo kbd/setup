@@ -41,4 +41,4 @@ dmg = "/Volumes/Tinkle/Tinkle.app"
 
 [kitty-tab-color]
 # build the binary from setup repo's bin dir
-cmd = "crystal build $(setup bin)/kitty-tab-color.cr -o ~/bin/kitty-tab-color"
+cmd = "crystal build $(setup bin)/kitty-tab-color.cr"
