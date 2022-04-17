@@ -95,16 +95,14 @@ preexec(){
   title "$PROMPT_PATH ($1)"
   unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS
 }
+chpwd(){
+  echo "changing to $PWD"
+  echo "kitty params $KITTY_TAB_AFG, $KITTY_TAB_ABG, $KITTY_TAB_IFG, $KITTY_TAB_IBG"
+  echo "setting kitty tab colors here"
+  # kitty-tab-color -s  # sets the values based on env vars
+}
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
-
-# after cd to
-autoload -U add-zsh-hook
-ls_after_cd() {
-	ls
-}
-
-add-zsh-hook chpwd ls_after_cd
 
 # zsh syntax highlighting - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
 typeset -A ZSH_HIGHLIGHT_STYLES

@@ -50,6 +50,10 @@ def manual(packages, dir, bin_path):
     For example, software that isn't configured with a package manager like
     Homebrew, where an archive needs to be downloaded and unpacked, or a repo
     needs to be checked out from git and a program manually built.
+
+    example setting from settings.py:
+    'manual': ['install-manual', 'manual.toml', VENDOR],
+    dir =
     """
     keys = _get_manual_packages_to_install(packages, dir)
     if not keys:
