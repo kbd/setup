@@ -90,8 +90,8 @@ kitty_chpwd(){
     kitty-tab-color -s  # sets the values based on env vars
   fi
 }
-if [[ -z "${chpwd_functions[(r)kitty_chpwd]+1}" ]]; then
-  chpwd_functions=( ${chpwd_functions[@]} kitty_chpwd )
+if [[ ${chpwd_functions[(Ie)kitty_chpwd]:-} -eq 0 ]]; then
+    chpwd_functions+=(kitty_chpwd)
 fi
 precmd() {
   export PROMPT_RETURN_CODE=$?
