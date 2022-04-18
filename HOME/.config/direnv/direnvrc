@@ -14,7 +14,10 @@ layout_poetry() {
 
 set_kitty_tab_colors() {
   if has kitty-tab-color; then
-    eval "$(kitty-tab-color)"
+    local file="$(find_up .vscode/settings.json)"
+    if [[ "$file" ]]; then
+      eval "$(kitty-tab-color "$file")"
+    fi
   fi
 }
 

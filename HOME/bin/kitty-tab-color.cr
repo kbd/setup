@@ -1,5 +1,7 @@
 require "json"
 
+exit 1 if ARGV.size == 0 # must provide argument
+
 if ARGV[0]? == "-s"
   `kitty @ set-tab-color \
     active_fg=${KITTY_TAB_AFG:-NONE} \
@@ -7,11 +9,11 @@ if ARGV[0]? == "-s"
     inactive_fg=${KITTY_TAB_IFG:-NONE} \
     inactive_bg=${KITTY_TAB_IBG:-NONE}`
 else
-  # pull colors from vscode settings if exists
-  file = ".vscode/settings.json"
-  exit 0 if !File.exists?(file)
+  vscode_setings_path = ARGV[0]
+  puts "# path: #{vscode_setings_path}"
+  exit 1 if !File.exists?(vscode_setings_path)
 
-  json = JSON.parse(File.read(file))
+  json = JSON.parse(File.read(vscode_setings_path))
   if color = json["peacock.color"]?
     puts "
 export KITTY_TAB_AFG=#fff
