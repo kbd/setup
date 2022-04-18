@@ -95,12 +95,14 @@ preexec(){
   title "$PROMPT_PATH ($1)"
   unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS
 }
-chpwd(){
-  echo "changing to $PWD"
-  echo "kitty params $KITTY_TAB_AFG, $KITTY_TAB_ABG, $KITTY_TAB_IFG, $KITTY_TAB_IBG"
-  echo "setting kitty tab colors here"
-  # kitty-tab-color -s  # sets the values based on env vars
+kitty_chpwd(){
+  if exists kitty-tab-color; then
+    kitty-tab-color -s  # sets the values based on env vars
+  fi
 }
+if [[ -z "${chpwd_functions[(r)kitty_chpwd]+1}" ]]; then
+  chpwd_functions=( ${chpwd_functions[@]} kitty_chpwd )
+fi
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
 

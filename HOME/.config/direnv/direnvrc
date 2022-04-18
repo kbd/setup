@@ -13,11 +13,8 @@ layout_poetry() {
 }
 
 set_kitty_tab_colors() {
-  echo "looking for tab colors"
   if has kitty-tab-color; then
-    local c="$(kitty-tab-color)"
-    echo "setting: $c"
-    # eval "$c"
+    eval "$(kitty-tab-color)"
   fi
 }
 
