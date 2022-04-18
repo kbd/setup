@@ -85,6 +85,14 @@ PROMPT='$(prompt zsh)'
 RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
 export PROMPT_PREFIX='⚡'
 
+kitty_chpwd(){
+  if exists kitty-tab-color; then
+    kitty-tab-color -s  # sets the values based on env vars
+  fi
+}
+if [[ -z "${chpwd_functions[(r)kitty_chpwd]+1}" ]]; then
+  chpwd_functions=( ${chpwd_functions[@]} kitty_chpwd )
+fi
 precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_PATH="$(print -P '%~')"
@@ -95,14 +103,6 @@ preexec(){
   title "$PROMPT_PATH ($1)"
   unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS
 }
-kitty_chpwd(){
-  if exists kitty-tab-color; then
-    kitty-tab-color -s  # sets the values based on env vars
-  fi
-}
-if [[ -z "${chpwd_functions[(r)kitty_chpwd]+1}" ]]; then
-  chpwd_functions=( ${chpwd_functions[@]} kitty_chpwd )
-fi
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
 
