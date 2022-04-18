@@ -85,6 +85,14 @@ PROMPT='$(prompt zsh)'
 RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
 export PROMPT_PREFIX='⚡'
 
+kitty_chpwd(){
+  if exists kitty-tab-color; then
+    kitty-tab-color -s  # sets the values based on env vars
+  fi
+}
+if [[ ${chpwd_functions[(Ie)kitty_chpwd]:-} -eq 0 ]]; then
+    chpwd_functions+=(kitty_chpwd)
+fi
 precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_PATH="$(print -P '%~')"

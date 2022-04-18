@@ -38,3 +38,7 @@ bin = "bin/tf"
 [tinkle]
 url = "https://github.com/pqrs-org/Tinkle/releases/download/v2.0.0/Tinkle-2.0.0.dmg"
 dmg = "/Volumes/Tinkle/Tinkle.app"
+
+[kitty-tab-color]
+# build the binary from setup repo's bin dir
+cmd = "crystal build $(setup bin)/kitty-tab-color.cr"

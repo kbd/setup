@@ -11,3 +11,11 @@ layout_poetry() {
   export POETRY_ACTIVE=1
   PATH_add "$VIRTUAL_ENV/bin"
 }
+
+set_kitty_tab_colors() {
+  if has kitty-tab-color; then
+    eval "$(kitty-tab-color)"
+  fi
+}
+
+set_kitty_tab_colors
