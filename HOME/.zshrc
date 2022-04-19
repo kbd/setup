@@ -94,8 +94,8 @@ kitty_chpwd(){
       inactive_bg=${KITTY_TAB_IBG:-NONE}
   fi
 }
-if [[ ${chpwd_functions[(Ie)kitty_chpwd]:-} -eq 0 ]]; then
-    chpwd_functions+=(kitty_chpwd)
+if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 ]]; then
+  chpwd_functions+=(kitty_chpwd)
 fi
 precmd() {
   export PROMPT_RETURN_CODE=$?
