@@ -87,7 +87,11 @@ export PROMPT_PREFIX='⚡'
 
 kitty_chpwd(){
   if exists kitty-tab-color; then
-    kitty-tab-color -s  # sets the values based on env vars
+    kitty @ set-tab-color \
+      active_fg=${KITTY_TAB_AFG:-NONE} \
+      active_bg=${KITTY_TAB_ABG:-NONE} \
+      inactive_fg=${KITTY_TAB_IFG:-NONE} \
+      inactive_bg=${KITTY_TAB_IBG:-NONE}
   fi
 }
 if [[ ${chpwd_functions[(Ie)kitty_chpwd]:-} -eq 0 ]]; then
