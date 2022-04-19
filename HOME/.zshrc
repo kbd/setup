@@ -94,7 +94,7 @@ kitty_chpwd(){
       inactive_bg=${KITTY_TAB_IBG:-NONE}
   fi
 }
-if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 ]]; then
+if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 && $TERM == 'xterm-kitty' ]]; then
   chpwd_functions+=(kitty_chpwd)
 fi
 precmd() {
