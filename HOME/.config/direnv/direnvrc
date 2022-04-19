@@ -16,14 +16,7 @@ set_kitty_tab_colors() {
   if has kitty-tab-color; then
     local file="$(find_up .vscode/settings.json)"
     if [[ "$file" ]]; then
-      # execute jq
-      local color="$(<"$file" jq -r '."peacock.color" // ""')"
-      if [[ "$color" ]]; then
-        export KITTY_TAB_AFG=#fff
-        export KITTY_TAB_ABG="$color"
-        export KITTY_TAB_IFG=#ccc
-        export KITTY_TAB_IBG="$color"
-      fi
+      eval "$(kitty-tab-color "$file")"
     fi
   fi
 }
