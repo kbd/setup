@@ -92,12 +92,11 @@ kitty_chpwd(){
     inactive_fg=${KITTY_TAB_IFG:-NONE} \
     inactive_bg=${KITTY_TAB_IBG:-NONE}
 }
-if [[
-  ${chpwd_functions[(Ie)kitty_chpwd]} == 0
-  && $TERM == 'xterm-kitty'
-  && $(exists kitty-tab-color)
-]]; then
-  chpwd_functions+=(kitty_chpwd)
+if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 && $TERM == 'xterm-kitty' ]]; then
+  if exists kitty-tab-color; then
+    # todo: how do you combine these two conditions in shell?
+    chpwd_functions+=(kitty_chpwd)
+  fi
 fi
 precmd() {
   export PROMPT_RETURN_CODE=$?
