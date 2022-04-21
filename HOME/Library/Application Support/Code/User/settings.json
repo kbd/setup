@@ -256,7 +256,7 @@
         },
     },
     "[json][jsonc]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "json.schemas": [],
     "debug.javascript.autoAttachFilter": "smart",
