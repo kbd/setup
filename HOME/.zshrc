@@ -66,7 +66,7 @@ TMPSUFFIX='.zsh' # for syntax highlighting
 # 3rd party config
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
-source "$HOME/.config/fzf/fzf.zsh"
+[[ ! "$PATH" == */usr/local/opt/fzf/bin* ]] && source "$HOME/.config/fzf/fzf.zsh"
 
 # fzf-tab
 zstyle ':completion:*:descriptions' format '[%d]' # enable group support
