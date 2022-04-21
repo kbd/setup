@@ -247,16 +247,13 @@
         "editor.wordWrap": "bounded",
     },
 
-    "[typescript][typescriptreact][javascript][javascriptreact]": {
+    "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
             "source.organizeImports": true,
             "source.fixAll": true,
         },
-    },
-    "[json][jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "json.schemas": [],
     "debug.javascript.autoAttachFilter": "smart",
