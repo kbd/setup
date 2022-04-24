@@ -50,7 +50,7 @@
   "Moves the active window to the given dimensions"
   (let [app (hs.application.frontmostApplication)
         window (hs.window.focusedWindow)
-        scr (or screen (: window "screen"))]
+        scr (or screen (window:screen))]
     (set-window-fraction app window num den scr)))
 
 (fn move-active-window-to-next-screen []
@@ -137,14 +137,12 @@
     (fuzzy choices execute-shortcut))))
 
 (fn is-zoom-muted []
-  (local apps (hs.application.applicationsForBundleID "us.zoom.xos"))
-  (if (not= (length apps) 0)
-    (let [app (. apps 1)]
-      (if (not= nil ((: app "findMenuItem") ["Meeting" "Unmute Audio"]))
-        true
-        (not= nil ((: app "findMenuItem") ["Meeting" "Mute Audio"]))
-        false
-        nil))))
+  (let [apps (hs.application.applicationsForBundleID "us.zoom.xos")]
+    (if (not= (length apps) 0)
+      (let [app (. apps 1)]
+        (if (app:findMenuItem ["Meeting" "Unmute Audio"]) true
+          (app:findMenuItem ["Meeting" "Mute Audio"]) false
+          nil)))))
 
 (fn zoom-mute-icon []
   (let [muted (is-zoom-muted)]
@@ -168,7 +166,7 @@
   (local browser-bundleid (hs.application.defaultAppForUTI "public.html"))
   ; get active app, if active app bundle id = browser bundle id, then vimium, otherwise activate
   (local focused-app (hs.application.frontmostApplication))
-  (if (not= (: focused-app "bundleID") browser-bundleid)
+  (if (not= (focused-app:bundleID) browser-bundleid)
     (hs.application.launchOrFocusByBundleID browser-bundleid)
     (hs.eventtap.keyStroke ["shift"] "T" 0 focused-app))) ; vimium switch tabs
 
