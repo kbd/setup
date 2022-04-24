@@ -109,19 +109,17 @@
 (fn execute-shortcut [shortcut]
   (if shortcut
     (let [action shortcut.action
-          bundleid (. action 1)
-          app (hs.application.applicationsForBundleID bundleid)]
-      (if (= (length app) 0)
+          [bundleid modifiers keystroke] action
+          apps (hs.application.applicationsForBundleID bundleid)]
+      (if (= (length apps) 0)
         (hs.application.launchOrFocusByBundleID bundleid))
-      (hs.eventtap.keyStroke (. action 2) (. action 3) 0 (. app 1)))))
+      (hs.eventtap.keyStroke (. action 2) (. action 3) 0 (. apps 1)))))
 
 (fn show-shortcut-fuzzy [shortcuts]
   "Shows a fuzzy finder of app-specific shortcuts"
   (let [choices (icollect [_ shortcut (ipairs shortcuts)]
-    (let [text (. shortcut 1)
-          func (?. shortcut 3)
+    (let [[text action func] shortcut
           subText (if func (func) nil)
-          action (. shortcut 2)
           bundleid (. action 1)
           image (hs.image.imageFromAppBundle bundleid)
           valid true]
