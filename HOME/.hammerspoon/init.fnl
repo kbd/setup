@@ -101,18 +101,18 @@
     (if (= app nil) (hs.window.allWindows) ; all windows
         (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
         (app:allWindows))) ; specific app windows
-  (each [i window (pairs windows)]
-    (let [id (window:id)
-          active (= id focused_id)
-          app (window:application)]
+  (let [choices (icollect [_ window (ipairs windows)]
+    (let [app (window:application)]
       (if (= (. app_images app) nil) ; cache the app image per app
         (tset app_images app (hs.image.imageFromAppBundle (app:bundleID))))
       (let [text (window:title)
+            id (window:id)
+            active (= id focused_id)
             subText (.. (app:title) (if active " (active)" ""))
             image (. app_images app)
-            valid (not active)]
-        (tset choices i {: text : subText :  image : id}))))
-  (fuzzy choices select-window))
+            valid (= id focused_id)]
+        {: text : subText : image : valid : id})))]
+    (fuzzy choices select-window)))
 
 (fn execute-shortcut [shortcut]
   (if (not= shortcut nil)
