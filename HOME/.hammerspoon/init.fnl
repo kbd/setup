@@ -11,10 +11,10 @@
 
 (fn move [axis increment]
   "Returns a fn that moves the focused window by the given increment along the given axis"
-  #((let [win (hs.window.focusedWindow)
-          f (win:frame)]
+  #(let [win (hs.window.focusedWindow)
+         f (win:frame)]
     (tset f axis (+ (. f axis) increment))
-    (win:setFrame f))))
+    (win:setFrame f)))
 
 (fn get-windows-for-app-on-screen [appname screen]
   "Returns a list of windows for the given app on the given screen"
@@ -125,16 +125,16 @@
 
 ; show a fuzzy finder of app-specific shortcuts
 (fn show-shortcut-fuzzy [shortcuts]
-  #((let [choices (icollect [_ shortcut (ipairs shortcuts)]
-      (let [text (. shortcut 1)
-            func (?. shortcut 3)
-            subText (if (not= nil func) (func) nil)
-            action (. shortcut 2)
-            bundleid (. action 1)
-            image (hs.image.imageFromAppBundle bundleid)
-            valid true]
-        {: text : subText : image : valid : action}))]
-    (fuzzy choices execute-shortcut))))
+  (let [choices (icollect [_ shortcut (ipairs shortcuts)]
+    (let [text (. shortcut 1)
+          func (?. shortcut 3)
+          subText (if (not= nil func) (func) nil)
+          action (. shortcut 2)
+          bundleid (. action 1)
+          image (hs.image.imageFromAppBundle bundleid)
+          valid true]
+      {: text : subText : image : valid : action}))]
+  (fuzzy choices execute-shortcut)))
 
 (fn is-zoom-muted []
   (let [apps (hs.application.applicationsForBundleID "us.zoom.xos")]
@@ -212,4 +212,4 @@
   ["Zoom toggle participants" ["us.zoom.xos" ["cmd"] "U"]]
   ["Zoom invite" ["us.zoom.xos" ["cmd"] "I"]]
 ])
-(hs.hotkey.bind hyper "K" (show-shortcut-fuzzy shortcuts))
+(hs.hotkey.bind hyper "K" #(show-shortcut-fuzzy shortcuts))
