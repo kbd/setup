@@ -1,13 +1,6 @@
-(fn bind-app [char app]
-  (hs.hotkey.bind hyper char #(hs.application.launchOrFocus app)))
-
-(fn bind-app-by-uti [char uti]
-  (hs.hotkey.bind hyper char #(
-    (let [bundleid (hs.application.defaultAppForUTI uti)]
-      (hs.application.launchOrFocusByBundleID bundleid)))))
-
-(fn bind-cmd [char cmd]
-  (hs.hotkey.bind hyper char #(hs.execute cmd true)))
+(fn launch-app-for-uti [uti]
+  (let [bundleid (hs.application.defaultAppForUTI uti)]
+    (hs.application.launchOrFocusByBundleID bundleid)))
 
 (fn move [axis increment]
   "Returns a fn that moves the focused window by the given increment along the given axis"
@@ -122,8 +115,8 @@
         (hs.application.launchOrFocusByBundleID bundleid))
       (hs.eventtap.keyStroke (. action 2) (. action 3) 0 (. app 1)))))
 
-; show a fuzzy finder of app-specific shortcuts
 (fn show-shortcut-fuzzy [shortcuts]
+  "Shows a fuzzy finder of app-specific shortcuts"
   (let [choices (icollect [_ shortcut (ipairs shortcuts)]
     (let [text (. shortcut 1)
           func (?. shortcut 3)
@@ -155,7 +148,7 @@
   (show-caffeine (hs.caffeinate.get "displayIdle")))
 
 (fn browser []
-  "activate browser. if already active, bring up vimium tab switcher"
+  "Activate browser. If already active, bring up vimium tab switcher."
   (let [browser-bundleid (hs.application.defaultAppForUTI "public.html")
         focused-app (hs.application.frontmostApplication)]
     (if (not= (focused-app:bundleID) browser-bundleid)
@@ -166,13 +159,21 @@
 
 (local [right left up down]
   [(move "x" 50) (move "x" -50) (move "y" -50) (move "y" 50)])
+(local expose (hs.expose.new)) ; default windowfilter, no thumbnails
+(local expose_app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
+(local shortcuts [
+  ["Zoom toggle mute" ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
+  ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
+  ["Zoom toggle participants" ["us.zoom.xos" ["cmd"] "U"]]
+  ["Zoom invite" ["us.zoom.xos" ["cmd"] "I"]]
+])
 
-(hs.hotkey.bind hyper "B" browser)
-(bind-app-by-uti "T" "public.plain-text")
-(bind-app "S" "kitty") ; "S=shell"
-(bind-app "C" "kitty") ; "C=console"
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
+(hs.hotkey.bind hyper "B" browser)
+(hs.hotkey.bind hyper "T" #(launch-app-for-uti "public.plain-text"))
+(hs.hotkey.bind hyper "S" #(hs.application.launchOrFocus "kitty")) ; "S=shell"
+(hs.hotkey.bind hyper "C" #(hs.application.launchOrFocus "kitty")) ; "C=console"
 (hs.hotkey.bind hyper "L" set-layout)
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
@@ -188,18 +189,8 @@
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper "." show-window-fuzzy) ; all windows
-(hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
-(hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
-
-(local expose (hs.expose.new)) ; default windowfilter, no thumbnails
-(local expose_app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose_app:toggleShow))
-
-(local shortcuts [
-  ["Zoom toggle mute" ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
-  ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
-  ["Zoom toggle participants" ["us.zoom.xos" ["cmd"] "U"]]
-  ["Zoom invite" ["us.zoom.xos" ["cmd"] "I"]]
-])
 (hs.hotkey.bind hyper "K" #(show-shortcut-fuzzy shortcuts))
+(hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
+(hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
