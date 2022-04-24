@@ -152,8 +152,8 @@
 
 ; main
 
-(local [right left up down]
-  [(move "x" 50) (move "x" -50) (move "y" -50) (move "y" 50)])
+(local [left right up down]
+  [(move "x" -50) (move "x" 50) (move "y" -50) (move "y" 50)])
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
 (local expose_app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
 (local shortcuts [
