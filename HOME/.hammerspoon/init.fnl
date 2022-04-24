@@ -162,13 +162,12 @@
     (show-caffeine (hs.caffeinate.get "displayIdle"))))
 
 (fn browser []
-  ; activate browser. if already active, bring up vimium tab switcher
-  (local browser-bundleid (hs.application.defaultAppForUTI "public.html"))
-  ; get active app, if active app bundle id = browser bundle id, then vimium, otherwise activate
-  (local focused-app (hs.application.frontmostApplication))
-  (if (not= (focused-app:bundleID) browser-bundleid)
-    (hs.application.launchOrFocusByBundleID browser-bundleid)
-    (hs.eventtap.keyStroke ["shift"] "T" 0 focused-app))) ; vimium switch tabs
+  "activate browser. if already active, bring up vimium tab switcher"
+  (let [browser-bundleid (hs.application.defaultAppForUTI "public.html")
+        focused-app (hs.application.frontmostApplication)]
+    (if (not= (focused-app:bundleID) browser-bundleid)
+      (hs.application.launchOrFocusByBundleID browser-bundleid)
+      (hs.eventtap.keyStroke ["shift"] "T" 0 focused-app)))) ; vimium switch tabs
 
 ; main
 
