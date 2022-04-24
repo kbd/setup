@@ -9,34 +9,30 @@
 (fn bind-cmd [char cmd]
   (hs.hotkey.bind hyper char #(hs.execute cmd true)))
 
-(fn move [axis increment] (fn []
-  (let [win (hs.window.focusedWindow)
-        f (win:frame)]
+(fn move [axis increment]
+  "Returns a fn that moves the focused window by the given increment along the given axis"
+  #((let [win (hs.window.focusedWindow)
+          f (win:frame)]
     (tset f axis (+ (. f axis) increment))
     (win:setFrame f))))
 
 (fn get-windows-for-app-on-screen [appname screen]
+  "Returns a list of windows for the given app on the given screen"
   (let [app (hs.application.get appname)]
-    (if (= app nil)
-      nil
+    (if (not= app nil)
       (let [scr (or screen (hs.screen.mainScreen))
-            wins (app:allWindows)
-            result {}]
-        (each [i win (pairs wins)]
-          (if (= scr (win:screen))
-            (table.insert result win)))
-        result))))
+            wins (app:allWindows)]
+        (icollect [_ win (ipairs wins)] ; filter windows by screen
+          (if (= scr (win:screen)) win))))))
 
 (fn lo [app x w]
   [app get-windows-for-app-on-screen hs.screen.mainScreen {"x" x "y" 0 "w" w "h" 1} nil nil])
 
 (local layouts {
-  "DELL U3818DW" [
-    (lo "Firefox" 0 0.275) (lo "Code" 0.275 0.5) (lo "kitty" 0.775 0.225)
-  ]
-  "Built-in Retina Display" [
-    (lo "Firefox" 0 0.3) (lo "Code" 0.3 0.38) (lo "kitty" 0.68 0.32)
-  ]
+  "DELL U3818DW"
+    [(lo "Firefox" 0 0.275) (lo "Code" 0.275 0.5) (lo "kitty" 0.775 0.225)]
+  "Built-in Retina Display"
+    [(lo "Firefox" 0 0.3) (lo "Code" 0.3 0.38) (lo "kitty" 0.68 0.32)]
 })
 (tset layouts "default" (. layouts "DELL U3818DW"))
 
@@ -51,14 +47,11 @@
     (hs.layout.apply [layout])))
 
 (fn move-active-window [num den screen]
-  (fn []
-   (let [app (hs.application.frontmostApplication)
-          window (hs.window.focusedWindow)
-          scr (or screen (: window "screen"))]
-        (inspect app)
-        (inspect window)
-        (inspect scr)
-    (set-window-fraction app window num den scr))))
+  "Moves the active window to the given dimensions"
+  (let [app (hs.application.frontmostApplication)
+        window (hs.window.focusedWindow)
+        scr (or screen (: window "screen"))]
+    (set-window-fraction app window num den scr)))
 
 (fn move-active-window-to-next-screen []
   (let [w (hs.window.focusedWindow)]
@@ -79,61 +72,46 @@
       (hs.alert.show (.. "Setting " audio.subText " device: " (device:name)))
       (if (device:isOutputDevice)
         (device:setDefaultOutputDevice)
-        (device:setDefaultInputDevice)
-      ))))
+        (device:setDefaultInputDevice)))))
 
 (fn show-audio-fuzzy []
   (let [devices (hs.audiodevice.allDevices)
-        choices {}
         active_input (hs.audiodevice.defaultInputDevice)
-        active_output (hs.audiodevice.defaultOutputDevice)]
-    (var [active subtext] [nil nil])
-    (each [i device (pairs devices)]
-      (if (device:isOutputDevice)
-        (set [active subtext]
-          [(= (device:uid) (active_output:uid)) "output"])
-        (set [active subtext]
-          [(= (device:uid) (active_input:uid)) "input"]))
-      (if active
-        (set subtext (.. subtext " (active)")))
-
-      (tset choices i {
-        "text" (device:name)
-        "uid" (device:uid)
-        "subText" subtext
-        "valid" (not active)
-      })
-    )
-  (fuzzy choices select-audio)))
+        active_output (hs.audiodevice.defaultOutputDevice)
+        choices (icollect [_ device (ipairs devices)] (do
+          (var [active subText] [nil nil])
+          (if (device:isOutputDevice)
+            (set [active subText] [(= (device:uid) (active_output:uid)) "output"])
+            (set [active subText] [(= (device:uid) (active_input:uid)) "input"]))
+          (if active (set subText (.. subText " (active)")))
+          (let [text (device:name)
+                uid (device:uid)
+                valid (not active)]
+            {: text : uid : subText : valid })))]
+    (fuzzy choices select-audio)))
 
 (fn select-window [window]
   (if (not= window nil)
     (: (hs.window.get window.id) "focus")))
 
 (fn show-window-fuzzy [app]
+  (local [choices app_images] [{} {}])
+  (local focused_id (: (hs.window.focusedWindow) "id"))
   (local windows
     (if (= app nil) (hs.window.allWindows) ; all windows
         (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
-        (app:allWindows)) ; specific app windows
-  )
-  (local focused_id (: (hs.window.focusedWindow) "id"))
-  (local [choices app_images] [{} {}])
+        (app:allWindows))) ; specific app windows
   (each [i window (pairs windows)]
-    (local id (window:id))
-    (local active (= id focused_id))
-    (local app (window:application))
-    (if (= (. app_images app) nil) ; cache the app image per app
-      (tset app_images app (hs.image.imageFromAppBundle (app:bundleID))))
-    (local image (. app_images app))
-    (local text (window:title))
-    (local subText (.. (app:title) (if active " (active)" "")))
-    (tset choices i {
-      "text" text
-      "subText" subText
-      "image" image
-      "valid" (not active)
-      "id" id
-    }))
+    (let [id (window:id)
+          active (= id focused_id)
+          app (window:application)]
+      (if (= (. app_images app) nil) ; cache the app image per app
+        (tset app_images app (hs.image.imageFromAppBundle (app:bundleID))))
+      (let [text (window:title)
+            subText (.. (app:title) (if active " (active)" ""))
+            image (. app_images app)
+            valid (not active)]
+        (tset choices i {: text : subText :  image : id}))))
   (fuzzy choices select-window))
 
 (fn execute-shortcut [shortcut]
@@ -147,22 +125,16 @@
 
 ; show a fuzzy finder of app-specific shortcuts
 (fn show-shortcut-fuzzy [shortcuts]
-  (fn []
-    (local choices {})
-    (each [i shortcut (pairs shortcuts)]
-      (local shortcut (. shortcuts i))
-      (local name (. shortcut 1))
-      (local action (. shortcut 2))
-      (local bundleid (. action 1))
-      (local func (?. shortcut 3))
-      (tset choices i {
-        "text" name
-        "subText" "" ; (if (not= nil func) (func) nil) ; tf?
-        "image" (hs.image.imageFromAppBundle bundleid)
-        "valid" true
-        "action" action
-      }
-    (fuzzy choices execute-shortcut)))))
+  #((let [choices (icollect [_ shortcut (ipairs shortcuts)]
+      (let [text (. shortcut 1)
+            func (?. shortcut 3)
+            subText (if (not= nil func) (func) nil)
+            action (. shortcut 2)
+            bundleid (. action 1)
+            image (hs.image.imageFromAppBundle bundleid)
+            valid true]
+        {: text : subText : image : valid : action}))]
+    (fuzzy choices execute-shortcut))))
 
 (fn is-zoom-muted []
   (local apps (hs.application.applicationsForBundleID "us.zoom.xos"))
@@ -180,8 +152,8 @@
 
 (local caffeine (hs.menubar.new))
 (fn show-caffeine [awake]
-  (local title (if awake "☕" "🍵"))
-  (caffeine:setTitle title))
+  (let [title (if awake "☕" "🍵")]
+    (caffeine:setTitle title)))
 
 (fn toggle-caffeine []
   (show-caffeine (hs.caffeinate.toggle "displayIdle")))
@@ -218,15 +190,15 @@
 (hs.hotkey.bind hyper "Left" left nil left)
 (hs.hotkey.bind hyper "Up" up nil up)
 (hs.hotkey.bind hyper "Down" down nil down)
-(hs.hotkey.bind hyper "1" (move-active-window 1 2))
-(hs.hotkey.bind hyper "2" (move-active-window 2 2))
-(hs.hotkey.bind hyper "3" (move-active-window 1 3))
-(hs.hotkey.bind hyper "4" (move-active-window 2 3))
-(hs.hotkey.bind hyper "5" (move-active-window 3 3))
-(hs.hotkey.bind hyper "6" (move-active-window 1 1))
+(hs.hotkey.bind hyper "1" #(move-active-window 1 2))
+(hs.hotkey.bind hyper "2" #(move-active-window 2 2))
+(hs.hotkey.bind hyper "3" #(move-active-window 1 3))
+(hs.hotkey.bind hyper "4" #(move-active-window 2 3))
+(hs.hotkey.bind hyper "5" #(move-active-window 3 3))
+(hs.hotkey.bind hyper "6" #(move-active-window 1 1))
 (hs.hotkey.bind hyper "N" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
-(hs.hotkey.bind hyper "," #((show-window-fuzzy true))) ; app windows
+(hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper "." show-window-fuzzy) ; all windows
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
@@ -236,10 +208,10 @@
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose_app:toggleShow))
 
-(local shortcuts {
+(local shortcuts [
   ["Zoom toggle mute" ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
   ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
   ["Zoom toggle participants" ["us.zoom.xos" ["cmd"] "U"]]
   ["Zoom invite" ["us.zoom.xos" ["cmd"] "I"]]
-})
+])
 (hs.hotkey.bind hyper "K" (show-shortcut-fuzzy shortcuts))
