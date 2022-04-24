@@ -19,14 +19,14 @@
 (fn get-windows-for-app-on-screen [appname screen]
   "Returns a list of windows for the given app on the given screen"
   (let [app (hs.application.get appname)]
-    (if (not= app nil)
+    (if app
       (let [scr (or screen (hs.screen.mainScreen))
             wins (app:allWindows)]
         (icollect [_ win (ipairs wins)] ; filter windows by screen
           (if (= scr (win:screen)) win))))))
 
 (fn lo [app x w]
-  [app get-windows-for-app-on-screen hs.screen.mainScreen {"x" x "y" 0 "w" w "h" 1} nil nil])
+  [app get-windows-for-app-on-screen hs.screen.mainScreen {: x :y 0 : w :h 1} nil nil])
 
 (local layouts {
   "DELL U3818DW"
@@ -42,7 +42,7 @@
     (hs.layout.apply layout)))
 
 (fn set-window-fraction [app window num den screen]
-  (let [coords {"x" (/ (- num 1) den) "y" 0 "w" (/ 1 den) "h" 1}
+  (let [coords {:x (/ (- num 1) den) :y 0 :w (/ 1 den) :h 1}
         layout [app window screen coords nil nil]]
     (hs.layout.apply [layout])))
 
@@ -58,16 +58,16 @@
     (w:moveToScreen (: (w:screen) "next"))))
 
 (fn fuzzy [choices func]
-  (let [chooser (hs.chooser.new func)]
-    (chooser:choices choices)
-    (chooser:searchSubText true)
-    (chooser:fgColor {"hex" "#bbf"})
-    (chooser:subTextColor {"hex" "#aaa"})
-    (chooser:width 25)
-    (chooser:show)))
+  (doto (hs.chooser.new func)
+    (: :choices choices)
+    (: :searchSubText true)
+    (: :fgColor {:hex "#bbf"})
+    (: :subTextColor {:hex "#aaa"})
+    (: :width 25)
+    (: :show)))
 
 (fn select-audio [audio]
-  (if (not= audio nil)
+  (if audio
     (let [device (hs.audiodevice.findDeviceByUID audio.uid)]
       (hs.alert.show (.. "Setting " audio.subText " device: " (device:name)))
       (if (device:isOutputDevice)
@@ -76,46 +76,45 @@
 
 (fn show-audio-fuzzy []
   (let [devices (hs.audiodevice.allDevices)
-        active_input (hs.audiodevice.defaultInputDevice)
-        active_output (hs.audiodevice.defaultOutputDevice)
-        choices (icollect [_ device (ipairs devices)] (do
-          (var [active subText] [nil nil])
-          (if (device:isOutputDevice)
-            (set [active subText] [(= (device:uid) (active_output:uid)) "output"])
-            (set [active subText] [(= (device:uid) (active_input:uid)) "input"]))
-          (if active (set subText (.. subText " (active)")))
-          (let [text (device:name)
+        input-uid (: (hs.audiodevice.defaultInputDevice) "uid")
+        output-uid (: (hs.audiodevice.defaultOutputDevice) "uid")
+        choices (icollect [_ device (ipairs devices)]
+          (let [uid (device:uid)
+                (active subText) (if (device:isOutputDevice)
+                  (values (= uid output-uid) "output")
+                  (values (= uid input-uid) "input"))
+                text (device:name)
+                subText (if active (.. subText " (active)") subText)
                 uid (device:uid)
                 valid (not active)]
-            {: text : uid : subText : valid })))]
+            {: text : uid : subText : valid}))]
     (fuzzy choices select-audio)))
 
 (fn select-window [window]
-  (if (not= window nil)
+  (if window
     (: (hs.window.get window.id) "focus")))
 
 (fn show-window-fuzzy [app]
-  (local [choices app_images] [{} {}])
-  (local focused_id (: (hs.window.focusedWindow) "id"))
-  (local windows
-    (if (= app nil) (hs.window.allWindows) ; all windows
-        (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
-        (app:allWindows))) ; specific app windows
-  (let [choices (icollect [_ window (ipairs windows)]
-    (let [app (window:application)]
-      (if (= (. app_images app) nil) ; cache the app image per app
-        (tset app_images app (hs.image.imageFromAppBundle (app:bundleID))))
-      (let [text (window:title)
-            id (window:id)
-            active (= id focused_id)
-            subText (.. (app:title) (if active " (active)" ""))
-            image (. app_images app)
-            valid (= id focused_id)]
-        {: text : subText : image : valid : id})))]
+  (let [app_images {}
+        focused_id (: (hs.window.focusedWindow) "id")
+        windows (if (= app nil) (hs.window.allWindows) ; all windows
+          (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
+          (app:allWindows)) ; specific app windows
+        choices (icollect [_ window (ipairs windows)]
+          (let [win-app (window:application)]
+            (if (= (. app_images win-app) nil) ; cache the app image per app
+              (tset app_images win-app (hs.image.imageFromAppBundle (win-app:bundleID))))
+            (let [text (window:title)
+                  id (window:id)
+                  active (= id focused_id)
+                  subText (.. (win-app:title) (if active " (active)" ""))
+                  image (. app_images win-app)
+                  valid (= id focused_id)]
+              {: text : subText : image : valid : id})))]
     (fuzzy choices select-window)))
 
 (fn execute-shortcut [shortcut]
-  (if (not= shortcut nil)
+  (if shortcut
     (let [action shortcut.action
           bundleid (. action 1)
           app (hs.application.applicationsForBundleID bundleid)]
@@ -128,7 +127,7 @@
   (let [choices (icollect [_ shortcut (ipairs shortcuts)]
     (let [text (. shortcut 1)
           func (?. shortcut 3)
-          subText (if (not= nil func) (func) nil)
+          subText (if func (func) nil)
           action (. shortcut 2)
           bundleid (. action 1)
           image (hs.image.imageFromAppBundle bundleid)
@@ -150,16 +149,10 @@
 
 (local caffeine (hs.menubar.new))
 (fn show-caffeine [awake]
-  (let [title (if awake "☕" "🍵")]
-    (caffeine:setTitle title)))
-
-(fn toggle-caffeine []
-  (show-caffeine (hs.caffeinate.toggle "displayIdle")))
-
-(if caffeine
-  (do
-    (caffeine:setClickCallback toggle-caffeine)
-    (show-caffeine (hs.caffeinate.get "displayIdle"))))
+  (caffeine:setTitle (if awake "☕" "🍵")))
+(when caffeine
+  (caffeine:setClickCallback #(show-caffeine (hs.caffeinate.toggle "displayIdle")))
+  (show-caffeine (hs.caffeinate.get "displayIdle")))
 
 (fn browser []
   "activate browser. if already active, bring up vimium tab switcher"
@@ -171,10 +164,8 @@
 
 ; main
 
-(local right (move "x" 50))
-(local left (move "x" -50))
-(local up (move "y" -50))
-(local down (move "y" 50))
+(local [right left up down]
+  [(move "x" 50) (move "x" -50) (move "y" -50) (move "y" 50)])
 
 (hs.hotkey.bind hyper "B" browser)
 (bind-app-by-uti "T" "public.plain-text")
@@ -201,7 +192,7 @@
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
-(local expose_app (hs.expose.new nil {"onlyActiveApplication" true})) ; show windows for the current application
+(local expose_app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose_app:toggleShow))
 
