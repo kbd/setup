@@ -130,11 +130,10 @@
 
 (fn is-zoom-muted []
   (let [apps (hs.application.applicationsForBundleID "us.zoom.xos")]
-    (if (not= (length apps) 0)
-      (let [app (. apps 1)]
-        (if (app:findMenuItem ["Meeting" "Unmute Audio"]) true
+    (match apps [app]
+      (if (app:findMenuItem ["Meeting" "Unmute Audio"]) true
           (app:findMenuItem ["Meeting" "Mute Audio"]) false
-          nil)))))
+          nil))))
 
 (fn zoom-mute-icon []
   (let [muted (is-zoom-muted)]
