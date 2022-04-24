@@ -14,4 +14,4 @@ end
 
 fennel = require("fennel")
 table.insert(package.loaders or package.searchers, fennel.searcher)
-init = fennel.dofile("initfnl.fnl")
+init = fennel.dofile("init.fnl")
