@@ -119,7 +119,7 @@
   "Shows a fuzzy finder of app-specific shortcuts"
   (let [choices (icollect [_ shortcut (ipairs shortcuts)]
     (let [[text action func] shortcut
-          subText (if func (func) nil)
+          subText (if func (func))
           bundleid (. action 1)
           image (hs.image.imageFromAppBundle bundleid)
           valid true]
@@ -130,8 +130,7 @@
   (let [apps (hs.application.applicationsForBundleID "us.zoom.xos")]
     (match apps [app]
       (if (app:findMenuItem ["Meeting" "Unmute Audio"]) true
-          (app:findMenuItem ["Meeting" "Mute Audio"]) false
-          nil))))
+          (app:findMenuItem ["Meeting" "Mute Audio"]) false))))
 
 (fn zoom-mute-icon []
   (match (is-zoom-muted) true "🔴" false "🟢"))
