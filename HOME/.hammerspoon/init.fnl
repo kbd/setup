@@ -136,8 +136,7 @@
           nil))))
 
 (fn zoom-mute-icon []
-  (let [muted (is-zoom-muted)]
-    (if (= nil muted) nil (if muted "🔴" "🟢" ))))
+  (match (is-zoom-muted) true "🔴" false "🟢"))
 
 (local caffeine (hs.menubar.new))
 (fn show-caffeine [awake]
