@@ -88,21 +88,21 @@
     (: (hs.window.get window.id) "focus")))
 
 (fn show-window-fuzzy [app]
-  (let [app_images {}
-        focused_id (: (hs.window.focusedWindow) "id")
+  (let [app-images {}
+        focused-id (: (hs.window.focusedWindow) "id")
         windows (if (= app nil) (hs.window.allWindows) ; all windows
           (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
           (app:allWindows)) ; specific app windows
         choices (icollect [_ window (ipairs windows)]
           (let [win-app (window:application)]
-            (if (= (. app_images win-app) nil) ; cache the app image per app
-              (tset app_images win-app (hs.image.imageFromAppBundle (win-app:bundleID))))
+            (if (= (. app-images win-app) nil) ; cache the app image per app
+              (tset app-images win-app (hs.image.imageFromAppBundle (win-app:bundleID))))
             (let [text (window:title)
                   id (window:id)
-                  active (= id focused_id)
+                  active (= id focused-id)
                   subText (.. (win-app:title) (if active " (active)" ""))
-                  image (. app_images win-app)
-                  valid (= id focused_id)]
+                  image (. app-images win-app)
+                  valid (= id focused-id)]
               {: text : subText : image : valid : id})))]
     (fuzzy choices select-window)))
 
@@ -155,7 +155,7 @@
 (local [left right up down]
   [(move "x" -50) (move "x" 50) (move "y" -50) (move "y" 50)])
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
-(local expose_app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
+(local expose-app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
 (local shortcuts [
   ["Zoom toggle mute" ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
   ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
@@ -185,7 +185,7 @@
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper "." show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
-(hs.hotkey.bind hyper "u" #(expose_app:toggleShow))
+(hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
 (hs.hotkey.bind hyper "K" #(show-shortcut-fuzzy shortcuts))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
