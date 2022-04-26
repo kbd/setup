@@ -3,9 +3,9 @@
     (hs.application.launchOrFocusByBundleID bundleid)))
 
 (fn move [axis increment]
-  "Returns a fn that moves the focused window by the given increment along the given axis"
-  #(let [win (hs.window.focusedWindow)
-         f (win:frame)]
+  "Moves the focused window by the given increment along the given axis"
+  (let [win (hs.window.focusedWindow)
+        f (win:frame)]
     (tset f axis (+ (. f axis) increment))
     (win:setFrame f)))
 
@@ -153,7 +153,7 @@
 ; main
 
 (local [left right up down]
-  [(move "x" -50) (move "x" 50) (move "y" -50) (move "y" 50)])
+  [#(move "x" -50) #(move "x" 50) #(move "y" -50) #(move "y" 50)])
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
 (local expose-app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
 (local shortcuts [
