@@ -186,6 +186,7 @@
 (hs.hotkey.bind hyper "." show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
-(hs.hotkey.bind hyper "K" #(show-shortcut-fuzzy shortcuts))
+(hs.hotkey.bind hyper "O" #(show-shortcut-fuzzy shortcuts))
+(hs.hotkey.bind hyper "K" #(hs.execute "code ~/notes" true))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
