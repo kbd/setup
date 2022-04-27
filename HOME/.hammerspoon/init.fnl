@@ -150,22 +150,19 @@
       (hs.application.launchOrFocusByBundleID browser-bundleid)
       (hs.eventtap.keyStroke ["shift"] "T" 0 focused-app)))) ; vimium switch tabs
 
+(fn toggle-window [new-window current-window command]
+  "Activates new-window. If new-window is already active, goes back to prior."
+  (if (= new-window current-window)
+    (let [last _G.last_window]
+      (when last (last:focus)))
+    (if new-window
+      (new-window:focus)
+      (command)
+  )
+  (tset _G "last_window" current-window)))
+
 (fn notes []
-  "Activates the notes window, otherwise launches it.
-  If notes is already active, goes back to previous window."
-  (let [w (hs.window.find "^~/notes") ; depends on vscode window title
-        current-window (hs.window.focusedWindow)
-        last-window _G.last_window]
-    (if (= w current-window)
-      ; if the notes window is already active, focus the previous window
-      (when last-window
-        (last-window:focus))
-      ; otherwise go to notes, opening if needed
-      (if w
-        (w:focus)
-        (hs.execute "code ~/notes" true)))
-    ; set last-window
-    (tset _G "last_window" current-window)))
+  (toggle-window (hs.window.find "^~/notes") (hs.window.focusedWindow) #(hs.execute "code ~/notes" true)))
 
 ; main
 
