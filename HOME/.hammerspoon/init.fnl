@@ -150,21 +150,19 @@
       (hs.application.launchOrFocusByBundleID browser-bundleid)
       (hs.eventtap.keyStroke ["shift"] "T" 0 focused-app)))) ; vimium switch tabs
 
-(fn toggle-window [new-window current-window command]
+(fn toggle-window [new-window command]
   "Activates new-window. If new-window is already active, goes back to prior."
-  (if (= new-window current-window)
-    (let [last _G.last_window]
-      (when last (last:focus)))
-    (if new-window
-      (new-window:focus)
-      (command))
-  (tset _G "last_window" current-window)))
+  (let [current-window (hs.window.focusedWindow)]
+    (if (= new-window current-window)
+      (let [last _G.last_window]
+        (when last (last:focus)))
+      (if new-window
+        (new-window:focus)
+        (command))
+    (tset _G "last_window" current-window))))
 
 (fn notes []
-  (toggle-window
-    (hs.window.find "^~/notes")
-    (hs.window.focusedWindow)
-    #(hs.execute "code ~/notes" true)))
+  (toggle-window (hs.window.find "^~/notes") #(hs.execute "code ~/notes" true)))
 
 ; main
 
