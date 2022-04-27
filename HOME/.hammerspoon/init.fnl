@@ -159,7 +159,7 @@
       (if new-window
         (new-window:focus)
         (command))
-    (tset _G "last_window" current-window))))
+    (set _G.last_window current-window))))
 
 (fn notes []
   (toggle-window (hs.window.find "^~/notes") #(hs.execute "code ~/notes" true)))
