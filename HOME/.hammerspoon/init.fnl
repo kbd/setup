@@ -157,12 +157,14 @@
       (when last (last:focus)))
     (if new-window
       (new-window:focus)
-      (command)
-  )
+      (command))
   (tset _G "last_window" current-window)))
 
 (fn notes []
-  (toggle-window (hs.window.find "^~/notes") (hs.window.focusedWindow) #(hs.execute "code ~/notes" true)))
+  (toggle-window
+    (hs.window.find "^~/notes")
+    (hs.window.focusedWindow)
+    #(hs.execute "code ~/notes" true)))
 
 ; main
 
