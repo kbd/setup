@@ -1,3 +1,4 @@
+// prettier-ignore
 {
 	"Print dir to console": {
 		"scope": "javascript,typescript",
@@ -35,7 +36,6 @@
 		"prefix": "TS",
 		"body": [
 			"$CURRENT_DAY_NAME_SHORT $CURRENT_MONTH_NAME_SHORT $CURRENT_DATE $CURRENT_YEAR",
-			"$0"
 		],
 		"description": "Current timestamp"
 	},
@@ -43,7 +43,6 @@
 		"prefix": "TSS",
 		"body": [
 			"$CURRENT_DAY_NAME_SHORT $CURRENT_MONTH_NAME_SHORT $CURRENT_DATE $CURRENT_YEAR $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
-			"$0"
 		],
 		"description": "Current timestamp"
 	},
@@ -51,7 +50,6 @@
 		"prefix": "DT",
 		"body": [
 			"$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
-			"$0"
 		],
 		"description": "Current date (ISO)"
 	},
@@ -59,7 +57,6 @@
 		"prefix": "DTT",
 		"body": [
 			"$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
-			"$0"
 		],
 		"description": "Current datetime (ISO)"
 	},
