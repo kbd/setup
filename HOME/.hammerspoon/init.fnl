@@ -161,8 +161,8 @@
         (command))
     (set _G.last_window current-window))))
 
-(fn notes []
-  (toggle-window (hs.window.find "^~/notes") #(hs.execute "code ~/notes" true)))
+(fn specific-vscode-window [path]
+  (toggle-window (hs.window.find (.. "^" path)) #(hs.execute (.. "code " path) true)))
 
 ; main
 
@@ -201,6 +201,7 @@
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
 (hs.hotkey.bind hyper "O" #(show-shortcut-fuzzy shortcuts))
-(hs.hotkey.bind hyper "K" notes)
+(hs.hotkey.bind hyper "K" #(specific-vscode-window "~/notes"))
+(hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
