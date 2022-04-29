@@ -13,7 +13,7 @@
     "editor.suggest.showStatusBar": true,
     "editor.minimap.enabled": true,
     "editor.minimap.showSlider": "always",
-    "editor.snippetSuggestions": "top",
+    "editor.snippetSuggestions": "bottom",
     "editor.autoClosingQuotes": "beforeWhitespace",
     "editor.autoClosingBrackets": "beforeWhitespace",
     "editor.renderLineHighlight": "all",
