@@ -154,11 +154,8 @@
   "Activates new-window. If new-window is already active, goes back to prior."
   (let [current-window (hs.window.focusedWindow)]
     (if (= new-window current-window)
-      (let [last _G.last_window]
-        (when last (last:focus)))
-      (if new-window
-        (new-window:focus)
-        (command))
+      (let [last _G.last_window] (when last (last:focus)))
+      (if new-window (new-window:focus) (command))
     (set _G.last_window current-window))))
 
 (fn specific-vscode-window [path]
