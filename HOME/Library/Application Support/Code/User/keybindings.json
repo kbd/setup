@@ -1,3 +1,4 @@
+// prettier-ignore
 [
     {
         "key": "cmd+d",
@@ -373,5 +374,9 @@
         "key": "cmd+k cmd+l",
         "command": "-editor.toggleFold",
         "when": "editorTextFocus && foldingEnabled"
-    }
+    },
+    {
+        "key": "shift+cmd+c",
+        "command": "copyFilePath"
+    },
 ]
