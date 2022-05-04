@@ -87,7 +87,7 @@
 	br = b -r
 	ba = b -a
 
-	bvb = "!f() { git bs \"$@\" --sort=-creatordate | rg -v '^\\(HEAD detached at \\w+\\)' | xargs -L1 git commit-info --color=always; }; f" # "bv base"
+	bvb = "!f() { git bs \"$@\" --sort=-creatordate | rg -v '^\\(HEAD detached at \\w+\\)' | xargs -I% -L1 git commit-info --color=always % --; }; f" # "bv base"
 	bv = "!f() { git bvb \"$@\" | perl -pe 's/^[^\\0]+\\0//'; }; f" # strip off the branch name for non-fzf display
 	brv = !git bv -r
 	bav = !git bv -a
