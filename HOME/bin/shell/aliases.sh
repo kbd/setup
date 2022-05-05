@@ -144,6 +144,17 @@ dlv() {
   EDITOR=delve-editor command dlv "${args[@]}"
 }
 go(){ if [[ $# -eq 0 ]]; then rlwrap yaegi; else command go "$@"; fi }
+gor(){
+  if [[ $# -gt 0 ]]; then
+    go run "$@"
+  elif [[ -f main.go ]]; then
+    go run main.go
+  elif [[ -f cmd/main.go ]]; then
+    go run cmd/main.go
+  else
+    return 1
+  fi
+}
 alias yaegi='rlwrap yaegi'
 
 # homebrew
