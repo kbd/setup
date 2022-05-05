@@ -186,6 +186,7 @@ alias c=bat
 alias chn='bat --style=header,numbers'
 alias cn='bat --style=numbers'
 alias cnh='bat --style=header,numbers'
+alias cbf='fzf | teerr | cb'
 alias d='docker'
 alias dc='docker-compose'
 alias dp='cd "$(dirs -pl | tail -n+2 | fzf)"'
