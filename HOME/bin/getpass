@@ -4,13 +4,12 @@ import sys
 
 from aush import op
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Get password from password manager")
-    parser.add_argument("key", help="The name of the account to get the password")
-    args = parser.parse_args()
+parser = argparse.ArgumentParser(description="Get password from password manager")
+parser.add_argument("key", help="The name of the account to get the password")
+args = parser.parse_args()
 
-    if result := op.item.get(args.key, fields="password"):
-        print(result)
-    else:
-        print(result.stderr.decode(), end="", file=sys.stderr)
-        sys.exit(result.code)
+if result := op.item.get(args.key, fields="password", _check=False):
+    print(result)
+else:
+    print(result.stderr.decode(), end="", file=sys.stderr)
+    sys.exit(result.code)
