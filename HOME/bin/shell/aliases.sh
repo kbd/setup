@@ -207,6 +207,8 @@ alias is_not_local='is_remote || is_docker'
 alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is_root='[[ $EUID == 0 ]]'
 alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
+alias jax='osascript -l JavaScript -e'
+alias jaxi='rlwrap --always-readline --no-children osascript -il JavaScript'
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
