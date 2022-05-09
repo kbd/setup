@@ -140,6 +140,8 @@ cask "vlc"
 # cask-fonts tap
 cask "font-fantasque-sans-mono"
 cask "font-inter"
+cask "font-noto-sans"
+cask "font-noto-mono"
 cask "font-victor-mono"
 
 mas "Clear", id: 504544917
