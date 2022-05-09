@@ -197,16 +197,6 @@
         "when": "editorLangId == 'markdown'"
     },
     {
-        "key": "f6",
-        "command": "code-runner.run",
-        "when": "!inDebugMode"
-    },
-    {
-        "key": "shift+f6",
-        "command": "code-runner.stop",
-        "when": "!inDebugMode"
-    },
-    {
         "key": "alt+f2",
         "command": "editor.debug.action.toggleBreakpoint",
         "when": "editorTextFocus"
