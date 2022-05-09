@@ -108,6 +108,9 @@ defaults['com.apple.menuextra.clock']['DateFormat'] = "EEE MMM d  h:mm a"
 # use function keys as function keys
 defaults.g['com.apple.keyboard.fnState'] = True
 
+# don't change my keyboard layout by tapping the fn key!
+defaults['com.apple.HIToolbox']['AppleFnUsageType'] = 0
+
 # don't close windows when quitting program
 defaults.g['NSQuitAlwaysKeepsWindows'] = True
 
