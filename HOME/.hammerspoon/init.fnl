@@ -200,5 +200,6 @@
 (hs.hotkey.bind hyper "O" #(show-shortcut-fuzzy shortcuts))
 (hs.hotkey.bind hyper "K" #(specific-vscode-window "~/notes"))
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
+(hs.hotkey.bind hyper "J" #(hs.application.launchOrFocus "Logseq"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
