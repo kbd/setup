@@ -1,3 +1,0 @@
-path = ["~/bin"]
-prompt = "prompt"
-startup = ["def spl [] { cat | lines | split column ' ' }"]
