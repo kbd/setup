@@ -13,6 +13,9 @@
             ln -sf $etc/docker.zsh-completion $sf/_docker;
             ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose;
         """,
+        # brew python formula doesn't link 'python' and 'pip'. Why?
+        'ln -sf /usr/local/bin/python3 ~/bin/python',
+        'ln -sf /usr/local/bin/pip3 ~/bin/pip',
     ),
     'python': (
         ['pip3', 'install', '--upgrade', '-r', 'requirements.txt'],
