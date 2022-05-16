@@ -50,6 +50,9 @@
     "files.insertFinalNewline": true,
     "files.hotExit": "onExitAndWindowClose",
     "files.autoSave": "onWindowChange",
+    "files.associations": {
+        "*.avsc": "json"
+    },
 
     "breadcrumbs.enabled": true,
     "outline.showVariables": false,
