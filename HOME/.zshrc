@@ -86,7 +86,7 @@ RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
 export PROMPT_PREFIX='⚡'
 
 kitty_chpwd(){
-  kitty @ set-tab-color \
+  kitty @ set-tab-color --self \
     active_fg=${KITTY_TAB_AFG:-NONE} \
     active_bg=${KITTY_TAB_ABG:-NONE} \
     inactive_fg=${KITTY_TAB_IFG:-NONE} \
