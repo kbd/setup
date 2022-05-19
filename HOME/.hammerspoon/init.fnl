@@ -84,26 +84,25 @@
     (fuzzy choices select-audio)))
 
 (fn select-window [window]
-  (if window
-    (: (hs.window.get window.id) "focus")))
+  (when window (window.window:focus)))
 
 (fn show-window-fuzzy [app]
   (let [app-images {}
         focused-id (: (hs.window.focusedWindow) "id")
-        windows (if (= app nil) (hs.window.allWindows) ; all windows
-          (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
-          (app:allWindows)) ; specific app windows
+        windows (if (= app nil) (hs.window.orderedWindows) ; all windows
+                  (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
+                  (app:allWindows)) ; specific app windows
         choices (icollect [_ window (ipairs windows)]
-          (let [win-app (window:application)]
-            (if (= (. app-images win-app) nil) ; cache the app image per app
-              (tset app-images win-app (hs.image.imageFromAppBundle (win-app:bundleID))))
-            (let [text (window:title)
-                  id (window:id)
-                  active (= id focused-id)
-                  subText (.. (win-app:title) (if active " (active)" ""))
-                  image (. app-images win-app)
-                  valid (= id focused-id)]
-              {: text : subText : image : valid : id})))]
+                  (let [win-app (window:application)]
+                    (if (= (. app-images win-app) nil) ; cache the app image per app
+                      (tset app-images win-app (hs.image.imageFromAppBundle (win-app:bundleID))))
+                    (let [text (window:title)
+                          id (window:id)
+                          active (= id focused-id)
+                          subText (.. (win-app:title) (if active " (active)" ""))
+                          image (. app-images win-app)
+                          valid (= id focused-id)]
+                      {: text : subText : image : valid : window})))]
     (fuzzy choices select-window)))
 
 (fn execute-shortcut [shortcut]
