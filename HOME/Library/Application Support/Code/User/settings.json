@@ -51,7 +51,8 @@
     "files.hotExit": "onExitAndWindowClose",
     "files.autoSave": "onWindowChange",
     "files.associations": {
-        "*.avsc": "json"
+        "*.avsc": "json",
+        "*.fnl": "clojure"
     },
 
     "breadcrumbs.enabled": true,
