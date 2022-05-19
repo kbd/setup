@@ -37,6 +37,7 @@ if [[ $ZSH_VERSION ]]; then
   alias -g C='| grcat log'
 
   # suffix aliases
+  # shellcheck disable=SC2139
   alias -s {txt,md}='$EDITOR'
 
   # fzf tab preview doesn't work properly without this set
