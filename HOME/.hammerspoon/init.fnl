@@ -74,8 +74,8 @@
         choices (icollect [_ device (ipairs devices)]
           (let [uid (device:uid)
                 (active subText) (if (device:isOutputDevice)
-                  (values (= uid output-uid) "output")
-                  (values (= uid input-uid) "input"))
+                                  (values (= uid output-uid) "output")
+                                  (values (= uid input-uid) "input"))
                 text (device:name)
                 subText (if active (.. subText " (active)") subText)
                 uid (device:uid)
