@@ -36,6 +36,9 @@ if [[ $ZSH_VERSION ]]; then
   alias -g H='| head'
   alias -g C='| grcat log'
 
+  # suffix aliases
+  alias -s {txt,md}='$EDITOR'
+
   # fzf tab preview doesn't work properly without this set
   # $SHELL is defaulting to /bin/sh
   export SHELL='/usr/local/bin/zsh'
