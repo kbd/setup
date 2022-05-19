@@ -194,7 +194,7 @@
 (hs.hotkey.bind hyper "N" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
-(hs.hotkey.bind hyper "." show-window-fuzzy) ; all windows
+(hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
 (hs.hotkey.bind hyper "O" #(show-shortcut-fuzzy shortcuts))
