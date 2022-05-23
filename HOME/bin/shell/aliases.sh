@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2139
 
 # path/system
 if [[ -z "$PATH_SET" ]]; then
@@ -37,7 +38,6 @@ if [[ $ZSH_VERSION ]]; then
   alias -g C='| grcat log'
 
   # suffix aliases
-  # shellcheck disable=SC2139
   alias -s {txt,md}='$EDITOR'
 
   # fzf tab preview doesn't work properly without this set
@@ -87,7 +87,6 @@ alias    ...='cd ../..'
 alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
-# shellcheck disable=SC2139
 alias ls="${LS_PATH:-ls} -F --color=auto --group-directories-first"
 alias l=ls
 alias la='ls -A'
@@ -120,18 +119,18 @@ _fzf_compgen_path() { fd -tf -HL . "$1"; }
 _fzf_compgen_dir() { fd -td -HL . "$1"; }
 
 # git
-# create aliases for all short (<= 4 character) git aliases
-for gitalias in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
-  # shellcheck disable=SC2139
-  alias "g$gitalias=g $gitalias"
-done
 alias g=git
 alias s='gs' # status
 alias p='gpg' # pull and show graph of recent changes
-alias g-='gw-' # switch to most recent branch
-alias ga='gaf' # add files with fuzzy finder
-alias gb='gbf' # show/switch branches using fuzzy finder
-alias gbr='gbrf' # show/switch remote branches using fuzzy finder
+alias g-='gw-' # switch to most recent branch (can't alias '-' directly in git)
+# alias short git aliases
+for a in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
+  alias "g$a=g $a"
+done
+# use fuzzy-find versions of these aliases
+for a in a b br; do
+  alias "g$a=g${a}f"
+done
 gccb() {
   # check out a repository from the url in the clipboard and cd into it
   local url="$(cb)"
