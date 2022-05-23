@@ -158,6 +158,7 @@ menuitems = [
     ('com.apple.controlcenter', 'WiFi'),
     ('com.apple.controlcenter', 'Bluetooth'),
     ('com.apple.controlcenter', 'Sound'),
+    ('com.apple.controlcenter', 'NowPlaying'),
     ('com.apple.controlcenter', 'ScreenMirroring'),
     ('85C27NK92C.com.flexibits.fantastical2.mac.helper', 'Fantastical'),
     ('com.agilebits.onepassword7', 'Item-0'),
