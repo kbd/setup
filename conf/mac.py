@@ -1,7 +1,9 @@
 # pylint:disable=no-name-in-module
 from os.path import expanduser
 
+import pandas as pd
 from aush import duti, mkdir, osascript, sudo
+
 from lib.mac import defaults
 
 ### trackpad settings ###
@@ -73,31 +75,9 @@ defaults.g['KeyRepeat'] = 1  # can this be a float? 1 seems a bit fast and 2 a b
 defaults.g['CGDisableCursorLocationMagnification'] = False
 
 # set file-type associations
-associations = {
-    'com.microsoft.vscode': [
-        # plain-text association also sets default text editor (open -t)
-        'public.plain-text',
-        'public.python-script',
-        'public.yaml',
-        'net.daringfireball.markdown',
-    ],
-    'org.videolan.vlc': [
-        'public.mp3',
-        'public.mpeg-4',
-        'org.matroska.mkv',
-        'org.videolan.webm',
-        'public.pls-playlist',
-    ],
-    'org.libreoffice.script': [
-        'public.comma-separated-values-text',
-    ],
-    'com.flexibits.fantastical2.mac': [
-        'com.apple.ical.ics'
-    ],
-}
-for program, types in associations.items():
-    for type in types:
-        duti('-s', program, type, 'all')
+associations = pd.read_csv("associations.csv")
+for _i, row in associations.iterrows():
+    duti('-s', row.bundleid, row.uti, 'all')
 
 # make tab move between "All Controls" (System Prefs -> Keyboard -> Shortcuts)
 defaults.g['AppleKeyboardUIMode'] = 3

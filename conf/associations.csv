@@ -1,0 +1,12 @@
+uti,bundleid,color
+public.plain-text,com.microsoft.vscode,
+public.python-script,com.microsoft.vscode,
+public.yaml,com.microsoft.vscode,
+net.daringfireball.markdown,com.microsoft.vscode,
+public.mp3,org.videolan.vlc,
+public.mpeg-4,org.videolan.vlc,
+org.matroska.mkv,org.videolan.vlc,
+org.videolan.webm,org.videolan.vlc,
+public.pls-playlist,org.videolan.vlc,
+public.comma-separated-values-text,org.libreoffice.script,
+com.apple.ical.ics,com.flexibits.fantastical2.mac,
