@@ -30,8 +30,6 @@ fi
 
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
-  export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-
   # global aliases
   alias -g L='| $PAGER'
   alias -g H='| head'
@@ -39,10 +37,6 @@ if [[ $ZSH_VERSION ]]; then
 
   # suffix aliases
   alias -s {txt,md}='$EDITOR'
-
-  # fzf tab preview doesn't work properly without this set
-  # $SHELL is defaulting to /bin/sh
-  export SHELL='/usr/local/bin/zsh'
 fi
 
 # TERMINAL SPECIFIC

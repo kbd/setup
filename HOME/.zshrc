@@ -74,6 +74,8 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
 [[ "$FZF_TAB_HOME" ]] || source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
+# fzf tab preview doesn't work properly without this set
+export SHELL='/usr/local/bin/zsh' # without this, defaults to /bin/sh
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
@@ -109,7 +111,10 @@ preexec(){
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
 
-# zsh syntax highlighting - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
+# zsh syntax highlighting
+# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md#how-to-activate-highlighters
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
