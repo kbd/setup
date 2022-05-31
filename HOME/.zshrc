@@ -94,7 +94,7 @@ kitty_chpwd(){
     inactive_fg=${KITTY_TAB_IFG:-NONE} \
     inactive_bg=${KITTY_TAB_IBG:-NONE}
 }
-if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 && $TERM == 'xterm-kitty' ]] &&
+if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 ]] && is_kitty &&
   exists kitty-tab-color; then
   chpwd_functions+=(kitty_chpwd)
 fi

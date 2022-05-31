@@ -40,7 +40,8 @@ if [[ $ZSH_VERSION ]]; then
 fi
 
 # TERMINAL SPECIFIC
-if [[ $TERM == 'xterm-kitty' ]]; then
+alias is_kitty='[[ $TERM == xterm-kitty ]]'
+if is_kitty; then
   alias cati="kitty +kitten icat --align=left"
 fi
 
