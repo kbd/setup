@@ -79,7 +79,12 @@
     },
     {
         "key": "shift+cmd+space",
-        "command": "editor.action.smartSelect.grow",
+        "command": "editor.action.smartSelect.expand",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+cmd+space",
+        "command": "editor.action.smartSelect.shrink",
         "when": "editorTextFocus"
     },
     {
