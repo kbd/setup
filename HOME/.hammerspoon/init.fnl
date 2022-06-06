@@ -167,10 +167,10 @@
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
 (local expose-app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
 (local shortcuts [
-  ["Zoom toggle mute" ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
+  ["Zoom toggle mute"         ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
   ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
-  ["Zoom toggle participants" ["us.zoom.xos" ["cmd"] "U"]]
-  ["Zoom invite" ["us.zoom.xos" ["cmd"] "I"]]
+  ["Zoom toggle participants" ["us.zoom.xos" ["cmd"]         "U"]]
+  ["Zoom invite"              ["us.zoom.xos" ["cmd"]         "I"]]
 ])
 
 (hs.grid.setGrid "9x6")
