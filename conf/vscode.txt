@@ -13,7 +13,6 @@ JakeBecker.elixir-ls
 janisdd.vscode-edit-csv
 johnpapa.vscode-peacock
 kosz78.nim
-matklad.rust-analyzer
 mechatroner.rainbow-csv
 ms-azuretools.vscode-docker
 ms-python.python
@@ -22,6 +21,7 @@ ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
 ms-vscode.cpptools
+rust-lang.rust-analyzer
 ryanluker.vscode-coverage-gutters
 serayuzgur.crates
 stkb.rewrap
