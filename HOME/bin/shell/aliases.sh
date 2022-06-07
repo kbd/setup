@@ -66,12 +66,13 @@ alias glab='PAGER= glab' # ...
 alias edit=code
 alias e=edit
 alias e.='e .'
-alias e-='e -'
-alias eg='e -g'
+alias e-='e -' # edit from stdin
+alias eg='e -g' # edit (go to line)
 alias o=open
 alias o.='o .'
 alias a='o -a'
 te(){ t "$@" && e "$@"; }
+ze(){ z "$@" && e .; } # z to dir then edit
 
 # directory/navigation
 alias   -- -='cd -'
