@@ -145,7 +145,12 @@ dlv() {
 go(){ if [[ $# -eq 0 ]]; then rlwrap yaegi; else command go "$@"; fi }
 gor(){
   if [[ $# -gt 0 ]]; then
-    go run "$@"
+    if [[ ! $1 =~ [./] ]]; then
+      # if a bare word (no dots or slashes), treat as the name of a command
+      go run "cmd/$1.go"
+    else
+      go run "$@"
+    fi
   elif [[ -f main.go ]]; then
     go run main.go
   elif [[ -f cmd/main.go ]]; then
