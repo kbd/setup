@@ -14,7 +14,7 @@ log = logging.getLogger()
 # called as ~/bin/setup -> points to ~/setup/HOME/bin/setup -> repo root ~/setup
 ROOT = Path(__file__).resolve().parents[2]
 HOME = ROOT / 'HOME'
-BIN = HOME/ 'bin'
+BIN = HOME / 'bin'
 CONF = ROOT / 'conf'
 VENDOR = ROOT / '3rdparty'
 SETTINGS_PATH = CONF / 'settings.py'
