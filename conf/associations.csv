@@ -1,6 +1,7 @@
 uti,bundleid,color
 public.plain-text,com.microsoft.vscode,
 public.python-script,com.microsoft.vscode,
+public.json,com.microsoft.vscode,
 public.yaml,com.microsoft.vscode,
 net.daringfireball.markdown,com.microsoft.vscode,
 public.mp3,org.videolan.vlc,
