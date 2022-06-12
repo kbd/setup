@@ -158,6 +158,7 @@ gor(){
     return 1
   fi
 }
+alias gort='go test ./...'
 alias yaegi='rlwrap yaegi'
 
 # homebrew
