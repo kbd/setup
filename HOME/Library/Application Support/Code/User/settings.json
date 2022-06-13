@@ -2,8 +2,8 @@
 {
     "editor.fontFamily": "Victor Mono",
     "editor.fontWeight": 500,
-    "editor.fontSize": 13,
-    "editor.lineHeight": 15,
+    "editor.fontSize": 14,
+    "editor.lineHeight": 16,
     "editor.fontLigatures": true,
     "editor.rulers": [80, 100],
     "editor.wordWrapColumn": 80,
@@ -340,5 +340,4 @@
     "[terraform]": {
         "editor.formatOnSave": true,
     },
-    "window.zoomLevel": 0.5,
 }
