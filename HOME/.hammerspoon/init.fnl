@@ -71,7 +71,7 @@
   (let [devices (hs.audiodevice.allDevices)
         input-uid (: (hs.audiodevice.defaultInputDevice) "uid")
         output-uid (: (hs.audiodevice.defaultOutputDevice) "uid")
-        choices (icollect [_ device (ipairs devices)]
+        choices #(icollect [_ device (ipairs devices)]
           (let [uid (device:uid)
                 (active subText) (if (device:isOutputDevice)
                                   (values (= uid output-uid) "output")
@@ -92,7 +92,7 @@
         windows (if (= app nil) (hs.window.orderedWindows) ; all windows
                   (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
                   (app:allWindows)) ; specific app windows
-        choices (icollect [_ window (ipairs windows)]
+        choices #(icollect [_ window (ipairs windows)]
                   (let [win-app (window:application)]
                     (if (= (. app-images win-app) nil) ; cache the app image per app
                       (tset app-images win-app (hs.image.imageFromAppBundle (win-app:bundleID))))
@@ -116,7 +116,7 @@
 
 (fn show-shortcut-fuzzy [shortcuts]
   "Shows a fuzzy finder of app-specific shortcuts"
-  (let [choices (icollect [_ shortcut (ipairs shortcuts)]
+  (let [choices #(icollect [_ shortcut (ipairs shortcuts)]
     (let [[text action func] shortcut
           subText (if func (func))
           bundleid (. action 1)
