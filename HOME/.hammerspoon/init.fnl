@@ -52,12 +52,12 @@
 
 (fn fuzzy [choices func]
   (doto (hs.chooser.new func)
-    (: :choices choices)
     (: :searchSubText true)
     (: :fgColor {:hex "#bbf"})
     (: :subTextColor {:hex "#aaa"})
     (: :width 25)
-    (: :show)))
+    (: :show)
+    (: :choices choices)))
 
 (fn select-audio [audio]
   (if audio
