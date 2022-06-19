@@ -16,6 +16,13 @@
         # brew python formula doesn't link 'python' and 'pip'. Why?
         'ln -sf /usr/local/bin/python3 ~/bin/python',
         'ln -sf /usr/local/bin/pip3 ~/bin/pip',
+        # install kitty terminfo
+        # https://sw.kovidgoyal.net/kitty/faq/#keys-such-as-arrow-keys-backspace-delete-home-end-etc-do-not-work-when-using-su-or-sudo
+        """
+        mkdir -p ~/.terminfo/{78,x}
+        ln -snf ../x/xterm-kitty ~/.terminfo/78/xterm-kitty
+        tic -x -o ~/.terminfo "$KITTY_INSTALLATION_DIR/terminfo/kitty.terminfo"
+        """
     ),
     'python': (
         ['pip3', 'install', '--upgrade', '-r', 'requirements.txt'],
