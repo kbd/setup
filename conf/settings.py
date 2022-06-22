@@ -21,7 +21,7 @@
         """
         mkdir -p ~/.terminfo/{78,x}
         ln -snf ../x/xterm-kitty ~/.terminfo/78/xterm-kitty
-        tic -x -o ~/.terminfo "$KITTY_INSTALLATION_DIR/terminfo/kitty.terminfo"
+        tic -x -o ~/.terminfo /Applications/kitty.app/Contents/Resources/kitty/terminfo/kitty.terminfo
         """
     ),
     'python': (
