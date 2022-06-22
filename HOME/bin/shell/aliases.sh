@@ -229,6 +229,7 @@ alias title-win='printf "\e]2;%s\a"'
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
 alias x='chmod +x'
+alias S='~S' # too often I miss the ~ when I ~S. Make it work anyway.
 
 rlh() {
   # reload history
