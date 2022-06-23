@@ -173,6 +173,18 @@
   ["Zoom invite"              ["us.zoom.xos" ["cmd"]         "I"]]
 ])
 
+(fn get-last-window []
+  "Returns a window object for the most-recent window"
+  (let [windows (hs.window.orderedWindows)]
+    (. windows 2)))
+
+(fn thirds-layout [portion]
+  "Sets a 2/3 1/3 layout (or vice versa)"
+  (let [last-window (get-last-window)]
+
+  ))
+
+
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" browser)
@@ -190,6 +202,9 @@
 (hs.hotkey.bind hyper "4" #(move-active-window 2 3))
 (hs.hotkey.bind hyper "5" #(move-active-window 3 3))
 (hs.hotkey.bind hyper "6" #(move-active-window 1 1))
+(hs.hotkey.bind hyper "7" #(inspect (get-last-window)))
+(hs.hotkey.bind hyper "8" #(move-active-window 1 1))
+(hs.hotkey.bind hyper "9" #(move-active-window 1 1))
 (hs.hotkey.bind hyper "N" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
