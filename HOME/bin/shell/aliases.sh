@@ -146,7 +146,15 @@ go(){ if [[ $# -eq 0 ]]; then rlwrap yaegi; else command go "$@"; fi }
 gor(){
   if [[ $# -gt 0 ]]; then
     if [[ $1 =~ ^[^-][^./]+$ ]]; then # doesn't start with dash, no dots or slashes
-      go run "cmd/$1.go"
+      if [[ -f "cmd/$1/$1.go" ]]; then
+        go run "cmd/$1/$1.go"
+      elif [[ -f "cmd/$1/main.go" ]]; then
+        go run "cmd/$1/main.go";
+      elif [[ -f "cmd/$1.go" ]]; then
+        go run "cmd/$1.go"
+      else
+        return 1
+      fi
     else
       go run "$@"
     fi
