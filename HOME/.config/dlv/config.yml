@@ -1,0 +1,2 @@
+source-list-string-color: "\x1b[95m"
+source-list-comment-color: "\x1b[92m"
