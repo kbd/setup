@@ -126,15 +126,6 @@
       {: text : subText : image : valid : action}))]
   (fuzzy choices execute-shortcut)))
 
-(fn is-zoom-muted []
-  (let [apps (hs.application.applicationsForBundleID "us.zoom.xos")]
-    (match apps [app]
-      (if (app:findMenuItem ["Meeting" "Unmute Audio"]) true
-          (app:findMenuItem ["Meeting" "Mute Audio"]) false))))
-
-(fn zoom-mute-icon []
-  (match (is-zoom-muted) true "🔴" false "🟢"))
-
 (local caffeine (hs.menubar.new))
 (fn show-caffeine [awake]
   (caffeine:setTitle (if awake "☕" "🍵")))
@@ -161,18 +152,10 @@
 (fn specific-vscode-window [path]
   (toggle-window (hs.window.find (.. "^" path)) #(hs.execute (.. "code " path) true)))
 
-; main
-
 (local [left right up down]
   [#(move "x" -50) #(move "x" 50) #(move "y" -50) #(move "y" 50)])
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
 (local expose-app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
-(local shortcuts [
-  ["Zoom toggle mute"         ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
-  ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
-  ["Zoom toggle participants" ["us.zoom.xos" ["cmd"]         "U"]]
-  ["Zoom invite"              ["us.zoom.xos" ["cmd"]         "I"]]
-])
 
 (fn get-previous-window []
   "Returns a window object for the most-recent window"
@@ -205,6 +188,7 @@
 (hs.hotkey.bind hyper "0" #(: (get-previous-window) "focus"))
 (hs.hotkey.bind hyper "N" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
+(hs.hotkey.bind hyper "M" toggle-mute)
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
