@@ -177,7 +177,11 @@
 (fn get-previous-window []
   "Returns a window object for the most-recent window"
   (let [windows (hs.window.orderedWindows)]
-    (. windows 2)))
+    (var found-one false) ; return the second "normal" window
+    (for [i 1 (length windows)]
+      (let [w (. windows i)]
+        (when (not= (: w "subrole") "AXUnknown")
+          (if found-one (lua "return w") (set found-one true)))))))
 
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
