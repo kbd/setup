@@ -3,14 +3,19 @@
 # open a new kitty window with the provided command
 import argparse
 import functools
+import glob
 import json
 import os
 import subprocess
 import sys
 import tempfile
 import threading
+import time
+from itertools import chain
+from pathlib import Path
 
 TAIL = 'gtail'  # gnu tail
+LISTEN_ON = "/tmp/mykitty-*"  # must match 'listen_on' value in kitty.conf
 
 
 def find_window_pid(kitty_ls_windows, id):
@@ -30,22 +35,74 @@ def send_stdin_to_named_pipe(path):
             return
 
 
-def wait_for_window_exit(window_id):
-    ls = json.loads(run(['kitty', '@', 'ls']).stdout)
+def kitty(to, rest):
+    to = ('--to', f"unix:{to}") if to else ()  # to of None -> current kitty instance
+    return run(['kitty', '@', *to, *rest])
+
+
+def kitty_ls(to):
+    return json.loads(kitty(to, ['ls']).stdout)
+
+
+def wait_for_window_exit(to, window_id):
+    ls = kitty_ls(to)
     pid = find_window_pid(ls, window_id)
     # https://stackoverflow.com/a/41613532
     subprocess.run([TAIL, '--pid', str(pid), '-f', '/dev/null'])
 
 
-def kitty_launch(subcmd, wait: bool, launch_args={}):
-    cmd = ['kitty', '@', 'launch', '--cwd', 'current', '--copy-env']
-    for k, v in launch_args.items():
-        cmd += [f'--{k}', v]
-    cmd += ['--', *subcmd]
-    result = run(cmd)
+def get_kitty_socket(glb=LISTEN_ON):
+    paths = [Path(f) for f in glob.glob(glb)]
+    return sorted(paths, key=lambda p: p.stat().st_mtime, reverse=True)[0]
+
+
+def kitty_launch(subcmd, wait: bool, launch_args={}, dir=None):
+    to = None
+    if dir:
+        dir = str(Path(dir))  # canonicalize the dir (removes trailing slash)
+        to = get_kitty_socket()
+        # print("SOCKET IS", to)
+        try:
+            ls = kitty_ls(to)
+        except subprocess.CalledProcessError as e:
+            if e.returncode == 1:
+                # assume old socket, try to start kitty and get a fresh one
+                subprocess.Popen(["kitty"])
+                time.sleep(.5)  # ensure kitty has time to open
+                to = get_kitty_socket()
+                ls = kitty_ls(to)  # try once more, bubble up exception this time
+            else:
+                raise
+
+        if window_id := find_free_window_at_dir(ls, dir):
+            # print(f"Got window id {window_id} for dir {dir} ")
+            kitty(to, ['focus-window', '--match', f'id:{window_id}'])
+            kitty(to, ['send-text', '--match', f'id:{window_id}', '--', *subcmd, '\n'])
+        else:
+            # print(f"Couldn't find window for dir {dir} ", file=sys.stderr)
+            kitty(to, ['launch', '--type', 'tab', '--hold', '--cwd', dir, '--', *subcmd])
+    else:
+        args = chain.from_iterable((f'--{k}', v) for k, v in launch_args.items())
+        cmd = ['launch', '--cwd', 'current', '--copy-env', *args, '--', *subcmd]
+        result = kitty(to, cmd)
+        if wait:
+            window_id = int(result.stdout)
+
     if wait:
-        window_id = int(result.stdout)
-        wait_for_window_exit(window_id)
+        wait_for_window_exit(to, window_id)
+
+
+def find_free_window_at_dir(ls, dir):
+    # find the first window set to dir that only has the login shell open
+    for oswindow in ls:
+        for tab in oswindow['tabs']:
+            for window in tab['windows']:
+                fg = window['foreground_processes']
+                w = {k: window[k] for k in ['cmdline', 'cwd']}
+                if len(fg) == 1:
+                    f = {k: fg[0][k] for k in ['cmdline', 'cwd']}
+                    if f['cwd'] == dir and w == f:
+                        return window['id']
 
 
 def get_additional_launch_args(args):
@@ -56,6 +113,8 @@ def get_additional_launch_args(args):
         kwargs['location'] = 'hsplit'
     elif args.new:
         kwargs['type'] = 'os-window'
+    elif args.tab:
+        kwargs['type'] = 'tab'
     return kwargs
 
 
@@ -63,7 +122,7 @@ def main(args, rest):
     launch_args = get_additional_launch_args(args)
 
     if sys.stdin.isatty():
-        return kitty_launch([args.program, *rest], args.wait, launch_args)
+        return kitty_launch([args.program, *rest], args.wait, launch_args, dir=args.dir)
 
     # if pipeline, pass stdin to subprocess via named pipe
     temp_dir = tempfile.mkdtemp()
@@ -86,12 +145,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Open a kitty window with the provided command")
     parser.add_argument("program", help="Program to execute")
     parser.add_argument("-w", "--wait", action="store_true", help="Wait for completion of the subcommand before returning")
+    parser.add_argument("-d", "--dir", help="Execute program in directory (tries to reuse existing window)")
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-H", "--horizontal", action="store_true", help="Split window horizontally")
     group.add_argument("-v", "--vertical", action="store_true", help="Split window vertically")
     group.add_argument("-n", "--new", action="store_true", help="Open into new kitty os window")
+    group.add_argument("-t", "--tab", action="store_true", help="Open into new kitty tab")
 
     args, rest = parser.parse_known_args()
 
-    sys.exit(main(args, rest))
+    if args.program == "GETSOCKET":
+        print(get_kitty_socket())
+    else:
+        sys.exit(main(args, rest))
