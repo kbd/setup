@@ -56,6 +56,8 @@ def get_additional_launch_args(args):
         kwargs['location'] = 'hsplit'
     elif args.new:
         kwargs['type'] = 'os-window'
+    elif args.cwd:
+        kwargs['type'] = 'cwd'
     return kwargs
 
 
@@ -86,12 +88,20 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Open a kitty window with the provided command")
     parser.add_argument("program", help="Program to execute")
     parser.add_argument("-w", "--wait", action="store_true", help="Wait for completion of the subcommand before returning")
+    parser.add_argument("-d", "--dir", help="Execute program in directory")
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-H", "--horizontal", action="store_true", help="Split window horizontally")
     group.add_argument("-v", "--vertical", action="store_true", help="Split window vertically")
     group.add_argument("-n", "--new", action="store_true", help="Open into new kitty os window")
+    group.add_argument("-t", "--tab", action="store_true", help="Open into new kitty tab")
 
     args, rest = parser.parse_known_args()
 
     sys.exit(main(args, rest))
+
+# to implmement:
+# - kw --cwd [command] open command in dir that looks for an existing tab (or any window) at that dir and switches to that if a command is not currently running and runs the command in it.
+#   if there's no window existing I'll create a new TAB.
+#   MAYBE provide an -e --existing option to prefer an existing window
+# - configure vscode tasks to be able to run things by calling kw --dir {} cmd.
