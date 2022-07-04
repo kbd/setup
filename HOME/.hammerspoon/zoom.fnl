@@ -13,7 +13,6 @@
 (fn zoom-mute-icon []
   (match (is-zoom-muted) true "🔴" false "🟢"))
 
-
 (local toggle-mute-shortcut ["us.zoom.xos" ["cmd" "shift"] "A"])
 (fn toggle-mute [] (
   (do

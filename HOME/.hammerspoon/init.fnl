@@ -106,14 +106,16 @@
                       {: text : subText : image : valid : window})))]
     (fuzzy choices select-window)))
 
+(fn send-keystroke [modifiers char bundleid]
+  (let [apps (hs.application.applicationsForBundleID bundleid)]
+    (if (= (length apps) 0)
+      (hs.application.launchOrFocusByBundleID bundleid))
+    (hs.eventtap.keyStroke modifiers char 0 (. apps 1))))
+
 (fn execute-shortcut [shortcut]
   (if shortcut
-    (let [action shortcut.action
-          [bundleid modifiers keystroke] action
-          apps (hs.application.applicationsForBundleID bundleid)]
-      (if (= (length apps) 0)
-        (hs.application.launchOrFocusByBundleID bundleid))
-      (hs.eventtap.keyStroke (. action 2) (. action 3) 0 (. apps 1)))))
+    (let [[bundleid modifiers keystroke] shortcut.action]
+          (send-keystroke modifiers keystroke bundleid))))
 
 (fn show-shortcut-fuzzy [shortcuts]
   "Shows a fuzzy finder of app-specific shortcuts"
@@ -166,6 +168,20 @@
         (when (not= (: w "subrole") "AXUnknown")
           (if found-one (lua "return w") (set found-one true)))))))
 
+
+;; (local toggle-mute-shortcut ["us.zoom.xos" ["cmd" "shift"] "A"])
+(local shortcuts [
+  ;; ["Zoom toggle mute"         toggle-mute-shortcut                zoom-mute-icon]
+  ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
+  ["Zoom toggle participants" ["us.zoom.xos" ["cmd"]         "U"]]
+  ["Zoom invite"              ["us.zoom.xos" ["cmd"]         "I"]]
+])
+
+; import zoom somehow? set global
+(fn toggle-mute []
+  "Toggle mute in videoconferencing. Currently only Zoom supported"
+  (if true true)) ; what's my condition here
+
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" browser)
@@ -198,3 +214,46 @@
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
+
+(var ZOOMENU nil)
+
+; Q. when do you refresh the options? If you're keeping track of the state,
+; the options should be "mute zoom" and "unmute zoom" not "toggle mute"
+; so...
+
+; on application launch, set up menu and poller
+; poller updates menu
+;   if poller can't find running app, it got closed somehow, remove menu and poller
+; on app close, remove menu and poller
+; currently there's only the zoom menu, but in the future there could be toher menus that are  in the menubar and then accessible from a fuzzy finder. Anyway get this shit done already :D
+
+(local zoom-bundleid "us.zoom.xos")
+(fn to-zoom [mods char] (send-keystroke mods char zoom-bundleid))
+(fn show-zoom-menu []
+  (let [menu-table [
+          { :title "Toggle audio" :fn #(to-zoom ["cmd" "shift"] "A") }
+          { :title "Toggle video" }
+          { :title "Toggle screen share" :fn #(to-zoom ["cmd" "shift"] "S")}
+          { :title "Toggle participants" :fn #(to-zoom ["cmd"] "U")}
+          { :title "Invite" :fn #(to-zoom ["cmd"] "I")}]]
+      (do
+      (set ZOOMENU (hs.menubar.new))
+      (ZOOMENU:setTitle "ZOOM IZ RUNNING A:🟢V:🔴S:🔴")
+      (ZOOMENU:setMenu menu-table))))
+
+(show-zoom-menu)
+;; (fn zoomWatch [name type app]
+;;   (if (= name "TextEdit")
+;;     (if
+;;       (= type hs.application.watcher.launched)
+;;         (do ...     (do
+      ; load the zoom module
+      ;; (inspect name)
+      ;; (inspect app)
+;; )
+;;         (show-zoom-menu)
+;;       (= type hs.application.watcher.terminated)
+;;         (if ZOOMENU (ZOOMENU:delete)))))
+
+;; (local w (hs.application.watcher.new zoomWatch))
+;; (w:start)
