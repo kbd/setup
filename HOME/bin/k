@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+import sys
+from datetime import datetime
+from pathlib import Path
+
+# read your note from today
+NOTES_DIR = Path('~/notes').expanduser()
+
+today_file = NOTES_DIR / datetime.now().strftime("%Y/%m/%d.txt")
+
+try:
+    with open(today_file) as f:
+        contents = f.read().splitlines()
+except FileNotFoundError as e:
+    print(f"{str(today_file)} not found", file=sys.stderr)
+    sys.exit(1)
+
+tasks = [c for c in contents if c.startswith('-')]
+
+for t in tasks:
+    print(t)
