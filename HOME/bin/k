@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -6,16 +7,32 @@ from pathlib import Path
 # read your note from today
 NOTES_DIR = Path('~/notes').expanduser()
 
-today_file = NOTES_DIR / datetime.now().strftime("%Y/%m/%d.txt")
+def main(path):
+    try:
+        with open(path) as f:
+            contents = f.read().splitlines()
+    except FileNotFoundError:
+        print(f"{str(path)} not found", file=sys.stderr)
+        return 1
 
-try:
-    with open(today_file) as f:
-        contents = f.read().splitlines()
-except FileNotFoundError as e:
-    print(f"{str(today_file)} not found", file=sys.stderr)
-    sys.exit(1)
+    tasks = [c for c in contents if c.startswith('-')]
 
-tasks = [c for c in contents if c.startswith('-')]
+    first = True
+    for t in tasks:
+        if first:
+            set_task_in_menu(t)
+            first = False
+        print(t)
 
-for t in tasks:
-    print(t)
+
+def set_task_in_menu(text):
+    """Set task text in menubar through Hammerspoon"""
+    escaped_text = text.replace('\\', '\\\\').replace('"', '\\"')
+    # double semicolon because hs dumps the result of the last expression
+    # so, end in an empty expression
+    subprocess.run(['hs', '-c', f'init.taskSet("{escaped_text}");;'], check=True)
+
+
+if __name__ == '__main__':
+    today_file = NOTES_DIR / datetime.now().strftime("%Y/%m/%d.txt")
+    sys.exit(main(today_file))
