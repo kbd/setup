@@ -215,8 +215,5 @@
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
-(local task (hs.menubar.new))
-{
-  :taskSet #(task:setTitle $1)
-  :taskDelete #(task:delete)
-}
+(local taskMenu (hs.menubar.new))
+(tset _G :taskMenu taskMenu)

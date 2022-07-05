@@ -13,16 +13,19 @@ def main(path):
             contents = f.read().splitlines()
     except FileNotFoundError:
         print(f"{str(path)} not found", file=sys.stderr)
+        set_task_in_menu("")
         return 1
 
     tasks = [c for c in contents if c.startswith('-')]
-
-    first = True
-    for t in tasks:
-        if first:
-            set_task_in_menu(t)
-            first = False
-        print(t)
+    if not tasks:
+        set_task_in_menu("")
+    else:
+        first = True
+        for t in tasks:
+            if first:
+                set_task_in_menu(t)
+                first = False
+            print(t)
 
 
 def set_task_in_menu(text):
@@ -30,7 +33,7 @@ def set_task_in_menu(text):
     escaped_text = text.replace('\\', '\\\\').replace('"', '\\"')
     # double semicolon because hs dumps the result of the last expression
     # so, end in an empty expression
-    subprocess.run(['hs', '-c', f'init.taskSet("{escaped_text}");;'], check=True)
+    subprocess.run(['hs', '-c', f'taskMenu:setTitle("{escaped_text}");;'], check=True)
 
 
 if __name__ == '__main__':
