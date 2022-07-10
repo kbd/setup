@@ -257,6 +257,8 @@
 
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
         "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
             "source.organizeImports": true,
