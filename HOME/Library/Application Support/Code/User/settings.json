@@ -11,6 +11,7 @@
     "editor.tabCompletion": "on",
     "editor.suggest.localityBonus": true,
     "editor.suggest.showStatusBar": true,
+    "editor.suggest.preview": true,
     "editor.minimap.enabled": true,
     "editor.minimap.showSlider": "always",
     "editor.snippetSuggestions": "bottom",
@@ -23,8 +24,6 @@
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
     "editor.guides.bracketPairsHorizontal": "active",
-
-    "editor.suggest.preview": true,
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
@@ -142,6 +141,8 @@
     },
 
     // extensions
+    "binrun.commandTemplate": "kw -d $PWD",
+
     "extensions.ignoreRecommendations": true,
 
     "gitlens.codeLens.enabled": false,
