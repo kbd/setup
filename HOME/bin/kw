@@ -95,11 +95,9 @@ def kitty_launch(subcmd, wait: bool, launch_args={}, dir=None):
         to = get_kitty_socket_launch()
         ls = kitty_ls_launch(to)
         if window_id := find_free_window_at_dir(ls, dir):
-            # print(f"Got window id {window_id} for dir {dir} ")
             kitty(to, ['focus-window', '--match', f'id:{window_id}'])
             kitty(to, ['send-text', '--match', f'id:{window_id}', '--', *subcmd, '\n'])
         else:
-            # print(f"Couldn't find window for dir {dir} ", file=sys.stderr)
             kitty(to, ['launch', '--type', 'tab', '--hold', '--cwd', dir, '--', *subcmd])
     else:
         args = chain.from_iterable((f'--{k}', v) for k, v in launch_args.items())
