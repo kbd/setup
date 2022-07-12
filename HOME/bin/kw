@@ -50,7 +50,7 @@ def kitty_ls_launch(to):
         return kitty_ls(to)
     except subprocess.CalledProcessError as e:
         if e.returncode == 1:
-            start_kitty()     # assume old socket, try to start new kitty
+            start_kitty()  # assume old socket, try to start new kitty
             return kitty_ls(get_kitty_socket())
         else:
             raise
