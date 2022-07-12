@@ -44,6 +44,18 @@ def kitty_ls(to):
     return json.loads(kitty(to, ['ls']).stdout)
 
 
+def kitty_ls_launch(to):
+    """kitty_ls, launch kitty if needed"""
+    try:
+        return kitty_ls(to)
+    except subprocess.CalledProcessError as e:
+        if e.returncode == 1:
+            start_kitty()     # assume old socket, try to start new kitty
+            return kitty_ls(get_kitty_socket())
+        else:
+            raise
+
+
 def wait_for_window_exit(to, window_id):
     ls = kitty_ls(to)
     pid = find_window_pid(ls, window_id)
@@ -53,27 +65,35 @@ def wait_for_window_exit(to, window_id):
 
 def get_kitty_socket(glb=LISTEN_ON):
     paths = [Path(f) for f in glob.glob(glb)]
+    if not paths:
+        return None
     return sorted(paths, key=lambda p: p.stat().st_mtime, reverse=True)[0]
+
+
+def start_kitty():
+    subprocess.Popen(["kitty"])
+    time.sleep(1)  # ensure kitty has time to open
+
+
+def get_kitty_socket_launch():
+    """get_kitty_socket, launch new kitty if needed"""
+    to = get_kitty_socket()
+    if not to:
+        start_kitty()
+        to = get_kitty_socket()
+
+    if not to:
+        raise Exception("Couldn't get kitty socket")
+
+    return to
 
 
 def kitty_launch(subcmd, wait: bool, launch_args={}, dir=None):
     to = None
     if dir:
         dir = str(Path(dir))  # canonicalize the dir (removes trailing slash)
-        to = get_kitty_socket()
-        # print("SOCKET IS", to)
-        try:
-            ls = kitty_ls(to)
-        except subprocess.CalledProcessError as e:
-            if e.returncode == 1:
-                # assume old socket, try to start kitty and get a fresh one
-                subprocess.Popen(["kitty"])
-                time.sleep(.5)  # ensure kitty has time to open
-                to = get_kitty_socket()
-                ls = kitty_ls(to)  # try once more, bubble up exception this time
-            else:
-                raise
-
+        to = get_kitty_socket_launch()
+        ls = kitty_ls_launch(to)
         if window_id := find_free_window_at_dir(ls, dir):
             # print(f"Got window id {window_id} for dir {dir} ")
             kitty(to, ['focus-window', '--match', f'id:{window_id}'])
