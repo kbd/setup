@@ -1,6 +1,8 @@
 {
     'brew': (
         ['homebrew-workflow', 'Brewfile'],
+        # todo: make a symlink of the brew prefix share to /opt/kbd/brewprefix
+        # todo: maybe create /opt/kbd/ in bootstrap so that you don't have to worry about it existing. How do you handle the sudo?
         # zsh: update to homebrew'd shell
         'update-shell "$(brew --prefix)/bin/zsh"',
         # fzf: install and patch its history format to include timestamp
