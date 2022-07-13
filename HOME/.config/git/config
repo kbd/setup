@@ -170,6 +170,7 @@
 	p = "!f() { if git upstream; then git push \"$@\"; else git push -u \"$@\"; fi }; f" # push, set upstream if necessary
 	# "push --force", requiring confirmation. AFAIK, you ~always want --force-with-lease over plain --force
 	# https://git-scm.com/docs/git-push#Documentation/git-push.txt---no-force-with-lease
+	pp = "!f() { git p \"$@\" && git push --tags; }; f" # push with tags
 	pf = "!f() { echo \"On branch $(git current-branch)\"; echo push | xargs -p -I% git % --force-with-lease; }; f"
 	pl = pull
 	ps = submodule update --init --recursive  # "pull submodules" - https://git-scm.com/book/en/v2/Git-Tools-Submodules (find "foolproof")
