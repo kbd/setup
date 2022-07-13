@@ -6,6 +6,7 @@ import functools
 import glob
 import json
 import os
+import queue
 import subprocess
 import sys
 import tempfile
@@ -16,6 +17,9 @@ from pathlib import Path
 
 TAIL = 'gtail'  # gnu tail
 LISTEN_ON = "/tmp/mykitty-*"  # must match 'listen_on' value in kitty.conf
+
+
+run = functools.partial(subprocess.run, capture_output=True, check=True)
 
 
 def find_window_pid(kitty_ls_windows, id):
@@ -136,34 +140,46 @@ def get_additional_launch_args(args):
     return kwargs
 
 
+def queue_return(fn, q):
+    q.put(fn())
+
+
 def main(args, rest):
     launch_args = get_additional_launch_args(args)
+    result = None
 
     if sys.stdin.isatty():
-        return kitty_launch([args.program, *rest], args.wait, launch_args, dir=args.dir)
+        result = kitty_launch([args.program, *rest], args.wait, launch_args, dir=args.dir)
+    else:
+        # if pipeline, pass stdin to subprocess via named pipe
+        temp_dir = tempfile.mkdtemp()
+        path = os.path.join(temp_dir, 'fifo')
+        try:
+            os.mkfifo(path)
+            cmd = ['sh', '-c', f"cat {path} | {args.program} {' '.join(rest)}"]
+            q = queue.Queue()
+            target = lambda: queue_return(kitty_launch, q)
+            t1 = threading.Thread(target=target, args=[cmd, args.wait, launch_args])
+            t1.start()
+            send_stdin_to_named_pipe(path)
+            t1.join()
+            result = q.get()
+        finally:
+            os.unlink(path)
+            os.rmdir(temp_dir)
 
-    # if pipeline, pass stdin to subprocess via named pipe
-    temp_dir = tempfile.mkdtemp()
-    path = os.path.join(temp_dir, 'fifo')
-    try:
-        os.mkfifo(path)
-        cmd = ['sh', '-c', f"cat {path} | {args.program} {' '.join(rest)}"]
-        t1 = threading.Thread(target=kitty_launch, args=[cmd, args.wait, launch_args])
-        t1.start()
-        send_stdin_to_named_pipe(path)
-        t1.join()
-    finally:
-        os.unlink(path)
-        os.rmdir(temp_dir)
+    if args.post:
+        run(args.post, shell=True)
 
+    return result
 
-run = functools.partial(subprocess.run, capture_output=True, check=True)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Open a kitty window with the provided command")
     parser.add_argument("program", help="Program to execute")
     parser.add_argument("-w", "--wait", action="store_true", help="Wait for completion of the subcommand before returning")
     parser.add_argument("-d", "--dir", help="Execute program in directory (tries to reuse existing window)")
+    parser.add_argument("-p", "--post", help="Command to execute as a post step")
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-H", "--horizontal", action="store_true", help="Split window horizontally")

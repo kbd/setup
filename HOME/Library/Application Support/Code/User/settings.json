@@ -141,7 +141,7 @@
     },
 
     // extensions
-    "binrun.commandTemplate": "kw -d $PWD",
+    "binrun.commandTemplate": "kw -d $PWD --post \"hs -c 'focusPreviousWindow()'\"",
 
     "extensions.ignoreRecommendations": true,
 

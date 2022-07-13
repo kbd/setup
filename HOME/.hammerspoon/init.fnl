@@ -183,6 +183,8 @@
         (when (not= (: w "subrole") "AXUnknown")
           (if found-one (lua "return w") (set found-one true)))))))
 
+(fn focus-previous-window [] (: (get-previous-window) "focus"))
+
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" browser)
@@ -202,7 +204,7 @@
 (hs.hotkey.bind hyper "6" #(move-active-window 1 3 2))
 (hs.hotkey.bind hyper "7" #(move-active-window 2 3 2))
 (hs.hotkey.bind hyper "8" #(move-active-window 1 1))
-(hs.hotkey.bind hyper "0" #(: (get-previous-window) "focus"))
+(hs.hotkey.bind hyper "0" focus-previous-window)
 (hs.hotkey.bind hyper "N" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
@@ -216,4 +218,6 @@
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
 (local taskMenu (hs.menubar.new))
+; "exports"
 (tset _G :taskMenu taskMenu)
+(tset _G :focusPreviousWindow focus-previous-window)
