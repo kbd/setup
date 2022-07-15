@@ -318,7 +318,7 @@
         "editor.tabSize": 4,
         "editor.defaultFormatter": "AugusteRame.zls-vscode",
     },
-    "zigLanguageClient.path": "zls", // compiled into path at ~/bin
+    "zls.path": "zls", // compiled into path at ~/bin
 
     "[rust]": {
         "editor.formatOnSave": true,
