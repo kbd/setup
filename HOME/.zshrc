@@ -102,6 +102,7 @@ precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_PATH="$(print -P '%~')"
   export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
+  export PROMPT_HR=$COLUMNS
   title "$PROMPT_PATH${TABTITLE:+" ($TABTITLE)"}"
 }
 preexec(){
