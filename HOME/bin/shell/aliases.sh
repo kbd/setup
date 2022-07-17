@@ -194,10 +194,7 @@ alias pyt='ptpython'
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
 export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/rc
 alias 1p='eval $(op signin)'
-alias c=bat
-alias chn='bat --style=header,numbers'
-alias cn='bat --style=numbers'
-alias cnh='bat --style=header,numbers'
+alias c='bat --style=header,numbers'
 alias cbf='fzf | teerr | cb'
 alias d='docker'
 alias dc='docker-compose'
