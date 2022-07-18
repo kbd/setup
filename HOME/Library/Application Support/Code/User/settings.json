@@ -24,6 +24,8 @@
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
     "editor.guides.bracketPairsHorizontal": "active",
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "editor.inlayHints.fontSize": 12,
 
     "terminal.integrated.fontFamily": "Fantasque Sans Mono",
     "terminal.integrated.fontSize": 13,
@@ -268,6 +270,18 @@
     },
     "json.schemas": [],
     "debug.javascript.autoAttachFilter": "smart",
+    "javascript.inlayHints.enumMemberValues.enabled": true,
+    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "javascript.inlayHints.parameterNames.enabled": "all",
+    "javascript.inlayHints.parameterTypes.enabled": true,
+    "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "javascript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.inlayHints.variableTypes.enabled": true,
 
     "[python]": {
         "editor.formatOnSave": false,
@@ -294,6 +308,8 @@
     "python.venvFolders": [ // unsure why vscode can't find poetry virtualenvs
         "Library/Caches/pypoetry/virtualenvs/"
     ],
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
 
     "jupyter.sendSelectionToInteractiveWindow": false,
     "notebook.cellToolbarLocation": {
@@ -324,6 +340,15 @@
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
     },
+    "rust-analyzer.inlayHints.bindingModeHints.enable": true,
+    "rust-analyzer.inlayHints.chainingHints.enable": true,
+    "rust-analyzer.inlayHints.closingBraceHints.enable": true,
+    "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
+    "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
+    "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
+    "rust-analyzer.inlayHints.parameterHints.enable": true,
+    "rust-analyzer.inlayHints.reborrowHints.enable": true,
+    "rust-analyzer.inlayHints.typeHints.enable": true,
 
     "[go]": {
         "editor.insertSpaces": false,
@@ -339,6 +364,13 @@
         "uncoveredGutterStyle": "blockred"
     },
     "go.toolsManagement.autoUpdate": true,
+    "go.inlayHints.assignVariableTypes": true,
+    "go.inlayHints.compositeLiteralFields": true,
+    "go.inlayHints.compositeLiteralTypes": true,
+    "go.inlayHints.constantValues": true,
+    "go.inlayHints.functionTypeParameters": true,
+    "go.inlayHints.parameterNames": true,
+    "go.inlayHints.rangeVariableTypes": true,
 
     "[terraform]": {
         "editor.formatOnSave": true,
