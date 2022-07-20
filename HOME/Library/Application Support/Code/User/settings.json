@@ -347,7 +347,7 @@
     "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
     "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
     "rust-analyzer.inlayHints.parameterHints.enable": true,
-    "rust-analyzer.inlayHints.reborrowHints.enable": true,
+    "rust-analyzer.inlayHints.reborrowHints.enable": "always",
     "rust-analyzer.inlayHints.typeHints.enable": true,
 
     "[go]": {
