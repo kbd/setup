@@ -1,7 +1,3 @@
-(fn launch-app-for-uti [uti]
-  (let [bundleid (hs.application.defaultAppForUTI uti)]
-    (hs.application.launchOrFocusByBundleID bundleid)))
-
 (fn move [axis increment]
   "Moves the focused window by the given increment along the given axis"
   (let [win (hs.window.focusedWindow)
@@ -90,9 +86,10 @@
 (fn show-window-fuzzy [app]
   (let [app-images {}
         focused-id (: (hs.window.focusedWindow) "id")
-        windows (if (= app nil) (hs.window.orderedWindows) ; all windows
-                  (= app true) (: (hs.application.frontmostApplication) "allWindows") ; focused app windows
-                  (app:allWindows)) ; specific app windows
+        windows (if (= app nil) (hs.window.orderedWindows)
+                  (= app true) (: (hs.application.frontmostApplication) "allWindows")
+                  (= (type app) "string") (: (hs.application.open app) "allWindows")
+                  (app:allWindows))
         choices #(icollect [_ window (ipairs windows)]
                   (let [win-app (window:application)]
                     (if (= (. app-images win-app) nil) ; cache the app image per app
@@ -150,6 +147,13 @@
       (hs.application.launchOrFocusByBundleID browser-bundleid)
       (hs.eventtap.keyStroke ["shift"] "T" 0 focused-app)))) ; vimium switch tabs
 
+(fn show-app-or-choose-window [bundleid]
+  "Activate app with bundleid. If already active, bring up fuzzy window picker."
+  (let [focused-app (hs.application.frontmostApplication)]
+    (if (not= bundleid (focused-app:bundleID))
+      (hs.application.launchOrFocusByBundleID bundleid)
+      (show-window-fuzzy bundleid))))
+
 (fn toggle-window [new-window command]
   "Activates new-window. If new-window is already active, goes back to prior."
   (let [current-window (hs.window.focusedWindow)]
@@ -188,7 +192,8 @@
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" browser)
-(hs.hotkey.bind hyper "T" #(launch-app-for-uti "public.plain-text"))
+(hs.hotkey.bind hyper "T" #(show-app-or-choose-window
+  (hs.application.defaultAppForUTI "public.plain-text")))
 (hs.hotkey.bind hyper "S" #(hs.application.launchOrFocus "kitty")) ; "S=shell"
 (hs.hotkey.bind hyper "C" #(hs.application.launchOrFocus "kitty")) ; "C=console"
 (hs.hotkey.bind hyper "L" set-layout)
