@@ -17,15 +17,7 @@
 (fn lo [app x w]
   [app get-windows-for-app-on-screen hs.screen.mainScreen {: x :y 0 : w :h 1} nil nil])
 
-(local layouts {
-  "DELL U3818DW"
-    [(lo "Firefox" 0 0.275) (lo "Code" 0.275 0.5) (lo "kitty" 0.775 0.225)]
-  "Built-in Retina Display"
-    [(lo "Firefox" 0 0.3) (lo "Code" 0.3 0.38) (lo "kitty" 0.68 0.32)]
-})
-(tset layouts "default" (. layouts "DELL U3818DW"))
-
-(fn set-layout [name]
+(fn set-layout [layouts name]
   (let [name (or name (: (hs.screen.primaryScreen) :name))
         layout (or (. layouts name) layouts.default)]
     (hs.layout.apply layout)))
@@ -46,11 +38,6 @@
 (fn move-active-window-to-next-screen []
   (let [w (hs.window.focusedWindow)]
     (w:moveToScreen (: (w:screen) :next))))
-
-; the default global callback seems to be incorrect:
-; if a chooser is opened when one is already open, closing it doesn't properly
-;   restore focus. Seems to work properly without?
-(tset hs.chooser :globalCallback nil)
 
 (fn fuzzy [choices func]
   (doto (hs.chooser.new func)
@@ -137,13 +124,6 @@
 (fn zoom-mute-icon []
   (match (is-zoom-muted) true "🔴" false "🟢"))
 
-(local caffeine (hs.menubar.new))
-(fn show-caffeine [awake]
-  (caffeine:setTitle (if awake "☕" "🍵")))
-(when caffeine
-  (caffeine:setClickCallback #(show-caffeine (hs.caffeinate.toggle "displayIdle")))
-  (show-caffeine (hs.caffeinate.get "displayIdle")))
-
 (fn show-app [bundleid func]
   "Activate app with bundleid.
 
@@ -164,7 +144,43 @@
 (fn specific-vscode-window [path]
   (toggle-window (hs.window.find (.. "^" path)) #(hs.execute (.. "code " path) true)))
 
-; main
+(fn get-previous-window []
+  "Returns a window object for the most-recent window"
+  (let [windows (hs.window.orderedWindows)]
+    (var found-one false) ; return the second "normal" window
+    (for [i 1 (length windows)]
+      (let [w (. windows i)]
+        (when (not= (w:subrole) "AXUnknown")
+          (if found-one (lua "return w") (set found-one true)))))))
+
+(fn focus-previous-window []
+  (: (get-previous-window) :focus))
+
+(fn show-browser []
+  (show-app
+    (hs.application.defaultAppForUTI "public.html")
+    #(hs.eventtap.keyStroke ["shift"] "T" 0 $1))) ; vimium tab switcher
+
+(fn show-editor []
+  (show-app (hs.application.defaultAppForUTI "public.plain-text")))
+
+(fn show-terminal []
+  (hs.application.launchOrFocus "kitty"))
+
+; "main"
+
+(hs.grid.setGrid "9x6")
+
+; the default global chooser callback seems to be incorrect:
+; if a chooser is opened when one is already open, closing it doesn't properly
+;   restore focus. Seems to work properly without?
+(tset hs.chooser :globalCallback nil)
+
+(local caffeine (hs.menubar.new))
+(when caffeine
+  (let [show-caffeine #(caffeine:setTitle (if $1 "☕" "🍵"))]
+    (caffeine:setClickCallback #(show-caffeine (hs.caffeinate.toggle "displayIdle")))
+    (show-caffeine (hs.caffeinate.get "displayIdle"))))
 
 (local [left right up down]
   [#(move "x" -50) #(move "x" 50) #(move "y" -50) #(move "y" 50)])
@@ -176,28 +192,20 @@
   ["Zoom toggle participants" ["us.zoom.xos" ["cmd"]         "U"]]
   ["Zoom invite"              ["us.zoom.xos" ["cmd"]         "I"]]
 ])
+(local layouts {
+  "DELL U3818DW"
+    [(lo "Firefox" 0 0.275) (lo "Code" 0.275 0.5) (lo "kitty" 0.775 0.225)]
+  "Built-in Retina Display"
+    [(lo "Firefox" 0 0.3) (lo "Code" 0.3 0.38) (lo "kitty" 0.68 0.32)]
+})
+(tset layouts "default" (. layouts "DELL U3818DW"))
 
-(fn get-previous-window []
-  "Returns a window object for the most-recent window"
-  (let [windows (hs.window.orderedWindows)]
-    (var found-one false) ; return the second "normal" window
-    (for [i 1 (length windows)]
-      (let [w (. windows i)]
-        (when (not= (w:subrole) "AXUnknown")
-          (if found-one (lua "return w") (set found-one true)))))))
-
-(fn focus-previous-window [] (: (get-previous-window) :focus))
-
-(hs.grid.setGrid "9x6")
+; keybinds
 (hs.hotkey.bind hyper "G" hs.grid.show)
-(hs.hotkey.bind hyper "B" #(show-app
-  (hs.application.defaultAppForUTI "public.html")
-  #(hs.eventtap.keyStroke ["shift"] "T" 0 $1))) ; vimium tab switcher
-(hs.hotkey.bind hyper "T" #(show-app
-  (hs.application.defaultAppForUTI "public.plain-text")))
-(hs.hotkey.bind hyper "S" #(hs.application.launchOrFocus "kitty")) ; "S=shell"
-(hs.hotkey.bind hyper "C" #(hs.application.launchOrFocus "kitty")) ; "C=console"
-(hs.hotkey.bind hyper "L" set-layout)
+(hs.hotkey.bind hyper "B" show-browser)
+(hs.hotkey.bind hyper "T" show-editor)
+(hs.hotkey.bind hyper "S" show-terminal) ; "S=shell"
+(hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
 (hs.hotkey.bind hyper "Up" up nil up)
@@ -223,7 +231,7 @@
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
-(local taskMenu (hs.menubar.new))
 ; "exports"
+(local taskMenu (hs.menubar.new))
 (tset _G :taskMenu taskMenu)
 (tset _G :focusPreviousWindow focus-previous-window)
