@@ -47,6 +47,11 @@
   (let [w (hs.window.focusedWindow)]
     (w:moveToScreen (: (w:screen) "next"))))
 
+; the default global callback seems to be incorrect:
+; if a chooser is opened when one is already open, closing it doesn't properly
+;   restore focus. Seems to work properly without?
+(tset hs.chooser :globalCallback nil)
+
 (fn fuzzy [choices func]
   (doto (hs.chooser.new func)
     (: :searchSubText true)
@@ -139,20 +144,14 @@
   (caffeine:setClickCallback #(show-caffeine (hs.caffeinate.toggle "displayIdle")))
   (show-caffeine (hs.caffeinate.get "displayIdle")))
 
-(fn browser []
-  "Activate browser. If already active, bring up vimium tab switcher."
-  (let [browser-bundleid (hs.application.defaultAppForUTI "public.html")
-        focused-app (hs.application.frontmostApplication)]
-    (if (not= (focused-app:bundleID) browser-bundleid)
-      (hs.application.launchOrFocusByBundleID browser-bundleid)
-      (hs.eventtap.keyStroke ["shift"] "T" 0 focused-app)))) ; vimium switch tabs
+(fn show-app [bundleid func]
+  "Activate app with bundleid.
 
-(fn show-app-or-choose-window [bundleid]
-  "Activate app with bundleid. If already active, bring up fuzzy window picker."
+  If already active, call (func or show-window-fuzzy)(app)"
   (let [focused-app (hs.application.frontmostApplication)]
     (if (not= bundleid (focused-app:bundleID))
       (hs.application.launchOrFocusByBundleID bundleid)
-      (show-window-fuzzy bundleid))))
+      ((or func show-window-fuzzy) focused-app))))
 
 (fn toggle-window [new-window command]
   "Activates new-window. If new-window is already active, goes back to prior."
@@ -189,10 +188,13 @@
 
 (fn focus-previous-window [] (: (get-previous-window) "focus"))
 
+(fn vimium-tab-switcher [browser] (hs.eventtap.keyStroke ["shift"] "T" 0 browser))
+
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
-(hs.hotkey.bind hyper "B" browser)
-(hs.hotkey.bind hyper "T" #(show-app-or-choose-window
+(hs.hotkey.bind hyper "B" #(show-app
+  (hs.application.defaultAppForUTI "public.html") vimium-tab-switcher))
+(hs.hotkey.bind hyper "T" #(show-app
   (hs.application.defaultAppForUTI "public.plain-text")))
 (hs.hotkey.bind hyper "S" #(hs.application.launchOrFocus "kitty")) ; "S=shell"
 (hs.hotkey.bind hyper "C" #(hs.application.launchOrFocus "kitty")) ; "C=console"
