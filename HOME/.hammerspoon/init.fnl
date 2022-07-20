@@ -188,12 +188,11 @@
 
 (fn focus-previous-window [] (: (get-previous-window) :focus))
 
-(fn vimium-tab-switcher [browser] (hs.eventtap.keyStroke ["shift"] "T" 0 browser))
-
 (hs.grid.setGrid "9x6")
 (hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" #(show-app
-  (hs.application.defaultAppForUTI "public.html") vimium-tab-switcher))
+  (hs.application.defaultAppForUTI "public.html")
+  #(hs.eventtap.keyStroke ["shift"] "T" 0 $1))) ; vimium tab switcher
 (hs.hotkey.bind hyper "T" #(show-app
   (hs.application.defaultAppForUTI "public.plain-text")))
 (hs.hotkey.bind hyper "S" #(hs.application.launchOrFocus "kitty")) ; "S=shell"
