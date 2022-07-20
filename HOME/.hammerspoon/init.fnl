@@ -233,6 +233,5 @@
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
 ; "exports"
-(local taskMenu (hs.menubar.new))
-(tset _G :taskMenu taskMenu)
+(tset _G :taskMenu (hs.menubar.new))
 (tset _G :focusPreviousWindow focus-previous-window)
