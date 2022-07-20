@@ -217,8 +217,8 @@
 (hs.hotkey.bind hyper "5" #(move-active-window 3 3))
 (hs.hotkey.bind hyper "6" #(move-active-window 1 3 2))
 (hs.hotkey.bind hyper "7" #(move-active-window 2 3 2))
-(hs.hotkey.bind hyper "8" #(move-active-window 1 1))
-(hs.hotkey.bind hyper "9" #(move-active-window 2 4 2)) ; "half-screen, center"
+(hs.hotkey.bind hyper "8" #(move-active-window 2 4 2)) ; "half-screen, center"
+(hs.hotkey.bind hyper "9" #(move-active-window 1 1))
 (hs.hotkey.bind hyper "0" focus-previous-window)
 (hs.hotkey.bind hyper "N" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
