@@ -26,7 +26,7 @@
 (tset layouts "default" (. layouts "DELL U3818DW"))
 
 (fn set-layout [name]
-  (let [name (or name (: (hs.screen.primaryScreen) "name"))
+  (let [name (or name (: (hs.screen.primaryScreen) :name))
         layout (or (. layouts name) layouts.default)]
     (hs.layout.apply layout)))
 
@@ -45,7 +45,7 @@
 
 (fn move-active-window-to-next-screen []
   (let [w (hs.window.focusedWindow)]
-    (w:moveToScreen (: (w:screen) "next"))))
+    (w:moveToScreen (: (w:screen) :next))))
 
 ; the default global callback seems to be incorrect:
 ; if a chooser is opened when one is already open, closing it doesn't properly
@@ -71,8 +71,8 @@
 
 (fn show-audio-fuzzy []
   (let [devices (hs.audiodevice.allDevices)
-        input-uid (: (hs.audiodevice.defaultInputDevice) "uid")
-        output-uid (: (hs.audiodevice.defaultOutputDevice) "uid")
+        input-uid (: (hs.audiodevice.defaultInputDevice) :uid)
+        output-uid (: (hs.audiodevice.defaultOutputDevice) :uid)
         choices #(icollect [_ device (ipairs devices)]
           (let [uid (device:uid)
                 (active subText) (if (device:isOutputDevice)
@@ -90,10 +90,10 @@
 
 (fn show-window-fuzzy [app]
   (let [app-images {}
-        focused-id (: (hs.window.focusedWindow) "id")
+        focused-id (: (hs.window.focusedWindow) :id)
         windows (if (= app nil) (hs.window.orderedWindows)
-                  (= app true) (: (hs.application.frontmostApplication) "allWindows")
-                  (= (type app) "string") (: (hs.application.open app) "allWindows")
+                  (= app true) (: (hs.application.frontmostApplication) :allWindows)
+                  (= (type app) "string") (: (hs.application.open app) :allWindows)
                   (app:allWindows))
         choices #(icollect [_ window (ipairs windows)]
                   (let [win-app (window:application)]
@@ -183,10 +183,10 @@
     (var found-one false) ; return the second "normal" window
     (for [i 1 (length windows)]
       (let [w (. windows i)]
-        (when (not= (: w "subrole") "AXUnknown")
+        (when (not= (w:subrole) "AXUnknown")
           (if found-one (lua "return w") (set found-one true)))))))
 
-(fn focus-previous-window [] (: (get-previous-window) "focus"))
+(fn focus-previous-window [] (: (get-previous-window) :focus))
 
 (fn vimium-tab-switcher [browser] (hs.eventtap.keyStroke ["shift"] "T" 0 browser))
 
