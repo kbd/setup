@@ -57,6 +57,7 @@ alias http='autopager http --pretty=all'
 alias https='autopager https --pretty=all'
 alias jq='autopager jq -C'
 alias curl='autopager curl -L'
+alias curlie='autopager curlie --pretty -L'
 alias xh='autopager xh --pretty=all'
 alias yq='autopager yq -C'
 alias gh='PAGER= gh' # use gh default pager; gh needs 'less -R' for colors
