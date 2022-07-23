@@ -6,13 +6,11 @@ import functools
 import glob
 import json
 import os
-import queue
 import subprocess
 import sys
 import tempfile
 import threading
 import time
-from functools import partial
 from itertools import chain
 from pathlib import Path
 
@@ -141,16 +139,10 @@ def get_additional_launch_args(args):
     return kwargs
 
 
-def queue_return(fn, q):
-    q.put(fn())
-
-
 def main(args, rest):
     launch_args = get_additional_launch_args(args)
-    result = None
-
     if sys.stdin.isatty():
-        result = kitty_launch([args.program, *rest], args.wait, launch_args, dir=args.dir)
+        kitty_launch([args.program, *rest], args.wait, launch_args, dir=args.dir)
     else:
         # if pipeline, pass stdin to subprocess via named pipe
         temp_dir = tempfile.mkdtemp()
@@ -158,21 +150,16 @@ def main(args, rest):
         try:
             os.mkfifo(path)
             cmd = ['sh', '-c', f"cat {path} | {args.program} {' '.join(rest)}"]
-            q = queue.Queue()
-            target = lambda *args: queue_return(partial(kitty_launch, *args), q)
-            t1 = threading.Thread(target=target, args=[cmd, args.wait, launch_args])
+            t1 = threading.Thread(target=kitty_launch, args=[cmd, args.wait, launch_args])
             t1.start()
             send_stdin_to_named_pipe(path)
             t1.join()
-            result = q.get()
         finally:
             os.unlink(path)
             os.rmdir(temp_dir)
 
     if args.post:
         run(args.post, shell=True)
-
-    return result
 
 
 if __name__ == '__main__':
@@ -193,4 +180,4 @@ if __name__ == '__main__':
     if args.program == "GETSOCKET":
         print(get_kitty_socket())
     else:
-        sys.exit(main(args, rest))
+        main(args, rest)
