@@ -74,8 +74,6 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
 [[ "$FZF_TAB_HOME" ]] || source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
-# fzf tab preview doesn't work properly without this set
-export SHELL='/usr/local/bin/zsh' # without this, defaults to /bin/sh
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
@@ -125,6 +123,6 @@ ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
 
 # source zsh plugins. syntax highlighting must be sourced last.
-brew_share='/usr/local/share' # "$(brew --prefix)/share"
+brew_share="$(brew --prefix)/share"
 source "$brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$brew_share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

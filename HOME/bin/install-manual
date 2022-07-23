@@ -1,5 +1,4 @@
-#!/usr/local/bin/python3
-# ^ intentionally use system Python vs /usr/bin/env
+#!/usr/bin/env systempython
 import argparse
 import os
 import shutil

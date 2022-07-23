@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2139
-
-# path/system
-if [[ -z "$PATH_SET" ]]; then
-  export PATH="$HOME/bin:$PATH:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.nimble/bin"
-  export PATH_SET=1
-fi
 export XDG_CONFIG_HOME=~/.config
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export OS="$(uname)"
+export ARCH="$(uname -p)"
+
+# homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+export BREW_PREFIX="$(brew --prefix)"
 
 # PLATFORM SPECIFIC
-if [[ "$(uname)" == 'Darwin' ]]; then
+if [[ $OS == Darwin ]]; then
   # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
   # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
@@ -19,13 +21,25 @@ if [[ "$(uname)" == 'Darwin' ]]; then
   alias awk=gawk
   alias sed=gsed
   alias tar=gtar
-  LS_PATH='/usr/local/bin/gls'
+  LS_PATH="$BREW_PREFIX/bin/gls"
 
   alias lock='pmset displaysleepnow'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
 
   alias switch-output="SwitchAudioSource -a -t output | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t output -s '%'"
   alias switch-input="SwitchAudioSource -a -t input | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t input -s '%'"
+fi
+
+# path/system
+if [[ -z "$PATH_SET" ]]; then
+  # ensure arm homebrew location added to path
+  if [[ $ARCH == arm ]]; then
+    PATH="$PATH:$BREW_PREFIX/bin"
+  fi
+
+  # add my bin first and language-specific paths after
+  PATH="$HOME/bin:$PATH:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.nimble/bin"
+  export PATH_SET=1
 fi
 
 # SHELL SPECIFIC
@@ -37,6 +51,9 @@ if [[ $ZSH_VERSION ]]; then
 
   # suffix aliases
   alias -s {txt,md}='$EDITOR'
+
+  # fzf tab preview doesn't work properly without this set
+  export SHELL="$BREW_PREFIX/bin/zsh" # without this, defaults to /bin/sh
 fi
 
 # TERMINAL SPECIFIC
@@ -169,11 +186,6 @@ gor(){
 }
 alias gort='go test ./...'
 alias yaegi='rlwrap yaegi'
-
-# homebrew
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_INSTALL_CLEANUP=1
-export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
 
 # python
 export PIPENV_SHELL_FANCY=1

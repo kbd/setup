@@ -14,8 +14,10 @@
             ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose;
         """,
         # brew python formula doesn't link 'python' and 'pip'. Why?
-        'ln -sf /usr/local/bin/python3 ~/bin/python',
-        'ln -sf /usr/local/bin/pip3 ~/bin/pip',
+        'ln -sf $(brew --prefix)/bin/python3 ~/bin/python',
+        'ln -sf $(brew --prefix)/bin/pip3 ~/bin/pip',
+        # create 'systempython' so scripts work with venv active
+        'ln -sf $(brew --prefix)/bin/python3 ~/bin/systempython',
         # install kitty terminfo
         # https://sw.kovidgoyal.net/kitty/faq/#keys-such-as-arrow-keys-backspace-delete-home-end-etc-do-not-work-when-using-su-or-sudo
         """
@@ -78,7 +80,6 @@
             # ensure current system deps (i.e. Python) are up to date first
             ['setup', 'brew'],
             # then subsequent run should have current base deps.
-            # Homebrew's bin (/usr/local/bin/) is in system path by default.
             ['setup', 'packages', 'manual', 'symlinks', 'mac', 'restartservices'],
         ),
     },

@@ -1,6 +1,6 @@
 # vi: ft=dosini
 [main]
 multi_line = False
-pager = kw /usr/local/bin/vd
+pager = kw vd
 table_format = tsv
 less_chatty = True
