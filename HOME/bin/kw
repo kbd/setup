@@ -12,6 +12,7 @@ import sys
 import tempfile
 import threading
 import time
+from functools import partial
 from itertools import chain
 from pathlib import Path
 
@@ -158,7 +159,7 @@ def main(args, rest):
             os.mkfifo(path)
             cmd = ['sh', '-c', f"cat {path} | {args.program} {' '.join(rest)}"]
             q = queue.Queue()
-            target = lambda: queue_return(kitty_launch, q)
+            target = lambda *args: queue_return(partial(kitty_launch, *args), q)
             t1 = threading.Thread(target=target, args=[cmd, args.wait, launch_args])
             t1.start()
             send_stdin_to_named_pipe(path)
