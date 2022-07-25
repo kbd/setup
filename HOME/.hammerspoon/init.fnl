@@ -159,7 +159,9 @@
 (fn show-browser []
   (show-app
     (hs.application.defaultAppForUTI "public.html")
-    #(hs.eventtap.keyStroke ["shift"] "T" 0 $1))) ; vimium tab switcher
+    (fn [app]
+      (hs.eventtap.keyStroke [] "ESCAPE" 0 app)
+      (hs.eventtap.keyStroke ["shift"] "T" 0 app)))) ; vimium tab switcher
 
 (fn show-editor []
   (show-app (hs.application.defaultAppForUTI "public.plain-text")))
