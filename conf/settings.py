@@ -14,6 +14,7 @@
             ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose;
         """,
         # brew python formula doesn't link 'python' and 'pip'. Why?
+        'mkdir -p ~/bin', # ensure bin exists (bootstrapping)
         'ln -sf $(brew --prefix)/bin/python3 ~/bin/python',
         'ln -sf $(brew --prefix)/bin/pip3 ~/bin/pip',
         # create 'systempython' so scripts work with venv active
