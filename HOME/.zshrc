@@ -123,6 +123,5 @@ ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
 
 # source zsh plugins. syntax highlighting must be sourced last.
-brew_share="$(brew --prefix)/share"
-source "$brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$brew_share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
