@@ -34,7 +34,7 @@ def main():
 
     print("Installing all the things")
     # add repo bin dir to path because bootstrapping
-    os.environ['PATH'] = f'{SETUP_EXE.parent}:{os.environ["PATH"]}'
+    os.environ['PATH'] = f'{SETUP_EXE.parent}:{os.environ["PATH"]}:/opt/homebrew/bin'
     run(['pip3', 'install', '--upgrade', 'click'])
     run([SETUP_EXE, 'init'])
     print("Done installing all the things.")
