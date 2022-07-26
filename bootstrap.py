@@ -34,8 +34,8 @@ def main():
 
     os.environ['PATH'] = ':'.join([
         str(SETUP_EXE.parent), # setup's dir, so ~/bin when symlinked later
-        os.environ["PATH"],
         '/opt/homebrew/bin', # M1 homebrew path
+        os.environ["PATH"],
     ])
     print("Installing all the things")
     run(['pip3', 'install', '--upgrade', 'click'])
