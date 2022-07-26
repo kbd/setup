@@ -32,9 +32,12 @@ def main():
         print("Checking out setup repo")
         run(['git', 'clone', REPO_URL], cwd=SETUP_PATH.parent)
 
+    os.environ['PATH'] = ':'.join([
+        str(SETUP_EXE.parent), # setup's dir, so ~/bin when symlinked later
+        os.environ["PATH"],
+        '/opt/homebrew/bin', # M1 homebrew path
+    ])
     print("Installing all the things")
-    # add repo bin dir to path because bootstrapping
-    os.environ['PATH'] = f'{SETUP_EXE.parent}:{os.environ["PATH"]}:/opt/homebrew/bin'
     run(['pip3', 'install', '--upgrade', 'click'])
     run([SETUP_EXE, 'init'])
     print("Done installing all the things.")
