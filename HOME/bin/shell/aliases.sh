@@ -4,13 +4,11 @@ export XDG_CONFIG_HOME=~/.config
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export OS="$(uname)"
-export ARCH="$(uname -p)"
 
 # homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
-export BREW_PREFIX="$(brew --prefix)"
 
 # PLATFORM SPECIFIC
 if [[ $OS == Darwin ]]; then
@@ -21,7 +19,7 @@ if [[ $OS == Darwin ]]; then
   alias awk=gawk
   alias sed=gsed
   alias tar=gtar
-  LS_PATH="$BREW_PREFIX/bin/gls"
+  LS_PATH="$HOMEBREW_PREFIX/bin/gls"
 
   alias lock='pmset displaysleepnow'
   alias locks='pmset sleepnow' # locks = "lock+sleep". 'sleep' is a unix command
@@ -31,16 +29,6 @@ if [[ $OS == Darwin ]]; then
 fi
 
 # path/system
-if [[ -z "$PATH_SET" ]]; then
-  # ensure arm homebrew location added to path
-  if [[ $ARCH == arm ]]; then
-    PATH="$PATH:$BREW_PREFIX/bin"
-  fi
-
-  # add my bin first and language-specific paths after
-  PATH="$HOME/bin:$PATH:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.nimble/bin"
-  export PATH_SET=1
-fi
 
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
@@ -53,7 +41,7 @@ if [[ $ZSH_VERSION ]]; then
   alias -s {txt,md}='$EDITOR'
 
   # fzf tab preview doesn't work properly without this set
-  export SHELL="$BREW_PREFIX/bin/zsh" # without this, defaults to /bin/sh
+  export SHELL="$HOMEBREW_PREFIX/bin/zsh" # without this, defaults to /bin/sh
 fi
 
 # TERMINAL SPECIFIC
