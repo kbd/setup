@@ -59,9 +59,9 @@
   ; check if app is running, if so create menu
   (let [zoom-app (hs.application.get ZOOM-BUNDLEID)]
     (when zoom-app
-      (create-zoom-menu zoom-app))
+      (create-zoom-menu zoom-app)))
   (set WATCHER (hs.application.watcher.new watch-zoom))
-  (WATCHER:start)))
+  (WATCHER:start))
 
 { :init init
   :toggle-audio toggle-audio

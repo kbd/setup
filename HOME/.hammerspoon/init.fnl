@@ -203,24 +203,24 @@
 (local zoom (require :zoom))
 (zoom.init)
 
-(local lookup {
-  :toggle-audio zoom.toggle-audio
-  :toggle-video zoom.toggle-video
-  :toggle-share zoom.toggle-share
-  :toggle-participants zoom.toggle-participants
-  :toggle-invite zoom.toggle-invite
-})
-(local choices [
-  ; can't pass a function value in a chooser, so pass the key to a lookup
-  {:text "Zoom toggle audio"        :fn :toggle-audio}
-  {:text "Zoom toggle video"        :fn :toggle-video }
-  {:text "Zoom toggle screen share" :fn :toggle-share }
-  {:text "Zoom toggle participants" :fn :toggle-participants }
-  {:text "Zoom invite"              :fn :toggle-invite }
-])
-
 ; todo: support cross-app functions like "toggle mute" in app-independent way
 (hs.hotkey.bind hyper "M" zoom.toggle-audio)
+
+; arbitrary-function fuzzy chooser
+(local lookup {})
+(local choices [
+  {:text "Zoom toggle audio"        :fn zoom.toggle-audio}
+  {:text "Zoom toggle video"        :fn zoom.toggle-video}
+  {:text "Zoom toggle screen share" :fn zoom.toggle-share}
+  {:text "Zoom toggle participants" :fn zoom.toggle-participants}
+  {:text "Zoom invite"              :fn zoom.toggle-invite}
+])
+; can't pass a function value to chooser directly, so indirect through a lookup
+(each [i v (ipairs choices)]
+  (let [name (tostring v.fn)] ; tostring(fn) -> "function: 0x6000023f43c0"
+    (tset lookup name v.fn)
+    (tset v :fn name)))
+
 (hs.hotkey.bind hyper "O" #(fuzzy choices #(when $1 ((. lookup $1.fn)))))
 
 ; "exports"
