@@ -95,35 +95,6 @@
                       {: text : subText : image : valid : window})))]
     (fuzzy choices select-window)))
 
-(fn execute-shortcut [shortcut]
-  (if shortcut
-    (let [action shortcut.action
-          [bundleid modifiers keystroke] action
-          apps (hs.application.applicationsForBundleID bundleid)]
-      (if (= (length apps) 0)
-        (hs.application.launchOrFocusByBundleID bundleid))
-      (hs.eventtap.keyStroke (. action 2) (. action 3) 0 (. apps 1)))))
-
-(fn show-shortcut-fuzzy [shortcuts]
-  "Shows a fuzzy finder of app-specific shortcuts"
-  (let [choices #(icollect [_ shortcut (ipairs shortcuts)]
-    (let [[text action func] shortcut
-          subText (if func (func))
-          bundleid (. action 1)
-          image (hs.image.imageFromAppBundle bundleid)
-          valid true]
-      {: text : subText : image : valid : action}))]
-  (fuzzy choices execute-shortcut)))
-
-(fn is-zoom-muted []
-  (let [apps (hs.application.applicationsForBundleID "us.zoom.xos")]
-    (match apps [app]
-      (if (app:findMenuItem ["Meeting" "Unmute Audio"]) true
-          (app:findMenuItem ["Meeting" "Mute Audio"]) false))))
-
-(fn zoom-mute-icon []
-  (match (is-zoom-muted) true "🔴" false "🟢"))
-
 (fn show-app [bundleid func]
   "Activate app with bundleid.
 
@@ -188,12 +159,7 @@
   [#(move "x" -50) #(move "x" 50) #(move "y" -50) #(move "y" 50)])
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
 (local expose-app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
-(local shortcuts [
-  ["Zoom toggle mute"         ["us.zoom.xos" ["cmd" "shift"] "A"] zoom-mute-icon]
-  ["Zoom toggle screen share" ["us.zoom.xos" ["cmd" "shift"] "S"]]
-  ["Zoom toggle participants" ["us.zoom.xos" ["cmd"]         "U"]]
-  ["Zoom invite"              ["us.zoom.xos" ["cmd"]         "I"]]
-])
+
 (local layouts {
   "DELL U3818DW"
     [(lo "Firefox" 0 0.275) (lo "Code" 0.275 0.5) (lo "kitty" 0.775 0.225)]
@@ -228,11 +194,34 @@
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
-(hs.hotkey.bind hyper "O" #(show-shortcut-fuzzy shortcuts))
 (hs.hotkey.bind hyper "K" #(specific-vscode-window "~/notes"))
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
+
+; import zoom
+(local zoom (require :zoom))
+(zoom.init)
+
+(local lookup {
+  :toggle-audio zoom.toggle-audio
+  :toggle-video zoom.toggle-video
+  :toggle-share zoom.toggle-share
+  :toggle-participants zoom.toggle-participants
+  :toggle-invite zoom.toggle-invite
+})
+(local choices [
+  ; can't pass a function value in a chooser, so pass the key to a lookup
+  {:text "Zoom toggle audio"        :fn :toggle-audio}
+  {:text "Zoom toggle video"        :fn :toggle-video }
+  {:text "Zoom toggle screen share" :fn :toggle-share }
+  {:text "Zoom toggle participants" :fn :toggle-participants }
+  {:text "Zoom invite"              :fn :toggle-invite }
+])
+
+; todo: support cross-app functions like "toggle mute" in app-independent way
+(hs.hotkey.bind hyper "M" zoom.toggle-audio)
+(hs.hotkey.bind hyper "O" #(fuzzy choices #(when $1 ((. lookup $1.fn)))))
 
 ; "exports"
 (tset _G :taskMenu (hs.menubar.new))
