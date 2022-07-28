@@ -128,6 +128,7 @@ for app in required_login_apps - current_login_apps:
 # must restart computer for this to take effect
 # to find all values: defaults find "NSStatusItem Preferred Position"
 position_key = "NSStatusItem Preferred Position"
+visible_key = "NSStatusItem Visible"
 menuitems = [
     ('com.apple.controlcenter', 'Clock'),
     ('com.apple.systemuiserver', 'Siri'),
@@ -137,6 +138,7 @@ menuitems = [
     ('com.apple.controlcenter', 'Battery'),
     ('com.apple.controlcenter', 'WiFi'),
     ('com.apple.controlcenter', 'Bluetooth'),
+    ('com.apple.controlcenter', 'Display'),
     ('com.apple.controlcenter', 'Sound'),
     ('com.apple.controlcenter', 'NowPlaying'),
     ('com.apple.controlcenter', 'ScreenMirroring'),
@@ -152,9 +154,9 @@ increment = 10.0
 value = increment
 for domain, key in menuitems:
     value += increment
-    item = f"{position_key} {key}"
     print(f"Setting menubar position {domain} {key} = {value}")
-    defaults[domain][item] = value
+    defaults[domain][f"{position_key} {key}"] = value
+    defaults[domain][f"{visible_key} {key}"] = True
 
 # screenshots
 screenshot_dir = expanduser('~/Desktop/Screenshots')
