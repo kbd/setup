@@ -43,7 +43,9 @@
 (fn destroy-zoom-menu []
   (when ZOOMENU
     (ZOOMENU:delete)
-    (set ZOOM nil)))
+    (set ZOOM nil)
+    (WATCHER:stop)
+    (set WATCHER nil)))
 
 (fn watch-zoom [name type app]
   (if (= type hs.application.watcher.launched)
