@@ -85,7 +85,7 @@ for _i, row in associations.iterrows():
 defaults.g['AppleKeyboardUIMode'] = 3
 
 # show the date in the clock
-defaults['com.apple.menuextra.clock']['DateFormat'] = "EEE MMM d  h:mm a"
+defaults['com.apple.menuextra.clock']['DateFormat'] = "EEE MMM d HH:mm"
 
 # use function keys as function keys
 defaults.g['com.apple.keyboard.fnState'] = True
