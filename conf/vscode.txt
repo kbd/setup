@@ -26,6 +26,7 @@ rust-lang.rust-analyzer
 ryanluker.vscode-coverage-gutters
 serayuzgur.crates
 stkb.rewrap
+TheNuProjectContributors.vscode-nushell-lang
 tiehuis.zig
 timonwong.shellcheck
 usernamehw.errorlens
