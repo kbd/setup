@@ -51,14 +51,16 @@ defaults.g['AppleSpacesSwitchOnActivate'] = False  # don't switch to another spa
 # 10: Put display to sleep
 # 11: Launchpad
 # 12: Notification Center
+# for modifier values: https://blog.jiayu.co/2018/12/quickly-configuring-hot-corners-on-macos/
+shift, ctrl, opt, cmd = (2**n for n in range(17,21))
 dock['wvous-bl-corner'] = 10  # bottom left: sleep
-dock['wvous-bl-modifier'] = 0
+dock['wvous-bl-modifier'] = ctrl
 dock['wvous-br-corner'] = 3  # bottom right: application windows
-dock['wvous-br-modifier'] = 0
+dock['wvous-br-modifier'] = ctrl
 dock['wvous-tl-corner'] = 2  # top left: mission control
-dock['wvous-tl-modifier'] = 0
+dock['wvous-tl-modifier'] = ctrl
 dock['wvous-tr-corner'] = 4  # top right: desktop
-dock['wvous-tr-modifier'] = 0
+dock['wvous-tr-modifier'] = ctrl
 
 finder = defaults['com.apple.finder']
 finder['ShowPathbar'] = True
