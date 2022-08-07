@@ -398,4 +398,9 @@
         "key": "f3",
         "command": "binrun.show"
     },
+    {
+        "key": "cmd+n",
+        "command": "explorer.newFile",
+        "when": "explorerViewletFocus"
+    },
 ]
