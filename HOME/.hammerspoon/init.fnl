@@ -207,7 +207,6 @@
 (hs.hotkey.bind hyper "M" zoom.toggle-audio)
 
 ; arbitrary-function fuzzy chooser
-(local lookup {})
 (local choices [
   {:text "Zoom toggle audio"        :fn zoom.toggle-audio}
   {:text "Zoom toggle video"        :fn zoom.toggle-video}
@@ -216,6 +215,7 @@
   {:text "Zoom invite"              :fn zoom.toggle-invite}
 ])
 ; can't pass a function value to chooser directly, so indirect through a lookup
+(local lookup {})
 (each [i v (ipairs choices)]
   (let [name (tostring v.fn)] ; tostring(fn) -> "function: 0x6000023f43c0"
     (tset lookup name v.fn)
