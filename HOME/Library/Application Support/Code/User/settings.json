@@ -27,8 +27,9 @@
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.inlayHints.fontSize": 12,
 
-    "terminal.integrated.fontFamily": "Fantasque Sans Mono",
+    "terminal.integrated.fontFamily": "Victor Mono",
     "terminal.integrated.fontSize": 13,
+    "terminal.integrated.fontWeight": 600,
     "terminal.integrated.splitCwd": "workspaceRoot",
     "terminal.integrated.profiles.osx": {
         "zsh": {"path": "zsh", "args": ["-l"]},
