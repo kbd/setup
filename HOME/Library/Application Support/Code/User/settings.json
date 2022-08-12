@@ -81,7 +81,7 @@
     "workbench.quickOpen.closeOnFocusLost": false,
     "workbench.activityBar.visible": true,
     "workbench.statusBar.visible": true,
-    "workbench.list.keyboardNavigation": "filter",
+    "workbench.list.defaultFindMode": "filter",
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
     "workbench.editorAssociations": {
