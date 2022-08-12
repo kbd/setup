@@ -138,10 +138,6 @@
         "when": "terminalFocus"
     },
     {
-        "key": "cmd+j",
-        "command": "-workbench.action.togglePanel"
-    },
-    {
         "key": "ctrl+right",
         "command": "cursorWordPartRight",
         "when": "textInputFocus"
@@ -407,5 +403,13 @@
         "key": "alt+cmd+t",
         "command": "testing.runAtCursor",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+b",
+        "command": "workbench.action.togglePanel"
+    },
+    {
+        "key": "alt+cmd+b",
+        "command": "workbench.action.toggleAuxiliaryBar"
     },
 ]
