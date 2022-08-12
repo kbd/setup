@@ -403,4 +403,9 @@
         "command": "explorer.newFile",
         "when": "explorerViewletFocus"
     },
+    {
+        "key": "alt+cmd+t",
+        "command": "testing.runAtCursor",
+        "when": "editorTextFocus"
+    },
 ]
