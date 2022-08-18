@@ -4,87 +4,64 @@
 	"Print dir to console": {
 		"scope": "javascript,typescript",
 		"prefix": "d",
-		"body": [
-			"console.dir($1)",
-		],
+		"body": "console.dir($1)",
 		"description": "Log dir output to console"
 	},
 	"New Promise": {
 		"scope": "javascript,typescript",
 		"prefix": "np",
-		"body": [
-			"new Promise((resolve, reject) => {",
-				"\t$0",
-			"})"
-		],
+		"body": "new Promise((resolve, reject) => {\n\t$0\n})",
 		"description": "Create a new Promise"
 	},
 	"callback": {
 		"scope": "javascript,typescript",
 		"prefix": "fn",
-		"body": [
-			"($1) => { $0 }"
-		]
+		"body": "($1) => { $0 }"
 	},
 	"throw new Error('$0')": {
 		"scope": "javascript,typescript",
 		"prefix": "throw",
-		"body": [
-			"throw new Error('$0')",
-		]
+		"body": "throw new Error('$0')"
 	},
 
 	// dates and times
 	"timestamp": {
 		"prefix": "TS",
-		"body": [
-			"$CURRENT_DAY_NAME_SHORT $CURRENT_MONTH_NAME_SHORT $CURRENT_DATE $CURRENT_YEAR",
-		],
+		"body": "$CURRENT_DAY_NAME_SHORT $CURRENT_MONTH_NAME_SHORT $CURRENT_DATE $CURRENT_YEAR",
 		"description": "Current timestamp"
 	},
 	"timestamp with time (seconds)": {
 		"prefix": "TSS",
-		"body": [
-			"$CURRENT_DAY_NAME_SHORT $CURRENT_MONTH_NAME_SHORT $CURRENT_DATE $CURRENT_YEAR $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
-		],
+		"body": "$CURRENT_DAY_NAME_SHORT $CURRENT_MONTH_NAME_SHORT $CURRENT_DATE $CURRENT_YEAR $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
 		"description": "Current timestamp"
 	},
 	"iso timestamp": {
 		"prefix": "ISO",
-		"body": [
-			"$CURRENT_YEAR$CURRENT_MONTH${CURRENT_DATE}T$CURRENT_HOUR$CURRENT_MINUTE$CURRENT_SECOND",
-		],
+		"body": "$CURRENT_YEAR$CURRENT_MONTH${CURRENT_DATE}T$CURRENT_HOUR$CURRENT_MINUTE$CURRENT_SECOND",
 		"description": "Current timestamp (short ISO format)"
 	},
 	"iso date": {
 		"prefix": "DT",
-		"body": [
-			"$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
-		],
+		"body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
 		"description": "Current date (ISO)"
 	},
 	"iso date w timestamp": {
 		"prefix": "DTT",
-		"body": [
-			"$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
-		],
+		"body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
 		"description": "Current datetime (ISO)"
 	},
 
 	// shell scripts
 	"shebang": {
 		"prefix": "env",
-		"body": [
-			"#!/usr/bin/env "
-		],
+		"body": "#!/usr/bin/env ",
 		"description": "shebang!"
 	},
 	"bash strict mode": {
 		"prefix": "bashstrict",
 		"body": [
 			"#!/usr/bin/env bash",
-			"set -Eeuxo pipefail",
-			"",
+			"set -Eeuxo pipefail\n",
 		]
 	},
 
@@ -92,10 +69,6 @@
 	"foreach": {
 		"scope": "go",
 		"prefix": "foreach",
-		"body": [
-			"for ${3|_,i|}, ${2:v} := range $1 {",
-			"\t$0",
-			"}",
-		]
+		"body": "for ${3|_,i|}, ${2:v} := range $1 {\n\t$0\n}",
 	}
 }
