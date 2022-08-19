@@ -70,5 +70,15 @@
 		"scope": "go",
 		"prefix": "foreach",
 		"body": "for ${3|_,i|}, ${2:v} := range $1 {\n\t$0\n}",
+	},
+	"listcomp": {
+		"scope": "go",
+		"prefix": "listcomp",
+		"body": [
+			"var $2 []$3",
+			"for _, v := range $1 {",
+			"\t$2 = append($2, v.$4)",
+			"}"
+		]
 	}
 }
