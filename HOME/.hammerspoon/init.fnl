@@ -134,15 +134,6 @@
       (hs.eventtap.keyStroke [] "ESCAPE" 0 app)
       (hs.eventtap.keyStroke ["shift"] "T" 0 app)))) ; vimium tab switcher
 
-(fn show-editor []
-  (show-app (hs.application.defaultAppForUTI "public.plain-text")))
-
-(fn show-terminal []
-  (hs.application.launchOrFocus "kitty"))
-
-(fn show-notes []
-  (hs.application.launchOrFocus "Logseq"))
-
 ; "main"
 
 (hs.grid.setGrid "9x6")
@@ -174,8 +165,8 @@
 ; keybinds
 (hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" show-browser)
-(hs.hotkey.bind hyper "T" show-editor)
-(hs.hotkey.bind hyper "S" show-terminal) ; "S=shell"
+(hs.hotkey.bind hyper "T" #(show-app (hs.application.defaultAppForUTI "public.plain-text")))
+(hs.hotkey.bind hyper "S" #(show-app "net.kovidgoyal.kitty")) ; "S=shell"
 (hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
@@ -197,7 +188,7 @@
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
-(hs.hotkey.bind hyper "K" show-notes)
+(hs.hotkey.bind hyper "K" #(show-app "com.electron.logseq"))
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
