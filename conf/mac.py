@@ -12,16 +12,20 @@ for key in (
     'com.apple.driver.AppleBluetoothMultitouch.trackpad'
 ):
     trackpad = defaults[key]
-    trackpad['Clicking'] = True  # touch to click
+    trackpad['Clicking'] = 1  # tap to click
 
     # enable *both* methods of right clicking
-    trackpad['TrackpadRightClick'] = True  # two finger tap
-    trackpad['TrackpadCornerSecondaryClick'] = 2  # pushing to click in right corner
+    trackpad['TrackpadRightClick'] = 1  # two finger tap
+    trackpad['TrackpadCornerSecondaryClick'] = 2  # push to click in right corner
 
     # disable "smart zoom" because it puts a delay on two-finger-tap right click
-    trackpad['TrackpadTwoFingerDoubleTapGesture'] = False
+    trackpad['TrackpadTwoFingerDoubleTapGesture'] = 0
 
-    trackpad['TrackpadThreeFingerDrag'] = True
+    # drag and drop with three fingers
+    trackpad['TrackpadThreeFingerDrag'] = 1
+
+    # without unsetting this app expose with four fingers down is disabled?
+    trackpad['TrackpadThreeFingerVertSwipeGesture'] = 0
 
 # disable dashboard
 defaults['com.apple.dashboard']['mcx-disabled'] = True
