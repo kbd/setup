@@ -140,6 +140,9 @@
 (fn show-terminal []
   (hs.application.launchOrFocus "kitty"))
 
+(fn show-notes []
+  (hs.application.launchOrFocus "Logseq"))
+
 ; "main"
 
 (hs.grid.setGrid "9x6")
@@ -194,7 +197,7 @@
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
-(hs.hotkey.bind hyper "K" #(specific-vscode-window "~/notes"))
+(hs.hotkey.bind hyper "K" show-notes)
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
