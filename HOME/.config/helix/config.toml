@@ -1,1 +1,4 @@
 theme = "dark_plus"
+
+[editor]
+rulers = [80, 100]
