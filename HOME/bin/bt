@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+blueutil --paired | sd '.*?address: (.*?),.*name: "(.*?)".*' '$1\x00$2' | fzf0 | xargs blueutil --connect
