@@ -80,5 +80,17 @@
 			"\t$2 = append($2, v.$4)",
 			"}"
 		]
-	}
+	},
+
+	// python
+	"log = logging.getLogger(__name__)": {
+		"scope": "python",
+		"prefix": "log=",
+		"body": "log = logging.getLogger(__name__)"
+	},
+	"if __name__ == __main__:": {
+		"scope": "python",
+		"prefix": "ifmain",
+		"body": "if __name__ == '__main__':\n\t$0",
+	},
 }
