@@ -73,7 +73,7 @@ zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
-[[ "$FZF_TAB_HOME" ]] || source ~/setup/3rdparty/fzf-tab/fzf-tab.plugin.zsh
+[[ "$FZF_TAB_HOME" ]] || source ~/3rdparty/fzf-tab/fzf-tab.plugin.zsh
 
 # source after 3rd party config so you can override (eg. aliases) if needed
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do

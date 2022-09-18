@@ -50,7 +50,7 @@ def manual(packages, packages_dir, bin_dir):
     Homebrew, where an archive needs to be downloaded and unpacked, or a repo
     needs to be checked out from git and a program manually built.
 
-    packages_dir is where to install packages (eg. ~/setup/3rdparty)
+    packages_dir is where to install packages (eg. ~/3rdparty)
     bin_dir is your $HOME/bin dir, or wherever to install any binaries to
     """
     keys = _get_manual_packages_to_install(packages, bin_dir)
