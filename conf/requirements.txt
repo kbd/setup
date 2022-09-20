@@ -1,3 +1,4 @@
+poetry
 attrs
 aush
 black
@@ -30,7 +31,6 @@ pgcli
 pillow
 pip
 pipdeptree
-poetry
 psycopg2-binary
 ptpython
 pudb
