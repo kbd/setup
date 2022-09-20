@@ -34,6 +34,8 @@ def main():
 
     os.environ['PATH'] = ':'.join([
         str(SETUP_EXE.parent), # setup's dir, so ~/bin when symlinked later
+        str(Path("~/bin").expanduser()),
+        str(Path("~/.cargo/bin").expanduser()),
         '/opt/homebrew/bin', # M1 homebrew path
         os.environ["PATH"],
     ])
