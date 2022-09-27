@@ -227,6 +227,7 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias notes='te ~/notes/'
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias printv='printf "%q\n"' # v for verbatim
+alias setup='just --justfile ~S/justfile'
 alias ssh='sshrc' # always sshrc
 alias tcl='rlwrap tclsh'
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1

@@ -1,5 +1,5 @@
 # pylint:disable=no-name-in-module
-from os.path import expanduser
+from pathlib import Path
 
 import pandas as pd
 from aush import duti, mkdir, osascript, sudo
@@ -81,7 +81,8 @@ defaults.g['KeyRepeat'] = 1  # can this be a float? 1 seems a bit fast and 2 a b
 defaults.g['CGDisableCursorLocationMagnification'] = False
 
 # set file-type associations
-associations = pd.read_csv("associations.csv")
+associations_path = Path(__file__).parent / "associations.csv"
+associations = pd.read_csv(associations_path)
 for _i, row in associations.iterrows():
     duti('-s', row.bundleid, row.uti, 'all')
 
@@ -165,7 +166,7 @@ for domain, key in menuitems:
     defaults[domain][f"{visible_key} {key}"] = True
 
 # screenshots
-screenshot_dir = expanduser('~/Desktop/Screenshots')
+screenshot_dir = str(Path('~/Desktop/Screenshots').expanduser())
 mkdir['-p'](screenshot_dir)
 screenshots = defaults['com.apple.screencapture']
 screenshots['location'] = screenshot_dir
