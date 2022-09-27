@@ -4,6 +4,9 @@ default:
 export VENDOR := "~/3rdparty"
 
 brew:
+  #!/usr/bin/env bash
+  set -Eeuxo pipefail
+
   homebrew-workflow conf/Brewfile
 
   # zsh: update to homebrew'd shell
@@ -11,7 +14,7 @@ brew:
 
   # fzf: install and patch its history format to include timestamp
   $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
-  perl -pi -e \'s/fc -rl 1/fc -rli 1/\' "$(brew --prefix fzf)/shell/key-bindings.zsh"
+  perl -pi -e 's/fc -rl 1/fc -rli 1/' "$(brew --prefix fzf)/shell/key-bindings.zsh"
 
   # docker: https://docs.docker.com/desktop/mac/#zsh
   etc=/Applications/Docker.app/Contents/Resources/etc
@@ -44,7 +47,7 @@ node:
   cat conf/npm.txt | xargs -t npm install -g
 
 go:
-  cat conf/go.txt | xargs -t -L1 go install",
+  cat conf/go.txt | xargs -t -L1 go install
 
 nim:
   cat conf/nimble.txt | xargs -to nimble install
@@ -59,6 +62,9 @@ symlinks:
   symgr HOME ~
 
 rust:
+  #!/usr/bin/env bash
+  set -Eeuxo pipefail
+
   rustup-init -y --no-modify-path;
   source $HOME/.cargo/env;
   rustup update;

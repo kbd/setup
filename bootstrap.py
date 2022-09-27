@@ -16,7 +16,6 @@ from pathlib import Path
 
 REPO_URL = 'https://github.com/kbd/setup.git'
 SETUP_PATH = Path('~/setup').expanduser()
-SETUP_EXE = SETUP_PATH / 'HOME/bin/setup'
 
 
 def run(cmd, **kwargs):
@@ -33,15 +32,14 @@ def main():
         run(['git', 'clone', REPO_URL], cwd=SETUP_PATH.parent)
 
     os.environ['PATH'] = ':'.join([
-        str(SETUP_EXE.parent), # setup's dir, so ~/bin when symlinked later
         str(Path("~/bin").expanduser()),
         str(Path("~/.cargo/bin").expanduser()),
         '/opt/homebrew/bin', # M1 homebrew path
         os.environ["PATH"],
     ])
     print("Installing all the things")
-    run(['pip3', 'install', '--upgrade', 'click'])
-    run([SETUP_EXE, 'init'])
+    run(['brew', 'install', 'just'])
+    run(['just', '--justfile', SETUP_PATH/'justfile', 'init'])
     print("Done installing all the things.")
 
 
