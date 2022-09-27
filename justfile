@@ -86,7 +86,7 @@ restartservices:
 
 # Open the setup directory in your editor
 edit:
-  code .
+  code {{justfile_directory()}}
 
 # Update the setup repository
 pull:
