@@ -1,7 +1,13 @@
 default:
   @just --list --justfile {{justfile()}}
 
-export VENDOR := "~/3rdparty"
+vendor := "~/3rdparty"
+
+vendor:
+  @echo {{vendor}}
+
+bin:
+  @echo {{justfile_directory()}}/HOME/bin
 
 brew:
   #!/usr/bin/env bash
@@ -56,7 +62,7 @@ vscode:
   install-vscode-extensions conf/vscode.txt
 
 manual:
-  install-manual conf/manual.toml $VENDOR
+  install-manual conf/manual.toml {{vendor}}
 
 symlinks:
   symgr HOME ~
