@@ -59,12 +59,12 @@
         "when": "editorFocus"
     },
     {
-        "key": "cmd+k cmd+l",
+        "key": "ctrl+cmd+l",
         "command": "editor.action.transformToLowercase",
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "cmd+k cmd+u",
+        "key": "ctrl+cmd+u",
         "command": "editor.action.transformToUppercase",
         "when": "editorTextFocus && !editorReadonly"
     },
