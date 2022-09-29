@@ -133,9 +133,11 @@
 
 ; "main"
 
-(local browser "Orion")
-(local editor "Code")
-(local terminal "kitty")
+(local browser-bundleid (hs.application.defaultAppForUTI "public.html"))
+(local browser-name (hs.application.nameForBundleID browser-bundleid))
+(local editor-bundleid (hs.application.defaultAppForUTI "public.plain-text"))
+(local editor-name (hs.application.nameForBundleID editor-bundleid))
+(local terminal-name "kitty")
 (local terminal-bundleid "net.kovidgoyal.kitty") ; there's no default association like with html/text
 
 (hs.grid.setGrid "9x6")
@@ -158,16 +160,16 @@
 
 (local layouts {
   "DELL U3818DW"
-    [(lo browser 0 0.275) (lo editor 0.275 0.5) (lo terminal 0.775 0.225)]
+    [(lo browser-name 0 0.275) (lo editor-name 0.275 0.5) (lo terminal-name 0.775 0.225)]
   "Built-in Retina Display"
-    [(lo browser 0 0.3) (lo editor 0.3 0.38) (lo terminal 0.68 0.32)]
+    [(lo browser-name 0 0.3) (lo editor-name 0.3 0.38) (lo terminal-name 0.68 0.32)]
 })
 (tset layouts "default" (. layouts "DELL U3818DW"))
 
 ; keybinds
 (hs.hotkey.bind hyper "G" hs.grid.show)
-(hs.hotkey.bind hyper "B" #(show-app (hs.application.defaultAppForUTI "public.html") vimium-tab-switcher))
-(hs.hotkey.bind hyper "T" #(show-app (hs.application.defaultAppForUTI "public.plain-text")))
+(hs.hotkey.bind hyper "B" #(show-app browser-bundleid vimium-tab-switcher))
+(hs.hotkey.bind hyper "T" #(show-app editor-bundleid))
 (hs.hotkey.bind hyper "S" #(show-app terminal-bundleid)) ; "S=shell"
 (hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
