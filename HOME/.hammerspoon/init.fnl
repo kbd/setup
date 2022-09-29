@@ -127,14 +127,16 @@
 (fn focus-previous-window []
   (: (get-previous-window) :focus))
 
-(fn show-browser []
-  (show-app
-    (hs.application.defaultAppForUTI "public.html")
-    (fn [app]
-      (hs.eventtap.keyStroke [] "ESCAPE" 0 app)
-      (hs.eventtap.keyStroke ["shift"] "T" 0 app)))) ; vimium tab switcher
+(fn vimium-tab-switcher [] ; open vimium tab switcher in active browser
+  (hs.eventtap.keyStroke [] "ESCAPE")
+  (hs.eventtap.keyStroke ["shift"] "T"))
 
 ; "main"
+
+(local browser "Orion")
+(local editor "Code")
+(local terminal "kitty")
+(local terminal-bundleid "net.kovidgoyal.kitty") ; there's no default association like with html/text
 
 (hs.grid.setGrid "9x6")
 
@@ -156,17 +158,17 @@
 
 (local layouts {
   "DELL U3818DW"
-    [(lo "Firefox" 0 0.275) (lo "Code" 0.275 0.5) (lo "kitty" 0.775 0.225)]
+    [(lo browser 0 0.275) (lo editor 0.275 0.5) (lo terminal 0.775 0.225)]
   "Built-in Retina Display"
-    [(lo "Firefox" 0 0.3) (lo "Code" 0.3 0.38) (lo "kitty" 0.68 0.32)]
+    [(lo browser 0 0.3) (lo editor 0.3 0.38) (lo terminal 0.68 0.32)]
 })
 (tset layouts "default" (. layouts "DELL U3818DW"))
 
 ; keybinds
 (hs.hotkey.bind hyper "G" hs.grid.show)
-(hs.hotkey.bind hyper "B" show-browser)
+(hs.hotkey.bind hyper "B" #(show-app (hs.application.defaultAppForUTI "public.html") vimium-tab-switcher))
 (hs.hotkey.bind hyper "T" #(show-app (hs.application.defaultAppForUTI "public.plain-text")))
-(hs.hotkey.bind hyper "S" #(show-app "net.kovidgoyal.kitty")) ; "S=shell"
+(hs.hotkey.bind hyper "S" #(show-app terminal-bundleid)) ; "S=shell"
 (hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
