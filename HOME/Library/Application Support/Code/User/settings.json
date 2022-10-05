@@ -45,6 +45,7 @@
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
     "window.restoreWindows": "preserve",
     "window.closeWhenEmpty": true,
+    "window.commandCenter": false,
 
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
