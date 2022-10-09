@@ -13,28 +13,30 @@ brew:
   #!/usr/bin/env bash
   set -Eeuxo pipefail
 
+  brew_prefix="$(brew --prefix)"
+
   homebrew-workflow conf/Brewfile
 
   # zsh: update to homebrew'd shell
-  update-shell "$(brew --prefix)/bin/zsh"
+  update-shell "$brew_prefix/bin/zsh"
 
   # fzf: install and patch its history format to include timestamp
-  $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
+  $brew_prefix/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
   perl -pi -e 's/fc -rl 1/fc -rli 1/' "$(brew --prefix fzf)/shell/key-bindings.zsh"
 
   # docker: https://docs.docker.com/desktop/mac/#zsh
   etc=/Applications/Docker.app/Contents/Resources/etc
-  sf="$(brew --prefix)/share/zsh/site-functions"
+  sf="$brew_prefix/share/zsh/site-functions"
   ln -sf $etc/docker.zsh-completion $sf/_docker
   ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose
 
   # brew python formula doesn't link 'python' and 'pip'. Why?
   mkdir -p ~/bin # ensure bin exists (bootstrapping)
-  ln -sf $(brew --prefix)/bin/python3 ~/bin/python
-  ln -sf $(brew --prefix)/bin/pip3 ~/bin/pip
+  ln -sf $brew_prefix/bin/python3 ~/bin/python
+  ln -sf $brew_prefix/bin/pip3 ~/bin/pip
 
   # create 'systempython' so scripts work with venv active
-  ln -sf $(brew --prefix)/bin/python3 ~/bin/systempython
+  ln -sf $brew_prefix/bin/python3 ~/bin/systempython
 
   # install kitty terminfo
   # https://sw.kovidgoyal.net/kitty/faq/#keys-such-as-arrow-keys-backspace-delete-home-end-etc-do-not-work-when-using-su-or-sudo
