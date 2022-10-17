@@ -1,3 +1,4 @@
+# https://github.com/direnv/direnv/wiki/Python#poetry
 layout_poetry() {
     PYPROJECT_TOML="${PYPROJECT_TOML:-pyproject.toml}"
     if [[ ! -f "$PYPROJECT_TOML" ]]; then
