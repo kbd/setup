@@ -1,4 +1,3 @@
-poetry
 attrs
 aush
 black

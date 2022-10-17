@@ -46,7 +46,6 @@ brew:
 
 python:
   pip3 install --upgrade -r conf/requirements.txt
-  poetry completions zsh > `brew --prefix`/share/zsh/site-functions/_poetry
 
 pipx:
   st <(cat conf/pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys[]') | xargs -t pipx install
