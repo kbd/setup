@@ -75,6 +75,7 @@
 (fn select-window [window]
   (when window (window.window:focus)))
 
+; todo: fix: if no focused window, gives "attempt to index a nil value"
 (fn show-window-fuzzy [app]
   (let [app-images {}
         focused-id (: (hs.window.focusedWindow) :id)
