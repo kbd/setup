@@ -228,8 +228,9 @@
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
 	l = log --date=format:'%a %Y-%m-%d %k:%M' --color=always --format='%C(green)%ad %C(blue)%an <%ae> %C(auto)%h%d%n%n% s%n%w(0,2,2)%+b%+N%C(reset)' --compact-summary
 	lp = l -p
-	lg-base = log --graph --format='%C(auto)%h %C(green)%<(7,trunc)%ar-%C(auto)%d %s %C(blue)<%an>%C(reset)'
-	lg = "!f() { git lg-base --color=always \"$@\" | perl -pe 's/(\\d+)\\s+(\\w{2}).*?-/\"(\".sprintf(\"%02d\", $1).$2.\")\"/e' | less -R; }; f"
+	lg-base = log --graph --format='%C(auto)%h %C(green)%<(7,trunc)-%ar-%C(auto)%d %s %C(blue)<%an>%C(reset)'
+	# format the date from git log into a fixed-width format like 04ho 05da 02we
+	lg = "!f() { git lg-base --color=always \"$@\" | perl -pe 's/-(\\d+)\\s+(\\w{2}).*?-/\"(\".sprintf(\"%02d\", $1).$2.\")\"/e' | less -R; }; f"
 	l1 = log --date=short --color=always --format='%C(green)%ad %C(auto)%h %C(blue)%<(15,trunc)%an %C(auto)%<(65,trunc)%s%d%C(reset)'
 	lo = !git l ORIG_HEAD..
 	lgo = !git lg ORIG_HEAD..
