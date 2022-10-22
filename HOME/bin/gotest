@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+rg '^func\s+(Test[A-Z0-9]\w*)' -or '$1' --no-heading --with-filename --no-line-number --sort path --color always \
+  | sd : ' ' \
+  | fzf --ansi \
+  # | xargs -t -n2 -I% sh -c "echo go test \"./$(dirname '$1')\" -v -run '^$2$'"
+
+
+#  go test ./pulsar/ -v -run 'Nested|Slice'
+#  dlv test ./pulsar/ -- -test.run ^TestNullTimeToAvro$
+
+# add a keyboard shortcut to sort by path or test function name
