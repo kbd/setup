@@ -78,6 +78,7 @@ alias o=open
 alias o.='o .'
 alias a='o -a'
 te(){ t "$@" && e "$@"; }
+tex(){ te "$@" && x "$@"; }
 ze(){ z "$@" && e .; } # z to dir then edit
 
 # directory/navigation
