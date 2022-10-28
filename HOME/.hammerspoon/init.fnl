@@ -144,9 +144,10 @@
         windows (hs.json.decode output)]
     windows))
 
-(fn select-kitty-window [kitty-pid kitty-wid]
-  (let [kitty-cmd (.. "kitty @ --to " (kitty-socket kitty-pid) " focus-window -m \"id:" kitty-wid "\"")]
-    (hs.execute kitty-cmd true)))
+(fn select-kitty-window [kitty-pid choice]
+  (when choice
+    (let [kitty-cmd (.. "kitty @ --to " (kitty-socket kitty-pid) " focus-window -m \"id:" choice.wid "\"")]
+      (hs.execute kitty-cmd true))))
 
 (fn kitty-window-switcher [kitty-instance]
   (var active-index 1)
@@ -157,7 +158,7 @@
                 wid window.id]
             (when window.is_focused (set active-index index))
             {: text : wid }))]
-    (let [chooser (fuzzy choices #(select-kitty-window pid $1.wid))]
+    (let [chooser (fuzzy choices #(select-kitty-window pid $1))]
       (chooser:selectedRow active-index))))
 
 ; "main"
