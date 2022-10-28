@@ -1,3 +1,12 @@
+; constants (reload Hammerspoon config to rebind)
+(local browser-bundleid (hs.application.defaultAppForUTI "public.html"))
+(local browser-name (hs.application.nameForBundleID browser-bundleid))
+(local editor-bundleid (hs.application.defaultAppForUTI "public.plain-text"))
+(local editor-name (hs.application.nameForBundleID editor-bundleid))
+(local terminal-name "kitty")
+(local terminal-bundleid "net.kovidgoyal.kitty") ; there's no default association like with html/text
+(local terminal-app-image (hs.image.imageFromAppBundle terminal-bundleid))
+
 (fn move [axis increment]
   "Moves the focused window by the given increment along the given axis"
   (let [win (hs.window.focusedWindow)
@@ -153,7 +162,7 @@
   (var active-index 1)
   (let [pid (kitty-instance:pid)
         windows (get-kitty-windows pid)
-        image (hs.image.imageFromAppBundle (kitty-instance:bundleID))
+        image terminal-app-image ; cached on HS init
         choices (icollect [index window (ipairs windows)]
           (let [text window.title
                 wid window.id]
@@ -163,13 +172,6 @@
       (chooser:selectedRow active-index))))
 
 ; "main"
-
-(local browser-bundleid (hs.application.defaultAppForUTI "public.html"))
-(local browser-name (hs.application.nameForBundleID browser-bundleid))
-(local editor-bundleid (hs.application.defaultAppForUTI "public.plain-text"))
-(local editor-name (hs.application.nameForBundleID editor-bundleid))
-(local terminal-name "kitty")
-(local terminal-bundleid "net.kovidgoyal.kitty") ; there's no default association like with html/text
 
 (hs.grid.setGrid "9x6")
 
