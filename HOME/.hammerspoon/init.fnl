@@ -153,11 +153,12 @@
   (var active-index 1)
   (let [pid (kitty-instance:pid)
         windows (get-kitty-windows pid)
+        image (hs.image.imageFromAppBundle (kitty-instance:bundleID))
         choices (icollect [index window (ipairs windows)]
           (let [text window.title
                 wid window.id]
             (when window.is_focused (set active-index index))
-            {: text : wid }))]
+            {: text : image : wid }))]
     (let [chooser (fuzzy choices #(select-kitty-window pid $1))]
       (chooser:selectedRow active-index))))
 
