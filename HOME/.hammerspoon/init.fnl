@@ -132,6 +132,31 @@
   (hs.eventtap.keyStroke [] "ESCAPE")
   (hs.eventtap.keyStroke ["shift"] "T"))
 
+(fn kitty-socket [kitty-pid]
+  (.. "unix:/tmp/mykitty-" kitty-pid))
+
+(fn get-kitty-windows [kitty-pid]
+  (let [socket (kitty-socket kitty-pid)
+        kitty-cmd (.. "kitty @ --to " socket " ls")
+        jq-cmd "jq '[.[].tabs[].windows[] | {id, title}]'"
+        cmd (.. kitty-cmd " | " jq-cmd)
+        (output status type rc) (hs.execute cmd true)
+        windows (hs.json.decode output)]
+    windows))
+
+(fn select-kitty-window [kitty-pid kitty-wid]
+  (let [kitty-cmd (.. "kitty @ --to " (kitty-socket kitty-pid) " focus-window -m \"id:" kitty-wid "\"")]
+    (hs.execute kitty-cmd true)))
+
+(fn kitty-window-switcher [kitty-instance]
+  (let [pid (kitty-instance:pid)
+        windows (get-kitty-windows pid)
+        choices (icollect [_ window (ipairs windows)]
+          (let [text window.title
+                window window.id]
+            {: text : window }))]
+    (fuzzy choices #(select-kitty-window pid $1.window))))
+
 ; "main"
 
 (local browser-bundleid (hs.application.defaultAppForUTI "public.html"))
@@ -171,7 +196,7 @@
 (hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" #(show-app browser-bundleid vimium-tab-switcher))
 (hs.hotkey.bind hyper "T" #(show-app editor-bundleid))
-(hs.hotkey.bind hyper "S" #(show-app terminal-bundleid)) ; "S=shell"
+(hs.hotkey.bind hyper "S" #(show-app terminal-bundleid kitty-window-switcher)) ; "S=shell"
 (hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
