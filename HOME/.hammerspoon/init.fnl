@@ -138,7 +138,7 @@
 (fn get-kitty-windows [kitty-pid]
   (let [socket (kitty-socket kitty-pid)
         kitty-cmd (.. "kitty @ --to " socket " ls")
-        jq-cmd "jq '[.[].tabs[].windows[] | {id, title}]'"
+        jq-cmd "jq '[.[].tabs[].windows[] | {id, title, is_focused}]'"
         cmd (.. kitty-cmd " | " jq-cmd)
         (output status type rc) (hs.execute cmd true)
         windows (hs.json.decode output)]
@@ -149,13 +149,16 @@
     (hs.execute kitty-cmd true)))
 
 (fn kitty-window-switcher [kitty-instance]
+  (var active-index 1)
   (let [pid (kitty-instance:pid)
         windows (get-kitty-windows pid)
-        choices (icollect [_ window (ipairs windows)]
+        choices (icollect [index window (ipairs windows)]
           (let [text window.title
-                window window.id]
-            {: text : window }))]
-    (fuzzy choices #(select-kitty-window pid $1.window))))
+                wid window.id]
+            (when window.is_focused (set active-index index))
+            {: text : wid }))]
+    (let [chooser (fuzzy choices #(select-kitty-window pid $1.wid))]
+      (chooser:selectedRow active-index))))
 
 ; "main"
 
