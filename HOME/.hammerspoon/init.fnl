@@ -3,8 +3,9 @@
 (local browser-name (hs.application.nameForBundleID browser-bundleid))
 (local editor-bundleid (hs.application.defaultAppForUTI "public.plain-text"))
 (local editor-name (hs.application.nameForBundleID editor-bundleid))
+; unfortunately for terminal there's no default association like with html/text
 (local terminal-name "kitty")
-(local terminal-bundleid "net.kovidgoyal.kitty") ; there's no default association like with html/text
+(local terminal-bundleid "net.kovidgoyal.kitty")
 (local terminal-app-image (hs.image.imageFromAppBundle terminal-bundleid))
 
 (fn move [axis increment]
