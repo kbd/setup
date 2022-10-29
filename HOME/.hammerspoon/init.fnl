@@ -8,6 +8,14 @@
 (local terminal-bundleid "net.kovidgoyal.kitty")
 (local terminal-app-image (hs.image.imageFromAppBundle terminal-bundleid))
 
+(local layouts {
+  "DELL U3818DW"
+    [(lo browser-name 0 0.275) (lo editor-name 0.275 0.5) (lo terminal-name 0.775 0.225)]
+  "Built-in Retina Display"
+    [(lo browser-name 0 0.3) (lo editor-name 0.3 0.38) (lo terminal-name 0.68 0.32)]
+})
+(tset layouts "default" (. layouts "DELL U3818DW"))
+
 (fn move [axis increment]
   "Moves the focused window by the given increment along the given axis"
   (let [win (hs.window.focusedWindow)
@@ -191,14 +199,6 @@
   [#(move "x" -50) #(move "x" 50) #(move "y" -50) #(move "y" 50)])
 (local expose (hs.expose.new)) ; default windowfilter, no thumbnails
 (local expose-app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
-
-(local layouts {
-  "DELL U3818DW"
-    [(lo browser-name 0 0.275) (lo editor-name 0.275 0.5) (lo terminal-name 0.775 0.225)]
-  "Built-in Retina Display"
-    [(lo browser-name 0 0.3) (lo editor-name 0.3 0.38) (lo terminal-name 0.68 0.32)]
-})
-(tset layouts "default" (. layouts "DELL U3818DW"))
 
 ; keybinds
 (hs.hotkey.bind hyper "G" hs.grid.show)
