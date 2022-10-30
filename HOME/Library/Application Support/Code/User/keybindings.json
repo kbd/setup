@@ -23,7 +23,6 @@
     {
         "key": "alt+w",
         "command": "editor.action.toggleWordWrap",
-        "when": "editorTextFocus"
     },
     {
         "key": "cmd+shift+]",
