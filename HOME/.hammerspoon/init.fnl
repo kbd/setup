@@ -8,6 +8,18 @@
 (local terminal-bundleid "net.kovidgoyal.kitty")
 (local terminal-app-image (hs.image.imageFromAppBundle terminal-bundleid))
 
+(fn get-windows-for-app-on-screen [appname screen]
+  "Returns a list of windows for the given app on the given screen"
+  (let [app (hs.application.get appname)]
+    (if app
+      (let [scr (or screen (hs.screen.mainScreen))
+            wins (app:allWindows)]
+        (icollect [_ win (ipairs wins)] ; filter windows by screen
+          (if (= scr (win:screen)) win))))))
+
+(fn lo [app x w]
+  [app get-windows-for-app-on-screen hs.screen.mainScreen {: x :y 0 : w :h 1} nil nil])
+
 (local layouts {
   "DELL U3818DW"
     [(lo browser-name 0 0.275) (lo editor-name 0.275 0.5) (lo terminal-name 0.775 0.225)]
@@ -22,18 +34,6 @@
         f (win:frame)]
     (tset f axis (+ (. f axis) increment))
     (win:setFrame f)))
-
-(fn get-windows-for-app-on-screen [appname screen]
-  "Returns a list of windows for the given app on the given screen"
-  (let [app (hs.application.get appname)]
-    (if app
-      (let [scr (or screen (hs.screen.mainScreen))
-            wins (app:allWindows)]
-        (icollect [_ win (ipairs wins)] ; filter windows by screen
-          (if (= scr (win:screen)) win))))))
-
-(fn lo [app x w]
-  [app get-windows-for-app-on-screen hs.screen.mainScreen {: x :y 0 : w :h 1} nil nil])
 
 (fn set-layout [layouts name]
   (let [name (or name (: (hs.screen.primaryScreen) :name))
