@@ -1,7 +1,54 @@
-#!/usr/bin/env bash
-rg '^func\s+(Test[A-Z0-9]\w*)' -or '$1' --no-heading --with-filename --no-line-number --sort path --color always \
-  | sd : ' ' \
-  | fzf --ansi \
+#!/usr/bin/env nu
+import logging
+import sys
+from pathlib import Path
+from subprocess import PIPE
+
+from aush import dlv, rg
+
+logging.basicConfig(level=logging.INFO)
+
+test_lines = rg(r'^func\s+(Test[A-Z0-9]\w*)',
+  o=True,
+  r='$1',
+  no_heading=True,
+  with_filename=True,
+  no_line_number=True,
+  sort="path",
+)
+
+tests = [t.split(':', maxsplit=1) for t in test_lines]
+
+# call fzf here
+fzf_cmd = ['fzf', '--sync', '--ansi']
+p = run(fzf_cmd, stdin="one\ntwo\nthree", stdout=PIPE, text=True)
+print(p.communicate())
+
+
+def dlv_debug(path, testname):
+  print(f"{path=} {testname=}")
+  r = dlv.test(f"./{path.parent}", '--', '-test.run', f'^{testname}$', _stdin=sys.stdin, _stdout=sys.stdout)
+  r._process.communicate()
+
+dlv_debug(Path(tests[0][1]), tests[0][1])
+
+# path, testname = tests[0]
+# path = Path(path)
+# dlv_debug(path, testname)
+
+# tests = (
+#   | sd : ' '
+#   | fzf --ansi
+#   | split column " "
+# )
+  # | each
+
+# split on first space
+# path, testname = line.split()
+# dir = dirname(path)
+# run dlv test $dir -- -test.run ^$testname$
+
+
   # | xargs -t -n2 -I% sh -c "echo go test \"./$(dirname '$1')\" -v -run '^$2$'"
 
 
