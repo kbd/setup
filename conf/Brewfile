@@ -157,10 +157,8 @@ cask "font-noto-sans"
 cask "font-noto-mono"
 cask "font-victor-mono"
 
-mas "Clear", id: 504544917
 mas "Cyberduck", id: 409222199
 mas "Fantastical", id: 975937182
-mas "Horo", id: 1437226581
+mas "Monodraw", id: 920404675
 mas "Tweetbot", id: 1384080005
 mas "Xcode", id: 497799835
-mas "Monodraw", id: 920404675
