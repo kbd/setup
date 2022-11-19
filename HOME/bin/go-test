@@ -1,58 +1,24 @@
 #!/usr/bin/env nu
-import logging
-import sys
-from pathlib import Path
-from subprocess import PIPE
+let result = (rg '^func\s+(Test[A-Z0-9]\w*)' -or '$1' --no-heading --with-filename --no-line-number --sort=path | fzf)
 
-from aush import dlv, rg
+#https://www.nushell.sh/book/scripts.html#parameterizing-scripts
+echo $"result: ($result)"
+let path_test = ($result | split column :)
+let path = ($path_test | select column1 | get 0)
+let path_dir = ($path.column1 | path parse | get parent)
+let test = ($path_test | select column2 | get 0 | str trim)
 
-logging.basicConfig(level=logging.INFO)
+def dlv_debug [dir test] {
+  echo $"dlv test \"./($dir)\" -- -test.run \"^($test)$\""
+  dlv test $"./($dir)" -- -test.run $"^($test)$"
+}
 
-test_lines = rg(r'^func\s+(Test[A-Z0-9]\w*)',
-  o=True,
-  r='$1',
-  no_heading=True,
-  with_filename=True,
-  no_line_number=True,
-  sort="path",
-)
+# how to pass command line arguments in nu?
+# def go_test [dir test] {
+#   echo $"go test $\"./($dir)\" -v -run $\"^($test)$\""
+#   go test $"./($dir)" -v -run $"^($test)$"
+# }
 
-tests = [t.split(':', maxsplit=1) for t in test_lines]
+dlv_debug $path_dir $test.column2
 
-# call fzf here
-fzf_cmd = ['fzf', '--sync', '--ansi']
-p = run(fzf_cmd, stdin="one\ntwo\nthree", stdout=PIPE, text=True)
-print(p.communicate())
-
-
-def dlv_debug(path, testname):
-  print(f"{path=} {testname=}")
-  r = dlv.test(f"./{path.parent}", '--', '-test.run', f'^{testname}$', _stdin=sys.stdin, _stdout=sys.stdout)
-  r._process.communicate()
-
-dlv_debug(Path(tests[0][1]), tests[0][1])
-
-# path, testname = tests[0]
-# path = Path(path)
-# dlv_debug(path, testname)
-
-# tests = (
-#   | sd : ' '
-#   | fzf --ansi
-#   | split column " "
-# )
-  # | each
-
-# split on first space
-# path, testname = line.split()
-# dir = dirname(path)
-# run dlv test $dir -- -test.run ^$testname$
-
-
-  # | xargs -t -n2 -I% sh -c "echo go test \"./$(dirname '$1')\" -v -run '^$2$'"
-
-
-#  go test ./pulsar/ -v -run 'Nested|Slice'
-#  dlv test ./pulsar/ -- -test.run ^TestNullTimeToAvro$
-
-# add a keyboard shortcut to sort by path or test function name
+# add a keyboard shortcut to fzf to sort by path or test function name?
