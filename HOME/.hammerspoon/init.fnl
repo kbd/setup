@@ -3,6 +3,8 @@
 (local browser-name (hs.application.nameForBundleID browser-bundleid))
 (local editor-bundleid (hs.application.defaultAppForUTI "public.plain-text"))
 (local editor-name (hs.application.nameForBundleID editor-bundleid))
+(local notes-app (hs.application.get "Obsidian"))
+(local notes-bundleid (notes-app:bundleID))
 ; unfortunately for terminal there's no default association like with html/text
 (local terminal-name "kitty")
 (local terminal-bundleid "net.kovidgoyal.kitty")
@@ -226,7 +228,7 @@
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "e" #(expose:toggleShow))
 (hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
-(hs.hotkey.bind hyper "K" #(show-app "com.electron.logseq"))
+(hs.hotkey.bind hyper "K" #(show-app notes-bundleid))
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
