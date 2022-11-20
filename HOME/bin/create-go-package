@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+import argparse
+import logging
+
+from aush import cd, echo, mkdir
+
+logging.basicConfig(level=logging.INFO)
+
+# parse args
+parser = argparse.ArgumentParser(description="Create a Go package in an existing project")
+parser.add_argument("name", help="The name of the package")
+args = parser.parse_args()
+
+# create directory
+mkdir("-p", args.name)
+cd(args.name)
+
+# create implementation file
+echo(f"""package {args.name}
+
+func {args.name.title()}() int {{
+	return 1
+}}""") > f"{args.name}.go"
+
+# create test file
+echo(f"""package {args.name}
+
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func Test{args.name.title()}(t *testing.T) {{
+	t.Parallel()
+
+	assert.Equal(t, {args.name.title()}(), 1)
+}}""") > f"{args.name}_test.go"

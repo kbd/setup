@@ -1,0 +1,44 @@
+#!/usr/bin/env nu
+def find-tests [] {(
+  rg '^func\s+(Test[A-Z0-9]\w*)'
+    -or '$1'
+    --no-heading
+    --with-filename
+    --no-line-number
+    --sort=path
+    --color=always
+)}
+
+def select-test [] {
+  # searches codebase for tests and lets user fuzzy find them
+  # returns [{path:, name:}, ...] for selected tests
+  find-tests | fzf --ansi | lines | split column : path name
+}
+
+def go_test [testpath funcname] {
+  let parentdir = ($testpath | path parse).parent
+  echo $"go test './($parentdir)' -v -run '^($funcname)'"
+  go test $"'./($parentdir)'" -v -run $"'^($funcname)$'"
+}
+
+def dlv_debug [testpath funcname] {
+  let parentdir = ($testpath | path parse).parent
+  echo $"dlv test './($parentdir)' -- -test.run '^($funcname)'"
+  dlv test $"'./($parentdir)'" -- -test.run $"'^($funcname)$'"
+}
+
+def main [
+  --debug (-d): bool
+  # --print (-p): bool
+  # --all (-a): bool
+] {
+  let test = select-test
+  if ($test | length) == 0 {
+    exit 0 # no test selected
+  }
+  if $debug {
+    dlv_debug $test.path.0 $test.name.0
+  } else {
+    go_test $test.path.0 $test.name.0
+  }
+}
