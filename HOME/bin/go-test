@@ -30,15 +30,24 @@ def dlv_debug [testpath funcname] {
 def main [
   --debug (-d): bool
   # --print (-p): bool
-  # --all (-a): bool
+  --all (-a): bool
+  # --verbose (-v): bool
 ] {
-  let test = select-test
-  if ($test | length) == 0 {
-    exit 0 # no test selected
-  }
-  if $debug {
-    dlv_debug $test.path.0 $test.name.0
+  if $all {
+    if $debug {
+      dlv test # I don't see an equivalent to run all tests in dlv
+    } else {
+      go test ./...
+    }
   } else {
-    go_test $test.path.0 $test.name.0
+    let test = select-test
+    if ($test | length) == 0 {
+      exit 0 # no test selected
+    }
+    if $debug {
+      dlv_debug $test.path.0 $test.name.0
+    } else {
+      go_test $test.path.0 $test.name.0
+    }
   }
 }
