@@ -27,7 +27,8 @@ def go-test-cmd [testpath funcname --verbose(-v)] {
 
 def dlv-debug-cmd [testpath funcname --verbose(-v)] {
   let parentdir = ($testpath | path parse).parent
-  let args = [test $"'./($parentdir)'" -- -test.run $"'^($funcname)$'"]
+  # todo: use temp file for delve-init so that this script is self-contained
+  let args = [test $"'./($parentdir)'" --init ~/setup/snip/delve-init -- -test.run $"'^($funcname)$'"]
   [dlv ($args | verbose $verbose '-test.v')]
 }
 
@@ -61,8 +62,3 @@ def main [
     }
   }
 }
-
-# todo: provide delve-init to dlv test --init
-# $ cat delve-init
-# b testing.common.Fail
-# c
