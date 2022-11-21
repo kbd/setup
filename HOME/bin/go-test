@@ -15,16 +15,26 @@ def select-test [] {
   find-tests | fzf --ansi | lines | split column : path name
 }
 
-def go_test [testpath funcname --verbose(-v)] {
-  let parentdir = ($testpath | path parse).parent
-  echo $"go test './($parentdir)' -v -run '^($funcname)'"
-  go test $"'./($parentdir)'" -v -run $"'^($funcname)$'"
+def verbose [v flag] {
+  if $v { append $flag } else { flatten }
 }
 
-def dlv_debug [testpath funcname --verbose(-v)] {
+def go-test-cmd [testpath funcname --verbose(-v)] {
   let parentdir = ($testpath | path parse).parent
-  echo $"dlv test './($parentdir)' -- -test.run '^($funcname)'"
-  dlv test $"'./($parentdir)'" -- -test.v -test.run $"'^($funcname)$'"
+  let args = [test $"'./($parentdir)'" -run $"'^($funcname)$'"]
+  [go ($args | verbose $verbose '-v')]
+}
+
+def dlv-debug-cmd [testpath funcname --verbose(-v)] {
+  let parentdir = ($testpath | path parse).parent
+  let args = [test $"'./($parentdir)'" -- -test.run $"'^($funcname)$'"]
+  [dlv ($args | verbose $verbose '-test.v')]
+}
+
+def run [cmd] {
+  # cmd is a list of [command, args]
+  $cmd | flatten | str join ' ' # show command
+  run-external $cmd.0 $cmd.1
 }
 
 def main [
@@ -35,9 +45,9 @@ def main [
 ] {
   if $all {
     if $debug {
-      dlv test # I don't see an equivalent to run all tests in dlv
+      run [dlv [test]] # I don't see an equivalent to run all tests in dlv
     } else {
-      go test ./...
+      run [go ([test './...'] | verbose $verbose '-v')]
     }
   } else {
     let test = select-test
@@ -45,9 +55,14 @@ def main [
       exit 0 # no test selected
     }
     if $debug {
-      dlv_debug $test.path.0 $test.name.0
+      run (dlv-debug-cmd $test.path.0 $test.name.0 --verbose)
     } else {
-      go_test $test.path.0 $test.name.0
+      run (go-test-cmd $test.path.0 $test.name.0 --verbose)
     }
   }
 }
+
+# todo: provide delve-init to dlv test --init
+# $ cat delve-init
+# b testing.common.Fail
+# c
