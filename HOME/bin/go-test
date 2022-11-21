@@ -15,23 +15,23 @@ def select-test [] {
   find-tests | fzf --ansi | lines | split column : path name
 }
 
-def go_test [testpath funcname] {
+def go_test [testpath funcname --verbose(-v)] {
   let parentdir = ($testpath | path parse).parent
   echo $"go test './($parentdir)' -v -run '^($funcname)'"
   go test $"'./($parentdir)'" -v -run $"'^($funcname)$'"
 }
 
-def dlv_debug [testpath funcname] {
+def dlv_debug [testpath funcname --verbose(-v)] {
   let parentdir = ($testpath | path parse).parent
   echo $"dlv test './($parentdir)' -- -test.run '^($funcname)'"
-  dlv test $"'./($parentdir)'" -- -test.run $"'^($funcname)$'"
+  dlv test $"'./($parentdir)'" -- -test.v -test.run $"'^($funcname)$'"
 }
 
 def main [
-  --debug (-d): bool
-  # --print (-p): bool
-  --all (-a): bool
-  # --verbose (-v): bool
+  --debug (-d)
+  --print (-p)
+  --all (-a)
+  --verbose (-v)
 ] {
   if $all {
     if $debug {
