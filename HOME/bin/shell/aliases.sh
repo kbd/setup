@@ -47,7 +47,7 @@ fi
 # TERMINAL SPECIFIC
 alias is_kitty='[[ $TERM == xterm-kitty ]]'
 if is_kitty; then
-  alias cati="kitty +kitten icat --align=left"
+  alias icat="kitty +kitten icat --align=left"
 fi
 
 # pag{ers,ing}/editors
