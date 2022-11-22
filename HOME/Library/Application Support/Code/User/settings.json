@@ -355,7 +355,7 @@
         "editor.insertSpaces": false,
         "editor.tabSize": 3,
     },
-    "go.lintOnSave": "file",
+    "go.lintOnSave": "package",
     "go.lintTool": "golangci-lint",
     "go.coverOnSingleTest": true,
     "go.coverOnSingleTestFile": true,
