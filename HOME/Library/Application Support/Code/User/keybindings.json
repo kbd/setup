@@ -411,4 +411,8 @@
         "key": "alt+cmd+b",
         "command": "workbench.action.toggleAuxiliaryBar"
     },
+    {
+        "key": "ctrl+cmd+p",
+        "command": "bookmarks.listFromAllFiles"
+    },
 ]
