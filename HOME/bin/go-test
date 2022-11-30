@@ -15,21 +15,23 @@ def select-test [] {
   find-tests | fzf --ansi | lines | split column : path name
 }
 
-def verbose [v flag] {
-  if $v { append $flag } else { flatten }
-}
-
 def go-test-cmd [testpath funcname --verbose(-v)] {
   let parentdir = ($testpath | path parse).parent
-  let args = [test $"'./($parentdir)'" -run $"'^($funcname)$'"]
-  [go ($args | verbose $verbose '-v')]
+  mut args = [test $"'./($parentdir)'" -run $"'^($funcname)$'"]
+  if $verbose {
+    $args = $args ++ ['-v']
+  }
+  [go $args]
 }
 
 def dlv-debug-cmd [testpath funcname --verbose(-v)] {
   let parentdir = ($testpath | path parse).parent
   # todo: use temp file for delve-init so that this script is self-contained
-  let args = [test $"'./($parentdir)'" --init ~/setup/snip/delve-init -- -test.run $"'^($funcname)$'"]
-  [dlv ($args | verbose $verbose '-test.v')]
+  mut args = [test $"'./($parentdir)'" --init ~/setup/snip/delve-init -- -test.run $"'^($funcname)$'"]
+  if $verbose {
+    $args = $args ++ ['-test.v']
+  }
+  [dlv $args]
 }
 
 def run [cmd] {
@@ -48,17 +50,22 @@ def main [
     if $debug {
       run [dlv [test]] # I don't see an equivalent to run all tests in dlv
     } else {
-      run [go ([test './...'] | verbose $verbose '-v')]
+      mut args = [test './...']
+      if $verbose {
+        $args = $args ++ ['-v']
+      }
+      run [go $args]
     }
+    return
+  }
+
+  let test = select-test
+  if ($test | length) == 0 {
+    exit 0 # no test selected
+  }
+  if $debug {
+    run (dlv-debug-cmd $test.path.0 $test.name.0 --verbose)
   } else {
-    let test = select-test
-    if ($test | length) == 0 {
-      exit 0 # no test selected
-    }
-    if $debug {
-      run (dlv-debug-cmd $test.path.0 $test.name.0 --verbose)
-    } else {
-      run (go-test-cmd $test.path.0 $test.name.0 --verbose)
-    }
+    run (go-test-cmd $test.path.0 $test.name.0 --verbose)
   }
 }
