@@ -5,5 +5,5 @@ let-env PROMPT_COMMAND = {
     let-env PROMPT_PREFIX = 'NU'
     prompt
 }
-let-env PROMPT_COMMAND_RIGHT = { date format '%m/%d %H:%M:%S' }
+let-env PROMPT_COMMAND_RIGHT = { date now | date format '%m/%d %H:%M:%S' }
 let-env PROMPT_INDICATOR = { "" }
