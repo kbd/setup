@@ -110,7 +110,7 @@ defaults.g['NSQuitAlwaysKeepsWindows'] = True
 defaults.g['NSAutomaticTextCompletionEnabled'] = False
 
 # startup items - https://apple.stackexchange.com/a/310502/
-required_login_apps = {'SpotMenu', 'Alfred 5', 'Horo', 'Hammerspoon', 'Tinkle'}
+required_login_apps = {'SpotMenu', 'Alfred 5', 'Hammerspoon', 'Tinkle'}
 cmd = 'tell application "System Events" to get the name of every login item'
 current_login_apps = set(str(osascript(e=cmd)).split(', '))
 
