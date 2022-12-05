@@ -412,7 +412,7 @@
         "command": "workbench.action.toggleAuxiliaryBar"
     },
     {
-        "key": "ctrl+cmd+p",
+        "key": "shift+cmd+f2",
         "command": "bookmarks.listFromAllFiles"
     },
     {
