@@ -1,2 +1,3 @@
+config max-string-len 500
 b testing.common.Fail
 c

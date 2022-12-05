@@ -17,7 +17,7 @@ def select-test [] {
 
 def go-test-cmd [testpath funcname --verbose(-v)] {
   let parentdir = ($testpath | path parse).parent
-  mut args = [test $"'./($parentdir)'" -run $"'^($funcname)$'"]
+  mut args = [test $"'./($parentdir)'" -run $"'^($funcname)$'" -count=1]
   if $verbose {
     $args = $args ++ ['-v']
   }
