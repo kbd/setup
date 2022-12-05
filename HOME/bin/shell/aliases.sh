@@ -90,7 +90,7 @@ alias    ...='cd ../..'
 alias   ....='cd ../../..'
 alias  .....='cd ../../../..'
 alias ......='cd ../../../../..'
-alias ls="${LS_PATH:-ls} -F --color=auto --group-directories-first"
+alias ls="${LS_PATH:-ls} -F --color=auto --group-directories-first --hyperlink"
 alias l=ls
 alias la='ls -A'
 alias lt='ls -t'
