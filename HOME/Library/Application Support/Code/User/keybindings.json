@@ -415,4 +415,8 @@
         "key": "ctrl+cmd+p",
         "command": "bookmarks.listFromAllFiles"
     },
+    {
+        "key": "cmd+f1",
+        "command": "editor.action.quickFix"
+    },
 ]
