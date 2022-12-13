@@ -311,6 +311,7 @@
     ],
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.variableTypes": true,
+    "python.defaultInterpreterPath": "python3",
 
     "jupyter.sendSelectionToInteractiveWindow": false,
     "notebook.cellToolbarLocation": {
