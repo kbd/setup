@@ -6,7 +6,7 @@ layout_poetry() {
         poetry init
     fi
 
-    VIRTUAL_ENV=$(poetry env info --path 2>/dev/null ; true)
+    VIRTUAL_ENV="$(poetry env list --full-path | head -1)"
 
     if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
         log_status "No virtual environment exists. Executing \`poetry install\` to create one."
