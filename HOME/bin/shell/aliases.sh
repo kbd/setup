@@ -77,6 +77,8 @@ alias eg='e -g' # edit (go to line)
 alias o=open
 alias o.='o .'
 alias a='o -a'
+alias x='chmod +x'
+alias c='bat --style=header,numbers'
 te(){ t "$@" && e "$@"; }
 tex(){ te "$@" && x "$@"; }
 ze(){ z "$@" && e .; } # z to dir then edit
@@ -196,7 +198,6 @@ alias pyt='ptpython'
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
 export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/rc
 alias 1p='eval $(op signin)'
-alias c='bat --style=header,numbers'
 alias cbf='fzf | teerr | cb'
 alias d='docker'
 alias dc='docker-compose'
@@ -236,7 +237,6 @@ alias title-tab='printf "\e]1;%s\a"'
 alias title-win='printf "\e]2;%s\a"'
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
-alias x='chmod +x'
 alias S='~S' # too often I miss the ~ when I ~S. Make it work anyway.
 
 rlh() {
