@@ -233,28 +233,31 @@
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
 ; import zoom
-(local zoom (require :zoom))
-(zoom.init)
+(fn init-zoom []
+  (local zoom (require :zoom))
+  (zoom.init)
 
-; todo: support cross-app functions like "toggle mute" in app-independent way
-(hs.hotkey.bind hyper "M" zoom.toggle-audio)
+  ; todo: support cross-app functions like "toggle mute" in app-independent way
+  (hs.hotkey.bind hyper "M" zoom.toggle-audio)
 
-; arbitrary-function fuzzy chooser
-(local choices [
-  {:text "Zoom toggle audio"        :fn zoom.toggle-audio}
-  {:text "Zoom toggle video"        :fn zoom.toggle-video}
-  {:text "Zoom toggle screen share" :fn zoom.toggle-share}
-  {:text "Zoom toggle participants" :fn zoom.toggle-participants}
-  {:text "Zoom invite"              :fn zoom.toggle-invite}
-])
-; can't pass a function value to chooser directly, so indirect through a lookup
-(local lookup {})
-(each [i v (ipairs choices)]
-  (let [name (tostring v.fn)] ; tostring(fn) -> "function: 0x6000023f43c0"
-    (tset lookup name v.fn)
-    (tset v :fn name)))
+  ; arbitrary-function fuzzy chooser
+  (local choices [
+    {:text "Zoom toggle audio"        :fn zoom.toggle-audio}
+    {:text "Zoom toggle video"        :fn zoom.toggle-video}
+    {:text "Zoom toggle screen share" :fn zoom.toggle-share}
+    {:text "Zoom toggle participants" :fn zoom.toggle-participants}
+    {:text "Zoom invite"              :fn zoom.toggle-invite}
+  ])
+  ; can't pass a function value to chooser directly, so indirect through a lookup
+  (local lookup {})
+  (each [i v (ipairs choices)]
+    (let [name (tostring v.fn)] ; tostring(fn) -> "function: 0x6000023f43c0"
+      (tset lookup name v.fn)
+      (tset v :fn name)))
 
-(hs.hotkey.bind hyper "O" #(fuzzy choices #(when $1 ((. lookup $1.fn)))))
+  (hs.hotkey.bind hyper "O" #(fuzzy choices #(when $1 ((. lookup $1.fn))))))
+
+; (init-zoom)
 
 ; "exports"
 (tset _G :taskMenu (hs.menubar.new))
