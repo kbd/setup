@@ -154,6 +154,8 @@
 	hide = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
 	unhide-all = update-index --really-refresh
+	lf = l --follow --
+	lpf = lp --follow --
 	ls = ls-files
 	list-hidden = !git ls-files -v | grep '^[a-z]' | cut -c3-
 	list-ignored = !git status -s --ignored | grep '^!!' | cut -c4-
