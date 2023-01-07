@@ -110,5 +110,8 @@ update: pull brew packages symlinks
 
 # 'Bless' files
 bless path:
-  cd {{invocation_directory()}}; \
-  symgr --bless "$(realpath {{path}})" "{{justfile_directory()}}/HOME/$(realpath --relative-to="$HOME" "{{path}}")"
+  #!/usr/bin/env zsh
+  cd "{{invocation_directory()}}"
+  source_path="$(realpath "{{path}}")"
+  controlled_path="$(realpath --relative-to="$HOME" $source_path)"
+  symgr --bless "$source_path" "{{justfile_directory()}}/HOME/$controlled_path"
