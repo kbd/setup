@@ -1,4 +1,4 @@
-default:
+list:
   @just --list --justfile {{justfile()}}
 
 vendor := "~/3rdparty"
