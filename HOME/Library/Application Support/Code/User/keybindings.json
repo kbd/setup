@@ -419,4 +419,8 @@
         "key": "cmd+f1",
         "command": "editor.action.quickFix"
     },
+    {
+        "key": "ctrl+cmd+enter",
+        "command": "editor.action.openLink"
+    },
 ]
