@@ -5,6 +5,7 @@ crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
 eamodio.gitlens
 esbenp.prettier-vscode
+Fr43nk.seito-openfile
 golang.go
 Gruntfuggly.todo-tree
 hashicorp.terraform
