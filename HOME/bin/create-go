@@ -16,27 +16,23 @@ args = parser.parse_args()
 mkdir("-p", args.name)
 cd(args.name)
 
-# create main
-echo(f"""package main
+main = f"""package main
 
 import "fmt"
 
 func main() {{
 	fmt.Println("{args.name}")
-}}""") > "main.go"
+}}"""
 
-# create justfile
-echo("""run:
-  go run main.go
-""") > "justfile"
-
-# initialize module
-go.mod.init(args.module or f"example.com/{args.name}")
-
-# create git repo and add files
+# create files
+go.mod.init(args.module or f"example.com/{args.name}")  # initialize module
+echo(main) > "main.go"
+echo("run:\n\tgo run main.go") > "justfile"  # create justfile
 echo(f"# {args.name}") >> 'README.md'
 echo(f"{args.name}") >> '.gitignore'  # add binary name to git ignore
 echo("go.work") >> '.gitignore'  # go 1.18
+
+# create git repo and add files
 git.init()
 git.add(all=True)
 git.commit(m="Initial Go commit")
