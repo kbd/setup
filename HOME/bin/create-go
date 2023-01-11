@@ -25,6 +25,10 @@ func main() {{
 	fmt.Println("{args.name}")
 }}""") > "main.go"
 
+echo("""run:
+  go run main.go
+""") > "justfile"
+
 # initialize module
 go.mod.init(args.module or f"example.com/{args.name}")
 
