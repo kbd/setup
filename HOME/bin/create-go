@@ -6,6 +6,14 @@ from aush import cd, echo, git, go, mkdir
 
 logging.basicConfig(level=logging.INFO)
 
+MAIN = """package main
+
+import "fmt"
+
+func main() {{
+	fmt.Println("{}")
+}}"""
+
 # parse args
 parser = argparse.ArgumentParser(description="Start a Go project")
 parser.add_argument("name", help="The name of the project")
@@ -16,19 +24,11 @@ args = parser.parse_args()
 mkdir("-p", args.name)
 cd(args.name)
 
-main = f"""package main
-
-import "fmt"
-
-func main() {{
-	fmt.Println("{args.name}")
-}}"""
-
 # create files
 go.mod.init(args.module or f"example.com/{args.name}")  # initialize module
-echo(main) > "main.go"
+echo(MAIN.format(args.name)) > "main.go"  # create main.go
 echo("run:\n\tgo run main.go") > "justfile"  # create justfile
-echo(f"# {args.name}") >> 'README.md'
+echo(f"# {args.name}") >> 'README.md'  # create readme
 echo(f"{args.name}") >> '.gitignore'  # add binary name to git ignore
 echo("go.work") >> '.gitignore'  # go 1.18
 
