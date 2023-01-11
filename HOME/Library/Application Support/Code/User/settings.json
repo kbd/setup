@@ -17,7 +17,8 @@
     "editor.autoClosingQuotes": "beforeWhitespace",
     "editor.autoClosingBrackets": "beforeWhitespace",
     "editor.renderLineHighlight": "all",
-    "editor.tabSize": 2,
+    "editor.tabSize": 3,
+    "editor.indentSize": 2,
     "editor.insertSpaces": true,
     "editor.wrappingIndent": "indent",
     "editor.bracketPairColorization.enabled": true,
@@ -354,7 +355,6 @@
 
     "[go]": {
         "editor.insertSpaces": false,
-        "editor.tabSize": 3,
     },
     "go.lintOnSave": "package",
     "go.lintTool": "golangci-lint",
