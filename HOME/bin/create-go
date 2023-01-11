@@ -25,6 +25,7 @@ func main() {{
 	fmt.Println("{args.name}")
 }}""") > "main.go"
 
+# create justfile
 echo("""run:
   go run main.go
 """) > "justfile"
