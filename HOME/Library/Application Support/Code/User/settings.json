@@ -36,8 +36,6 @@
     },
     "terminal.integrated.defaultProfile.osx": "zsh",
 
-    "markdown.preview.fontFamily": "Inter",
-
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useIgnoreFiles": true,
@@ -259,6 +257,7 @@
     "[markdown]": {
         "editor.wordWrap": "bounded",
     },
+    "markdown.preview.fontFamily": "Inter",
 
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
         "editor.formatOnSave": true,
