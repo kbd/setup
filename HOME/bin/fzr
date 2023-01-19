@@ -9,7 +9,7 @@ from pathlib import Path
 from subprocess import PIPE, run
 from tempfile import NamedTemporaryFile
 
-xdg = Path(os.getenv('XDG_CONFIG_HOME', Path('~/.config').expanduser())
+xdg = Path(os.getenv('XDG_CONFIG_HOME', Path('~/.config').expanduser()))
 CONFIG_DIR = xdg / 'fzr'
 HISTORY_DIR = CONFIG_DIR / 'history'
 
