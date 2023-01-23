@@ -1,6 +1,6 @@
 #!/bin/sh
 # switch to kitty window (used to be taB)
-query='.[].tabs[].windows[] | select(.is_focused == false) | "\(.id)\u0000\(.title)"'
+query='.[].tabs[].windows[] | select(.is_self == false) | "\(.id)\u0000\(.title)"'
 window=$(kitty @ ls | jq -r "$query" | fzf0 --sync --tiebreak=begin -q "$*")
 if [ "$window" ]; then
   kitty @ focus-window -m "id:$window";
