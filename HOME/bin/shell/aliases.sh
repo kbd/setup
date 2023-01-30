@@ -231,6 +231,7 @@ alias notes='te ~/notes/'
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias printv='printf "%q\n"' # v for verbatim
 alias ssh='sshrc' # always sshrc
+alias rgh='rg --no-heading'
 alias tcl='rlwrap tclsh'
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 alias title-tab='printf "\e]1;%s\a"'
