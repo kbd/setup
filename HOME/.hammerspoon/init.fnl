@@ -4,6 +4,7 @@
 (local editor-bundleid (hs.application.defaultAppForUTI "public.plain-text"))
 (local editor-name (hs.application.nameForBundleID editor-bundleid))
 (local notes-bundleid "md.obsidian")
+(local music-bundleid "com.spotify.client")
 ; unfortunately for terminal there's no default association like with html/text
 (local terminal-name "kitty")
 (local terminal-bundleid "net.kovidgoyal.kitty")
@@ -206,6 +207,7 @@
 (hs.hotkey.bind hyper "B" #(show-app browser-bundleid vimium-tab-switcher))
 (hs.hotkey.bind hyper "T" #(show-app editor-bundleid))
 (hs.hotkey.bind hyper "S" #(show-app terminal-bundleid kitty-window-switcher)) ; "S=shell"
+(hs.hotkey.bind hyper "M" #(show-app music-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
