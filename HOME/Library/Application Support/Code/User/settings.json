@@ -285,11 +285,12 @@
     "typescript.inlayHints.variableTypes.enabled": true,
 
     "[python]": {
+        "editor.formatOnType": true,
         "editor.formatOnSave": false,
         "editor.tabSize": 4,
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
-        }
+        },
     },
     "python.formatting.provider": "black",
     "isort.args": ["-m3", "--tc", "--ca"],
@@ -306,9 +307,6 @@
     "python.globalModuleInstallation": true,
     "python.languageServer": "Pylance",
     "python.terminal.activateEnvironment": false, // depend on direnv instead
-    "python.venvFolders": [ // unsure why vscode can't find poetry virtualenvs
-        "Library/Caches/pypoetry/virtualenvs/"
-    ],
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.variableTypes": true,
     "python.defaultInterpreterPath": "python3",
