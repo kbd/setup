@@ -63,6 +63,11 @@ direnv.allow()
 git.init()
 echo(f"# {args.name}") >> 'README.md'
 echo('\n'.join(('*.sqlite3', '*.db', '.venv/', '__pycache__/'))) >> '.gitignore'
+echo("""[pytest]
+python_files = *.py
+norecursedirs = bin
+""") >> 'pytest.ini'
+echo("test:\n\tpytest") > "justfile"
 git.add(all=True)
 git.commit(m="Initial Python commit")
 
