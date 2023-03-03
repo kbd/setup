@@ -311,7 +311,7 @@
     "python.analysis.inlayHints.variableTypes": true,
     "python.defaultInterpreterPath": "python3",
 
-    "jupyter.sendSelectionToInteractiveWindow": false,
+    "jupyter.interactiveWindow.textEditor.executeSelection": false,
     "notebook.cellToolbarLocation": {
         "default": "right",
         "jupyter-notebook": "left"
