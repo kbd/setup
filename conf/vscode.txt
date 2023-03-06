@@ -1,5 +1,4 @@
 alefragnani.Bookmarks
-AugusteRame.zls-vscode
 bungcip.better-toml
 crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
@@ -28,7 +27,7 @@ ryanluker.vscode-coverage-gutters
 serayuzgur.crates
 stkb.rewrap
 TheNuProjectContributors.vscode-nushell-lang
-tiehuis.zig
 timonwong.shellcheck
 usernamehw.errorlens
 wholroyd.jinja
+ziglang.vscode-zig
