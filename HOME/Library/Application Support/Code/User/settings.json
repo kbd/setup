@@ -64,6 +64,7 @@
     "problems.showCurrentInStatus": true,
     "debug.showBreakpointsInOverviewRuler": true,
     "scm.alwaysShowRepositories": true,
+    "git.openRepositoryInParentFolders": "always",
     "security.workspace.trust.untrustedFiles": "open",
 
     "workbench.tree.indent": 15,
