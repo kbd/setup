@@ -240,6 +240,7 @@ user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
 alias S='~S' # too often I miss the ~ when I ~S. Make it work anyway.
 alias zj=zellij
+alias zja='zj ls | fzf -0 -1 | xargs -to zellij a'
 
 rlh() {
   # reload history
