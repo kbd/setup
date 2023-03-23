@@ -56,6 +56,7 @@ export LESS='-iMFx4 --mouse --incsearch' # smart-case, status bar, quit 1 screen
 export EDITOR=vim
 export VISUAL='code -nw'
 export GIT_EDITOR='kw --wait vim'
+export IGREP_EDITOR=code
 export DELTA_PAGER="less $LESS -R"
 export JQ_COLORS='4;36:0;37:0;37:0;37:0;32:1;37:1;37'
 alias http='autopager http --pretty=all'
