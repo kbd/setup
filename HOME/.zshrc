@@ -61,8 +61,13 @@ bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^[e" edit-command-line # ⌥e
+# https://zsh.sourceforge.io/Doc/Release/Parameters.html
 TMPSUFFIX='.zsh' # for syntax highlighting
-TIMEFMT=$'real\t%*E\nuser\t%*U\nsys\t%*S\nmaxmem\t%M MB\nfaults\t%F'
+TIMEFMT=$'user\t%*Us
+sys\t%*Ss
+real\t%*Es
+cpu/mem\t%P/%Mk
+faults\t%F'
 
 # 3rd party config
 eval "$(direnv hook zsh)"
