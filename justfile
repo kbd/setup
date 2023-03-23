@@ -82,7 +82,8 @@ cargo:
 
 	# create directory in case bootstrapping when symlinks not yet created
 	mkdir -p ~/bin/shell/3rdparty/
-	broot --set-install-state refused --print-shell-function zsh > ~/bin/shell/3rdparty/br.zsh
+	broot --set-install-state refused
+	broot --print-shell-function zsh > ~/bin/shell/3rdparty/br.zsh
 
 mac:
 	PYTHONPATH=~/bin python3 conf/mac.py
