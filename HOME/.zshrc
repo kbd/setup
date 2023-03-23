@@ -62,6 +62,7 @@ bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^[e" edit-command-line # ⌥e
 TMPSUFFIX='.zsh' # for syntax highlighting
+TIMEFMT=$'real\t%*E\nuser\t%*U\nsys\t%*S\nmaxmem\t%M MB\nfaults\t%F'
 
 # 3rd party config
 eval "$(direnv hook zsh)"
