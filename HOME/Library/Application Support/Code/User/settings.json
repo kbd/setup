@@ -26,6 +26,7 @@
     "editor.guides.bracketPairsHorizontal": "active",
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.inlayHints.fontSize": 12,
+    "editor.accessibilitySupport": "off",
 
     "terminal.integrated.fontFamily": "Victor Mono",
     "terminal.integrated.fontSize": 13,
