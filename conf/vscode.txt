@@ -7,7 +7,6 @@ esbenp.prettier-vscode
 Fr43nk.seito-openfile
 golang.go
 Gruntfuggly.todo-tree
-hashicorp.terraform
 ionutvmi.spacegray-vscode
 JakeBecker.elixir-ls
 janisdd.vscode-edit-csv
