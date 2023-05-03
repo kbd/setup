@@ -195,6 +195,7 @@
 	v = revert
 	vc = !git pick-commits | xargs -tI% git v -m1 %
 	s = status
+	save = !git aa && git cm '' --allow-empty-message
 	sbs = !DELTA_FEATURES=sbs git
 	st = stash
 	stm = st push -m
