@@ -311,6 +311,8 @@
     "python.terminal.activateEnvironment": false, // depend on direnv instead
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.pylanceLspClientEnabled": true,
+    "python.analysis.autoFormatStrings": true,
     "python.defaultInterpreterPath": "python3",
 
     "jupyter.interactiveWindow.textEditor.executeSelection": false,
