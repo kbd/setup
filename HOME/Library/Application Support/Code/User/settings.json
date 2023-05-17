@@ -338,7 +338,8 @@
         "editor.tabSize": 4,
         "editor.defaultFormatter": "AugusteRame.zls-vscode",
     },
-    "zls.path": "/Users/kbd/Library/Application Support/Code/User/globalStorage/augusterame.zls-vscode/zls_install/zls",
+    "zig.zls.path": "zls", // installed with 'install-manual'
+    "zig.zls.checkForUpdate": false,
 
     "[rust]": {
         "editor.formatOnSave": true,
