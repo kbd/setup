@@ -3,12 +3,15 @@
 """dl = download"""
 
 import argparse
+import os
 import shlex
 import sys
+from pathlib import Path
 
 from lib import colors as c, utils
 
 BINARY_EXTENSIONS = ('.zip', '.tar.gz', '.dmg')
+DEFAULT_DOWNLOADS_DIR = Path("~/Downloads").expanduser()
 
 
 def run(*args):
@@ -29,6 +32,10 @@ if __name__ == "__main__":
 
     url = args.url or utils.run(['cb'], cap=True)
     fprint("Downloading", url)
+
+    # set working directory to downloads dir so tools download there by default
+    fprint("Working dir", DEFAULT_DOWNLOADS_DIR)
+    os.chdir(DEFAULT_DOWNLOADS_DIR)
 
     if (args.raw
         or url.endswith(BINARY_EXTENSIONS)
