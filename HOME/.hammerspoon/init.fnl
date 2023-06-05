@@ -5,7 +5,7 @@
 (local editor-name (hs.application.nameForBundleID editor-bundleid))
 (local notes-bundleid "md.obsidian")
 (local music-bundleid "com.spotify.client")
-(local tasks-bundleid "com.omnigroup.OmniFocus3")
+(local tasks-bundleid "com.electron.asana")
 ; unfortunately for terminal there's no default association like with html/text
 (local terminal-name "kitty")
 (local terminal-bundleid "net.kovidgoyal.kitty")
@@ -209,7 +209,8 @@
 (hs.hotkey.bind hyper "T" #(show-app editor-bundleid))
 (hs.hotkey.bind hyper "S" #(show-app terminal-bundleid kitty-window-switcher)) ; "S=shell"
 (hs.hotkey.bind hyper "M" #(show-app music-bundleid focus-previous-window))
-(hs.hotkey.bind hyper "O" #(show-app tasks-bundleid focus-previous-window))
+(hs.hotkey.bind hyper "K" #(show-app tasks-bundleid focus-previous-window))
+(hs.hotkey.bind hyper "N" #(show-app notes-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
@@ -225,13 +226,12 @@
 (hs.hotkey.bind hyper "8" #(move-active-window 1 4 2)) ; half-screen, center
 (hs.hotkey.bind hyper "9" #(move-active-window 0 1))
 (hs.hotkey.bind hyper "0" focus-previous-window)
-(hs.hotkey.bind hyper "N" move-active-window-to-next-screen)
+(hs.hotkey.bind hyper "E" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
-(hs.hotkey.bind hyper "e" #(expose:toggleShow))
-(hs.hotkey.bind hyper "u" #(expose-app:toggleShow))
-(hs.hotkey.bind hyper "K" #(show-app notes-bundleid))
+(hs.hotkey.bind hyper "X" #(expose:toggleShow))
+(hs.hotkey.bind hyper "U" #(expose-app:toggleShow))
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
