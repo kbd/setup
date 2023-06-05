@@ -46,6 +46,7 @@ PyYAML
 ranger-fm
 requests
 rich
+ruff
 setuptools
 Sphinx
 sqlalchemy

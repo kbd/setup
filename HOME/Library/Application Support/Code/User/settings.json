@@ -288,24 +288,14 @@
 
     "[python]": {
         "editor.formatOnType": true,
-        "editor.formatOnSave": false,
         "editor.tabSize": 4,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true
+            "source.fixAll": true,
+            "source.organizeImports": true,
         },
     },
     "python.formatting.provider": "black",
-    "isort.args": ["-m3", "--tc", "--ca"],
-    "python.linting.enabled": true,
     "python.linting.mypyEnabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": [
-        // have to re-specify all default settings to add unused-imports
-        // https://code.visualstudio.com/docs/python/linting#_default-pylint-rules
-        "--disable=all",
-        "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode",
-        "--enable=unused-import",
-    ],
     "python.globalModuleInstallation": true,
     "python.languageServer": "Pylance",
     "python.terminal.activateEnvironment": false, // depend on direnv instead
