@@ -222,6 +222,7 @@
 	uncommit-soft = reset --soft @~ --
 	uncs = uncommit-soft
 	upstream = name-rev @{upstream}
+	commit-url = !git pick-commits | xargs -I% echo "$(git url | sd '\\.git$' '')/commit/%"
 	url = remote get-url origin
 	info = remote show origin
 	rao = remote add origin
