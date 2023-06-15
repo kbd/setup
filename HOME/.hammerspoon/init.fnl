@@ -44,8 +44,8 @@
     (hs.layout.apply layout)))
 
 (fn set-window-fraction [app window num den screen numwidth]
-  (let [coords {:x (/ num den) :y 0 :w (/ numwidth den) :h 1}
-        layout [app window screen coords nil nil]]
+  (let [coords (hs.geometry.rect (/ num den) 0 (/ numwidth den) 1)
+        layout [app window screen coords]]
     (hs.layout.apply [layout])))
 
 (fn move-active-window [num den numwidth screen]
