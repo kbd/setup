@@ -1,5 +1,4 @@
 alefragnani.Bookmarks
-bungcip.better-toml
 charliermarsh.ruff
 crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
@@ -23,6 +22,7 @@ rust-lang.rust-analyzer
 ryanluker.vscode-coverage-gutters
 serayuzgur.crates
 stkb.rewrap
+tamasfe.even-better-toml
 TheNuProjectContributors.vscode-nushell-lang
 timonwong.shellcheck
 usernamehw.errorlens
