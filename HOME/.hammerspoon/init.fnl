@@ -20,14 +20,14 @@
         (icollect [_ win (ipairs wins)] ; filter windows by screen
           (if (= scr (win:screen)) win))))))
 
-(fn lo [app x w]
-  [app get-windows-for-app-on-screen hs.screen.mainScreen {: x :y 0 : w :h 1} nil nil])
+(fn lo [appname x w]
+  [(hs.application.get appname) get-windows-for-app-on-screen hs.screen.mainScreen {: x :y 0 : w :h 1} nil nil])
 
 (local layouts {
   "DELL U3818DW"
-    [(lo browser-name 0 0.275) (lo editor-name 0.275 0.5) (lo terminal-name 0.775 0.225)]
+    [[browser-name 0 0.275] [editor-name 0.275 0.5] [terminal-name 0.775 0.225]]
   "Built-in Retina Display"
-    [(lo browser-name 0 0.3) (lo editor-name 0.3 0.38) (lo terminal-name 0.68 0.32)]
+    [[browser-name 0 0.3] [editor-name 0.3 0.38] [terminal-name 0.68 0.32]]
 })
 (tset layouts "default" (. layouts "DELL U3818DW"))
 
@@ -38,15 +38,24 @@
     (tset f axis (+ (. f axis) increment))
     (win:setFrame f)))
 
+(fn layout-with-enhanced-interface-off [layout]
+  (let [app (. layout 1)
+        el (hs.axuielement.applicationElement app)
+        enhanced el.AXEnhancedUserInterface]
+    (set el.AXEnhancedUserInterface false)
+    (hs.layout.apply [layout])
+    (set el.AXEnhancedUserInterface enhanced)))
+
 (fn set-layout [layouts name]
   (let [name (or name (: (hs.screen.primaryScreen) :name))
         layout (or (. layouts name) layouts.default)]
-    (hs.layout.apply layout)))
+    (each [_ l (pairs layout)]
+      (layout-with-enhanced-interface-off (lo (table.unpack l))))))
 
 (fn set-window-fraction [app window num den screen numwidth]
   (let [coords (hs.geometry.rect (/ num den) 0 (/ numwidth den) 1)
         layout [app window screen coords]]
-    (hs.layout.apply [layout])))
+    (layout-with-enhanced-interface-off layout)))
 
 (fn move-active-window [num den numwidth screen]
   "Moves the active window to the given dimensions"
@@ -186,6 +195,7 @@
 ; "main"
 
 (hs.grid.setGrid "9x6")
+(set hs.window.animationDuration 0)
 
 ; the default global chooser callback seems to be incorrect:
 ; if a chooser is opened when one is already open, closing it doesn't properly
