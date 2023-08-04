@@ -163,5 +163,4 @@ cask "font-victor-mono"
 mas "Cyberduck", id: 409222199
 mas "Fantastical", id: 975937182
 mas "Monodraw", id: 920404675
-mas "Tweetbot", id: 1384080005
 mas "Xcode", id: 497799835
