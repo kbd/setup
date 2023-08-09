@@ -6,6 +6,7 @@
 (local notes-bundleid "md.obsidian")
 (local music-bundleid "com.spotify.client")
 (local tasks-bundleid "com.electron.asana")
+(local messages-bundleid "com.apple.MobileSMS")
 ; unfortunately for terminal there's no default association like with html/text
 (local terminal-name "kitty")
 (local terminal-bundleid "net.kovidgoyal.kitty")
@@ -221,6 +222,7 @@
 (hs.hotkey.bind hyper "M" #(show-app music-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "K" #(show-app tasks-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "N" #(show-app notes-bundleid focus-previous-window))
+(hs.hotkey.bind hyper "-" #(show-app messages-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "L" #(set-layout layouts $1))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
