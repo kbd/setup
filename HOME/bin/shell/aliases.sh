@@ -231,6 +231,7 @@ alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias notes='te ~/notes/'
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias printv='printf "%q\n"' # v for verbatim
+alias qalc='noglob qalc'
 alias ssh='sshrc' # always sshrc
 alias rgh='rg --no-heading'
 alias tcl='rlwrap tclsh'
