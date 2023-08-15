@@ -5,7 +5,8 @@
 (local editor-name (hs.application.nameForBundleID editor-bundleid))
 (local notes-bundleid "md.obsidian")
 (local music-bundleid "com.spotify.client")
-(local tasks-bundleid "com.electron.asana")
+(local tasks-bundleid "com.TickTick.task.mac")
+(local projects-bundleid "com.electron.asana")
 (local messages-bundleid "com.apple.MobileSMS")
 ; unfortunately for terminal there's no default association like with html/text
 (local terminal-name "kitty")
@@ -220,6 +221,7 @@
 (hs.hotkey.bind hyper "T" #(show-app editor-bundleid))
 (hs.hotkey.bind hyper "S" #(show-app terminal-bundleid kitty-window-switcher)) ; "S=shell"
 (hs.hotkey.bind hyper "M" #(show-app music-bundleid focus-previous-window))
+(hs.hotkey.bind hyper "J" #(show-app projects-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "K" #(show-app tasks-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "N" #(show-app notes-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "-" #(show-app messages-bundleid focus-previous-window))
