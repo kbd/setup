@@ -4,6 +4,6 @@ from lib.mac import defaults
 
 fnState = defaults.g['com.apple.keyboard.fnState']
 current = fnState.read()
-print(f"Current fnState: {current}\nNew fnState: {not current}\n", file=sys.stderr)
+print(f"Current fnState: {current}\nNew fnState: {not current}", file=sys.stderr)
 result = fnState.write(not current)
 sys.exit(result.returncode)
