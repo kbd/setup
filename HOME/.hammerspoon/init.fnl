@@ -194,6 +194,11 @@
     (let [chooser (fuzzy choices #(select-kitty-window pid $1))]
       (chooser:selectedRow active-index))))
 
+(fn toggle-fnState []
+  (let [result (hs.execute "toggle-fnState 2>&1" true)
+        output (string.gsub result "%s+$" "")]
+    (hs.alert output)))
+
 ; "main"
 
 (hs.grid.setGrid "9x6")
@@ -244,6 +249,7 @@
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
 (hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
+(hs.hotkey.bind hyper "[" toggle-fnState)
 (hs.hotkey.bind hyper "X" #(expose:toggleShow))
 (hs.hotkey.bind hyper "U" #(expose-app:toggleShow))
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
