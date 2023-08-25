@@ -221,6 +221,7 @@ alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is_root='[[ $EUID == 0 ]]'
 alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
 alias j=just
+alias janet='rlwrap -Na janet' # just for repl history
 alias jax='osascript -l JavaScript -e'
 alias jaxi='rlwrap --always-readline --no-children osascript -il JavaScript'
 alias map='parallel'
