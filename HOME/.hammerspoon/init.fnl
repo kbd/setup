@@ -68,8 +68,10 @@
     (set-window-fraction app window num den scr numwidth)))
 
 (fn move-active-window-to-next-screen []
-  (let [w (hs.window.focusedWindow)]
-    (w:moveToScreen (: (w:screen) :next))))
+  (let [w (hs.window.focusedWindow)
+        next-screen (: (w:screen) :next)
+        layout [(w:application) w next-screen (w:frame)]]
+    (layout-with-enhanced-interface-off layout)))
 
 (fn fuzzy [choices func]
   (doto (hs.chooser.new func)
