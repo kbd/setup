@@ -326,7 +326,7 @@
     "[zig]": {
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
-        "editor.defaultFormatter": "AugusteRame.zls-vscode",
+        "editor.defaultFormatter": "ziglang.vscode-zig",
     },
     "zig.zls.path": "zls", // installed with 'install-manual'
     "zig.zls.checkForUpdate": false,
