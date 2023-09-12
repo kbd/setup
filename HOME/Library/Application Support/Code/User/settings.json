@@ -330,6 +330,7 @@
     },
     "zig.zls.path": "zls", // installed with 'install-manual'
     "zig.zls.checkForUpdate": false,
+    "zig.zigPath": "", // use zig in path
 
     "[rust]": {
         "editor.formatOnSave": true,
