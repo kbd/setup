@@ -41,6 +41,7 @@
     (win:setFrame f)))
 
 (fn layout-with-enhanced-interface-off [layout]
+  ; https://github.com/Hammerspoon/hammerspoon/issues/3224
   (let [app (. layout 1)
         el (hs.axuielement.applicationElement app)
         enhanced el.AXEnhancedUserInterface]
@@ -60,7 +61,7 @@
     (layout-with-enhanced-interface-off layout)))
 
 (fn move-active-window [num den numwidth screen]
-  "Moves the active window to the given dimensions"
+  "Move the active window to the given dimensions"
   (let [numwidth (or numwidth 1)
         app (hs.application.frontmostApplication)
         window (hs.window.focusedWindow)
@@ -202,8 +203,6 @@
     (hs.alert output)))
 
 ; "main"
-
-(hs.grid.setGrid "9x6")
 (set hs.window.animationDuration 0)
 
 ; the default global chooser callback seems to be incorrect:
@@ -219,11 +218,8 @@
 
 (local [left right up down]
   [#(move "x" -50) #(move "x" 50) #(move "y" -50) #(move "y" 50)])
-(local expose (hs.expose.new)) ; default windowfilter, no thumbnails
-(local expose-app (hs.expose.new nil {:onlyActiveApplication true})) ; show windows for the current application
 
 ; keybinds
-(hs.hotkey.bind hyper "G" hs.grid.show)
 (hs.hotkey.bind hyper "B" #(show-app browser-bundleid vimium-tab-switcher))
 (hs.hotkey.bind hyper "T" #(show-app editor-bundleid))
 (hs.hotkey.bind hyper "S" #(show-app terminal-bundleid kitty-window-switcher)) ; "S=shell"
@@ -232,58 +228,29 @@
 (hs.hotkey.bind hyper "K" #(show-app tasks-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "N" #(show-app notes-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "-" #(show-app messages-bundleid focus-previous-window))
-(hs.hotkey.bind hyper "L" #(set-layout layouts $1))
+(hs.hotkey.bind hyper "L" #(set-layout layouts))
 (hs.hotkey.bind hyper "Right" right nil right)
 (hs.hotkey.bind hyper "Left" left nil left)
 (hs.hotkey.bind hyper "Up" up nil up)
 (hs.hotkey.bind hyper "Down" down nil down)
-(hs.hotkey.bind hyper "1" #(move-active-window 0 2))
-(hs.hotkey.bind hyper "2" #(move-active-window 1 2))
-(hs.hotkey.bind hyper "3" #(move-active-window 0 3))
-(hs.hotkey.bind hyper "4" #(move-active-window 1 3))
-(hs.hotkey.bind hyper "5" #(move-active-window 2 3))
+(hs.hotkey.bind hyper "1" #(move-active-window 0 2))   ; first half
+(hs.hotkey.bind hyper "2" #(move-active-window 1 2))   ; second half
+(hs.hotkey.bind hyper "3" #(move-active-window 0 3))   ; first third
+(hs.hotkey.bind hyper "4" #(move-active-window 1 3))   ; second third
+(hs.hotkey.bind hyper "5" #(move-active-window 2 3))   ; third third
 (hs.hotkey.bind hyper "6" #(move-active-window 0 3 2)) ; two-thirds, left
 (hs.hotkey.bind hyper "7" #(move-active-window 1 3 2)) ; two-thirds, right
 (hs.hotkey.bind hyper "8" #(move-active-window 1 4 2)) ; half-screen, center
-(hs.hotkey.bind hyper "9" #(move-active-window 0 1))
+(hs.hotkey.bind hyper "9" #(move-active-window 0 1))   ; full screen
 (hs.hotkey.bind hyper "0" focus-previous-window)
 (hs.hotkey.bind hyper "E" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
-(hs.hotkey.bind hyper "," #(show-window-fuzzy true)) ; app windows
+(hs.hotkey.bind hyper "." #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "[" toggle-fnState)
-(hs.hotkey.bind hyper "X" #(expose:toggleShow))
-(hs.hotkey.bind hyper "U" #(expose-app:toggleShow))
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
-
-; import zoom
-(fn init-zoom []
-  (local zoom (require :zoom))
-  (zoom.init)
-
-  ; todo: support cross-app functions like "toggle mute" in app-independent way
-  (hs.hotkey.bind hyper "M" zoom.toggle-audio)
-
-  ; arbitrary-function fuzzy chooser
-  (local choices [
-    {:text "Zoom toggle audio"        :fn zoom.toggle-audio}
-    {:text "Zoom toggle video"        :fn zoom.toggle-video}
-    {:text "Zoom toggle screen share" :fn zoom.toggle-share}
-    {:text "Zoom toggle participants" :fn zoom.toggle-participants}
-    {:text "Zoom invite"              :fn zoom.toggle-invite}
-  ])
-  ; can't pass a function value to chooser directly, so indirect through a lookup
-  (local lookup {})
-  (each [i v (ipairs choices)]
-    (let [name (tostring v.fn)] ; tostring(fn) -> "function: 0x6000023f43c0"
-      (tset lookup name v.fn)
-      (tset v :fn name)))
-
-  (hs.hotkey.bind hyper "O" #(fuzzy choices #(when $1 ((. lookup $1.fn))))))
-
-; (init-zoom)
 
 ; "exports"
 (tset _G :taskMenu (hs.menubar.new))
