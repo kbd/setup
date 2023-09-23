@@ -61,7 +61,6 @@
     "breadcrumbs.enabled": true,
     "outline.showVariables": false,
     "explorer.openEditors.sortOrder": "alphabetical",
-    "explorer.openEditors.visible": 0,
     "problems.showCurrentInStatus": true,
     "debug.showBreakpointsInOverviewRuler": true,
     "scm.alwaysShowRepositories": true,
@@ -294,14 +293,11 @@
             "source.organizeImports": true,
         },
     },
-    "python.formatting.provider": "black",
-    "python.linting.mypyEnabled": true,
     "python.globalModuleInstallation": true,
     "python.languageServer": "Pylance",
     "python.terminal.activateEnvironment": false, // depend on direnv instead
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.variableTypes": true,
-    "python.analysis.pylanceLspClientEnabled": true,
     "python.analysis.autoFormatStrings": true,
     "python.defaultInterpreterPath": "python3",
 
