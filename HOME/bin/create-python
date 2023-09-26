@@ -62,7 +62,15 @@ direnv.allow()
 # create repo (if needed) and add/append to files
 git.init()
 echo(f"# {args.name}") >> 'README.md'
-echo('\n'.join(('*.sqlite3', '*.db', '.venv/', '__pycache__/'))) >> '.gitignore'
+ignores = [
+    '*.sqlite3',
+    '.mypy_cache/',
+    '.pytest_cache/',
+    '.ruff_cache/',
+    '.venv/',
+    '__pycache__/',
+]
+echo('\n'.join(ignores)) >> '.gitignore'
 echo("""[pytest]
 python_files = *.py
 norecursedirs = bin
