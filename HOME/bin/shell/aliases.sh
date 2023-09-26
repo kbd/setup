@@ -105,7 +105,7 @@ alias lsd='ls -d --indicator-style=none -- */'
 alias lld='ll -d --indicator-style=none -- */'
 cl() { cd -- "${1-$HOME}" && l "${@:2}"; }
 cll() { cd -- "${1-$HOME}" && ll "${@:2}"; }
-et() { eza -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache|.venv' --color=always "$@" | less -R; }
+et() { eza -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache|.venv|.ruff_cache|.dolt' --color=always "$@" | less -R; }
 alias et1='et -L1'
 alias et2='et -L2'
 alias et3='et -L3'
