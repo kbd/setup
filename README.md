@@ -18,6 +18,3 @@ You can bootstrap this onto a new system with:
 All "config" (what programs/libraries get installed, OS settings, etc.) go in
 `conf/`, and everything in `HOME/` (dotfiles and so on) gets symlinked into
 `$HOME`.
-
-The `setup` program manages everything and reads `conf/settings.py` to know
-what's possible to do.
