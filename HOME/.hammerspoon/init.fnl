@@ -240,7 +240,7 @@
 (hs.hotkey.bind hyper "5" #(move-active-window 2 3))   ; third third
 (hs.hotkey.bind hyper "6" #(move-active-window 0 3 2)) ; two-thirds, left
 (hs.hotkey.bind hyper "7" #(move-active-window 1 3 2)) ; two-thirds, right
-(hs.hotkey.bind hyper "8" #(move-active-window 1 4 2)) ; half-screen, center
+(hs.hotkey.bind hyper "8" #(move-active-window 1 6 4)) ; two-thirds, center
 (hs.hotkey.bind hyper "9" #(move-active-window 0 1))   ; full screen
 (hs.hotkey.bind hyper "0" focus-previous-window)
 (hs.hotkey.bind hyper "E" move-active-window-to-next-screen)
