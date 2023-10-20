@@ -4,6 +4,7 @@ import logging
 
 from aush import (
     cd,
+    chmod,
     direnv,
     django_admin,
     echo,
@@ -76,6 +77,11 @@ python_files = *.py
 norecursedirs = bin
 """) >> 'pytest.ini'
 echo("test:\n\tpytest") > "justfile"
+echo(f"""#!/usr/bin/env python3
+import {args.name}
+
+print({args.name})""") >> 'main'
+chmod("+x", 'main')
 git.add(all=True)
 git.commit(m="Initial Python commit")
 
