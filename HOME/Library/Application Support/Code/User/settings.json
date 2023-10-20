@@ -70,7 +70,7 @@
     "workbench.tree.indent": 15,
     "workbench.editor.showTabs": true,
     "workbench.editor.wrapTabs": false, // buggy
-    "workbench.editor.untitled.hint": "hidden",
+    "workbench.editor.empty.hint": "hidden",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.decorations.colors": true,
     "workbench.editor.decorations.badges": true,
