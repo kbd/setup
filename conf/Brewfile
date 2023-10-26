@@ -153,6 +153,7 @@ cask "spotify"
 cask "spotmenu"
 cask "sublime-text"
 cask "tableplus"
+cask "transmission"
 cask "visual-studio-code"
 cask "vlc"
 
