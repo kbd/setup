@@ -42,12 +42,13 @@
 
 (fn layout-with-enhanced-interface-off [layout]
   ; https://github.com/Hammerspoon/hammerspoon/issues/3224
-  (let [app (. layout 1)
-        el (hs.axuielement.applicationElement app)
-        enhanced el.AXEnhancedUserInterface]
-    (set el.AXEnhancedUserInterface false)
-    (hs.layout.apply [layout])
-    (set el.AXEnhancedUserInterface enhanced)))
+  (let [app (. layout 1)]
+    (when app
+      (let [el (hs.axuielement.applicationElement app)
+            enhanced el.AXEnhancedUserInterface]
+        (set el.AXEnhancedUserInterface false)
+        (hs.layout.apply [layout])
+        (set el.AXEnhancedUserInterface enhanced)))))
 
 (fn set-layout [layouts name]
   (let [name (or name (: (hs.screen.primaryScreen) :name))
