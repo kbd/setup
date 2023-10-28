@@ -288,6 +288,7 @@
     "[python]": {
         "editor.formatOnType": true,
         "editor.tabSize": 4,
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.codeActionsOnSave": {
             "source.fixAll": true,
             "source.organizeImports": true,
