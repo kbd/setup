@@ -27,6 +27,7 @@
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.inlayHints.fontSize": 12,
     "editor.accessibilitySupport": "off",
+    "editor.multiDocumentOccurrencesHighlight": true,
 
     "terminal.integrated.fontFamily": "Victor Mono",
     "terminal.integrated.fontSize": 13,
@@ -68,7 +69,7 @@
     "security.workspace.trust.untrustedFiles": "open",
 
     "workbench.tree.indent": 15,
-    "workbench.editor.showTabs": true,
+    "workbench.editor.showTabs": "multiple",
     "workbench.editor.wrapTabs": false, // buggy
     "workbench.editor.empty.hint": "hidden",
     "workbench.editor.highlightModifiedTabs": true,
@@ -79,7 +80,6 @@
     "workbench.colorTheme": "Spacegray Eighties Dark",
     "workbench.startupEditor": "newUntitledFile",
     "workbench.quickOpen.closeOnFocusLost": false,
-    "workbench.activityBar.visible": true,
     "workbench.statusBar.visible": true,
     "workbench.list.defaultFindMode": "filter",
     "workbench.settings.editor": "json",
