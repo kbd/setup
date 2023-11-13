@@ -69,6 +69,7 @@ dock['wvous-tr-modifier'] = ctrl
 finder = defaults['com.apple.finder']
 finder['ShowPathbar'] = True
 finder['ShowStatusBar'] = True
+finder['AppleShowAllFiles'] = True
 
 # show battery % in menubar
 defaults['com.apple.menuextra.battery']['ShowPercent'] = True
