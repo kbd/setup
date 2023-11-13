@@ -1,0 +1,2 @@
+[lint.isort]
+known-local-folder = ["lib"]
