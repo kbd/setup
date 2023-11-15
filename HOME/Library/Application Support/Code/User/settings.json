@@ -325,9 +325,9 @@
         "editor.tabSize": 4,
         "editor.defaultFormatter": "ziglang.vscode-zig",
     },
-    "zig.zls.path": "zls", // installed with 'install-manual'
-    "zig.zls.checkForUpdate": false,
-    "zig.zigPath": "", // use zig in path
+    "zig.path": "",
+    "zig.zls.path": "",
+    "zig.initialSetupDone": true,
 
     "[rust]": {
         "editor.formatOnSave": true,

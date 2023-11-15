@@ -20,8 +20,8 @@ bin = "prompt"
 
 [zls]
 git = "https://github.com/zigtools/zls.git"
-tag = "0.10.0"
-cmd = "zig build -Drelease-safe"
+tag = "0.11.0"
+cmd = "zig build -Doptimize=ReleaseSafe"
 bin = "zig-out/bin/zls"
 
 [fzf-tab]
