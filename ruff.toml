@@ -1,2 +1,5 @@
 [lint.isort]
 known-local-folder = ["lib"]
+
+# [format]
+# quote-style = "preserve"

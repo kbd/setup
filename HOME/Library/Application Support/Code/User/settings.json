@@ -27,7 +27,7 @@
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.inlayHints.fontSize": 12,
     "editor.accessibilitySupport": "off",
-    "editor.multiDocumentOccurrencesHighlight": true,
+    "editor.occurrencesHighlight": "multiFile",
 
     "terminal.integrated.fontFamily": "Victor Mono",
     "terminal.integrated.fontSize": 13,
@@ -69,6 +69,7 @@
     "security.workspace.trust.untrustedFiles": "open",
 
     "workbench.tree.indent": 15,
+    "workbench.tree.enableStickyScroll": true,
     "workbench.editor.showTabs": "multiple",
     "workbench.editor.wrapTabs": false, // buggy
     "workbench.editor.empty.hint": "hidden",
@@ -251,7 +252,7 @@
 
     // language-specific
     "[plaintext]": {
-        "editor.wordBasedSuggestions": false,
+        "editor.wordBasedSuggestions": "off",
         "editor.wordWrap": "bounded",
     },
 
@@ -266,8 +267,8 @@
         "editor.insertSpaces": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll": true,
+            "source.organizeImports": "always",
+            "source.fixAll": "always",
         },
     },
     "json.schemas": [],
@@ -289,9 +290,10 @@
         "editor.formatOnType": true,
         "editor.tabSize": 4,
         "editor.defaultFormatter": "charliermarsh.ruff",
+        // "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.fixAll": true,
-            "source.organizeImports": true,
+            "source.organizeImports": "always",
+            "source.fixAll": "always",
         },
     },
     "python.globalModuleInstallation": true,
@@ -310,7 +312,7 @@
 
     "[elixir]": {
         "editor.formatOnSave": true,
-        "editor.wordBasedSuggestions": true,
+        "editor.wordBasedSuggestions": "matchingDocuments",
         "editor.acceptSuggestionOnEnter": "on",
     },
     "elixirLS.suggestSpecs": false,
