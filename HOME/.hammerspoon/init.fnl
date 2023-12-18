@@ -113,7 +113,7 @@
 (fn show-window-fuzzy [app]
   (let [app-images {}
         focused-window (hs.window.focusedWindow)
-        focused-id (if focused-window (focused-window:id) nil)
+        focused-id (when focused-window (focused-window:id))
         windows (if (= app nil) (hs.window.orderedWindows)
                   (= app true) (: (hs.application.frontmostApplication) :allWindows)
                   (= (type app) "string") (: (hs.application.open app) :allWindows)
