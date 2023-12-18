@@ -110,10 +110,10 @@
 (fn select-window [window]
   (when window (window.window:focus)))
 
-; todo: fix: if no focused window, gives "attempt to index a nil value"
 (fn show-window-fuzzy [app]
   (let [app-images {}
-        focused-id (: (hs.window.focusedWindow) :id)
+        focused-window (hs.window.focusedWindow)
+        focused-id (if focused-window (focused-window:id) nil)
         windows (if (= app nil) (hs.window.orderedWindows)
                   (= app true) (: (hs.application.frontmostApplication) :allWindows)
                   (= (type app) "string") (: (hs.application.open app) :allWindows)
