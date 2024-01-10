@@ -116,10 +116,13 @@
 	c = commit
 	cm = c -m
 	ca = c -a
+	cA = "!git add -A && git c"
 	cam = c -am
+	cAm = "!git ca -m"
 	cab = "!git authors | cut -f2 | perl -ne '/<([^>]+)>$/; print if !$a{lc $1}++' | fzf | xargs -L1 echo Co-authored-by: "
 	cmp  = "!f() { git cm \"$@\" && git p; }; f"
 	camp = "!f() { git cam \"$@\" && git p; }; f"
+	cAmp = "!f() { git cAm \"$@\" && git p; }; f"
 	co = checkout
 	cof = with-status-files co
 	cf = !git cof
@@ -177,8 +180,9 @@
 	pf = "!f() { echo \"On branch $(git current-branch)\"; echo push | xargs -p -I% git % --force-with-lease; }; f"
 	pl = pull
 	ps = submodule update --init --recursive  # "pull submodules" - https://git-scm.com/book/en/v2/Git-Tools-Submodules (find "foolproof")
-	pg = "!f() { git pl \"$@\" && git lgo; }; f"
+	pg = "!f() { git pr \"$@\" && git lgo; }; f"
 	pr = pl --rebase
+	pnr = !"f() { if git url &>/dev/null; then git pr &>/dev/null; fi }; f" # pull so long as there's a remote
 	pick-commits = "!f() { git l1 \"${1:-.}\" | fzf --ansi | cut -d' ' -f2; }; f"
 	pc = pick-commits
 	pick-status-files = !git status -z | xargs -0n1 | cut -c4- | fzf --print0 --preview='git d --color=always -- {} | $(git config core.pager || echo cat)'
@@ -209,10 +213,10 @@
 	sts = st show
 	stsp = st show -p
 	ss = stash --staged
-	sync = !git pr && g cm .
+	sync = !git pnr && git cAm .
 	y = sync
-	syncp = !git sync && g p
-	yp = !g y && g p
+	syncp = !git sync && git p
+	yp = !git y && git p
 	w = switch-autostash
 	w- = w -
 	wc = w -c
