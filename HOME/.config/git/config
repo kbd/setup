@@ -209,6 +209,10 @@
 	sts = st show
 	stsp = st show -p
 	ss = stash --staged
+	sync = !git pr && g cm .
+	y = sync
+	syncp = !git sync && g p
+	yp = !g y && g p
 	w = switch-autostash
 	w- = w -
 	wc = w -c
