@@ -48,7 +48,8 @@ python:
 	pip3 install --upgrade -r conf/requirements.txt
 
 pipx:
-	st <(cat conf/pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys[]') | xargs -t pipx install
+	#!/usr/bin/env bash
+	st <(cat conf/pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys | select(false)') | xargs -t pipx install
 
 node:
 	cat conf/npm.txt | xargs -t npm install -g
@@ -101,7 +102,7 @@ pull:
 	git pull
 
 # Install all software packages
-packages: python node go rust cargo vscode
+packages: python pipx node go rust cargo vscode
 
 # The full set of commands used on first setup / bootstrap
 init: brew packages manual symlinks mac restartservices
