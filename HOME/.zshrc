@@ -77,7 +77,7 @@ eval "$(zoxide init zsh)"
 # fzf-tab
 zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 # fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
 [[ "$FZF_TAB_HOME" ]] || source ~/3rdparty/fzf-tab/fzf-tab.plugin.zsh
 
