@@ -195,6 +195,7 @@
         { "name": "Django Green Official", "value": "#092E20" },
         { "name": "Notes blue", "value": "#5ba5f6" },
         { "name": "Zig orange", "value": "#F7A41D" },
+        { "name": "Notes Tree Green", "value": "#5e7869" },
     ],
 
     // change default regex to require colon after tag
