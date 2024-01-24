@@ -2,6 +2,8 @@ alefragnani.Bookmarks
 charliermarsh.ruff
 crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
+dendron.dendron
+dendron.dendron-paste-image
 eamodio.gitlens
 esbenp.prettier-vscode
 Fr43nk.seito-openfile
@@ -15,9 +17,9 @@ kbd.binrun
 kosz78.nim
 mechatroner.rainbow-csv
 ms-azuretools.vscode-docker
+ms-python.mypy-type-checker
 ms-python.python
 ms-python.vscode-pylance
-ms-python.mypy-type-checker
 ms-vscode.cpptools
 rust-lang.rust-analyzer
 ryanluker.vscode-coverage-gutters

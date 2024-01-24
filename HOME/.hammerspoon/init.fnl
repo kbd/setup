@@ -3,7 +3,6 @@
 (local browser-name (hs.application.nameForBundleID browser-bundleid))
 (local editor-bundleid (hs.application.defaultAppForUTI "public.plain-text"))
 (local editor-name (hs.application.nameForBundleID editor-bundleid))
-(local notes-bundleid "md.obsidian")
 (local scratch-bundleid "com.heynote.app")
 (local music-bundleid "com.spotify.client")
 (local projects-bundleid "com.electron.asana")
@@ -226,7 +225,6 @@
 (hs.hotkey.bind hyper "S" #(show-app terminal-bundleid kitty-window-switcher)) ; "S=shell"
 (hs.hotkey.bind hyper "M" #(show-app music-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "J" #(show-app projects-bundleid focus-previous-window))
-(hs.hotkey.bind hyper "N" #(show-app notes-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "H" #(show-app scratch-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "-" #(show-app messages-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "L" #(set-layout layouts))
@@ -250,6 +248,13 @@
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "[" toggle-fnState)
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
+
+; note that 'notes' bind doesn't work properly because hs.window.find in
+;  specific-vscode-window doesn't work past the dash in '.code-workspace'
+; It's close: it'll bring up the window but won't find it if it's already open,
+;  so it doesn't have the correct 'focus-previous-window' behavior that works
+;  for 'setup'
+(hs.hotkey.bind hyper "N" #(specific-vscode-window "~/notes/dendron.code-workspace"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
