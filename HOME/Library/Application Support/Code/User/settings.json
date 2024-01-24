@@ -259,6 +259,7 @@
 
     "[markdown]": {
         "editor.wordWrap": "bounded",
+        "editor.fontFamily": "Inter"  // try using proportional font for writing
     },
     "markdown.preview.fontFamily": "Inter",
 
