@@ -67,6 +67,7 @@
     "scm.alwaysShowRepositories": true,
     "git.openRepositoryInParentFolders": "always",
     "security.workspace.trust.untrustedFiles": "open",
+    "editor.lightbulb.enabled": "onCode",
 
     "workbench.tree.indent": 15,
     "workbench.tree.enableStickyScroll": true,
