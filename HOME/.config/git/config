@@ -118,7 +118,7 @@
 	ca = c -a
 	cA = "!git add -A && git c"
 	cam = c -am
-	cAm = "!git ca -m"
+	cAm = "!git cA -m"
 	cab = "!git authors | cut -f2 | perl -ne '/<([^>]+)>$/; print if !$a{lc $1}++' | fzf | xargs -L1 echo Co-authored-by: "
 	cmp  = "!f() { git cm \"$@\" && git p; }; f"
 	camp = "!f() { git cam \"$@\" && git p; }; f"
