@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import sys
+
 from lib.mac import defaults
 
 fnState = defaults.g['com.apple.keyboard.fnState']
 current = fnState.read()
-print(f"Current fnState: {current}\nNew fnState: {not current}", file=sys.stderr)
-result = fnState.write(not current)
+new = not current
+result = fnState.write(new)
+print(f"{'Function' if new else 'Media'} keys active", file=sys.stderr)
 sys.exit(result.returncode)
