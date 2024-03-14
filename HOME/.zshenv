@@ -5,3 +5,4 @@ hash -d D=~/Downloads
 hash -d C=~/Documents
 hash -d T=~/temp
 hash -d N=~/notes
+hash -d K=~/tasks
