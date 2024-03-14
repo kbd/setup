@@ -52,7 +52,7 @@ fi
 
 # pag{ers,ing}/editors
 export PAGER=less
-export LESS='-iMFx4 --mouse --incsearch' # smart-case, status bar, quit 1 screen, 4sp tabs
+export LESS='-iMFx4 --mouse --incsearch --exit-follow-on-close' # smart-case, status bar, quit 1 screen, 4sp tabs
 export EDITOR=vim
 export VISUAL='code -nw'
 export GIT_EDITOR='kw --wait vim'
