@@ -211,6 +211,7 @@ alias emoji='uni emoji all | fzf | f 0 | trim | cb'
 alias ercho='>&2 echo' # echo to stderr
 alias exists='type &>/dev/null' # check if a program exists
 alias fennel='rlwrap fennel'
+alias fm='yazi'
 alias fu='fd -uu' # fd, but don't ignore any files
 alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
