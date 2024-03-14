@@ -1,2 +1,4 @@
 [manager]
 sort_dir_first = true
+linemode = "size"
+ratio = [1, 2, 3] # fibonacci hello. Default is [1, 4, 3]. https://yazi-rs.github.io/docs/configuration/yazi/#ratio
