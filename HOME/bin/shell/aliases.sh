@@ -203,6 +203,8 @@ alias battery='pmset -g batt'
 alias cbf='fzf | teerr | cb'
 alias d='docker'
 alias daily='te ~/notes/notes/daily.journal.$(date +%Y.%m.%d).md'
+alias diary=daily
+alias dear=diary
 alias dc='docker-compose'
 alias dp='cd "$(dirs -pl | tail -n+2 | fzf)"'
 alias dtrx='dtrx --one=inside'
