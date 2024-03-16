@@ -117,7 +117,7 @@ mcd() {
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd -tf -HL'
-export FZF_DEFAULT_OPTS='--height 30% --reverse --multi'
+export FZF_DEFAULT_OPTS='--height 30% --reverse --multi --bind=ctrl-r:toggle-sort'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd -td -HL'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
