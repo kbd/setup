@@ -346,6 +346,8 @@
         "editor.wordWrap": "bounded",
         "editor.fontFamily": "Inter",  // try using proportional font for writing
         "files.trimTrailingWhitespace": false,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
     },
     "markdown.preview.fontFamily": "Inter",
 
