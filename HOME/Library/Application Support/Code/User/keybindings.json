@@ -404,11 +404,11 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "shift+cmd+b",
+        "key": "alt+cmd+b",
         "command": "workbench.action.togglePanel"
     },
     {
-        "key": "alt+cmd+b",
+        "key": "shift+cmd+b",
         "command": "workbench.action.toggleAuxiliaryBar"
     },
     {
