@@ -248,13 +248,8 @@
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "[" toggle-fnState)
 (hs.hotkey.bind hyper "D" #(specific-vscode-window "~/setup"))
-
-; note that 'notes' bind doesn't work properly because hs.window.find in
-;  specific-vscode-window doesn't work past the dash in '.code-workspace'
-; It's close: it'll bring up the window but won't find it if it's already open,
-;  so it doesn't have the correct 'focus-previous-window' behavior that works
-;  for 'setup'
-(hs.hotkey.bind hyper "N" #(specific-vscode-window "~/notes/dendron.code-workspace"))
+(hs.hotkey.bind hyper "N" #(specific-vscode-window "~/notes"))
+(hs.hotkey.bind hyper "K" #(specific-vscode-window "~/tasks"))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
