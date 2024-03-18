@@ -12,7 +12,7 @@ layout {
 }
 '
 
-default:
+run:
    #!/usr/bin/env bash
    zellij --layout <(echo '{{layout}}') --session='{{file_name(parent_directory(justfile()))}}'
 
