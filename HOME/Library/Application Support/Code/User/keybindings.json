@@ -254,6 +254,17 @@
         "command": "workbench.action.splitEditorOrthogonal"
     },
     {
+        "key": "shift+cmd+\\",
+        "command": "runCommands",
+        "args": {
+          "commands": [
+            "markdown.showPreviewToSide",
+            "workbench.action.toggleEditorGroupLayout",
+          ]
+        },
+        "when": "editorLangId == 'markdown'"
+    },
+    {
         "key": "cmd+k cmd+\\",
         "command": "-workbench.action.splitEditorOrthogonal"
     },
