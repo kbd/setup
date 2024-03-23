@@ -195,6 +195,15 @@ alias pyi='ptipython'
 alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias pyt='ptpython'
 
+# notes/tasks/dates
+alias daily='te ~/notes/diary/$(date +%Y-%m-%d).md'
+alias dear=diary
+alias diary=daily
+alias notes='code ~/notes'
+alias tasks='code ~/tasks'
+alias today="gdate '+%Y-%m-%d'"
+alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
+
 # shortcuts/defaults/config
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
 export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/rc
@@ -202,9 +211,6 @@ alias 1p='eval $(op signin)'
 alias battery='pmset -g batt'
 alias cbf='fzf | teerr | cb'
 alias d='docker'
-alias daily='te ~/notes/diary/$(date +%Y-%m-%d).md'
-alias diary=daily
-alias dear=diary
 alias dc='docker-compose'
 alias dp='cd "$(dirs -pl | tail -n+2 | fzf)"'
 alias dtrx='dtrx --one=inside'
@@ -234,8 +240,6 @@ alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
 alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
-alias notes='code ~/notes'
-alias tasks='code ~/tasks'
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias printv='printf "%q\n"' # v for verbatim
 alias qalc='noglob qalc'
