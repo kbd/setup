@@ -1,14 +1,14 @@
-alefragnani.Bookmarks
+alefragnani.bookmarks
 charliermarsh.ruff
 crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
 eamodio.gitlens
 esbenp.prettier-vscode
-Fr43nk.seito-openfile
+fr43nk.seito-openfile
 golang.go
-Gruntfuggly.todo-tree
+gruntfuggly.todo-tree
 ionutvmi.spacegray-vscode
-JakeBecker.elixir-ls
+jakebecker.elixir-ls
 janisdd.vscode-edit-csv
 johnpapa.vscode-peacock
 kbd.binrun
@@ -24,7 +24,7 @@ ryanluker.vscode-coverage-gutters
 serayuzgur.crates
 stkb.rewrap
 tamasfe.even-better-toml
-TheNuProjectContributors.vscode-nushell-lang
+thenuprojectcontributors.vscode-nushell-lang
 timonwong.shellcheck
 usernamehw.errorlens
 wholroyd.jinja
