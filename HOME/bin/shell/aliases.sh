@@ -50,7 +50,7 @@ if is_kitty; then
   alias icat="kitty +kitten icat --align=left"
 fi
 
-# pag{ers,ing}/editors
+# find/pag{ers,ing}/editors
 export PAGER=less
 export LESS='-iMFx4 --mouse --incsearch --exit-follow-on-close' # smart-case, status bar, quit 1 screen, 4sp tabs
 export EDITOR=vim
@@ -59,6 +59,8 @@ export GIT_EDITOR='kw --wait vim'
 export IGREP_EDITOR=code
 export DELTA_PAGER="less $LESS -R"
 export JQ_COLORS='4;36:0;37:0;37:0;37:0;32:1;37:1;37'
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/rc
+export GREP_COLORS='ms=01;32:ln=34:fn=33' # bold green matches, blue line numbers, yellow filenames. Match ripgrep.
 alias http='autopager http --pretty=all'
 alias https='autopager https --pretty=all'
 alias jq='autopager jq -C'
@@ -206,7 +208,6 @@ alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
 
 # shortcuts/defaults/config
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
-export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/rc
 alias 1p='eval $(op signin)'
 alias battery='pmset -g batt'
 alias cbf='fzf | teerr | cb'
