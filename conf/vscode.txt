@@ -2,8 +2,6 @@ alefragnani.Bookmarks
 charliermarsh.ruff
 crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint
-dendron.dendron
-dendron.dendron-paste-image
 eamodio.gitlens
 esbenp.prettier-vscode
 Fr43nk.seito-openfile
