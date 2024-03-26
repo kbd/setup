@@ -219,8 +219,8 @@
 	yp = syncp
 	w = switch-autostash
 	w- = w -
-	watch = !watchexec --print-events git cam .
-	watchp = !watchexec --print-events git camp .
+	watch = !watchexec --print-events --no-meta git cam .
+	watchp = !watchexec --print-events --no-meta git camp .
 	wc = w -c
 	set-main-branch = remote set-head origin
 	set-branch-here = !git pick-branch | xargs -tp git branch --force
