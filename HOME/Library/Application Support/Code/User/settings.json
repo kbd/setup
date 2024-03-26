@@ -143,9 +143,18 @@
                 "scope": ["punctuation.section.embedded"],
                 "settings": {"foreground": "#0f0"}
             },
+            // markdown
             {
                 "scope": ["markup.list"],
-                "settings": { "foreground": "#0a6" }
+                "settings": { "foreground": "#ddd", "fontStyle": "bold" }
+            },
+            {
+                "scope": ["string.other.link"],
+                "settings": { "foreground": "#0c6" }
+            },
+            {
+                "scope": ["meta.link"],
+                "settings": { "foreground": "#99f" }
             },
         ]
     },
