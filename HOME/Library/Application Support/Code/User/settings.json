@@ -37,6 +37,9 @@
         "zsh": {"path": "zsh", "args": ["-l"]},
     },
     "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.commandsToSkipShell": [
+        "binrun.show",
+    ],
 
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
