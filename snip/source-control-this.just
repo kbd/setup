@@ -20,4 +20,4 @@ watch:
    git watch
 
 log:
-   echo .git/COMMIT_EDITMSG | DELTA_PAGER="$DELTA_PAGER +G -EX" entr git lp -n1
+   watchexec --ignore-nothing -r -w .git/COMMIT_EDITMSG git --no-pager lp -n1
