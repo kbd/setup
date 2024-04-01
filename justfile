@@ -30,14 +30,6 @@ brew:
 	ln -sf $etc/docker.zsh-completion $sf/_docker
 	ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose
 
-	# brew python formula doesn't link 'python' and 'pip'. Why?
-	mkdir -p ~/bin # ensure bin exists (bootstrapping)
-	ln -sf $brew_prefix/bin/python3 ~/bin/python
-	ln -sf $brew_prefix/bin/pip3 ~/bin/pip
-
-	# create 'systempython' so scripts work with venv active
-	ln -sf $brew_prefix/bin/python3 ~/bin/systempython
-
 	# install kitty terminfo
 	# https://sw.kovidgoyal.net/kitty/faq/#keys-such-as-arrow-keys-backspace-delete-home-end-etc-do-not-work-when-using-su-or-sudo
 	mkdir -p ~/.terminfo/{78,x}
@@ -45,7 +37,11 @@ brew:
 	tic -x -o ~/.terminfo /Applications/kitty.app/Contents/Resources/kitty/terminfo/kitty.terminfo
 
 python:
-	pip3 install --upgrade -r conf/requirements.txt
+	mkdir -p ~/bin # ensure bin exists (bootstrapping)
+
+	uv venv ~/bin/.venv
+	ln -sf ~/bin/.venv/bin/python ~/bin/systempython # for scripts
+	uv pip sync --python ~/bin/.venv/bin/python conf/requirements.txt
 
 pipx:
 	#!/usr/bin/env bash
