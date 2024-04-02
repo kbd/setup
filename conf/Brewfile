@@ -165,6 +165,7 @@ cask "font-inter"
 cask "font-noto-sans"
 cask "font-noto-mono"
 cask "font-victor-mono"
+cask "font-victor-mono-nerd-font"
 cask "font-symbols-only-nerd-font"
 
 mas "Cyberduck", id: 409222199
