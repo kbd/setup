@@ -1,14 +1,8 @@
 set_kitty_tab_colors() {
   if has kitty-tab-color && [[ $TERM == xterm-kitty ]]; then
-    local file="$(find_up .vscode/settings.json)"
-    if [[ "$file" ]]; then
+    if file="$(find_up .vscode/settings.json)"; then
       eval "$(kitty-tab-color "$file")"
-      # see kitty_chpwd
-      kitty @ set-tab-color --self \
-        active_fg=${KITTY_TAB_AFG:-NONE} \
-        active_bg=${KITTY_TAB_ABG:-NONE} \
-        inactive_fg=${KITTY_TAB_IFG:-NONE} \
-        inactive_bg=${KITTY_TAB_IBG:-NONE}
+      kitty-set-tab
     fi
   fi
 }

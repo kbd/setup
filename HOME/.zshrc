@@ -92,11 +92,7 @@ RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
 export PROMPT_PREFIX='⚡'
 
 kitty_chpwd(){
-  kitty @ set-tab-color --self \
-    active_fg=${KITTY_TAB_AFG:-NONE} \
-    active_bg=${KITTY_TAB_ABG:-NONE} \
-    inactive_fg=${KITTY_TAB_IFG:-NONE} \
-    inactive_bg=${KITTY_TAB_IBG:-NONE}
+  kitty-set-tab
 }
 if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 ]] && is_kitty &&
   exists kitty-tab-color; then
