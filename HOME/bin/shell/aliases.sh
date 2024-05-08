@@ -251,7 +251,8 @@ alias tcl='rlwrap tclsh'
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 alias title-tab='printf "\e]1;%s\a"'
 alias title-win='printf "\e]2;%s\a"'
-alias ug='ug --smart-case'
+alias ugs='command ug --smart-case'
+ug() { [[ $# == 0 ]] && ugs -Q || ugs "$@"; } # run TUI if no arguments
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
 alias S='~S' # too often I miss the ~ when I ~S. Make it work anyway.
