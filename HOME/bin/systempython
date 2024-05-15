@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# if only shebangs could have relative paths
+~/bin/.venv/bin/python "$@"

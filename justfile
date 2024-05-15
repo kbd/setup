@@ -40,7 +40,6 @@ python:
 	mkdir -p ~/bin # ensure bin exists (bootstrapping)
 
 	uv venv ~/bin/.venv
-	ln -sf ~/bin/.venv/bin/python ~/bin/systempython # for scripts
 	uv pip sync --python ~/bin/.venv/bin/python conf/requirements.txt
 
 pipx:
