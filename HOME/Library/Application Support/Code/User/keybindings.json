@@ -434,4 +434,9 @@
         "key": "ctrl+cmd+enter",
         "command": "editor.action.openLink"
     },
+    {
+        "key": "f5",
+        "command": "diffEditor.switchSide",
+        "when": "inDiffEditor"
+    },
 ]
