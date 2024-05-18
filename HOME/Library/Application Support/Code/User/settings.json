@@ -434,8 +434,8 @@
         "editor.tabSize": 4,
         "editor.defaultFormatter": "ziglang.vscode-zig",
     },
-    "zig.path": "",
-    "zig.zls.path": "",
+    "zig.path": "zig",
+    "zig.zls.path": "zls",
     "zig.initialSetupDone": true,
 
     "[rust]": {
