@@ -103,8 +103,8 @@ alias ll='ls -lh'
 alias lla='ll -A'
 alias llt='ll -t'
 alias llat='ll -At'
-alias lsd='ls -d --indicator-style=none -- */'
-alias lld='ll -d --indicator-style=none -- */'
+lsd() { ls -d --indicator-style=none "$@" -- */; }
+lld() { ll -d --indicator-style=none "$@" -- */; }
 cl() { cd -- "${1-$HOME}" && l "${@:2}"; }
 cll() { cd -- "${1-$HOME}" && ll "${@:2}"; }
 et() { eza -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache|.venv|.ruff_cache|.dolt' --color=always "$@" | less -R; }
