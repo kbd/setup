@@ -423,6 +423,10 @@
         "command": "workbench.action.toggleAuxiliaryBar"
     },
     {
+        "key": "shift+cmd+0",
+        "command": "workbench.action.focusAuxiliaryBar"
+    },
+    {
         "key": "shift+cmd+f2",
         "command": "bookmarks.listFromAllFiles"
     },
