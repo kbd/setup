@@ -62,6 +62,7 @@
         "*.janet": "clojure"
     },
 
+    // misc
     "breadcrumbs.enabled": true,
     "outline.showVariables": false,
     "explorer.openEditors.sortOrder": "alphabetical",
@@ -71,7 +72,9 @@
     "git.openRepositoryInParentFolders": "always",
     "security.workspace.trust.untrustedFiles": "open",
     "editor.lightbulb.enabled": "onCode",
+    "github.copilot.editor.enableAutoCompletions": true,
 
+    // workbench
     "workbench.tree.indent": 15,
     "workbench.tree.enableStickyScroll": true,
     "workbench.editor.showTabs": "multiple",
