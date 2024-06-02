@@ -38,7 +38,6 @@ brew:
 
 python:
 	mkdir -p ~/bin # ensure bin exists (bootstrapping)
-
 	uv venv ~/bin/.venv
 	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt
 
