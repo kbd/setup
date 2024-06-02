@@ -24,18 +24,6 @@ brew:
 	$brew_prefix/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
 	perl -pi -e 's/fc -rl 1/fc -rli 1/' "$(brew --prefix fzf)/shell/key-bindings.zsh"
 
-	# docker: https://docs.docker.com/desktop/mac/#zsh
-	etc=/Applications/Docker.app/Contents/Resources/etc
-	sf="$brew_prefix/share/zsh/site-functions"
-	ln -sf $etc/docker.zsh-completion $sf/_docker
-	ln -sf $etc/docker-compose.zsh-completion $sf/_docker-compose
-
-	# install kitty terminfo
-	# https://sw.kovidgoyal.net/kitty/faq/#keys-such-as-arrow-keys-backspace-delete-home-end-etc-do-not-work-when-using-su-or-sudo
-	mkdir -p ~/.terminfo/{78,x}
-	ln -snf ../x/xterm-kitty ~/.terminfo/78/xterm-kitty
-	tic -x -o ~/.terminfo /Applications/kitty.app/Contents/Resources/kitty/terminfo/kitty.terminfo
-
 python:
 	uv venv ~/bin/.venv
 	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt
