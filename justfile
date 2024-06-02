@@ -40,7 +40,7 @@ python:
 	mkdir -p ~/bin # ensure bin exists (bootstrapping)
 
 	uv venv ~/bin/.venv
-	uv pip sync --python ~/bin/.venv/bin/python conf/requirements.txt
+	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt
 
 pipx:
 	#!/usr/bin/env bash
