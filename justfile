@@ -37,7 +37,6 @@ brew:
 	tic -x -o ~/.terminfo /Applications/kitty.app/Contents/Resources/kitty/terminfo/kitty.terminfo
 
 python:
-	mkdir -p ~/bin # ensure bin exists (bootstrapping)
 	uv venv ~/bin/.venv
 	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt
 
@@ -98,8 +97,11 @@ pull:
 # Install all software packages
 packages: python pipx node go rust cargo vscode
 
-# The full set of commands used on first setup / bootstrap
-init: brew packages manual symlinks mac restartservices
+bootstrap:
+	mkdir -p ~/bin
+
+# The full set of commands used on first setup
+init: bootstrap brew packages manual symlinks mac restartservices
 
 # One-stop shopping to update setup repo and most things
 update: pull brew packages symlinks
