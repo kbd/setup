@@ -9,7 +9,6 @@ from aush import (
     django_admin,
     echo,
     git,
-    ln,
     mkdir,
     poetry,
     python3,
@@ -56,7 +55,8 @@ if not args.no_dependencies:
     poetry.add('pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb', group="dev")
 
 # set up direnv
-echo("""export VIRTUAL_ENV=.venv
+echo("""export PYTHONPATH="$PWD"
+export VIRTUAL_ENV=.venv
 layout python""") >> '.envrc'
 direnv.allow()
 
@@ -116,7 +116,5 @@ else:
     #     └── __init__.py
     files = [f'{args.name}/__init__.py', 'tests/__init__.py']
     t(*files, 'bin/')
-    ln('-s', f'../{args.name}', f'bin/{args.name}')  # create package symlink
-    files.append(f'bin/{args.name}')
     git.add(*files, force=True)
     git.commit(m="Create Python project structure")
