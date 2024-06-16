@@ -1,5 +1,6 @@
 // prettier-ignore
 {
+    // editor
     "editor.fontFamily": "Victor Mono",
     "editor.fontWeight": 500,
     "editor.fontSize": 14,
@@ -29,6 +30,7 @@
     "editor.accessibilitySupport": "off",
     "editor.occurrencesHighlight": "multiFile",
 
+    // terminal
     "terminal.integrated.fontFamily": "Victor Mono",
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.fontWeight": 600,
@@ -41,17 +43,20 @@
         "binrun.show",
     ],
 
+    // search
     "search.showLineNumbers": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useIgnoreFiles": true,
     "search.followSymlinks": false,
 
+    // window
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
     "window.titleSeparator": " // ",
     "window.restoreWindows": "preserve",
     "window.closeWhenEmpty": true,
     "window.commandCenter": false,
 
+    // files
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
@@ -60,7 +65,8 @@
     "files.associations": {
         "*.avsc": "json",
         "*.fnl": "clojure",
-        "*.janet": "clojure"
+        "*.janet": "clojure",
+        "*.heex": "html-eex",
     },
 
     // misc
@@ -171,6 +177,7 @@
 
     "extensions.ignoreRecommendations": true,
 
+    // gitlens
     "gitlens.codeLens.enabled": false,
     "gitlens.advanced.messages": {
         "suppressCommitHasNoPreviousCommitWarning": false,
@@ -185,6 +192,7 @@
         "containers"
     ],
 
+    // peacock
     "peacock.surpriseMeOnStartup": false,
     "peacock.affectStatusBar": true,
     "peacock.affectActivityBar": true,
@@ -308,6 +316,7 @@
         }
     ],
 
+    // todo-tree
     // change default regex to require colon after tag
     "todo-tree.regex.regex": "((//|#|<!--|;|/\\*|^)\\s*($TAGS):|^\\s*- \\[ \\])",
     "todo-tree.regex.regexCaseSensitive": false,
@@ -362,6 +371,7 @@
     },
 
     // language-specific
+    // text
     "[plaintext]": {
         "editor.wordBasedSuggestions": "off",
         "editor.wordWrap": "bounded",
@@ -376,6 +386,7 @@
     },
     "markdown.preview.fontFamily": "Inter",
 
+    // js
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
         "editor.formatOnSave": true,
         "editor.tabSize": 2,
@@ -401,6 +412,7 @@
     "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
     "typescript.inlayHints.variableTypes.enabled": true,
 
+    // python
     "[python]": {
         "editor.formatOnType": true,
         "editor.tabSize": 4,
@@ -425,18 +437,18 @@
         "jupyter-notebook": "left"
     },
 
+    // elixir
     "[elixir]": {
         "editor.formatOnSave": true,
         "editor.wordBasedSuggestions": "matchingDocuments",
         "editor.acceptSuggestionOnEnter": "on",
     },
     "elixirLS.suggestSpecs": false,
-
-    "[nim]": {
-        "editor.formatOnSave": true,
-        "editor.acceptSuggestionOnEnter": "smart",
+    "emmet.includeLanguages": {
+        "html-eex": "html",
     },
 
+    // zig
     "[zig]": {
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
@@ -446,6 +458,7 @@
     "zig.zls.path": "zls",
     "zig.initialSetupDone": true,
 
+    // rust
     "[rust]": {
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
@@ -460,6 +473,7 @@
     "rust-analyzer.inlayHints.reborrowHints.enable": "always",
     "rust-analyzer.inlayHints.typeHints.enable": true,
 
+    // go
     "[go]": {
         "editor.insertSpaces": false,
     },
@@ -480,6 +494,12 @@
     "go.inlayHints.functionTypeParameters": true,
     "go.inlayHints.parameterNames": true,
     "go.inlayHints.rangeVariableTypes": true,
+
+    // misc
+    "[nim]": {
+        "editor.formatOnSave": true,
+        "editor.acceptSuggestionOnEnter": "smart",
+    },
 
     "[terraform]": {
         "editor.formatOnSave": true,

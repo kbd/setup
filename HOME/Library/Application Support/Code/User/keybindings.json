@@ -87,6 +87,16 @@
         "when": "editorTextFocus"
     },
     {
+        "key": "shift+cmd+space",
+        "command": "editor.emmet.action.balanceOut",
+        "when": "editorTextFocus && editorLangId == 'html-eex'"
+    },
+    {
+        "key": "ctrl+shift+cmd+space",
+        "command": "editor.emmet.action.balanceIn",
+        "when": "editorTextFocus && editorLangId == 'html-eex'"
+    },
+    {
         "key": "cmd+f2",
         "command": "bookmarks.toggle",
         "when": "editorTextFocus"
