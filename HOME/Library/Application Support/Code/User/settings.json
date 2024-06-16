@@ -47,6 +47,7 @@
     "search.followSymlinks": false,
 
     "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
+    "window.titleSeparator": " // ",
     "window.restoreWindows": "preserve",
     "window.closeWhenEmpty": true,
     "window.commandCenter": false,
