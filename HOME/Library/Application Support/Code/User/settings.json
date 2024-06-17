@@ -379,19 +379,19 @@
     },
 
     "[markdown]": {
-        "editor.wordWrap": "bounded",
-        "editor.fontFamily": "Inter",  // try using proportional font for writing
-        "files.trimTrailingWhitespace": false,
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
+        "editor.wordWrap": "bounded",
+        "editor.fontFamily": "Inter",  // use proportional font for writing
+        "files.trimTrailingWhitespace": false,  // actually syntactically necessary
     },
     "markdown.preview.fontFamily": "Inter",
 
     // js
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
-        "editor.formatOnSave": true,
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
             "source.organizeImports": "always",
@@ -415,22 +415,22 @@
 
     // python
     "[python]": {
-        "editor.formatOnType": true,
         "editor.tabSize": 4,
-        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnType": true,
         // "editor.formatOnSave": true,
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.codeActionsOnSave": {
             "source.organizeImports": "always",
             "source.fixAll": "always",
         },
     },
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.defaultInterpreterPath": "python3",
     "python.globalModuleInstallation": true,
     "python.languageServer": "Pylance",
     "python.terminal.activateEnvironment": false, // depend on direnv instead
-    "python.analysis.inlayHints.functionReturnTypes": true,
-    "python.analysis.inlayHints.variableTypes": true,
-    "python.analysis.autoFormatStrings": true,
-    "python.defaultInterpreterPath": "python3",
 
     "jupyter.interactiveWindow.textEditor.executeSelection": false,
     "notebook.cellToolbarLocation": {
@@ -451,8 +451,8 @@
 
     // zig
     "[zig]": {
-        "editor.formatOnSave": true,
         "editor.tabSize": 4,
+        "editor.formatOnSave": true,
         "editor.defaultFormatter": "ziglang.vscode-zig",
     },
     "zig.path": "zig",
@@ -461,8 +461,8 @@
 
     // rust
     "[rust]": {
-        "editor.formatOnSave": true,
         "editor.tabSize": 4,
+        "editor.formatOnSave": true,
     },
     "rust-analyzer.inlayHints.bindingModeHints.enable": true,
     "rust-analyzer.inlayHints.chainingHints.enable": true,
