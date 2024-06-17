@@ -72,6 +72,7 @@
     // misc
     "breadcrumbs.enabled": true,
     "outline.showVariables": false,
+    "explorer.openEditors.visible": 15,
     "explorer.openEditors.sortOrder": "alphabetical",
     "problems.showCurrentInStatus": true,
     "debug.showBreakpointsInOverviewRuler": true,
@@ -84,7 +85,7 @@
     // workbench
     "workbench.tree.indent": 15,
     "workbench.tree.enableStickyScroll": true,
-    "workbench.editor.showTabs": "multiple",
+    "workbench.editor.showTabs": "none",
     "workbench.editor.wrapTabs": false, // buggy
     "workbench.editor.empty.hint": "hidden",
     "workbench.editor.highlightModifiedTabs": true,
