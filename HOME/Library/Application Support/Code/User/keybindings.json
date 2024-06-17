@@ -453,4 +453,8 @@
         "command": "diffEditor.switchSide",
         "when": "inDiffEditor"
     },
+    {
+        "key": "cmd+p",
+        "command": "workbench.action.quickOpenPreviousEditor"
+    },
 ]
