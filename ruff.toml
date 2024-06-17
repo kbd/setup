@@ -1,5 +1,6 @@
-[lint.isort]
+[isort]
+combine-as-imports = true
 known-local-folder = ["lib"]
 
-# [format]
-# quote-style = "preserve"
+[format]
+quote-style = "preserve"

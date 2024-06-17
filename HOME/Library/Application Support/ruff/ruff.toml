@@ -1,2 +1,5 @@
 [isort]
 combine-as-imports = true
+
+[format]
+quote-style = "preserve"
