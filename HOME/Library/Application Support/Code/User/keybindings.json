@@ -457,4 +457,8 @@
         "key": "cmd+p",
         "command": "workbench.action.quickOpenPreviousEditor"
     },
+    {
+        "key": "ctrl+1",
+        "command": "workbench.files.action.focusOpenEditorsView",
+    },
 ]
