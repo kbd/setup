@@ -106,7 +106,6 @@ else:
     # .
     # ├── README.md
     # ├── bin
-    # │   └── proj -> ../proj
     # ├── poetry.lock
     # ├── poetry.toml
     # ├── proj
