@@ -1,14 +1,11 @@
 layout := '
 layout {
-   pane split_direction="vertical" size="60%" {
-      pane size="35%" command="just" {
-         args "watch"
-      }
-      pane command="just" {
-         args "log"
-      }
+   pane command="just" {
+      args "watch"
    }
-   pane size="40%"
+   pane command="just" {
+      args "log"
+   }
 }
 '
 
