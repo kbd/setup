@@ -1,4 +1,4 @@
-[isort]
+[lint.isort]
 combine-as-imports = true
 known-local-folder = ["lib"]
 
