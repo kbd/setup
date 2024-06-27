@@ -8,7 +8,9 @@ import shlex
 import sys
 from pathlib import Path
 
-from lib import colors as c, utils
+from aush import COLORS as c
+
+from lib import utils
 
 BINARY_EXTENSIONS = ('.zip', '.tar.gz', '.dmg')
 DEFAULT_DOWNLOADS_DIR = Path("~/Downloads").expanduser()
@@ -20,7 +22,7 @@ def run(*args):
 
 
 def fprint(action, text, bold=True):
-    print(f"{c.s.bold if bold else ''}{c.fg.blue}{action}: {c.fg.yellow}{text}{c.s.reset}")
+    print(f"{c.c.bold if bold else ''}{c.f.blue}{action}: {c.f.yellow}{text}{c.c.reset}")
 
 
 if __name__ == "__main__":

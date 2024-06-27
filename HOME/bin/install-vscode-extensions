@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 
-from aush import code
+from aush import COLORS as c, code
 
 from lib.utils import read_config_file
 
@@ -18,18 +18,20 @@ def vscode(config_path):
     expected = set(read_config_file(config_path))
     missing = expected - installed
 
-    print(f"Installed extensions: {fmt(installed)}\n")
-    print(f"Expected extensions: {fmt(expected)}\n")
-    print(f"Missing extensions: {fmt(missing)}\n")
+    print(f"{c.green("Installed extensions")}: {fmt(installed)}\n")
+    print(f"{c.blue("Expected extensions")}: {fmt(expected)}\n")
+    print(f"{c.red("Missing extensions")}: {fmt(missing)}\n")
 
     # install missing
     for package in sorted(missing):
-        print(f"Installing: {package}")
+        print(f"{c.magenta(f"Installing: {package}")}")
         code(install_extension=package)
 
     # report any extensions that are installed that aren't in source control
     if unexpected := installed - expected:
-        print(f"Installed extensions not in config: {fmt(unexpected)}")
+        if missing:
+            print()
+        print(f"{c.yellow("Installed extensions not in config")}: {fmt(unexpected)}")
 
 
 if __name__ == '__main__':
