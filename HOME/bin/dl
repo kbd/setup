@@ -22,7 +22,8 @@ def run(*args):
 
 
 def fprint(action, text, bold=True):
-    print(f"{c.c.bold if bold else ''}{c.f.blue}{action}: {c.f.yellow}{text}{c.c.reset}")
+    fmt = getattr(c, f"blue{'_bold' if bold else ''}")
+    print(f"{fmt(action)}: {c.yellow(text)}")
 
 
 if __name__ == "__main__":
