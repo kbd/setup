@@ -226,6 +226,7 @@ alias fu='fd -uu' # fd, but don't ignore any files
 alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
 alias hex='hexyl'
+alias ieX='iex -S mix'
 alias is_docker='[[ -f "/.dockerenv" ]]'
 alias is_local='! is_not_local'
 alias is_not_local='is_remote || is_docker'
