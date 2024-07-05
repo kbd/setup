@@ -29,7 +29,7 @@ python:
 	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt
 
 pipx:
-	cat conf/pipx.txt | xargs -t pipx install
+	cat conf/pipx.txt | xargs -t -n1 pipx install
 	pipx upgrade-all
 
 node:
