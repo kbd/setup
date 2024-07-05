@@ -29,8 +29,8 @@ python:
 	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt
 
 pipx:
-	#!/usr/bin/env bash
-	st <(cat conf/pipx.txt) '-' <(pipx list --json | jq -r '.venvs | keys | select(false)') | xargs -t pipx install
+	cat conf/pipx.txt | xargs -t pipx install
+	pipx upgrade-all
 
 node:
 	cat conf/npm.txt | xargs -t npm install -g
