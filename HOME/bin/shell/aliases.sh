@@ -198,11 +198,11 @@ alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from
 alias pyt='ptpython'
 
 # notes/tasks/dates
-alias daily='te ~/notes ~/notes/diary/$(date +%Y-%m-%d).md'
+alias daily='te ~/notes{,/diary/$(date +%Y-%m-%d).md}'
 alias dear=diary
 alias diary=daily
-alias notes='code ~/notes'
-alias tasks='code ~/tasks'
+alias notes='e ~/notes'
+alias tasks='e ~/tasks'
 alias today="gdate '+%Y-%m-%d'"
 alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
 
