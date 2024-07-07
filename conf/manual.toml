@@ -10,12 +10,12 @@ bin = "bak"
 
 [repo_status]
 git = "https://github.com/kbd/repo_status.git"
-cmd = "nim c -d:release repo_status.nim"
+cmd = "just build-release"
 bin = "repo_status"
 
 [prompt]
 git = "https://github.com/kbd/prompt.git"
-cmd = "zig build-exe -OReleaseFast prompt.zig"
+cmd = "just build-release"
 bin = "prompt"
 
 [zls]
@@ -36,7 +36,7 @@ cmd = "make"
 bin = "bin/tf"
 
 [tinkle]
-url = "https://github.com/pqrs-org/Tinkle/releases/download/v2.1.0/Tinkle-2.1.0.dmg"
+url = "https://github.com/pqrs-org/Tinkle/releases/download/v2.4.0/Tinkle-2.4.0.dmg"
 dmg = "/Volumes/Tinkle/Tinkle.app"
 
 [kitty-tab-color]
