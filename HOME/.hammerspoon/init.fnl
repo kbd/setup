@@ -242,7 +242,7 @@
 (hs.hotkey.bind hyper "8" #(move-active-window 1 6 4)) ; two-thirds, center
 (hs.hotkey.bind hyper "9" #(move-active-window 0 1))   ; full screen
 (hs.hotkey.bind hyper "0" focus-previous-window)
-(hs.hotkey.bind hyper "E" move-active-window-to-next-screen)
+(hs.hotkey.bind hyper "G" move-active-window-to-next-screen)
 (hs.hotkey.bind hyper "A" show-audio-fuzzy)
 (hs.hotkey.bind hyper "." #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
