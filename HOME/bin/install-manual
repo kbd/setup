@@ -8,21 +8,21 @@ from pathlib import Path
 
 import tabulate
 import toml
+from aush import COLORS as c
 
-from lib.colors import fg, s
 from lib.utils import run, run_commands
 
 
 def _format_manual_packages_table(packages, bin_dir):
     items = [
         [
-            f"{fg.yellow}{key}{s.reset}",
+            f"{c.f.yellow}{key}{c.c.reset}",
             params.get('git', params.get('url', params.get('cmd'))), # source
-            f'{fg.green}yes{s.reset}' if (bin_dir/key).exists() else f'{fg.red}no{s.reset}'
+            f'{c.f.green}yes{c.c.reset}' if (bin_dir/key).exists() else f'{c.f.red}no{c.c.reset}'
         ]
         for key, params in packages.items()
     ]
-    headers = [f"{fg.blue}{s.bold}{k}{s.reset}" for k in ["key","source","installed"]]
+    headers = [f"{c.f.blue}{c.c.bold}{k}{c.c.reset}" for k in ["key","source","installed"]]
     table = tabulate.tabulate(items, headers=headers, tablefmt="plain")
     return table
 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
     parser.add_argument("config_path", help="Path to config file")
     parser.add_argument("dir", help="Directory to install software to")
     parser.add_argument("bin_dir", default=Path('~/bin').expanduser(), nargs='?',
-        help=f"Bin path to symlink to (default: ~/bin)")
+        help="Bin path to symlink to (default: ~/bin)")
     args = parser.parse_args()
 
     packages = toml.load(args.config_path)
