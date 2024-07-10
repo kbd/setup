@@ -80,15 +80,15 @@ def start_kitty():
 
 def get_kitty_socket_launch():
     """get_kitty_socket, launch new kitty if needed"""
-    to = get_kitty_socket()
-    if not to:
-        start_kitty()
-        to = get_kitty_socket()
+    if to := get_kitty_socket():
+        return to
 
-    if not to:
-        raise Exception("Couldn't get kitty socket")
+    start_kitty()
 
-    return to
+    if to := get_kitty_socket():
+        return to
+
+    raise Exception("Couldn't get kitty socket")
 
 
 def kitty_launch(subcmd, wait: bool, launch_args={}, dir=None):
