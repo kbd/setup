@@ -53,7 +53,7 @@ fi
 # find/pag{ers,ing}/editors
 export PAGER=less
 export LESS='-iMFx4 --mouse --incsearch --exit-follow-on-close' # smart-case, status bar, quit 1 screen, 4sp tabs
-export EDITOR=vim
+export EDITOR=hx
 export VISUAL='code -nw'
 export GIT_EDITOR='kw --wait hx'
 export IGREP_EDITOR=code
@@ -72,7 +72,7 @@ alias gh='PAGER= gh' # use gh default pager; gh needs 'less -R' for colors
 alias glab='PAGER= glab' # ...
 
 # edit/open
-alias edit=code
+alias edit='$EDITOR'
 alias e=edit
 alias e.='e .'
 alias e-='e -' # edit from stdin
