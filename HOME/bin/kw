@@ -99,9 +99,11 @@ def kitty_launch(subcmd, wait: bool, launch_args={}, dir=None):
         ls = kitty_ls_launch(to)
         if window_id := find_free_window_at_dir(ls, dir):
             kitty(to, ['focus-window', '--match', f'id:{window_id}'])
-            kitty(to, ['send-text', '--match', f'id:{window_id}', '--', *subcmd, '\n'])
         else:
-            kitty(to, ['launch', '--type', 'tab', '--hold', '--cwd', dir, '--', *subcmd])
+            result = kitty(to, ['launch', '--type', 'tab', '--cwd', dir])
+            window_id = int(result.stdout)
+
+        kitty(to, ['send-text', '--match', f'id:{window_id}', '--', *subcmd, '\n'])
     else:
         args = chain.from_iterable((f'--{k}', v) for k, v in launch_args.items())
         cmd = ['launch', '--cwd', 'current', '--copy-env', *args, '--', *subcmd]
@@ -119,11 +121,9 @@ def find_free_window_at_dir(ls, dir):
         for tab in oswindow['tabs']:
             for window in tab['windows']:
                 fg = window['foreground_processes']
-                w = {k: window[k] for k in ['cmdline', 'cwd']}
-                if len(fg) == 1:
-                    f = {k: fg[0][k] for k in ['cmdline', 'cwd']}
-                    if f['cwd'] == dir and w == f:
-                        return window['id']
+                if window['at_prompt'] and len(fg) == 1 and fg[0]['cwd'] == dir:
+                    # the process of the at-prompt window should be the shell
+                    return window['id']
 
 
 def get_additional_launch_args(args):
