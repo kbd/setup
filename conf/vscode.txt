@@ -21,7 +21,6 @@ ms-python.vscode-pylance
 ms-vscode.cpptools
 rust-lang.rust-analyzer
 ryanluker.vscode-coverage-gutters
-serayuzgur.crates
 stkb.rewrap
 tamasfe.even-better-toml
 thenuprojectcontributors.vscode-nushell-lang
