@@ -6,4 +6,4 @@ keymap_name = ["vscode", "mine"]
 [[keymaps.mine]]
 keys = "ctrl+enter,ctrl+j,f5"
 action = "code_editor.run_query"
-key_display = "CTRL+ENTER,CTRL+J,F5"
+key_display = "⌃⏎,⌃j,f5"
