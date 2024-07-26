@@ -2,8 +2,13 @@ import logging
 import re
 import subprocess
 import sys
+from unittest.mock import patch
 
 log = logging.getLogger(__name__)
+
+
+
+EXECUTABLE = '/bin/bash'
 
 
 def run(cmd, check=True, cap=False, input=None, exe='/bin/bash', cwd=None, env=None, **kwargs):
@@ -28,6 +33,75 @@ def run(cmd, check=True, cap=False, input=None, exe='/bin/bash', cwd=None, env=N
     else:
         return result
 
+# region run tests
+def test_run_call_cmd():
+    cmd = ['echo', 'hello']
+    with patch('subprocess.run') as mockrun:
+        run(cmd)
+
+    mockrun.assert_called_with(
+        cmd, check=True, shell=False, stdout=None, stderr=None,
+        executable=None, input=None, cwd=None, env=None
+    )
+
+
+def test_run_call_shell_cmd():
+    cmd = 'echo "hello"'
+    with patch('subprocess.run') as mockrun:
+        run(cmd)
+
+    mockrun.assert_called_with(
+        cmd, check=True, shell=True, stdout=None, stderr=None,
+        executable=EXECUTABLE, input=None, cwd=None, env=None
+    )
+
+
+def test_run_call_shell_output():
+    cmd = 'echo "hello"'
+    with patch('subprocess.run') as mockrun:
+        run(cmd, cap=True)
+
+    mockrun.assert_called_with(
+        cmd, check=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        executable=EXECUTABLE, input=None, cwd=None, env=None
+    )
+
+
+def test_run_call_shell_input():
+    cmd = 'cat'
+    input = 'hello'
+    with patch('subprocess.run') as mockrun:
+        run(cmd, input=input)
+
+    mockrun.assert_called_with(
+        cmd, check=True, shell=True, stdout=None, stderr=None,
+        executable=EXECUTABLE, input=input.encode(), cwd=None, env=None
+    )
+
+
+def test_run_call_cmd_cap_input():
+    cmd = ['cat']
+    input = 'hello'
+    with patch('subprocess.run') as mockrun:
+        run(cmd, cap=True, input=input)
+
+    mockrun.assert_called_with(
+        cmd, check=True, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        executable=None, input=input.encode(), cwd=None, env=None
+    )
+
+
+def test_run_shell_output():
+    output = run('echo "hello"', cap=True)
+    expected_output = 'hello\n'
+    assert output == expected_output
+
+
+def test_run_shell_input():
+    output = run(['cat'], cap=True, input='hello')
+    expected_output = 'hello'
+    assert output == expected_output
+# endregion run tests
 
 def partition(pred, list):
     trues, falses = [], []
@@ -57,6 +131,7 @@ def read_config_file(path, comment='#'):
         return parse_config_file(file, comment)
 
 
+# region config file tests
 def test_parse_config_file():
     import io
     file = io.StringIO("""a\nb\nc""")
@@ -68,6 +143,44 @@ def test_parse_config_file():
     file = io.StringIO("""a\n\nb\n    # c\nc\nd\n\n""")
     assert parse_config_file(file) == ['a', 'b', 'c', 'd']
 
+
+def test_read_config():
+    import tempfile
+
+    values = ['one', 'two', 'three', '#four', '     \t  ', 'five']
+    with tempfile.NamedTemporaryFile() as t:
+        t.writelines(f'{v}\n'.encode() for v in values)
+        t.flush()
+        actual = read_config_file(t.name)
+
+    expected = ['one', 'two', 'three', 'five']
+    assert actual == expected
+
+
+def test_read_config_no_comments():
+    import tempfile
+
+    values = ['one', 'two', 'three', '#four', '     \t  ', 'five']
+    with tempfile.NamedTemporaryFile() as t:
+        t.writelines(f'{v}\n'.encode() for v in values)
+        t.flush()
+        actual = read_config_file(t.name, comment=None)
+
+    expected = ['one', 'two', 'three', '#four', 'five']
+    assert actual == expected
+
+
+def test_read_config_with_blanks_and_comments():
+    import tempfile
+
+    values = ['one', 'two', 'three', '# commented line', 'four', ' ', 'six']
+    with tempfile.NamedTemporaryFile() as t:
+        t.writelines(f'{v}\n'.encode() for v in values)
+        t.flush()
+        actual = read_config_file(t.name, comment='#')
+
+    assert actual == ['one', 'two', 'three', 'four', 'six']
+# endregion config file tests
 
 def run_commands(cmd, *args, **kwargs):
     """Take one or more commands to run as a subprocess.
