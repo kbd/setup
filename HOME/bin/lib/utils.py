@@ -41,16 +41,32 @@ def partition_by_regex(regex, list):
     return partition(r.search, list)
 
 
+def parse_config_file(file, comment='#'):
+    return [
+        line for line in (line.rstrip() for line in file)
+        if line and not (comment and line.lstrip().startswith(comment))
+    ]
+
+
 def read_config_file(path, comment='#'):
     """Read the lines from a file, skipping empty and commented lines.
 
     Don't process comments if 'comment' is falsy.
     """
     with open(path) as file:
-        return [
-            line for line in (line.rstrip() for line in file)
-            if line and not (comment and line.startswith(comment))
-        ]
+        return parse_config_file(file, comment)
+
+
+def test_parse_config_file():
+    import io
+    file = io.StringIO("""a\nb\nc""")
+    assert parse_config_file(file) == ['a', 'b', 'c']
+
+    file = io.StringIO("""a\nb\n#c\nc\nd""")
+    assert parse_config_file(file) == ['a', 'b', 'c', 'd']
+
+    file = io.StringIO("""a\n\nb\n    # c\nc\nd\n\n""")
+    assert parse_config_file(file) == ['a', 'b', 'c', 'd']
 
 
 def run_commands(cmd, *args, **kwargs):
