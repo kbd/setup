@@ -74,17 +74,24 @@ alias glab='PAGER= glab' # ...
 # edit/open
 alias edit='$EDITOR'
 alias e=edit
+alias E='code'
 alias e.='e .'
-alias e-='e -' # edit from stdin
-alias eg='e -g' # edit (go to line)
+alias E.='E .'
+alias e-='e' # edit from stdin
+alias E-='E -' # edit from stdin
+alias eg='e' # edit (go to line)
+alias Eg='E -g' # edit (go to line)
 alias o=open
 alias o.='o .'
 alias a='o -a'
 alias x='chmod +x'
 alias c='bat --style=header,numbers'
 te(){ t "$@" && e "$@"; }
+tE(){ EDITOR="code" te "$@"; }
 tex(){ te "$@" && x "$@"; }
+tEx(){ EDITOR="code" tex "$@"; }
 ze(){ z "$@" && e .; } # z to dir then edit
+zE(){ EDITOR="code" ze "$@"; }
 
 # directory/navigation
 alias   -- -='cd -'
