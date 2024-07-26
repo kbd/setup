@@ -10,7 +10,6 @@ but it's not possible: https://github.com/pytest-dev/pytest/issues/1599
 I tried the 'capsys' context manager on each test but that didn't work (?)
 """
 
-import inspect
 import tempfile
 from subprocess import check_call as cc, check_output as co
 
