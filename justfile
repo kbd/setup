@@ -24,6 +24,13 @@ brew:
 	$brew_prefix/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
 	perl -pi -e 's/fc -rl 1/fc -rli 1/' "$(brew --prefix fzf)/shell/key-bindings.zsh"
 
+	# cache zsh plugins
+	# note: '3rdparty' subdir should sort and therefore be sourced first
+	plugins=~/bin/shell/3rdparty/plugins.zsh
+	direnv hook zsh > $plugins
+	zoxide init zsh >> $plugins
+	fzf --zsh >> $plugins
+
 python:
 	uv venv ~/bin/.venv
 	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt

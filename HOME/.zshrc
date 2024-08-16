@@ -69,10 +69,10 @@ real\t%*Es
 cpu/mem\t%P/%Mk
 faults\t%F'
 
-# 3rd party config
-eval "$(direnv hook zsh)"
-eval "$(zoxide init zsh)"
-[[ ! "$PATH" == */usr/local/opt/fzf/bin* ]] && source "$HOME/.config/fzf/fzf.zsh"
+# source all shell config (aliases, 3rd party plugins, etc.)
+for file in "$HOME"/bin/shell/**/*.(z|)sh; do
+  source "$file";
+done
 
 # fzf-tab
 zstyle ':completion:*:descriptions' format '[%d]' # enable group support
@@ -81,12 +81,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 # fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
 [[ "$FZF_TAB_HOME" ]] || source ~/3rdparty/fzf-tab/fzf-tab.plugin.zsh
 
-# source after 3rd party config so you can override (eg. aliases) if needed
-for file in "$HOME"/bin/shell/**/*.(z|)sh; do
-  source "$file";
-done
-
 # 1st party config
+# kitty and prompt
 PROMPT='$(prompt zsh)'
 RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
 export PROMPT_PREFIX='⚡'
