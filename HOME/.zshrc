@@ -41,6 +41,14 @@ WORDCHARS=${WORDCHARS/\/} # don't consider slash a word char - https://stackover
 # key binds
 stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
 
+# https://zsh.sourceforge.io/Doc/Release/Parameters.html
+TMPSUFFIX='.zsh' # for syntax highlighting
+TIMEFMT=$'user\t%*Us
+sys\t%*Ss
+real\t%*Es
+cpu/mem\t%P/%Mk
+faults\t%F'
+
 bindplugin() {
   # usage: bindplugin "\e[A" up-line-or-beginning-search
   autoload -Uz "$2"
@@ -61,13 +69,6 @@ bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^[e" edit-command-line # ⌥e
-# https://zsh.sourceforge.io/Doc/Release/Parameters.html
-TMPSUFFIX='.zsh' # for syntax highlighting
-TIMEFMT=$'user\t%*Us
-sys\t%*Ss
-real\t%*Es
-cpu/mem\t%P/%Mk
-faults\t%F'
 
 # source all shell config (aliases, 3rd party plugins, etc.)
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
