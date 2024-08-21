@@ -137,7 +137,7 @@ _fzf_compgen_dir() { fd -td -HL . "$1"; }
 alias g=git
 alias s='gs' # status
 alias p='gpg' # pull and show graph of recent changes
-alias g-='gw-' # switch to most recent branch (can't alias '-' directly in git)
+alias g-='gco -' # switch to most recent branch (can't alias '-' directly in git)
 # alias short git aliases
 for a in $(git alias 2>/dev/null | grep -E '^.{0,4}$'); do
   alias "g$a=g $a"
