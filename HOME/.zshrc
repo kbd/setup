@@ -22,25 +22,6 @@ export HISTSIZE=50000
 export SAVEHIST=$HISTSIZE
 export HISTFILE="$HOME/.history"
 
-# load LS_COLORS. Needs to precede zsh completion so it can use the same colors.
-eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
-
-# completion
-autoload -Uz compinit
-zmodload zsh/complist
-compinit
-zstyle ':completion:*' menu select
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-bindkey -M menuselect '\e[Z' reverse-menu-complete # shift tab to go backwards
-
-# turn off bad Zsh defaults
-compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
-ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/
-WORDCHARS=${WORDCHARS/\/} # don't consider slash a word char - https://stackoverflow.com/questions/444951/
-
-# key binds
-stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
-
 # https://zsh.sourceforge.io/Doc/Release/Parameters.html
 TMPSUFFIX='.zsh' # for syntax highlighting
 TIMEFMT=$'user\t%*Us
@@ -49,12 +30,24 @@ real\t%*Es
 cpu/mem\t%P/%Mk
 faults\t%F'
 
+# completion
+autoload -Uz compinit
+compinit
+
+# turn off bad Zsh defaults
+compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
+ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/
+WORDCHARS=${WORDCHARS/\/} # don't consider slash a word char - https://stackoverflow.com/questions/444951/
+
 bindplugin() {
   # usage: bindplugin "\e[A" up-line-or-beginning-search
   autoload -Uz "$2"
   zle -N "$2"
   bindkey "$1" "$2"
 }
+
+# keybinds
+stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
 
 bindkey "\e[A" history-beginning-search-backward # ↑
 bindkey "\e[B" history-beginning-search-forward # ↓
@@ -70,19 +63,20 @@ bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^[e" edit-command-line # ⌥e
 
+# load LS_COLORS. Needs to precede zsh completion so it can use the same colors.
+eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
+
 # source all shell config (aliases, 3rd party plugins, etc.)
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
   source "$file";
 done
 
-# fzf-tab
+# configure completion / fzf-tab
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-# fzf-tab misbehaves if zsh config is reloaded; guard against repeated source
-[[ "$FZF_TAB_HOME" ]] || source ~/3rdparty/fzf-tab/fzf-tab.plugin.zsh
 
-# 1st party config
 # kitty and prompt
 PROMPT='$(prompt zsh)'
 RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
@@ -118,7 +112,7 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
 ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
 
-# machine-specific config
+# machine-specific config, if present
 [[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
 
 # source zsh plugins. syntax highlighting must be sourced last.

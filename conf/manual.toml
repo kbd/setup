@@ -26,6 +26,7 @@ bin = "zig-out/bin/zls"
 
 [fzf-tab]
 git = "https://github.com/Aloxaf/fzf-tab"
+cmd = "ln -sf ~/3rdparty/fzf-tab/fzf-tab.plugin.zsh ~/bin/shell/3rdparty/fzf-tab.plugin.zsh"
 
 [zsh-prompt-benchmark]
 git = "https://github.com/romkatv/zsh-prompt-benchmark.git"
