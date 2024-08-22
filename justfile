@@ -26,7 +26,7 @@ brew:
 
 	# cache zsh plugins
 	# note: '3rdparty' subdir should sort and therefore be sourced first
-	plugins=~/bin/shell/3rdparty/plugins.zsh
+	plugins=~/bin/shell/3rdparty/_plugins.zsh
 	direnv hook zsh > $plugins
 	zoxide init zsh >> $plugins
 	fzf --zsh >> $plugins
