@@ -52,7 +52,7 @@ for (setting, value) in args.poetry_config:
 t('poetry.toml')  # ensure the poetry config exists to keep projects consistent
 
 if not args.no_dependencies:
-    poetry.add('pytest', 'ipython', 'ptpython', 'pylint', 'mypy', 'black', 'pudb', group="dev")
+    poetry.add('pytest', 'ipython', 'ptpython', 'mypy', 'pudb', group="dev")
 
 # set up direnv
 echo("""export PYTHONPATH="$PWD"
