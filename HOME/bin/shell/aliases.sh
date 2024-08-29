@@ -201,7 +201,7 @@ alias py='pyt'
 alias pyb='bpython'
 alias pyc='python3 -c'
 alias pyi='ptipython'
-alias pym='py -i -c "import pandas as pd; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
+alias pym='py -i -c "import polars as pl; import re; import datetime as dt; from pathlib import Path; import sys; import os; import json; from pprint import pprint as pp;"'
 alias pyt='ptpython'
 alias pytest-d='pytest --pdb --pdbcls=pudb.debugger:Debugger'
 

@@ -26,7 +26,6 @@ mycli
 mypy
 nbterm
 openpyxl
-pandas
 pgcli
 pillow
 pip

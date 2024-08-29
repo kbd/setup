@@ -1,7 +1,7 @@
 # pylint:disable=no-name-in-module
 from pathlib import Path
 
-import pandas as pd
+import polars as pl
 from aush import duti, mkdir, osascript, sudo
 
 from lib.mac import defaults
@@ -83,9 +83,9 @@ defaults.g['CGDisableCursorLocationMagnification'] = False
 
 # set file-type associations
 associations_path = Path(__file__).parent / "associations.csv"
-associations = pd.read_csv(associations_path)
-for _i, row in associations.iterrows():
-    duti('-s', row.bundleid, row.uti, 'all')
+associations = pl.read_csv(associations_path)
+for uti, bundleid, _color in associations.iter_rows():
+    duti('-s', bundleid, uti, 'all')
 
 # make tab move between "All Controls" (System Prefs -> Keyboard -> Shortcuts)
 defaults.g['AppleKeyboardUIMode'] = 3
