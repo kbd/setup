@@ -13,16 +13,14 @@ brew:
 	#!/usr/bin/env bash
 	set -Eeuxo pipefail
 
-	brew_prefix="$(brew --prefix)"
-
+	# run everything for homebrew
 	homebrew-workflow conf/Brewfile
+
+	# post-install steps
+	brew_prefix="$(brew --prefix)"
 
 	# zsh: update to homebrew'd shell
 	update-shell "$brew_prefix/bin/zsh"
-
-	# fzf: install and patch its history format to include timestamp
-	$brew_prefix/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
-	perl -pi -e 's/fc -rl 1/fc -rli 1/' "$(brew --prefix fzf)/shell/key-bindings.zsh"
 
 	# cache zsh plugins
 	# note: '3rdparty' subdir should sort and therefore be sourced first
