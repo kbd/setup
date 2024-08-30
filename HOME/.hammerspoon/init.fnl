@@ -121,7 +121,7 @@
         choices #(icollect [_ window (ipairs windows)]
                   (let [win-app (window:application)]
                     (if (= (. app-images win-app) nil) ; cache the app image per app
-                      (tset app-images win-app (hs.image.imageFromAppBundle (win-app:bundleID))))
+                      (tset app-images win-app (hs.image.imageFromAppBundle (or (win-app:bundleID) ""))))
                     (let [text (window:title)
                           id (window:id)
                           active (= id focused-id)
