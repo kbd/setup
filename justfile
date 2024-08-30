@@ -28,6 +28,7 @@ brew:
 	direnv hook zsh > $plugins
 	zoxide init zsh >> $plugins
 	fzf --zsh >> $plugins
+	atuin init zsh >> $plugins
 
 python:
 	uv venv ~/bin/.venv
