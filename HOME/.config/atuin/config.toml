@@ -1,5 +1,5 @@
 auto_sync = false
 update_check = false
 style = "compact"
-inline_height = 30
+inline_height = 25
 enter_accept = true
