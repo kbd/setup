@@ -248,7 +248,7 @@
 (hs.hotkey.bind hyper "." #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "[" toggle-fnState)
-(hs.hotkey.bind hyper "E" #(specific-vscode-window "~/setup"))
+(hs.hotkey.bind hyper "," #(specific-vscode-window "~/setup"))
 (hs.hotkey.bind hyper "K" #(specific-vscode-window "~/tasks"))
 (hs.hotkey.bind hyper "N" #(show-app notes-bundleid focus-previous-window))
 (hs.hotkey.bind hyper "D" #(hs.execute "daily" true))
