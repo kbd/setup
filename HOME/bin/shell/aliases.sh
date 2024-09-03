@@ -206,7 +206,7 @@ alias pyt='ptpython'
 alias pytest-d='pytest --pdb --pdbcls=pudb.debugger:Debugger'
 
 # notes/tasks/dates
-alias daily='EDITOR=code te ~/notes{,/diary/$(date +%Y-%m-%d).md}'
+alias daily='a zettlr ~/notes{,/diary/$(date +%Y-%m-%d).md}'
 alias dear=diary
 alias diary=daily
 alias notes='e ~/notes'
