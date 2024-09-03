@@ -189,7 +189,6 @@ alias gort='go test ./...'
 alias yaegi='rlwrap yaegi'
 
 # python
-export PIPENV_SHELL_FANCY=1
 export PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython  # defaults to ~/Library/Application Support/... on Mac
 export PYTHONBREAKPOINT=pudb.set_trace
 export PYTHONDONTWRITEBYTECODE=1
