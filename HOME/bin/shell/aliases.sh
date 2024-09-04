@@ -174,13 +174,16 @@ alias pyt='ptpython'
 alias pytest-d='pytest --pdb --pdbcls=pudb.debugger:Debugger'
 
 # notes/tasks/dates
-alias daily='a zettlr ~/notes{,/diary/$(date +%Y-%m-%d).md}'
+alias today="gdate '+%Y-%m-%d'"
+alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
+daily() {
+  local f=~/notes/diary/$(today).md
+  t "$f" && a zettlr "$f"
+}
 alias dear=diary
 alias diary=daily
 alias notes='e ~/notes'
 alias tasks='e ~/tasks'
-alias today="gdate '+%Y-%m-%d'"
-alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
 
 # shortcuts/defaults/config
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
