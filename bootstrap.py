@@ -38,7 +38,7 @@ def main():
         os.environ["PATH"],
     ])
     print("Installing all the things")
-    run(['brew', 'install', 'just'])
+    run([SETUP_PATH/'HOME/bin/homebrew-workflow', SETUP_PATH/'conf/Brewfile'])
     run(['just', '--justfile', SETUP_PATH/'justfile', 'init'])
     print("Done installing all the things.")
 
