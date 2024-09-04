@@ -16,11 +16,12 @@ brew:
 	# run everything for homebrew
 	homebrew-workflow conf/Brewfile
 
-	# post-install steps
-	brew_prefix="$(brew --prefix)"
+	# cache brew shellenv
+	brew shellenv > ~/bin/shell/3rdparty/.brew.sh
 
+	# post-install steps
 	# zsh: update to homebrew'd shell
-	update-shell "$brew_prefix/bin/zsh"
+	update-shell "$(brew --prefix)/bin/zsh"
 
 	# cache zsh plugins
 	# note: '3rdparty' subdir should sort and therefore be sourced first
