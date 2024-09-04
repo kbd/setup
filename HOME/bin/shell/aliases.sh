@@ -12,9 +12,6 @@ export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
 
 # PLATFORM SPECIFIC
 if [[ $OS == Darwin ]]; then
-  # PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  # MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
   # prefer GNU versions of common utils
   alias awk=gawk
   alias sed=gsed
@@ -28,8 +25,6 @@ if [[ $OS == Darwin ]]; then
   alias switch-input="SwitchAudioSource -a -t input | f ' (' 0 | fzf | xargs -I% SwitchAudioSource -t input -s '%'"
 fi
 
-# path/system
-
 # SHELL SPECIFIC
 if [[ $ZSH_VERSION ]]; then
   # global aliases
@@ -39,9 +34,6 @@ if [[ $ZSH_VERSION ]]; then
 
   # suffix aliases
   alias -s {txt,md}='$EDITOR'
-
-  # fzf tab preview doesn't work properly without this set
-  export SHELL="$HOMEBREW_PREFIX/bin/zsh" # without this, defaults to /bin/sh
 fi
 
 # TERMINAL SPECIFIC
