@@ -202,7 +202,6 @@ alias exists='type &>/dev/null' # check if a program exists
 alias fennel='rlwrap fennel'
 alias fm='yazi'
 alias fu='fd -uu' # fd, but don't ignore any files
-alias goog='googler -n5 --np'
 alias grep='grep --color=auto'
 alias hex='hexyl'
 alias ieX='iex -S mix'
