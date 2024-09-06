@@ -20,7 +20,6 @@ setopt hist_ignore_space
 setopt inc_append_history_time
 export HISTSIZE=50000
 export SAVEHIST=$HISTSIZE
-export HISTFILE="$HOME/.zsh_history"
 
 # https://zsh.sourceforge.io/Doc/Release/Parameters.html
 TMPSUFFIX='.zsh' # for syntax highlighting
