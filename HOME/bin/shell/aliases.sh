@@ -33,7 +33,8 @@ if [[ $ZSH_VERSION ]]; then
   alias -g C='| grcat log'
 
   # suffix aliases
-  alias -s {txt,md}='$EDITOR'
+  alias -s txt='$EDITOR'
+  alias -s md='a zettlr'
 fi
 
 # TERMINAL SPECIFIC
