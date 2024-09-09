@@ -65,12 +65,7 @@ bindplugin "^[e" edit-command-line # ⌥e
 # load LS_COLORS. Needs to precede zsh completion so it can use the same colors.
 eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
 
-# source all shell config (aliases, 3rd party plugins, etc.)
-for file in "$HOME"/bin/shell/**/*.(z|)sh; do
-  source "$file";
-done
-
-# configure completion / fzf-tab
+# completion / fzf-tab
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
@@ -88,6 +83,8 @@ if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 ]] && is_kitty &&
   exists kitty-tab-color; then
   chpwd_functions+=(kitty_chpwd)
 fi
+
+alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 precmd() {
   export PROMPT_RETURN_CODE=$?
   export PROMPT_PATH="$(print -P '%~')"
@@ -111,9 +108,7 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
 ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
 
-# machine-specific config, if present
-[[ -f ~/.config/.machine/.zshrc ]] && source ~/.config/.machine/.zshrc
-
-# source zsh plugins. syntax highlighting must be sourced last.
-source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# source all shell config (aliases, 3rd party plugins, etc.)
+for file in "$HOME"/bin/shell/**/*.(z|)sh; do
+  source "$file";
+done

@@ -10,26 +10,30 @@ bin:
 	@echo {{justfile_directory()}}/HOME/bin
 
 brew:
-	#!/usr/bin/env bash
+	#!/usr/bin/env zsh
 	set -Eeuxo pipefail
 
 	# run everything for homebrew
 	homebrew-workflow conf/Brewfile
 
-	# cache brew shellenv
+	# cache brew shellenv (run in .zprofile)
 	brew shellenv > ~/bin/shell/3rdparty/.brew.sh
 
-	# post-install steps
-	# zsh: update to homebrew'd shell
+	# update to homebrew'd shell
 	update-shell "$(brew --prefix)/bin/zsh"
 
 	# cache zsh plugins
-	# note: '3rdparty' subdir should sort and therefore be sourced first
+	# note: 3rdparty should sort and therefore be sourced first in .zshrc, while
+	#       ~3rdparty should sort and be sourced last.
 	plugins=~/bin/shell/3rdparty/_plugins.zsh
 	direnv hook zsh > $plugins
 	zoxide init zsh >> $plugins
 	fzf --zsh >> $plugins
 	atuin init zsh >> $plugins
+
+	link(){ ln -sf "$(brew --prefix)/share/$1/$1.zsh" ~/bin/shell/~3rdparty/$1.zsh; }
+	link zsh-autosuggestions
+	link zsh-syntax-highlighting
 
 python:
 	uv venv ~/bin/.venv
