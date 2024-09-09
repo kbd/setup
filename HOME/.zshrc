@@ -71,18 +71,10 @@ zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
-# kitty and prompt
+# prompt
 PROMPT='$(prompt zsh)'
 RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
 export PROMPT_PREFIX='⚡'
-
-kitty_chpwd(){
-  kitty-set-tab
-}
-if [[ ${chpwd_functions[(Ie)kitty_chpwd]} == 0 ]] && is_kitty &&
-  exists kitty-tab-color; then
-  chpwd_functions+=(kitty_chpwd)
-fi
 
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 precmd() {
