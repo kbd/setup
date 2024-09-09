@@ -1,9 +1,5 @@
-set_kitty_tab_colors() {
-  if has kitty-tab-color && [[ $TERM == xterm-kitty ]]; then
-    if file="$(find_up .vscode/settings.json)"; then
-      eval "$(kitty-tab-color "$file")"
-    fi
+if [[ $TERM == xterm-kitty ]] && has kitty-tab-color; then
+  if file="$(find_up .vscode/settings.json)"; then
+    eval "$(kitty-tab-color "$file")"
   fi
-}
-
-set_kitty_tab_colors
+fi
