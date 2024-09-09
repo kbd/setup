@@ -23,11 +23,7 @@ export SAVEHIST=$HISTSIZE
 
 # https://zsh.sourceforge.io/Doc/Release/Parameters.html
 TMPSUFFIX='.zsh' # for syntax highlighting
-TIMEFMT=$'user\t%*Us
-sys\t%*Ss
-real\t%*Es
-cpu/mem\t%P/%Mk
-faults\t%F'
+TIMEFMT=$'user\t%*Us\nsys\t%*Ss\nreal\t%*Es\ncpu/mem\t%P/%Mk\nfaults\t%F'
 
 # completion
 autoload -Uz compinit
@@ -47,7 +43,6 @@ bindplugin() {
 
 # keybinds
 stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
-
 bindkey "\e[A" history-beginning-search-backward # ↑
 bindkey "\e[B" history-beginning-search-forward # ↓
 bindkey "\e[1;5D" backward-word # ⌃←
@@ -62,10 +57,8 @@ bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^[e" edit-command-line # ⌥e
 
-# load LS_COLORS. Needs to precede zsh completion so it can use the same colors.
+# ls_colors / completion / fzf-tab
 eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
-
-# completion / fzf-tab
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
@@ -75,7 +68,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 PROMPT='$(prompt zsh)'
 RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
 export PROMPT_PREFIX='⚡'
-
 alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
 precmd() {
   export PROMPT_RETURN_CODE=$?
@@ -92,13 +84,12 @@ tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
 
 # zsh syntax highlighting
-# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md#how-to-activate-highlighters
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[comment]='fg=green,standout'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta,bold'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta,bold,bg=black'
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor) # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md#how-to-activate-highlighters
+typeset -A ZSH_HIGHLIGHT_STYLES=( # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
+  [comment]='fg=green,standout'
+  [double-quoted-argument]='fg=magenta,bold'
+  [single-quoted-argument]='fg=magenta,bold,bg=black'
+)
 
 # source all shell config (aliases, 3rd party plugins, etc.)
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
