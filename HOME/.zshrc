@@ -24,13 +24,6 @@ export SAVEHIST=$HISTSIZE
 # https://zsh.sourceforge.io/Doc/Release/Parameters.html
 TMPSUFFIX='.zsh' # for syntax highlighting
 TIMEFMT=$'user\t%*Us\nsys\t%*Ss\nreal\t%*Es\ncpu/mem\t%P/%Mk\nfaults\t%F'
-
-# completion
-autoload -Uz compinit
-compinit
-
-# turn off bad Zsh defaults
-compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/
 WORDCHARS=${WORDCHARS/\/} # don't consider slash a word char - https://stackoverflow.com/questions/444951/
 
@@ -57,13 +50,6 @@ bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^[e" edit-command-line # ⌥e
 
-# ls_colors / completion / fzf-tab
-eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:descriptions' format '[%d]' # enable group support
-zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-
 # prompt
 PROMPT='$(prompt zsh)'
 RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
@@ -82,6 +68,17 @@ preexec(){
 }
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
+
+# completion
+autoload -Uz compinit && compinit
+compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
+
+# ls colors, fzf-tab https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
+eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:descriptions' format '[%d]' # enable group support
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
 # zsh syntax highlighting
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor) # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md#how-to-activate-highlighters
