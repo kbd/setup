@@ -16,13 +16,13 @@ from lib.utils import run, run_commands
 def _format_manual_packages_table(packages, bin_dir):
     items = [
         [
-            f"{c.f.yellow}{key}{c.c.reset}",
+            c.yellow(key),
             params.get('git', params.get('url', params.get('cmd'))), # source
-            f'{c.f.green}yes{c.c.reset}' if (bin_dir/key).exists() else f'{c.f.red}no{c.c.reset}'
+            c.green("yes") if (bin_dir/key).exists() else c.red("no")
         ]
         for key, params in packages.items()
     ]
-    headers = [f"{c.f.blue}{c.c.bold}{k}{c.c.reset}" for k in ["key","source","installed"]]
+    headers = [c.blue_bold(k) for k in ["key","source","installed"]]
     table = tabulate.tabulate(items, headers=headers, tablefmt="plain")
     return table
 
