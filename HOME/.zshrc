@@ -76,6 +76,7 @@ compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/
 # ls colors, fzf-tab https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
 eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' insert-tab false
 zstyle ':completion:*:descriptions' format '[%d]' # enable group support
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
