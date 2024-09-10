@@ -95,7 +95,7 @@ pull:
 packages: python pipx node go rust cargo vscode
 
 bootstrap:
-	mkdir -p ~/bin/shell/3rdparty/
+	mkdir -p ~/bin/shell/{,~}3rdparty/
 
 # The full set of commands used on first setup
 init: bootstrap brew packages manual symlinks mac restartservices
