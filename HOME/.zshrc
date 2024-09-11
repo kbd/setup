@@ -89,6 +89,18 @@ typeset -A ZSH_HIGHLIGHT_STYLES=( # https://github.com/zsh-users/zsh-syntax-high
   [single-quoted-argument]='fg=magenta,bold,bg=black'
 )
 
+# use autocomplete on nothing
+empty-tab() {
+  if [[ $#BUFFER == 0 ]]; then
+    BUFFER="br" # broot
+    zle accept-line
+  else
+    zle expand-or-complete
+  fi
+}
+zle -N empty-tab
+bindkey '^I' empty-tab
+
 # source all shell config (aliases, 3rd party plugins, etc.)
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
   source "$file";
