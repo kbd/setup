@@ -5,6 +5,7 @@ from pathlib import Path
 
 REPO_URL = 'https://github.com/kbd/setup.git'
 SETUP_PATH = Path('~/setup').expanduser()
+BIN_PATH = Path('~/bin').expanduser()
 
 
 def run(*cmd, **kwargs):
@@ -12,11 +13,7 @@ def run(*cmd, **kwargs):
     subprocess.run(cmd, check=True, **kwargs)
 
 
-os.environ['PATH'] = ':'.join([
-    *map(os.path.expanduser, ["~/bin", "~/.cargo/bin"]),
-    '/opt/homebrew/bin',
-    os.environ["PATH"],
-])
+os.environ['PATH'] = ':'.join([str(BIN_PATH), '/opt/homebrew/bin', os.environ["PATH"]])
 
 if SETUP_PATH.exists():
     print("Setup location exists, updating")
