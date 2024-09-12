@@ -3,19 +3,30 @@ list:
 	@just --list --justfile {{justfile()}}
 
 vendor := "~/3rdparty"
+setup-path := canonicalize(justfile() / "../../..") # HOME/bin/setup
+conf := setup-path / "conf"
+
+wd:
+	@pwd
 
 vendor:
 	@echo {{vendor}}
 
 bin:
-	@echo {{justfile_directory()}}/HOME/bin
+	@echo {{setup-path}}/HOME/bin
+
+path:
+	@echo {{setup-path}}
+
+conf:
+	@echo {{conf}}
 
 brew:
 	#!/usr/bin/env zsh
 	set -Eeuxo pipefail
 
 	# run everything for homebrew
-	homebrew-workflow conf/Brewfile
+	homebrew-workflow {{conf}}/Brewfile
 
 	# cache brew shellenv (run in .zprofile)
 	brew shellenv > ~/bin/shell/3rdparty/.brew.sh
@@ -40,26 +51,26 @@ brew:
 
 python:
 	uv venv ~/bin/.venv
-	uv pip install --strict --python ~/bin/.venv/bin/python -r conf/requirements.txt
+	uv pip install --strict --python ~/bin/.venv/bin/python -r {{conf}}/requirements.txt
 
 pipx:
-	cat conf/pipx.txt | xargs -t -n1 pipx install
+	cat {{conf}}/pipx.txt | xargs -t -n1 pipx install
 	pipx upgrade-all
 
 node:
-	cat conf/npm.txt | xargs -t npm install -g
+	cat {{conf}}/npm.txt | xargs -t npm install -g
 
 go:
-	cat conf/go.txt | xargs -t -L1 go install
+	cat {{conf}}/go.txt | xargs -t -L1 go install
 
 nim:
-	cat conf/nimble.txt | xargs -to nimble install
+	cat {{conf}}/nimble.txt | xargs -to nimble install
 
 vscode:
-	install-vscode-extensions conf/vscode.txt
+	install-vscode-extensions {{conf}}/vscode.txt
 
 manual:
-	install-manual conf/manual.toml {{vendor}}
+	install-manual {{conf}}/manual.toml {{vendor}}
 
 symlinks:
 	symgr HOME ~
@@ -74,10 +85,10 @@ rust:
 	rustup install nightly;
 
 cargo:
-	cat conf/cargo.txt | xargs -t cargo install
+	cat {{conf}}/cargo.txt | xargs -t cargo install
 
 mac:
-	PYTHONPATH=~/bin python3 conf/mac.py
+	PYTHONPATH=~/bin python3 {{conf}}/mac.py
 
 # Restart Finder, Menubar, Dock, etc.
 restartservices:
@@ -85,7 +96,7 @@ restartservices:
 
 # Open the setup directory in your editor
 edit:
-	code {{justfile_directory()}}
+	code {{setup-path}}
 
 # Update the setup repository
 pull:
@@ -109,4 +120,4 @@ bless path:
 	cd "{{invocation_directory()}}"
 	source_path="$(grealpath "{{path}}")"
 	controlled_path="$(grealpath --relative-to="$HOME" "$source_path")"
-	symgr --bless "$source_path" "{{justfile_directory()}}/HOME/$controlled_path"
+	symgr --bless "$source_path" "{{setup-path}}/HOME/$controlled_path"
