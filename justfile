@@ -30,6 +30,8 @@ brew:
 	zoxide init zsh >> $plugins
 	fzf --zsh >> $plugins
 	atuin init zsh >> $plugins
+	broot --print-shell-function zsh >> $plugins
+	broot --set-install-state installed
 
 	link(){ ln -sf "$(brew --prefix)/share/$1/$1.zsh" ~/bin/shell/~3rdparty/$1.zsh; }
 	link zsh-autosuggestions
@@ -72,9 +74,6 @@ rust:
 
 cargo:
 	cat conf/cargo.txt | xargs -t cargo install
-
-	broot --set-install-state refused
-	broot --print-shell-function zsh > ~/bin/shell/3rdparty/br.zsh
 
 mac:
 	PYTHONPATH=~/bin python3 conf/mac.py
