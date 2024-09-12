@@ -171,7 +171,7 @@ cask "font-victor-mono"
 cask "font-victor-mono-nerd-font"
 cask "font-symbols-only-nerd-font"
 
-mas "Amazon Kindle", id: 302584613
+# mas "Amazon Kindle", id: 302584613
 mas "Cyberduck", id: 409222199
 mas "Fantastical", id: 975937182
 mas "Monodraw", id: 920404675
