@@ -47,7 +47,9 @@ brew:
 	link zsh-syntax-highlighting
 
 	# delete cached brew script so it's regenerated
-	[[ -f $BREW_SHELLENV_PATH ]] && rm $BREW_SHELLENV_PATH
+	if [[ -n "$BREW_SHELLENV_PATH" && -f "$BREW_SHELLENV_PATH" ]]; then
+		rm $BREW_SHELLENV_PATH
+	fi
 
 python:
 	uv venv ~/bin/.venv
