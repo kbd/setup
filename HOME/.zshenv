@@ -6,3 +6,4 @@ hash -d C=~/Documents
 hash -d T=~/temp
 hash -d N=~/notes
 hash -d K=~/tasks
+BREW_SHELLENV_PATH=~/bin/shell/3rdparty/.brew.sh

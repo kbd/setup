@@ -1,4 +1,9 @@
-source ~/bin/shell/3rdparty/.brew.sh
+# cache brew shellenv
+if [[ ! -f "$BREW_SHELLENV_PATH" ]]; then
+   # /usr/local/bin already in path on intel (and brew shellenv adds it again...)
+   "$([[ "$(uname -p)" == arm ]] && echo /opt/homebrew/bin/)"brew shellenv > $BREW_SHELLENV_PATH
+fi
+source "$BREW_SHELLENV_PATH"
 
 # add my bin first and language-specific paths after
 PATH="$HOME/bin:$HOME/bin/.venv/bin:$PATH:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.nimble/bin"

@@ -28,9 +28,6 @@ brew:
 	# run everything for homebrew
 	homebrew-workflow {{conf}}/Brewfile
 
-	# cache brew shellenv (run in .zprofile)
-	brew shellenv > ~/bin/shell/3rdparty/.brew.sh
-
 	# update to homebrew'd shell
 	update-shell "$(brew --prefix)/bin/zsh"
 
@@ -48,6 +45,9 @@ brew:
 	link(){ ln -sf "$(brew --prefix)/share/$1/$1.zsh" ~/bin/shell/~3rdparty/$1.zsh; }
 	link zsh-autosuggestions
 	link zsh-syntax-highlighting
+
+	# delete cached brew script so it's regenerated
+	[[ -f $BREW_SHELLENV_PATH ]] && rm $BREW_SHELLENV_PATH
 
 python:
 	uv venv ~/bin/.venv
