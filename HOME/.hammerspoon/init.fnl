@@ -255,6 +255,14 @@
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
+; watchers
+(local zettlr-watcher ; start Zettlr in distraction free mode
+  (hs.application.watcher.new
+    (fn [name type _]
+      (when (and (= name "Zettlr") (= type hs.application.watcher.launched))
+        (hs.timer.doAfter .8 #(hs.eventtap.keyStroke ["cmd"] "J"))))))
+(zettlr-watcher:start)
+
 ; "exports"
 (tset _G :taskMenu (hs.menubar.new))
 (tset _G :focusPreviousWindow focus-previous-window)
