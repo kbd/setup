@@ -33,6 +33,9 @@ def format_date(dt, fmt, strftime):
         return dt.strftime('%c')
     elif fmt == 'strftime':
         return dt.strftime(strftime)
+    elif fmt == 'full':
+        o = 'th' if 11 <= dt.day <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(dt.day % 10, 'th')
+        return dt.strftime(f"%A, %B %-d{o} %Y")
 
     raise Exception(f"Unknown format option: {fmt}")
 
@@ -66,6 +69,7 @@ if __name__ == '__main__':
     group.add_argument('-r', '--rfc2822', action='store_true', help='rfc2822 (email)')
     group.add_argument('-l', '-c', '--locale', action='store_true', help='locale')
     group.add_argument('-s', '--strftime', metavar="S", help='Use strftime format string')
+    group.add_argument('-f', '--full', action='store_true', help='Full English date')
     args = vars(parser.parse_args())
 
     # pick out primary arguments and pass format options
