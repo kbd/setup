@@ -181,3 +181,6 @@ defaults['com.apple.Siri']['VoiceTriggerUserEnabled'] = False
 defaults.currentHost["com.apple.screensaver"]["idleTime"] = 420
 defaults.currentHost["com.apple.screensaver"]["showClock"] = True
 sudo.pmset.displaysleep(10)
+
+# Typora settings
+defaults["abnerworks.Typora"]["NSUserKeyEquivalents"] = {"Open Link": "@$k"}

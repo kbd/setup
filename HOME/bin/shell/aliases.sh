@@ -34,7 +34,7 @@ if [[ $ZSH_VERSION ]]; then
 
   # suffix aliases
   alias -s txt='$EDITOR'
-  alias -s md='a zettlr'
+  alias -s md='a Typora'
 fi
 
 # TERMINAL SPECIFIC
@@ -183,7 +183,7 @@ daily() {
   if [[ ! -f "$f" ]]; then
     echo "# $(today-full)\n" > "$f"
   fi
-  a zettlr "$f"
+  o "$f" # invoke default markdown app
 }
 alias dear=diary
 alias diary=daily

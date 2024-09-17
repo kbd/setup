@@ -7,7 +7,7 @@
 (local music-bundleid "com.spotify.client")
 (local projects-bundleid "com.electron.asana")
 (local messages-bundleid "com.apple.MobileSMS")
-(local notes-bundleid "com.zettlr.app")
+(local notes-bundleid "abnerworks.Typora")
 ; unfortunately for terminal there's no default association like with html/text
 (local terminal-name "kitty")
 (local terminal-bundleid "net.kovidgoyal.kitty")
@@ -254,14 +254,6 @@
 (hs.hotkey.bind hyper "D" #(hs.execute "daily" true))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
-
-; watchers
-(local zettlr-watcher ; start Zettlr in distraction free mode
-  (hs.application.watcher.new
-    (fn [name type _]
-      (when (and (= name "Zettlr") (= type hs.application.watcher.launched))
-        (hs.timer.doAfter .8 #(hs.eventtap.keyStroke ["cmd"] "J"))))))
-(zettlr-watcher:start)
 
 ; "exports"
 (tset _G :taskMenu (hs.menubar.new))

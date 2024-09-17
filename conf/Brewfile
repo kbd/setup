@@ -162,7 +162,6 @@ cask "tableplus"
 cask "transmission"
 cask "visual-studio-code"
 cask "vlc"
-cask "zettlr"
 
 # cask-fonts tap
 cask "font-fantasque-sans-mono"
