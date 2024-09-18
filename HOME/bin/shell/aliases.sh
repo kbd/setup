@@ -271,19 +271,6 @@ rlh() {
   echo "History reloaded"
 }
 
-rls() {
-  # "reload shell" config
-  if [[ $ZSH_VERSION ]]; then
-    echo "Reloading zsh config"
-    source "$HOME/.zshrc"
-  elif [[ $BASH_VERSION ]]; then
-    echo "Reloading bash config"
-    source "$HOME/.bashrc"
-  else
-    echo "Unknown shell, can't reload config"
-  fi
-}
-
 create() {
   # since scripts can't cd, need a function to cd after 'create-' scripts
   [[ -z "$1" || -z "$2" ]] && echo >&2 "type and project name required" && return 1
