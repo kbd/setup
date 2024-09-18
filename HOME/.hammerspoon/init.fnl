@@ -12,6 +12,10 @@
 (local terminal-name "kitty")
 (local terminal-bundleid "net.kovidgoyal.kitty")
 (local terminal-app-image (hs.image.imageFromAppBundle terminal-bundleid))
+(local notes-app-image (hs.image.imageFromAppBundle notes-bundleid))
+(local setup-dir "~/setup")
+(local tasks-dir "~/tasks")
+(local notes-dir "~/notes")
 
 (fn get-windows-for-app-on-screen [appname screen]
   "Returns a list of windows for the given app on the given screen"
@@ -203,6 +207,25 @@
         output (string.gsub result "%s+$" "")]
     (hs.alert output)))
 
+; notes
+(fn open-note [choice]
+  ; todo: allow creating a new note when no existing note selected
+  (when choice
+    (hs.execute (.. "note " choice.text) true)))
+
+(fn sort-files [files]
+  (let [copy files] ; todo: make a copy
+    (table.sort copy (fn [a b] (< (string.lower a) (string.lower b))))
+    copy))
+
+(fn show-notes-fuzzy []
+  (let [files (hs.fs.fileListForPath notes-dir {:relativePath true})
+    image notes-app-image
+    choices #(icollect [_ file (ipairs (sort-files files))]
+        (let [text file]
+          {: text : image}))]
+    (fuzzy choices open-note)))
+
 ; "main"
 (set hs.window.animationDuration 0)
 
@@ -248,9 +271,9 @@
 (hs.hotkey.bind hyper "." #(show-window-fuzzy true)) ; app windows
 (hs.hotkey.bind hyper hs.keycodes.map.space show-window-fuzzy) ; all windows
 (hs.hotkey.bind hyper "[" toggle-fnState)
-(hs.hotkey.bind hyper "," #(specific-vscode-window "~/setup"))
-(hs.hotkey.bind hyper "K" #(specific-vscode-window "~/tasks"))
-(hs.hotkey.bind hyper "N" #(show-app notes-bundleid focus-previous-window))
+(hs.hotkey.bind hyper "," #(specific-vscode-window setup-dir))
+(hs.hotkey.bind hyper "K" #(specific-vscode-window tasks-dir))
+(hs.hotkey.bind hyper "N" #(show-notes-fuzzy))
 (hs.hotkey.bind hyper "D" #(hs.execute "daily" true))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
