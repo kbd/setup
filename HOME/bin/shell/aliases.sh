@@ -177,6 +177,7 @@ alias pytest-d='pytest --pdb --pdbcls=pudb.debugger:Debugger'
 # notes/tasks/dates
 alias today="gdate '+%Y-%m-%d'"
 alias today-full="ts -f"
+alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
 alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
 daily() {
   local f=~/notes/diary/$(today).md
