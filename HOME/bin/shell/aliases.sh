@@ -129,6 +129,7 @@ _fzf_compgen_dir() { fd -td -HL . "$1"; }
 # git
 alias g=git
 alias s='gs' # status
+alias d='gd' # diff
 alias p='gpg' # pull and show graph of recent changes
 alias g-='gco -' # switch to most recent branch (can't alias '-' directly in git)
 # alias short git aliases
@@ -212,8 +213,6 @@ export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history 
 alias 1p='eval $(op signin)'
 alias battery='pmset -g batt'
 alias cbf='fzf | teerr | cb'
-alias d='docker'
-alias dc='docker-compose'
 alias dp='cd "$(dirs -pl | tail -n+2 | fzf)"'
 alias dtrx='dtrx --one=inside'
 alias du='du -h'
