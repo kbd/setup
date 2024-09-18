@@ -186,6 +186,22 @@ daily() {
   fi
   o "$f" # invoke default markdown app
 }
+note() {
+  if [[ -z "$1" ]]; then
+    a Typora ~N
+  else
+    local f=~/notes/"$1"
+    if [[ "$f" != *.md ]]; then
+      f="$f.md"
+    fi
+    if [[ ! -f "$f" ]]; then
+      echo "# $1\n" > "$f"
+    fi
+    o "$f"
+  fi
+}
+compdef '_files -W ~/notes/' note
+
 alias dear=diary
 alias diary=daily
 alias notes='e ~/notes'
