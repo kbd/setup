@@ -213,15 +213,14 @@
   (when choice
     (hs.execute (.. "note " choice.text) true)))
 
-(fn sort-files [files]
-  (let [copy files] ; todo: make a copy
-    (table.sort copy (fn [a b] (< (string.lower a) (string.lower b))))
-    copy))
+(fn sort-naturally [list]
+    (table.sort list (fn [a b] (< (string.lower a) (string.lower b))))
+    list)
 
 (fn show-notes-fuzzy []
   (let [files (hs.fs.fileListForPath notes-dir {:relativePath true})
     image notes-app-image
-    choices #(icollect [_ file (ipairs (sort-files files))]
+    choices #(icollect [_ file (ipairs (sort-naturally files))]
         (let [text file]
           {: text : image}))]
     (fuzzy choices open-note)))
