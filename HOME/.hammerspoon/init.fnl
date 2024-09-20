@@ -208,10 +208,14 @@
     (hs.alert output)))
 
 ; notes
+(fn shell-escape [str]
+  (string.gsub str "'" "'\\''"))
+
 (fn open-note [choice]
   ; todo: allow creating a new note when no existing note selected
   (when choice
-    (hs.execute (.. "note " choice.text) true)))
+    (let [cmd (.. "note '" (shell-escape choice.text) "'")]
+      (hs.execute cmd true))))
 
 (fn sort-naturally [list]
     (table.sort list (fn [a b] (< (string.lower a) (string.lower b))))
