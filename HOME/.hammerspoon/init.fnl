@@ -209,7 +209,7 @@
 
 ; notes
 (fn shell-escape [str]
-  (string.gsub str "'" "'\\''"))
+  (string.gsub (string.gsub str "\\" "\\\\") "'" "'\\''"))
 
 (fn open-note [choice]
   ; todo: allow creating a new note when no existing note selected
