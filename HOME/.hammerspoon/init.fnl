@@ -212,22 +212,43 @@
   (string.gsub (string.gsub str "\\" "\\\\") "'" "'\\''"))
 
 (fn open-note [choice]
-  ; todo: allow creating a new note when no existing note selected
   (when choice
-    (let [cmd (.. "note '" (shell-escape choice.text) "'")]
-      (hs.execute cmd true))))
+    (if choice.id
+      (: (hs.window.get choice.id) :focus) ; focus existing window
+      (let [cmd (.. "note '" (shell-escape choice.text) "'")] ; open note
+        (hs.execute cmd true)))))
 
 (fn sort-naturally [list]
-    (table.sort list (fn [a b] (< (string.lower a) (string.lower b))))
+  (table.sort list (fn [a b] (< (string.lower a) (string.lower b))))
     list)
 
+(fn get-notes-choices []
+  ; notes fuzzy should behave as follows:
+  ; - show list of open notes in Typora in recent acccess order so
+  ;   that hitting enter opens your most recent document
+  ; - (todo) if there are no notes open, prepend the most recently-modified note(s)
+  ; - then show a list of all notes
+  ; - (todo) if possible, allow creating a new note from chooser
+  ; - (todo) if a note is open, don't bother showing the second instance of it
+  (let [app (hs.application.applicationsForBundleID notes-bundleid)
+        app (. app 1)
+        windows (if app (app:allWindows) [])
+        files (sort-naturally (hs.fs.fileListForPath notes-dir {:relativePath true}))
+        choices []]
+        (each [_ window (ipairs windows)]
+          (let [text (window:title)
+                image notes-app-image
+                id (window:id)
+                subText "open file"]
+            (table.insert choices {: text : image : subText : id})))
+        (each [_ file (ipairs files)]
+          (let [text file
+                image notes-app-image]
+            (table.insert choices {: text : image })))
+        choices))
+
 (fn show-notes-fuzzy []
-  (let [files (hs.fs.fileListForPath notes-dir {:relativePath true})
-    image notes-app-image
-    choices #(icollect [_ file (ipairs (sort-naturally files))]
-        (let [text file]
-          {: text : image}))]
-    (fuzzy choices open-note)))
+  (fuzzy get-notes-choices open-note))
 
 ; "main"
 (set hs.window.animationDuration 0)
