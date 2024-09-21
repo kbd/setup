@@ -1,0 +1,70 @@
+enable_kitty_keyboard: true
+terminal_title: "broot {file}"
+show_selection_mark: true
+icon_theme: nerdfont
+quit_on_last_cancel: true
+content_search_max_file_size: 10MB
+lines_before_match_in_preview: 1
+lines_after_match_in_preview: 1
+
+special_paths: {
+    "~/.config": { "show": "always" }
+}
+
+imports: [
+   {
+        luma: [
+            dark
+            unknown
+        ]
+        file: skins/dark-blue.hjson
+    }
+]
+
+# https://dystroy.org/broot/verbs/
+verbs: [
+    # edit (EDITOR)
+    {
+        invocation: edit
+        shortcut: e
+        key: ctrl-e
+        apply_to: text_file
+        execution: "$EDITOR {file}"
+        leave_broot: false
+    }
+
+    # edit (code)
+    {
+        invocation: code
+        shortcut: E
+        key: ctrl-shift-e
+        apply_to: text_file
+        execution: "code {file}"
+        leave_broot: false
+    }
+
+    # use trash over rm
+    {
+        invocation: "rm"
+        internal: "trash"
+        leave_broot: false
+    }
+
+    # launch terminal here
+    {
+        invocation: terminal
+        key: ctrl-t
+        execution: "$SHELL"
+        set_working_dir: true
+        leave_broot: false
+    }
+
+    # launch yazi here
+    {
+        invocation: terminal
+        key: ctrl-/
+        execution: "yazi {file}"
+        set_working_dir: true
+        leave_broot: false
+    }
+]
