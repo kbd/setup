@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "{isodate:EEE MMM dd yyyy HH:mm:ss}",
+    "uid" : "49F29C97-B13E-4B7D-B5D8-06C3C5E43C0C",
+    "name" : "timestamp",
+    "keyword" : "$tss"
+  }
+}

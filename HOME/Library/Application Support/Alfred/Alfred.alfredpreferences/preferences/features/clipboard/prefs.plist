@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>autoExpandSnippetPlaySound</key>
+	<false/>
+	<key>autoExpandSnippetSound</key>
+	<string>Submarine</string>
+	<key>autoExpandSnippetTriggerPlaySound</key>
+	<false/>
 	<key>hotkey</key>
 	<dict>
 		<key>key</key>
