@@ -184,24 +184,14 @@ alias dear=diary
 alias diary=daily
 alias notes='e ~/notes'
 alias tasks='e ~/tasks'
-create-note() {
-  [[ ! -f "$1" ]] && echo "# ${2:-$1}\n" > "$1"
-}
+create-note() { [[ ! -f "$1" ]] && echo "# ${2:-$1}\n" > "$1"; }
 open-note() {
   local f=~/notes/"${1%.md}.md"
   create-note "$f" "${2:-$1}"
   o "$f"
 }
-daily() {
-  open-note diary/"$(today)".md "$(today-full)"
-}
-note() {
-  if [[ -z "$1" ]]; then
-    a Typora ~/notes
-  else
-    open-note "$1"
-  fi
-}
+daily() { open-note diary/"$(today)" "$(today-full)"; }
+note() { [[ "$1" ]] && open-note "$1" || a Typora ~/notes; }
 compdef '_files -W ~/notes/' note
 
 # shortcuts/defaults/config
