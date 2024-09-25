@@ -180,33 +180,29 @@ alias today="gdate '+%Y-%m-%d'"
 alias today-full="ts -f"
 alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
 alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
-daily() {
-  local f=~/notes/diary/$(today).md
-  if [[ ! -f "$f" ]]; then
-    echo "# $(today-full)\n" > "$f"
-  fi
-  o "$f" # invoke default markdown app
-}
-note() {
-  if [[ -z "$1" ]]; then
-    a Typora ~N
-  else
-    local f=~/notes/"$1"
-    if [[ "$f" != *.md ]]; then
-      f="$f.md"
-    fi
-    if [[ ! -f "$f" ]]; then
-      echo "# $1\n" > "$f"
-    fi
-    o "$f"
-  fi
-}
-compdef '_files -W ~/notes/' note
-
 alias dear=diary
 alias diary=daily
 alias notes='e ~/notes'
 alias tasks='e ~/tasks'
+create-note() {
+  [[ ! -f "$1" ]] && echo "# ${2:-1}\n" > "$1"
+}
+daily() {
+  local f=~/notes/diary/$(today).md
+  create-note "$f" "$(today-full)"
+  o "$f" # invoke default markdown app
+}
+note() {
+  local dir=~/notes
+  if [[ -z "$1" ]]; then
+    a Typora $dir
+  else
+    local f=$dir/"${1%.md}.md"
+    create-note "$f" "$1"
+    o "$f"
+  fi
+}
+compdef '_files -W ~/notes/' note
 
 # shortcuts/defaults/config
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
