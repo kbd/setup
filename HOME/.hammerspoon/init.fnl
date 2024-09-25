@@ -85,8 +85,8 @@
     (: :fgColor {:hex "#bbf"})
     (: :subTextColor {:hex "#aaa"})
     (: :width 25)
-    (: :show)
-    (: :choices choices)))
+    (: :choices choices)
+    (: :show)))
 
 (fn select-audio [audio]
   (if audio
@@ -248,7 +248,9 @@
         choices))
 
 (fn show-notes-fuzzy []
-  (fuzzy get-notes-choices open-note))
+  (local chooser (fuzzy get-notes-choices open-note))
+  (chooser:enableDefaultForQuery true)
+  chooser)
 
 ; "main"
 (set hs.window.animationDuration 0)
