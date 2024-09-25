@@ -185,21 +185,21 @@ alias diary=daily
 alias notes='e ~/notes'
 alias tasks='e ~/tasks'
 create-note() {
-  [[ ! -f "$1" ]] && echo "# ${2:-1}\n" > "$1"
+  [[ ! -f "$1" ]] && echo "# ${2:-$1}\n" > "$1"
+}
+open-note() {
+  local f=~/notes/"${1%.md}.md"
+  create-note "$f" "${2:-$1}"
+  o "$f"
 }
 daily() {
-  local f=~/notes/diary/$(today).md
-  create-note "$f" "$(today-full)"
-  o "$f" # invoke default markdown app
+  open-note diary/"$(today)".md "$(today-full)"
 }
 note() {
-  local dir=~/notes
   if [[ -z "$1" ]]; then
-    a Typora $dir
+    a Typora ~/notes
   else
-    local f=$dir/"${1%.md}.md"
-    create-note "$f" "$1"
-    o "$f"
+    open-note "$1"
   fi
 }
 compdef '_files -W ~/notes/' note
