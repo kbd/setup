@@ -226,9 +226,9 @@
   ; notes fuzzy should behave as follows:
   ; - show list of open notes in Typora in recent acccess order so
   ;   that hitting enter opens your most recent document
-  ; - (todo) if there are no notes open, prepend the most recently-modified note(s)
   ; - then show a list of all notes
-  ; - (todo) if possible, allow creating a new note from chooser
+  ; - allow creating a new note from chooser if no existing file matches query
+  ; - (todo) if there are no notes open, prepend the most recently-modified note(s)
   ; - (todo) if a note is open, don't bother showing the second instance of it
   (let [app (hs.application.applicationsForBundleID notes-bundleid)
         app (. app 1)
