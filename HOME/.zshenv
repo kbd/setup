@@ -1,9 +1,11 @@
-hash -d P=~/proj
 hash -d S=~/setup
 hash -d H=~S/HOME
-hash -d D=~/Downloads
-hash -d C=~/Documents
-hash -d T=~/temp
+hash -d P=~/proj
 hash -d N=~/notes
 hash -d K=~/tasks
+hash -d T=~/temp
+hash -d C=~/Documents
+hash -d D=~/Downloads
+hash -d E=~/Desktop
+hash -d R=~E/share
 BREW_SHELLENV_PATH=~/bin/shell/3rdparty/.brew.sh
