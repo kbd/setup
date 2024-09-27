@@ -75,7 +75,7 @@ manual:
 	install-manual {{conf}}/manual.toml {{vendor}}
 
 symlinks:
-	symgr HOME ~
+	symgr {{setup-path}}/HOME ~
 
 rust:
 	#!/usr/bin/env bash
