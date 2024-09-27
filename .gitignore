@@ -1,2 +1,4 @@
 .pytest_cache/
+.mypy_cache/
+__pycache__/
 Brewfile.lock.json
