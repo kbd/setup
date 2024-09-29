@@ -211,6 +211,8 @@ alias fm='yazi'
 alias fu='fd -uu' # fd, but don't ignore any files
 alias grep='grep --color=auto'
 alias hex='hexyl'
+alias hj=hjson-cli
+alias hjj='hjson-cli -j'
 alias ieX='iex -S mix'
 alias is_docker='[[ -f "/.dockerenv" ]]'
 alias is_local='! is_not_local'
