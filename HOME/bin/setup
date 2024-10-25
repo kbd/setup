@@ -102,7 +102,7 @@ edit:
 
 # Update the setup repository
 pull:
-	git pull
+	cd {{setup-path}} && git pull
 
 # Install all software packages
 packages: python pipx node go rust cargo vscode
