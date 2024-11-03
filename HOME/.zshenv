@@ -7,5 +7,6 @@ hash -d T=~/temp
 hash -d C=~/Documents
 hash -d D=~/Downloads
 hash -d E=~/Desktop
-hash -d R=~E/share
+hash -d A=~E/share
+hash -d R=~E/Screenshots
 BREW_SHELLENV_PATH=~/bin/shell/3rdparty/.brew.sh
