@@ -180,6 +180,7 @@ alias today="gdate '+%Y-%m-%d'"
 alias today-full="ts -f"
 alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
 alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
+alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
 alias dear=diary
 alias diary=daily
 alias notes='e ~/notes'
@@ -190,7 +191,10 @@ open-note() {
   create-note "$f" "${2:-$1}"
   o "$f"
 }
-daily() { open-note diary/"$(today)" "$(today-full)"; }
+daily() {
+  local dt="${1:-$(today)}"
+  open-note "diary/$dt" "$(today-full "$dt")";
+}
 note() { [[ "$1" ]] && open-note "$1" || a Typora ~/notes; }
 compdef '_files -W ~/notes/' note
 
