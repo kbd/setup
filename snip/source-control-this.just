@@ -11,7 +11,7 @@ layout {
 
 run:
    #!/usr/bin/env bash
-   zellij --layout <(echo '{{layout}}') --session='{{file_name(parent_directory(justfile()))}}'
+   zellij --new-session-with-layout <(echo '{{layout}}') --session='{{file_name(parent_directory(justfile()))}}'
 
 watch:
    git watch
