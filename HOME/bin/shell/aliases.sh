@@ -177,10 +177,10 @@ alias pytest-d='pytest --pdb --pdbcls=pudb.debugger:Debugger'
 
 # notes/tasks/dates
 alias today="gdate '+%Y-%m-%d'"
-alias today-full="ts -f"
-alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
 alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
 alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
+alias date-full="ts -f"
+alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
 alias dear=diary
 alias diary=daily
 alias notes='e ~/notes'
@@ -193,7 +193,7 @@ open-note() {
 }
 daily() {
   local dt="${1:-$(today)}"
-  open-note "diary/$dt" "$(today-full "$dt")";
+  open-note "diary/$dt" "$(date-full "$dt")";
 }
 note() { [[ "$1" ]] && open-note "$1" || a Typora ~/notes; }
 compdef '_files -W ~/notes/' note
