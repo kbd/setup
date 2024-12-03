@@ -186,7 +186,14 @@ alias diary=daily
 alias notes='e ~/notes'
 alias tasks='e ~/tasks'
 new-note() {
-  echo "# ${2:-$1}\n"
+  echo "# ${2:-$1}
+
+## Journal
+
+## Ideas
+
+## Tasks
+"
 }
 create-note() { [[ ! -f "$1" ]] && new-note "$@" > "$1"; }
 open-note() {
