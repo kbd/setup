@@ -14,3 +14,7 @@ h4 {
 h5 {
    color: orange;
 }
+
+.task-list-done {
+   text-decoration: line-through;
+}
