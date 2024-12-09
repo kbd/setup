@@ -1,4 +1,5 @@
 alefragnani.bookmarks
+calebfiggers.vscode-janet-plus-plus
 charliermarsh.ruff
 crystal-lang-tools.crystal-lang
 dbaeumer.vscode-eslint

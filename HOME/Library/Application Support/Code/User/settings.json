@@ -66,7 +66,6 @@
     "files.associations": {
         "*.avsc": "json",
         "*.fnl": "clojure",
-        "*.janet": "clojure",
         "*.heex": "html-eex",
     },
 
