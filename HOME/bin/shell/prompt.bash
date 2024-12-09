@@ -65,9 +65,9 @@ _prompt_date() {
 
 _prompt_user() {
   local color="${COL[green]}"
-  if is_root; then
+  if is-root; then
     color="${COL[red]}"
-  elif is_su; then
+  elif is-su; then
     color="${COL[yellow]}${COL[bold]}"
   fi
   echo -n "$eo$color$ec$user$eo${COL[reset]}$ec"
@@ -76,7 +76,7 @@ _prompt_user() {
 _prompt_at() {
   # show the @ in red if not local
   local at='@'
-  if is_remote; then
+  if is-remote; then
     at="$eo${COL[red]}${COL[bold]}$ec$at$eo${COL[reset]}$ec"
   fi
   echo -n "$at"
@@ -133,7 +133,7 @@ _prompt_path() {
 
 # source control information in prompt
 _prompt_repo() {
-  if is_not_local; then
+  if is-not-local; then
     # skip repo support because repo_status won't be able to run
     return 0
   fi
@@ -216,10 +216,10 @@ _prompt_filter() {
   local funcs="$1"
   if [[ $PROMPT_SHORT_DISPLAY ]]; then
     # showing the host (and user, if not su/root) is unnecessary if local
-    if is_local; then
+    if is-local; then
       funcs=$(filter "$funcs" "at|host")
 
-      if ! (is_su || is_root); then
+      if ! (is-su || is-root); then
         funcs=$(filter "$funcs" "user")
       fi
     fi

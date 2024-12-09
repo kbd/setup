@@ -38,8 +38,8 @@ if [[ $ZSH_VERSION ]]; then
 fi
 
 # TERMINAL SPECIFIC
-alias is_kitty='[[ $TERM == xterm-kitty ]]'
-if is_kitty; then
+alias is-kitty='[[ $TERM == xterm-kitty ]]'
+if is-kitty; then
   alias icat="kitty +kitten icat --align=left"
 fi
 
@@ -230,12 +230,12 @@ alias hex='hexyl'
 alias hj=hjson-cli
 alias hjj='hjson-cli -j'
 alias ieX='iex -S mix'
-alias is_docker='[[ -f "/.dockerenv" ]]'
-alias is_local='! is_not_local'
-alias is_not_local='is_remote || is_docker'
-alias is_remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
-alias is_root='[[ $EUID == 0 ]]'
-alias is_su='[[ $(whoami) != $(logname) ]]' # if current user != login user
+alias is-docker='[[ -f "/.dockerenv" ]]'
+alias is-local='! is-not-local'
+alias is-not-local='is-remote || is-docker'
+alias is-remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
+alias is-root='[[ $EUID == 0 ]]'
+alias is-su='[[ $(whoami) != $(logname) ]]' # if current user != login user
 alias j=just
 alias janet='rlwrap -Na janet' # just for repl history
 alias jax='osascript -l JavaScript -e'
