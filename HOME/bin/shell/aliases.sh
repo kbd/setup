@@ -260,6 +260,7 @@ alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
 alias daily=note-daily
 alias dear=diary
 alias diary=daily
+export NOTES_DIR=~/notes
 note-new() {
   echo "# ${2:-$1}
 
@@ -271,17 +272,21 @@ note-new() {
 "
 }
 note-create() {
-  [[ -z "$1" ]] && echo >&2 "note name required" && return 1
+  [[ -z "$1" ]] && echo >&2 "note path required" && return 1
   [[ ! -f "$1" ]] && note-new "$@" > "$1";
 }
 note-open() {
-  local f=~/notes/"${1%.md}.md"
-  note-create "$f" "${2:-$1}"
+  [[ -z "$1" ]] && echo >&2 "note path required" && return 1
+  local f=${1%.md}.md
+  if ! is-absolute "$f"; then
+    f="$NOTES_DIR/$f"
+  fi
+  note-create "$f" "${2:-$1}" # provide optional title as 2nd arg
   o "$f"
 }
 note-daily() {
   local dt="${1:-$(today)}"
   note-open "diary/$dt" "$(date-full "$dt")";
 }
-note() { [[ "$1" ]] && note-open "$1" || a Typora ~/notes; }
-compdef '_files -W ~/notes/' note
+note() { [[ "$1" ]] && note-open "$1" || a Typora $NOTES_DIR; }
+compdef "_files -W $NOTES_DIR/" note
