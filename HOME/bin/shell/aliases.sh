@@ -175,41 +175,6 @@ alias pym='PYTHONSTARTUP=~/bin/pythonstartup.py py'
 alias pyt='ptpython'
 alias pytest-d='pytest --pdb --pdbcls=pudb.debugger:Debugger'
 
-# notes/tasks/dates
-alias today="gdate '+%Y-%m-%d'"
-alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
-alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
-alias date-full="ts -f"
-alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
-alias daily=note-daily
-alias dear=diary
-alias diary=daily
-note-new() {
-  echo "# ${2:-$1}
-
-## Journal
-
-## Ideas
-
-## Tasks
-"
-}
-note-create() {
-  [[ -z "$1" ]] && echo >&2 "note name required" && return 1
-  [[ ! -f "$1" ]] && note-new "$@" > "$1";
-}
-note-open() {
-  local f=~/notes/"${1%.md}.md"
-  note-create "$f" "${2:-$1}"
-  o "$f"
-}
-note-daily() {
-  local dt="${1:-$(today)}"
-  note-open "diary/$dt" "$(date-full "$dt")";
-}
-note() { [[ "$1" ]] && note-open "$1" || a Typora ~/notes; }
-compdef '_files -W ~/notes/' note
-
 # shortcuts/defaults/config
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
 alias 1p='eval $(op signin)'
@@ -236,6 +201,7 @@ alias is-not-local='is-remote || is-docker'
 alias is-remote='[[ $SSH_TTY || $SSH_CLIENT ]]'
 alias is-root='[[ $EUID == 0 ]]'
 alias is-su='[[ $(whoami) != $(logname) ]]' # if current user != login user
+is-absolute(){ [[ "$1" == /* ]]; }
 alias j=just
 alias janet='rlwrap -Na janet' # just for repl history
 alias jax='osascript -l JavaScript -e'
@@ -284,3 +250,38 @@ create() {
   ! exists "$cmd" && echo >&2 "'$cmd' doesn't exist" && return 2
   $cmd "$project" "$@" && cd "$project" || return 3
 }
+
+# notes/tasks/dates
+alias today="gdate '+%Y-%m-%d'"
+alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
+alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
+alias date-full="ts -f"
+alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
+alias daily=note-daily
+alias dear=diary
+alias diary=daily
+note-new() {
+  echo "# ${2:-$1}
+
+## Journal
+
+## Ideas
+
+## Tasks
+"
+}
+note-create() {
+  [[ -z "$1" ]] && echo >&2 "note name required" && return 1
+  [[ ! -f "$1" ]] && note-new "$@" > "$1";
+}
+note-open() {
+  local f=~/notes/"${1%.md}.md"
+  note-create "$f" "${2:-$1}"
+  o "$f"
+}
+note-daily() {
+  local dt="${1:-$(today)}"
+  note-open "diary/$dt" "$(date-full "$dt")";
+}
+note() { [[ "$1" ]] && note-open "$1" || a Typora ~/notes; }
+compdef '_files -W ~/notes/' note
