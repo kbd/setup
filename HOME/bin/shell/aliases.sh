@@ -262,7 +262,10 @@ alias dear=diary
 alias diary=daily
 export NOTES_DIR=~/notes
 note-new() {
-  echo "# ${2:-$1}
+  echo "# $1"
+}
+note-daily-new() {
+  echo "# $1
 
 ## Journal
 
@@ -271,22 +274,22 @@ note-new() {
 ## Tasks
 "
 }
-note-create() {
-  [[ -z "$1" ]] && echo >&2 "note path required" && return 1
-  [[ ! -f "$1" ]] && note-new "$@" > "$1";
-}
-note-open() {
-  [[ -z "$1" ]] && echo >&2 "note path required" && return 1
-  local f=${1%.md}.md
-  if ! is-absolute "$f"; then
-    f="$NOTES_DIR/$f"
-  fi
-  note-create "$f" "${2:-$1}" # provide optional title as 2nd arg
-  o "$f"
-}
 note-daily() {
   local dt="${1:-$(today)}"
-  note-open "diary/$dt" "$(date-full "$dt")";
+  note "diary/$dt" "$(note-daily-new "$(date-full "$dt")")";
 }
-note() { [[ "$1" ]] && note-open "$1" || a Typora $NOTES_DIR; }
+note() {
+  if [[ -z "$1" ]]; then
+    a Typora $NOTES_DIR
+  else
+    local f="${1%.md}.md" # ensure md extension
+    if ! is-absolute "$f"; then
+      f="$NOTES_DIR/$f"
+    fi
+    if [[ ! -f "$f" ]]; then
+      echo "${2:-$(note-new "${f%.md}")}" > "$f"
+    fi
+    a Typora "$f"
+  fi
+}
 compdef "_files -W $NOTES_DIR/" note
