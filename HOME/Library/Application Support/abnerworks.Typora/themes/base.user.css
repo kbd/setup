@@ -18,3 +18,7 @@ h5 {
 .task-list-done {
    text-decoration: line-through;
 }
+
+code {
+   color: #96c;
+}
