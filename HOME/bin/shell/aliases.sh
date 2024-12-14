@@ -282,12 +282,13 @@ note() {
   if [[ -z "$1" ]]; then
     a Typora $NOTES_DIR
   else
-    local f="${1%.md}.md" # ensure md extension
+    local name="${1%.md}"
+    local f="$name.md"
     if ! is-absolute "$f"; then
       f="$NOTES_DIR/$f"
     fi
     if [[ ! -f "$f" ]]; then
-      echo "${2:-$(note-new "${f%.md}")}" > "$f"
+      echo "${2:-$(note-new "$name")}" > "$f"
     fi
     a Typora "$f"
   fi
