@@ -293,4 +293,9 @@ note() {
     a Typora "$f"
   fi
 }
-compdef "_files -W $NOTES_DIR/" note
+compdef "_files -W \"$NOTES_DIR/\"" note
+compdef "_files -W \"$NOTES_DIR/diary/\"" note-daily
+zstyle ':fzf-tab:complete:note:*' fzf-preview 'CLICOLOR_FORCE=1 glow --style=dark "$NOTES_DIR/$realpath"'
+zstyle ':fzf-tab:complete:note-daily:*' fzf-preview 'CLICOLOR_FORCE=1 glow --style=dark "$NOTES_DIR/diary/$realpath"'
+zstyle ':completion:*:note-daily:*' sort false # fzf-tab respect provided order
+zstyle ':completion:*:note-daily:*' file-sort reverse
