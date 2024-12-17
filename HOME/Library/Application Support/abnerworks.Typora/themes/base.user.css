@@ -22,3 +22,21 @@ h5 {
 code {
    color: #96c;
 }
+
+ul.task-list {
+   margin: 0;
+}
+
+ul.task-list li {
+   line-height: 1.2;
+   margin-bottom: 0.2em;
+}
+
+ol {
+   margin: 0;
+}
+
+ol li {
+   line-height: 1.2;
+   margin-bottom: 0.2em;
+}
