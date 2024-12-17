@@ -110,6 +110,10 @@ defaults.g['NSQuitAlwaysKeepsWindows'] = True
 # turn off touch-bar autocompletion (horrific! distracting!)
 defaults.g['NSAutomaticTextCompletionEnabled'] = False
 
+# turn off apple predictive text (also far more distracting than helpful
+# on a platform where I'll have a real keyboard)
+defaults.g['NSAutomaticInlinePredictionEnabled'] = False
+
 # startup items - https://apple.stackexchange.com/a/310502/
 required_login_apps = {'SpotMenu', 'Alfred 5', 'Hammerspoon', 'Tinkle'}
 cmd = 'tell application "System Events" to get the name of every login item'
