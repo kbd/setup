@@ -461,7 +461,6 @@
     },
     "zig.path": "zig",
     "zig.zls.path": "zls",
-    "zig.initialSetupDone": true,
 
     // rust
     "[rust]": {
