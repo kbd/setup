@@ -64,7 +64,7 @@ precmd() {
 }
 preexec(){
   title "$PROMPT_PATH ($1)"
-  unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS
+  unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS PROMPT_HR
 }
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
