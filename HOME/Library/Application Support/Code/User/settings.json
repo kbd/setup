@@ -81,6 +81,7 @@
     "security.workspace.trust.untrustedFiles": "open",
     "editor.lightbulb.enabled": "onCode",
     "github.copilot.editor.enableAutoCompletions": true,
+    "chat.editing.alwaysSaveWithGeneratedChanges": true,
 
     // workbench
     "workbench.tree.indent": 15,
