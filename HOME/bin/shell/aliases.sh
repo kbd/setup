@@ -266,6 +266,7 @@ note-new() {
 }
 note-daily-new() {
   echo "# $1
+## Schedule
 
 ## Journal
 
