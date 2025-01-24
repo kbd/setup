@@ -1,20 +1,5 @@
-layout := '
-layout {
-   pane command="just" {
-      args "watch"
-   }
-   pane command="just" {
-      args "log"
-   }
-}
-'
+kitty_launch := 'kitty @ launch --type window --cwd=current --copy-env --location=before --dont-take-focus'
 
 run:
-   #!/usr/bin/env bash
-   zellij --new-session-with-layout <(echo '{{layout}}') --session='{{file_name(parent_directory(justfile()))}}'
-
-watch:
-   git watch
-
-log:
-   watchexec --ignore-nothing -r -w .git/COMMIT_EDITMSG git --no-pager lp -n1
+   {{kitty_launch}} --bias=25 git watch
+   {{kitty_launch}} --bias=50 git tail-log
