@@ -1,3 +1,0 @@
-#!/bin/sh
-# if only shebangs could have relative paths
-~/bin/.venv/bin/python "$@"
