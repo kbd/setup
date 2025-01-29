@@ -4,15 +4,13 @@ import logging
 
 from aush import (
     cd,
-    chmod,
     direnv,
     django_admin,
     echo,
     git,
-    mkdir,
-    poetry,
     python3,
     t,
+    uv,
 )
 
 logging.basicConfig(level=logging.INFO)
@@ -21,38 +19,16 @@ logging.basicConfig(level=logging.INFO)
 parser = argparse.ArgumentParser(description="Start a Python project")
 parser.add_argument("name", help="The name of the project")
 parser.add_argument("-d", "--django", action="store_true", help="Add Django to the project")
-parser.add_argument("-p", "--poetry-config", default=[], action='append', nargs=2, help="Pass config arguments to Poetry")
 parser.add_argument("-n", "--no-dependencies", action='store_true', help="Don't install any dependencies when creating project")
 args = parser.parse_args()
 
-# create directory
-mkdir("-p", args.name)
+# initialize project
+uv.init(args.name, author_from="auto")
 cd(args.name)
 
-# initialize poetry with default dependencies, create virtualenv
-poetry.init(
-    no_interaction = True,
-    name = args.name,
-    author = git.config(get='user.name'),
-)
-
-def add_source_to_pyproject(name, url):
-    echo (f"""
-[[tool.poetry.source]]
-name = "{name}"
-url = "{url}"
-default = true""") >> 'pyproject.toml'
-
-for (setting, value) in args.poetry_config:
-    if setting == 'source':  # special-case source
-        add_source_to_pyproject(*value.split('='))
-        continue
-    poetry.config['--local'](setting, value)
-
-t('poetry.toml')  # ensure the poetry config exists to keep projects consistent
-
+# add default dev dependencies
 if not args.no_dependencies:
-    poetry.add('pytest', 'ipython', 'ptpython', 'mypy', 'pudb', group="dev")
+    uv.add('pytest', 'ipython', 'ptpython', 'mypy', 'pudb', dev=True)
 
 # set up direnv
 echo("""export PYTHONPATH="$PWD"
@@ -60,34 +36,24 @@ export VIRTUAL_ENV=.venv
 layout python""") >> '.envrc'
 direnv.allow()
 
-# create repo (if needed) and add/append to files
+# create repo and initial files
 git.init()
+
 echo(f"# {args.name}") >> 'README.md'
-ignores = [
-    '*.sqlite3',
-    '.mypy_cache/',
-    '.pytest_cache/',
-    '.ruff_cache/',
-    '.venv/',
-    '__pycache__/',
-]
-echo('\n'.join(ignores)) >> '.gitignore'
 echo("""[pytest]
 python_files = *.py
 norecursedirs = bin
 """) >> 'pytest.ini'
 echo("test:\n\tpytest") > "justfile"
-echo(f"""#!/usr/bin/env python3
-import {args.name}
 
-print({args.name})""") >> 'main'
-chmod("+x", 'main')
 git.add(all=True)
 git.commit(m="Initial Python commit")
 
+# create project structure
 if args.django:
     # add django
-    poetry.add("django", dev=["Werkzeug", "django-debug-toolbar", "django-extensions"])
+    uv.add("django")
+    uv.add("Werkzeug", "django-debug-toolbar", "django-extensions", dev=True)
     django_admin.startproject(args.name)
     cd(args.name)
     django_manage = python3["manage.py"]
@@ -102,15 +68,9 @@ if args.django:
     git.add(all=True)
     git.commit(m="Add Django")
 else:
-    # create project structure
-    # .
-    # ├── README.md
     # ├── bin
-    # ├── poetry.lock
-    # ├── poetry.toml
     # ├── proj
     # │   └── __init__.py
-    # ├── pyproject.toml
     # └── tests
     #     └── __init__.py
     files = [f'{args.name}/__init__.py', 'tests/__init__.py']
