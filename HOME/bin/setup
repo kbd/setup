@@ -55,9 +55,9 @@ python:
 	uv venv ~/bin/.venv
 	uv pip install --strict --python ~/bin/.venv/bin/python -r {{conf}}/requirements.txt
 
-pipx:
-	cat {{conf}}/pipx.txt | xargs -t -n1 pipx install
-	pipx upgrade-all
+python-tools:
+	cat {{conf}}/pipx.txt | xargs -t -L1 uv tool install
+	uv tool upgrade --all
 
 node:
 	cat {{conf}}/npm.txt | xargs -t npm install -g
@@ -105,7 +105,7 @@ pull:
 	cd {{setup-path}} && git pull
 
 # Install all software packages
-packages: python pipx node go rust cargo vscode
+packages: python python-tools node go rust cargo vscode
 
 bootstrap:
 	mkdir -p ~/bin/shell/{,~}3rdparty/
