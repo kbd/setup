@@ -90,11 +90,11 @@ cargo:
 	cat {{conf}}/cargo.txt | xargs -t cargo install
 
 mac:
-	PYTHONPATH=~/bin python3 {{conf}}/mac.py
+	PYTHONPATH=~/bin ~/bin/.venv/bin/python {{conf}}/mac.py
 
 # Restart Finder, Menubar, Dock, etc.
 restartservices:
-	PYTHONPATH=~/bin python3 -c "import lib.mac; lib.mac.restart_os_functions()"
+	PYTHONPATH=~/bin ~/bin/.venv/bin/python -c "import lib.mac; lib.mac.restart_os_functions()"
 
 # Open the setup directory in your editor
 edit:
