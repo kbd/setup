@@ -11,10 +11,7 @@ if [[ -z "$socket" ]]; then
   sleep 1 # ensure kitty has time to open
   socket="$(get_kitty_socket)"
 fi
-if [[ -z "$socket" ]]; then
-  echo "Couldn't get kitty socket"
-  exit 1
-fi
+[[ -z "$socket" ]] && echo >&2 "Couldn't get kitty socket" && exit 1
 
 to="unix:$socket"
 # shellcheck disable=SC2016 # $dir expands in jq, not in shell
@@ -25,14 +22,10 @@ cmd='first(.[].tabs[].windows[] | select(
   and (.foreground_processes[0].cmdline[0] | startswith("-"))
 ) | .id)'
 wid="$(kitty @ ls --to="$to" | jq --arg dir "$PWD" "$cmd")"
-if [[ -n "$wid" ]]; then
-  kitty @ focus-window --to="$to" --match="id:$wid"
-else
+if [[ -z "$wid" ]]; then
   wid="$(kitty @ launch --to="$to" --type=tab --cwd="$PWD" --hold)"
 fi
-if [[ -z "$wid" ]]; then
-  echo "Couldn't get kitty window id"
-  exit 1
-fi
+[[ -z "$wid" ]] && echo >&2 "Couldn't get window id" && exit 1
+
 kitty @ focus-window --to="$to" --match="id:$wid"
 kitty @ send-text --to="$to" --match="id:$wid" -- "$@" '\n'
