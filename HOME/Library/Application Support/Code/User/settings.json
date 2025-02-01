@@ -175,7 +175,7 @@
     },
 
     // extensions
-    "binrun.commandTemplate": "kw -d $PWD --post \"hs -c 'focusPreviousWindow()'\"",
+    "binrun.commandTemplate": "kitty-launch-command-in-dir {} && hs -c 'focusPreviousWindow()'",
 
     "extensions.ignoreRecommendations": true,
 

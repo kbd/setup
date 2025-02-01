@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+get_kitty_socket() {
+  fd -ts -d1 'mykitty-*' /tmp | head -1
+}
+
+socket="$(get_kitty_socket)"
+if [[ -z "$socket" ]]; then
+  kitty&
+  sleep 1 # ensure kitty has time to open
+  socket="$(get_kitty_socket)"
+fi
+if [[ -z "$socket" ]]; then
+  echo "Couldn't get kitty socket"
+  exit 1
+fi
+
+to="unix:$socket"
+# shellcheck disable=SC2016 # $dir expands in jq, not in shell
+cmd='first(.[].tabs[].windows[] | select(
+  .at_prompt
+  and (.foreground_processes | length == 1)
+  and (.foreground_processes[0].cwd == $dir)
+  and (.foreground_processes[0].cmdline[0] | startswith("-"))
+) | .id)'
+wid="$(kitty @ ls --to="$to" | jq --arg dir "$PWD" "$cmd")"
+if [[ -n "$wid" ]]; then
+  kitty @ focus-window --to="$to" --match="id:$wid"
+else
+  wid="$(kitty @ launch --to="$to" --type=tab --cwd="$PWD" --hold)"
+fi
+if [[ -z "$wid" ]]; then
+  echo "Couldn't get kitty window id"
+  exit 1
+fi
+kitty @ focus-window --to="$to" --match="id:$wid"
+kitty @ send-text --to="$to" --match="id:$wid" -- "$@" '\n'
