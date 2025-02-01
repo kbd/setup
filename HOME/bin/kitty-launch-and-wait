@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+wid="$(kitty @ launch --type=window --cwd=current --copy-env "$@")"
+pid="$(kitty @ ls --match=id:"$wid" | jq '.[].tabs[0].windows[0].pid')"
+gtail --pid="$pid" -f /dev/null
