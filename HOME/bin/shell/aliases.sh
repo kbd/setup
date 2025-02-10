@@ -35,6 +35,8 @@ if [[ $ZSH_VERSION ]]; then
   # suffix aliases
   alias -s txt='$EDITOR'
   alias -s md='a Typora'
+
+  alias rlh='fc -R && echo history reloaded'
 fi
 
 # TERMINAL SPECIFIC
@@ -230,16 +232,6 @@ alias S='~S' # too often I miss the ~ when I ~S. Make it work anyway.
 alias ,='~S'
 alias zj=zellij
 alias zja='zj ls | fzf -0 -1 --ansi --bind "enter:become(echo {1})" | xargs -to zellij a'
-
-rlh() {
-  # reload history
-  if [[ $ZSH_VERSION ]]; then
-    fc -R
-  else
-    history -r
-  fi
-  echo "History reloaded"
-}
 
 create() {
   # since scripts can't cd, need a function to cd after 'create-' scripts
