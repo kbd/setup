@@ -261,23 +261,12 @@ alias daily=note-daily
 alias dear=diary
 alias diary=daily
 export NOTES_DIR=~/notes
-note-new() {
-  echo "# $1"
-}
-note-daily-new() {
-  echo "# $1
-## Schedule
-
-## Journal
-
-## Ideas
-
-## Tasks
-"
+note-tmpl() {
+  "$NOTES_DIR/templates/${1:-_}".sh "${@:2}"
 }
 note-daily() {
   local dt="${1:-$(today)}"
-  note "diary/$dt" "$(note-daily-new "$(date-full "$dt")")";
+  note "diary/$dt" "$(note-tmpl daily "$(date-full "$dt")")";
 }
 note() {
   if [[ -z "$1" ]]; then
@@ -289,7 +278,7 @@ note() {
       f="$NOTES_DIR/$f"
     fi
     if [[ ! -f "$f" ]]; then
-      echo "${2:-$(note-new "$name")}" > "$f"
+      echo "${2:-$(note-tmpl _ "$name")}" > "$f"
     fi
     a Typora "$f"
   fi
