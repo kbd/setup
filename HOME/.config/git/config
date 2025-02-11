@@ -134,7 +134,7 @@
 	clone-insecure = clone -c http.sslVerify=false
 	d = diff
 	debug = !GIT_TRACE=1 git
-	dt = difftool
+	dt = difftool --dir-diff
 	dc = !git pick-commits | xargs -t git d
 	dtc = !git pick-commits | xargs -t git dt
 	df = with-status-files d
