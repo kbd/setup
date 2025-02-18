@@ -179,6 +179,7 @@ alias pytest-d='pytest --pdb --pdbcls=pudb.debugger:Debugger'
 
 # shortcuts/defaults/config
 export ERL_AFLAGS="-kernel shell_history enabled" # remember Elixir iex history across sessions
+export DENO_INSTALL_ROOT="$HOME/.local"
 alias 1p='eval $(op signin)'
 alias battery='pmset -g batt'
 alias cbf='fzf | teerr | cb'
