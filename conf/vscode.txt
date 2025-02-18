@@ -13,7 +13,6 @@ jakebecker.elixir-ls
 janisdd.vscode-edit-csv
 johnpapa.vscode-peacock
 kbd.binrun
-kosz78.nim
 mechatroner.rainbow-csv
 ms-azuretools.vscode-docker
 ms-python.mypy-type-checker

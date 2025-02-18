@@ -65,9 +65,6 @@ node:
 go:
 	cat {{conf}}/go.txt | xargs -t -L1 go install
 
-nim:
-	cat {{conf}}/nimble.txt | xargs -to nimble install
-
 vscode:
 	install-vscode-extensions {{conf}}/vscode.txt
 

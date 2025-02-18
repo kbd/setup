@@ -212,7 +212,6 @@ alias k=task
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
-alias nimr='nim c -r --verbosity:0 --"hint[Processing]":off'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 alias printv='printf "%q\n"' # v for verbatim

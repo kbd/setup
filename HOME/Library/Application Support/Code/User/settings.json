@@ -437,6 +437,7 @@
     "python.languageServer": "Pylance",
     "python.terminal.activateEnvironment": false, // depend on direnv instead
 
+    // jupyter
     "jupyter.interactiveWindow.textEditor.executeSelection": false,
     "notebook.cellToolbarLocation": {
         "default": "right",
@@ -500,16 +501,12 @@
     "go.inlayHints.parameterNames": true,
     "go.inlayHints.rangeVariableTypes": true,
 
-    // misc
-    "[nim]": {
-        "editor.formatOnSave": true,
-        "editor.acceptSuggestionOnEnter": "smart",
-    },
-
+    // terraform
     "[terraform]": {
         "editor.formatOnSave": true,
     },
 
+    // dart
     "[dart]": {
         "editor.formatOnSave": true,
         "editor.formatOnType": true,

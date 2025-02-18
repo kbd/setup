@@ -290,11 +290,6 @@
     },
     {
         "key": "shift+enter",
-        "command": "-nim.execSelectionInTerminal",
-        "when": "editorFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'nim'"
-    },
-    {
-        "key": "shift+enter",
         "command": "-python.execSelectionInTerminal",
         "when": "editorFocus && !findInputFocussed && !python.datascience.ownsSelection && !replaceInputFocussed && editorLangId == 'python'"
     },
