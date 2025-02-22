@@ -24,17 +24,19 @@ else
   unalias cat  # locally aliased to bat
 fi
 
-if is_remote; then
+if is-remote; then
   # unicode character prompt prefix works fine locally but
   # always seems to cause problems on servers, so disable it
   export PROMPT_PREFIX=''
 fi
 
 # configure prompt
-export PROMPT_SHORT_DISPLAY=1
-
-# register command prompt (prompt.sh)
-register_prompt bash
+BREW_SHELLENV_PATH=~/bin/shell/3rdparty/.brew.sh
+source ~/.zprofile
+jobscount() {
+  echo "$(jobs -rp | wc -l | tr -d ' ') $(jobs -sp | wc -l | tr -d ' ')"
+}
+PROMPT_COMMAND='PS1="$(PROMPT_RETURN_CODE=$? PROMPT_PATH="\w" PROMPT_JOBS="$(jobscount)" prompt bash)"'
 
 # source my bashrc even when su-ing, derived from http://superuser.com/a/636475
 # note: doesn't work if user you su to has PROMPT_COMMAND set. Not sure of workaround
@@ -43,8 +45,3 @@ register_prompt bash
 alias su="export PROMPT_COMMAND='source $SELF; $PROMPT_COMMAND' && su -p"
 # shellcheck disable=SC2139
 alias sudosu="export PROMPT_COMMAND='source $SELF; $PROMPT_COMMAND' && sudo -E su"
-
-# override prompt precmd (prompt.sh)
-_prompt_precmd() {
-  echo -n "$eo$(title '\w')$ec"
-}
