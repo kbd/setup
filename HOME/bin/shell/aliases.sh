@@ -188,6 +188,7 @@ alias fm='yazi'
 alias fu='fd -uu' # fd, but don't ignore any files
 alias grep='grep --color=auto'
 alias hex='hexyl'
+alias histogram='sort | uniq -c | sort -nr'
 alias hj=hjson-cli
 alias hjj='hjson-cli -j'
 alias ieX='iex -S mix'
