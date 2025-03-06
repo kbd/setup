@@ -10,6 +10,15 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
 
+# fzf
+export FZF_DEFAULT_COMMAND='fd -tf -HL'
+export FZF_DEFAULT_OPTS='--height 30% --reverse --multi --bind=ctrl-r:toggle-sort'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd -td -HL'
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+_fzf_compgen_path() { fd -tf -HL . "$1"; }
+_fzf_compgen_dir() { fd -td -HL . "$1"; }
+
 # PLATFORM SPECIFIC
 if [[ $OS == Darwin ]]; then
   # prefer GNU versions of common utils
@@ -119,15 +128,6 @@ mcd() {
   mkdir -p -- "$1" && cl "$@" -A
 }
 
-# fzf
-export FZF_DEFAULT_COMMAND='fd -tf -HL'
-export FZF_DEFAULT_OPTS='--height 30% --reverse --multi --bind=ctrl-r:toggle-sort'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd -td -HL'
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
-_fzf_compgen_path() { fd -tf -HL . "$1"; }
-_fzf_compgen_dir() { fd -td -HL . "$1"; }
-
 # git
 alias g=git
 alias s='gs' # status
@@ -150,13 +150,6 @@ gccb() {
 }
 
 # go
-dlv() {
-  local args=('debug')
-  if [[ $# != 0 ]]; then
-    args=("$@")
-  fi
-  EDITOR=delve-editor command dlv "${args[@]}"
-}
 go(){ if [[ $# -eq 0 ]]; then rlwrap yaegi; else command go "$@"; fi }
 alias gort='go test ./...'
 alias yaegi='rlwrap yaegi'
@@ -242,44 +235,3 @@ create() {
   ! exists "$cmd" && echo >&2 "'$cmd' doesn't exist" && return 2
   $cmd "$project" "$@" && cd "$project" || return 3
 }
-
-# notes/tasks/dates
-alias today="gdate '+%Y-%m-%d'"
-alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
-alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
-alias date-full="ts -f"
-alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
-alias daily=note-daily
-alias dear=diary
-alias diary=daily
-export NOTES_DIR=~/notes
-note-tmpl() {
-  "$NOTES_DIR/templates/${1:-_}".sh "${@:2}"
-}
-note-daily() {
-  local dt="${1:-$(today)}"
-  note "diary/$dt" "$(note-tmpl daily "$(date-full "$dt")")";
-}
-note() {
-  if [[ -z "$1" ]]; then
-    a Typora $NOTES_DIR
-  else
-    local name="${1%.md}"
-    local f="$name.md"
-    if ! is-absolute "$f"; then
-      f="$NOTES_DIR/$f"
-    fi
-    if [[ ! -f "$f" ]]; then
-      echo "${2:-$(note-tmpl _ "$name")}" > "$f"
-    fi
-    a Typora "$f"
-  fi
-}
-if [[ $ZSH_VERSION ]]; then
-  compdef "_files -W \"$NOTES_DIR/\"" note
-  compdef "_files -W \"$NOTES_DIR/diary/\"" note-daily
-  zstyle ':fzf-tab:complete:note:*' fzf-preview 'CLICOLOR_FORCE=1 glow --style=dark "$NOTES_DIR/$realpath"'
-  zstyle ':fzf-tab:complete:note-daily:*' fzf-preview 'CLICOLOR_FORCE=1 glow --style=dark "$NOTES_DIR/diary/$realpath"'
-  zstyle ':completion:*:note-daily:*' sort false # fzf-tab respect provided order
-  zstyle ':completion:*:note-daily:*' file-sort reverse
-fi

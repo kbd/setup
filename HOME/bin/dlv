@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+args=('debug')
+if [[ $# != 0 ]]; then
+   args=("$@")
+fi
+EDITOR=delve-editor command dlv "${args[@]}"
