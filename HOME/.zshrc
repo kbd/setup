@@ -69,19 +69,6 @@ preexec(){
 tt() { TABTITLE="$@"; }
 ttl() { tt "⚡$@⚡"; }
 
-# completion
-autoload -Uz compinit && compinit
-compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
-
-# ls colors, fzf-tab https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
-eval $(gdircolors -b $HOME/.LS_COLORS) # gdircolors is dircolors in coreutils
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' insert-tab false
-zstyle ':completion:*:descriptions' format '[%d]' # enable group support
-zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-zstyle ':fzf-tab:*' fzf-flags '--preview-window=70%'
-
 # zsh syntax highlighting
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor) # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md#how-to-activate-highlighters
 typeset -A ZSH_HIGHLIGHT_STYLES=( # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
@@ -101,6 +88,18 @@ empty-tab() {
 }
 zle -N empty-tab
 bindkey '^I' empty-tab
+
+# completion/fzf-tab https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
+eval $(gdircolors -b $HOME/.LS_COLORS)
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' insert-tab false
+zstyle ':completion:*:descriptions' format '[%d]' # enable group support
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:*' fzf-flags '--preview-window=70%'
+
+autoload -Uz compinit && compinit
+compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 
 # source all shell config (aliases, 3rd party plugins, etc.)
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
