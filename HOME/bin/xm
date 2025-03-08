@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # {x}, creating directories if necessary
-# ${@: -1} is a bash/zsh-ism for the last arg
-d="$(dirnameslash "${@: -1}")"
-if [[ ! -d "$d" ]]; then
-  echo "Creating '$d'"
-  mkdir -p -- "$d"
-fi
+d="$(dirnameslash "${@: -1}")" # ${@: -1} is a bash/zsh-ism for the last arg
+create(){ echo "Creating '$1'"; mkdir -p -- "$1"; }
+[[ -d "$d" ]] || create "$d"
 "$@"
