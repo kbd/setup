@@ -27,48 +27,6 @@ TIMEFMT=$'user\t%*Us\nsys\t%*Ss\nreal\t%*Es\ncpu/mem\t%P/%Mk\nfaults\t%F'
 ZLE_REMOVE_SUFFIX_CHARS='' # https://superuser.com/a/613817/
 WORDCHARS=${WORDCHARS/\/} # don't consider slash a word char - https://stackoverflow.com/questions/444951/
 
-bindplugin() {
-  # usage: bindplugin "\e[A" up-line-or-beginning-search
-  autoload -Uz "$2"
-  zle -N "$2"
-  bindkey "$1" "$2"
-}
-
-# keybinds
-stty -ixon # allow C-s and C-q to be used for things (see .vimrc)
-bindkey "\e[A" history-beginning-search-backward # ↑
-bindkey "\e[B" history-beginning-search-forward # ↓
-bindkey "\e[1;5D" backward-word # ⌃←
-bindkey "\e[1;5C" forward-word # ⌃→
-bindkey "\e[1;3D" backward-word # ⌥← kitty
-bindkey "\e[1;3C" forward-word # ⌥→
-bindkey "\eb" backward-word # ⌥← vscode
-bindkey "\ef" forward-word # ⌥→
-bindkey "\e[H" beginning-of-line # home
-bindkey "\e[F" end-of-line # end
-bindkey "\e[3~" delete-char # delete
-bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
-bindplugin "^[e" edit-command-line # ⌥e
-
-# prompt
-PROMPT='$(prompt zsh)'
-RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
-export PROMPT_PREFIX='⚡'
-alias title='printf "\e]0;%s\a"' # https://tldp.org/HOWTO/Xterm-Title-3.html#ss3.1
-precmd() {
-  export PROMPT_RETURN_CODE=$?
-  export PROMPT_PATH="$(print -P '%~')"
-  export PROMPT_JOBS=${(M)#${jobstates%%:*}:#running}\ ${(M)#${jobstates%%:*}:#suspended}
-  export PROMPT_HR=$COLUMNS
-  title "$PROMPT_PATH${TABTITLE:+" ($TABTITLE)"}"
-}
-preexec(){
-  title "$PROMPT_PATH ($1)"
-  unset PROMPT_RETURN_CODE PROMPT_PATH PROMPT_JOBS PROMPT_HR
-}
-tt() { TABTITLE="$@"; }
-ttl() { tt "⚡$@⚡"; }
-
 # zsh syntax highlighting
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor) # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md#how-to-activate-highlighters
 typeset -A ZSH_HIGHLIGHT_STYLES=( # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
@@ -76,18 +34,6 @@ typeset -A ZSH_HIGHLIGHT_STYLES=( # https://github.com/zsh-users/zsh-syntax-high
   [double-quoted-argument]='fg=magenta,bold'
   [single-quoted-argument]='fg=magenta,bold,bg=black'
 )
-
-# use autocomplete on nothing
-empty-tab() {
-  if [[ $#BUFFER == 0 ]]; then
-    BUFFER="br" # broot
-    zle accept-line
-  else
-    zle expand-or-complete
-  fi
-}
-zle -N empty-tab
-bindkey '^I' empty-tab
 
 # completion/fzf-tab https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
 eval $(gdircolors -b $HOME/.LS_COLORS)
@@ -101,7 +47,7 @@ zstyle ':fzf-tab:*' fzf-flags '--preview-window=70%'
 autoload -Uz compinit && compinit
 compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 
-# source all shell config (aliases, 3rd party plugins, etc.)
+# source all shell config
 for file in "$HOME"/bin/shell/**/*.(z|)sh; do
   source "$file";
 done
