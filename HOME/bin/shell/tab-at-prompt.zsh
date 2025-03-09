@@ -1,8 +1,9 @@
 #!/usr/bin/env zsh
 # use autocomplete on nothing
+TABATPROMPT="${TABATPROMPT:-br}" # broot
 empty-tab() {
   if [[ $#BUFFER == 0 ]]; then
-    BUFFER="br" # broot
+    BUFFER="$TABATPROMPT"
     zle accept-line
   else
     zle expand-or-complete
