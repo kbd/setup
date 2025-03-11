@@ -48,6 +48,6 @@ autoload -Uz compinit && compinit
 compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 
 # source all shell config
-for file in "$HOME"/bin/shell/**/*.(z|)sh; do
+for file in ~/bin/shell/**/*.(z|)sh; do
   source "$file";
 done
