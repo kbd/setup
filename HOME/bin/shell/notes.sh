@@ -23,15 +23,15 @@ note-file() {
   is-absolute "$f" || f="$NOTES_DIR/$f"
   echo "$f"
 }
+note-create() {
+  local name="${1%.md}"
+  local f="$(note-file "$name")"
+  [[ -f "$f" ]] || echo "${2:-$(note-tmpl _ "$name")}" > "$f"
+  echo "$f"
+}
 note() {
-  if [[ -z "$1" ]]; then
-    a Typora $NOTES_DIR
-  else
-    local name="${1%.md}"
-    local f="$(note-file "$name")"
-    [[ -f "$f" ]] || echo "${2:-$(note-tmpl _ "$name")}" > "$f"
-    a Typora "$f"
-  fi
+  [[ -z "$1" ]] && exec a Typora $NOTES_DIR
+  a Typora "$(note-create "$@")"
 }
 note-tasks() {
   <"$(note-daily-file "$@")" mdq '# ^tasks | - [ ]'
