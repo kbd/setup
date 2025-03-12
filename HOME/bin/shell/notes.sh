@@ -33,6 +33,9 @@ note() {
     a Typora "$f"
   fi
 }
+note-tasks() {
+  <"$(note-daily-file "$@")" mdq '# ^tasks | - [ ]'
+}
 if [[ $ZSH_VERSION ]]; then
   compdef "_files -W \"$NOTES_DIR/\"" note
   compdef "_files -W \"$NOTES_DIR/diary/\"" note-daily
