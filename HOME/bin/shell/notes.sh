@@ -9,24 +9,27 @@ alias dear=diary
 alias diary=daily
 export NOTES_DIR=~/notes
 note-tmpl() {
-  "$NOTES_DIR/templates/${1:-_}".sh "${@:2}"
+  "$NOTES_DIR/templates/${1:-_}.sh" "${@:2}"
 }
 note-daily() {
   local dt="${1:-$(today)}"
-  note "diary/$dt" "$(note-tmpl daily "$(date-full "$dt")")";
+  note "$(note-daily-file "$dt")" "$(note-tmpl daily "$(date-full "$dt")")";
+}
+note-daily-file() {
+  note-file "diary/${1:-$(today)}"
+}
+note-file() {
+  local f="${1%.md}.md"
+  is-absolute "$f" || f="$NOTES_DIR/$f"
+  echo "$f"
 }
 note() {
   if [[ -z "$1" ]]; then
     a Typora $NOTES_DIR
   else
     local name="${1%.md}"
-    local f="$name.md"
-    if ! is-absolute "$f"; then
-      f="$NOTES_DIR/$f"
-    fi
-    if [[ ! -f "$f" ]]; then
-      echo "${2:-$(note-tmpl _ "$name")}" > "$f"
-    fi
+    local f="$(note-file "$name")"
+    [[ -f "$f" ]] || echo "${2:-$(note-tmpl _ "$name")}" > "$f"
     a Typora "$f"
   fi
 }
