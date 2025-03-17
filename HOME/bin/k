@@ -5,5 +5,6 @@
 # you tried to zsh -i in the shebang but that wasn't runnable by 'watchexec'
 if [[ -z $NO_RECURSION ]]; then
   export NO_RECURSION=1
+  rep -
   zsh -ci k "$@"
 fi
