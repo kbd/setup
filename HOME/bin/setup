@@ -46,10 +46,7 @@ brew:
 	link zsh-autosuggestions
 	link zsh-syntax-highlighting
 
-	# delete cached brew script so it's regenerated
-	if [[ -n "$BREW_SHELLENV_PATH" && -f "$BREW_SHELLENV_PATH" ]]; then
-		rm $BREW_SHELLENV_PATH
-	fi
+	rm -f "$BREW_SHELLENV_PATH" # delete cached brew script so it's regenerated
 
 python:
 	uv venv ~/bin/.venv

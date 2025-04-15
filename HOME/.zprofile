@@ -1,8 +1,11 @@
 # cache brew shellenv
-if [[ ! -f "$BREW_SHELLENV_PATH" ]]; then
-   # /usr/local/bin already in path on intel (and brew shellenv adds it again...)
-   "$([[ "$(uname -p)" == arm ]] && echo /opt/homebrew/bin/)"brew shellenv > $BREW_SHELLENV_PATH
-fi
+[[ -f "$BREW_SHELLENV_PATH" ]] || {
+   # /usr/local/bin already in path on intel
+   # https://docs.brew.sh/FAQ#why-is-the-default-installation-prefix-opthomebrew-on-apple-silicon
+   # https://docs.brew.sh/Tips-N'-Tricks#loading-homebrew-from-the-same-dotfiles-on-different-operating-systems
+   p="$([[ "$(uname -p)" == arm ]] && echo /opt/homebrew/bin/)"
+   "${p}brew" shellenv > "$BREW_SHELLENV_PATH"
+}
 source "$BREW_SHELLENV_PATH"
 
 # add my bin first and language-specific paths after
