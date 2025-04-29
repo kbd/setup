@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2139
 export XDG_CONFIG_HOME=~/.config
-export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export OS="$(uname)"
 

@@ -48,6 +48,7 @@ autoload -Uz compinit && compinit
 compdef -d mcd # conflicts with my alias: https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_mtools
 
 # source all shell config
+export LC_COLLATE=C # ensure consistent sort, ~ at end
 for file in ~/bin/shell/**/*.(z|)sh; do
   source "$file";
 done
