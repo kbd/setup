@@ -37,7 +37,7 @@ note-tasks() {
   <"$(note-daily-file "$@")" mdq '# ^tasks | - [ ]' | glow
 }
 if [[ $ZSH_VERSION ]]; then
-  compdef "_files -W \"$NOTES_DIR/\"" note
+  compdef '_files -W "$NOTES_DIR" -g "**/*.md~*(Library|diary|templates)/**/*.md"' note
   compdef "_files -W \"$NOTES_DIR/diary/\"" note-daily
   zstyle ':fzf-tab:complete:note:*' fzf-preview 'CLICOLOR_FORCE=1 glow --style=dark "$NOTES_DIR/$realpath"'
   zstyle ':fzf-tab:complete:note-daily:*' fzf-preview 'CLICOLOR_FORCE=1 glow --style=dark "$NOTES_DIR/diary/$realpath"'
