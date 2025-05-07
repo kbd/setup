@@ -233,7 +233,11 @@
   (let [app (hs.application.applicationsForBundleID notes-bundleid)
         app (. app 1)
         windows (if app (app:allWindows) [])
-        files (sort-naturally (hs.fs.fileListForPath notes-dir {:relativePath true}))
+        default-ignores (hs.fnutils.copy hs.fs.defaultPathListExcludes)
+        my-ignores ["^(Library|diary|templates)$"]
+        ignores (hs.fnutils.concat default-ignores my-ignores)
+        options {:relativePath true :subdirs true :ignore ignores}
+        files (sort-naturally (hs.fs.fileListForPath notes-dir options))
         choices []]
         (each [_ window (ipairs windows)]
           (let [text (window:title)
