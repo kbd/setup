@@ -40,7 +40,8 @@ if __name__ == "__main__":
     fprint("Working dir", DEFAULT_DOWNLOADS_DIR)
     os.chdir(DEFAULT_DOWNLOADS_DIR)
 
-    if (args.raw
+    if (
+        args.raw
         or url.endswith(BINARY_EXTENSIONS)
         or url.startswith('magnet:')
         or url.endswith('.torrent')
@@ -49,7 +50,13 @@ if __name__ == "__main__":
         if args.directory:
             cmd += ['-d', args.directory]
     else:
-        cmd = ['yt-dlp', '--embed-subs', '--embed-thumbnail', '--embed-metadata']
+        cmd = [
+            'yt-dlp',
+            '--embed-subs',
+            '--embed-thumbnail',
+            '--embed-metadata',
+            '--trim-filenames=150',
+        ]
         if args.directory:
             cmd += ['-P', args.directory]
 
