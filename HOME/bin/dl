@@ -3,7 +3,6 @@
 """dl = download"""
 
 import argparse
-import os
 import shlex
 import sys
 from pathlib import Path
@@ -13,7 +12,7 @@ from aush import COLORS as c
 from lib import utils
 
 BINARY_EXTENSIONS = ('.zip', '.tar.gz', '.dmg')
-DEFAULT_DOWNLOADS_DIR = Path("~/Downloads").expanduser()
+DEFAULT_DOWNLOADS_DIR = Path("~/Downloads")
 
 
 def run(*args):
@@ -36,9 +35,8 @@ if __name__ == "__main__":
     url = args.url or utils.run(['cb'], cap=True)
     fprint("Downloading", url)
 
-    # set working directory to downloads dir so tools download there by default
-    fprint("Working dir", DEFAULT_DOWNLOADS_DIR)
-    os.chdir(DEFAULT_DOWNLOADS_DIR)
+    dest_dir = Path(args.directory or DEFAULT_DOWNLOADS_DIR).expanduser()
+    fprint("Download dir", str(dest_dir))
 
     if (
         args.raw
@@ -46,9 +44,7 @@ if __name__ == "__main__":
         or url.startswith('magnet:')
         or url.endswith('.torrent')
     ):
-        cmd = ['aria2c']
-        if args.directory:
-            cmd += ['-d', args.directory]
+        cmd = ['aria2c', '-d', dest_dir]
     else:
         cmd = [
             'yt-dlp',
@@ -56,8 +52,7 @@ if __name__ == "__main__":
             '--embed-thumbnail',
             '--embed-metadata',
             '--trim-filenames=150',
+            '-P', str(dest_dir),
         ]
-        if args.directory:
-            cmd += ['-P', args.directory]
 
     run(*cmd, *rest, url)
