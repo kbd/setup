@@ -44,7 +44,7 @@ if __name__ == "__main__":
         or url.startswith('magnet:')
         or url.endswith('.torrent')
     ):
-        cmd = ['aria2c', '-d', dest_dir]
+        cmd = ['aria2c', '-d', str(dest_dir)]
     else:
         cmd = [
             'yt-dlp',
@@ -52,7 +52,8 @@ if __name__ == "__main__":
             '--embed-thumbnail',
             '--embed-metadata',
             '--trim-filenames=150',
-            '-P', str(dest_dir),
+            '-P',
+            str(dest_dir),
         ]
 
     run(*cmd, *rest, url)
