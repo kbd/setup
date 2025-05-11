@@ -202,6 +202,7 @@ alias j=just
 alias janet='rlwrap -Na janet' # just for repl history
 alias jax='osascript -l JavaScript -e'
 alias jaxi='rlwrap --always-readline --no-children osascript -il JavaScript'
+alias jj='LESS="$LESS -R" jj'
 alias k=note-tasks
 alias map='parallel'
 alias my_home='user_home "$(logname)"'
