@@ -41,8 +41,13 @@ brew:
 	atuin init zsh >> $plugins
 	broot --print-shell-function zsh >> $plugins
 	broot --set-install-state installed
+	zcompile $plugins
 
-	link(){ ln -sf "$(brew --prefix)/share/$1/$1.zsh" ~/bin/shell/~3rdparty/$1.zsh; }
+	link(){
+		local dest=~/bin/shell/~3rdparty/$1.zsh
+		ln -sf "$(brew --prefix)/share/$1/$1.zsh" $dest;
+		zcompile $dest
+	}
 	link zsh-autosuggestions
 	link zsh-syntax-highlighting
 

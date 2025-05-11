@@ -26,7 +26,12 @@ bin = "zig-out/bin/zls"
 
 [fzf-tab]
 git = "https://github.com/Aloxaf/fzf-tab"
-cmd = "ln -sf ~/3rdparty/fzf-tab/fzf-tab.plugin.zsh ~/bin/shell/~3rdparty/fzf-tab.plugin.zsh"
+exe = "zsh"
+cmd = """
+dest=~/bin/shell/~3rdparty/fzf-tab.plugin.zsh
+ln -sf ~/3rdparty/fzf-tab/fzf-tab.plugin.zsh $dest
+zcompile $dest
+"""
 
 [tinkle]
 url = "https://github.com/pqrs-org/Tinkle/releases/download/v2.4.0/Tinkle-2.4.0.dmg"
