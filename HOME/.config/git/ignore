@@ -12,6 +12,4 @@ __*
 .DS_Store
 .envrc
 .vscode/
-
-scratch
-scratch.*
+.jj/
