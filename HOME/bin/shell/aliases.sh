@@ -118,7 +118,7 @@ lsd() { ls -d --indicator-style=none "$@" -- */; }
 lld() { ll -d --indicator-style=none "$@" -- */; }
 cl() { cd -- "${1-$HOME}" && l "${@:2}"; }
 cll() { cd -- "${1-$HOME}" && ll "${@:2}"; }
-et() { eza -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache|.venv|.ruff_cache|.dolt|.jj' --color=always "$@" | less -R; }
+et() { eza -alT --git --git-ignore --color=always "$@" | less -R; }
 alias et1='et -L1'
 alias et2='et -L2'
 alias et3='et -L3'
