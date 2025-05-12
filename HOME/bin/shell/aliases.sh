@@ -58,7 +58,8 @@ export PAGER=less
 export LESS='-iMFx4 --mouse --incsearch --exit-follow-on-close' # smart-case, status bar, quit 1 screen, 4sp tabs
 export EDITOR=hx
 export VISUAL='code -nw'
-export GIT_EDITOR='kitty @ launch --type=window --cwd=current --copy-env --wait-for-child-to-exit -- "$EDITOR"'
+export GIT_EDITOR="kitty @ launch --type=window --cwd=current --copy-env --wait-for-child-to-exit -- $EDITOR"
+export JJ_EDITOR="$GIT_EDITOR"
 export IGREP_EDITOR=code
 export DELTA_PAGER="less $LESS -R"
 export JQ_COLORS='4;36:0;37:0;37:0;37:0;32:1;37:1;37'
@@ -117,7 +118,7 @@ lsd() { ls -d --indicator-style=none "$@" -- */; }
 lld() { ll -d --indicator-style=none "$@" -- */; }
 cl() { cd -- "${1-$HOME}" && l "${@:2}"; }
 cll() { cd -- "${1-$HOME}" && ll "${@:2}"; }
-et() { eza -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache|.venv|.ruff_cache|.dolt' --color=always "$@" | less -R; }
+et() { eza -alT --git -I'.git|node_modules|.mypy_cache|.pytest_cache|.venv|.ruff_cache|.dolt|.jj' --color=always "$@" | less -R; }
 alias et1='et -L1'
 alias et2='et -L2'
 alias et3='et -L3'
