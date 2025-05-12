@@ -27,6 +27,12 @@ for key in (
     # without unsetting this app expose with four fingers down is disabled?
     trackpad['TrackpadThreeFingerVertSwipeGesture'] = 0
 
+# disable window tiling
+wm = defaults["com.apple.WindowManager"]
+wm['EnableTiledWindowMargins'] = False
+wm['EnableTilingByEdgeDrag'] = False
+wm['EnableTopTilingByEdgeDrag'] = False
+
 # disable dashboard
 defaults['com.apple.dashboard']['mcx-disabled'] = True
 
