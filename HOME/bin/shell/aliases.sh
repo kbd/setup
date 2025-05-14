@@ -58,8 +58,8 @@ export PAGER=less
 export LESS='-iMFx4 --mouse --incsearch --exit-follow-on-close' # smart-case, status bar, quit 1 screen, 4sp tabs
 export EDITOR=hx
 export VISUAL='code -nw'
-export GIT_EDITOR="kitty @ launch --type=window --cwd=current --copy-env --wait-for-child-to-exit -- $EDITOR"
-export JJ_EDITOR="$GIT_EDITOR"
+export GIT_EDITOR='kitty-launch-and-wait "$EDITOR"'
+export JJ_EDITOR="kitty-launch-and-wait $EDITOR" # jj won't expand $EDITOR so capture at definition time
 export IGREP_EDITOR=code
 export DELTA_PAGER="less $LESS -R"
 export JQ_COLORS='4;36:0;37:0;37:0;37:0;32:1;37:1;37'
