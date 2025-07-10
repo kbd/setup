@@ -80,7 +80,7 @@
     "git.openRepositoryInParentFolders": "always",
     "security.workspace.trust.untrustedFiles": "open",
     "editor.lightbulb.enabled": "onCode",
-    "github.copilot.editor.enableAutoCompletions": true,
+    "github.copilot.nextEditSuggestions.enabled": true,
     "chat.editing.alwaysSaveWithGeneratedChanges": true,
 
     // workbench
