@@ -50,7 +50,8 @@ fi
 # TERMINAL SPECIFIC
 alias is-kitty='[[ $TERM == xterm-kitty ]]'
 if is-kitty; then
-  alias icat="kitty +kitten icat --align=left"
+  alias icat="kitten icat --align=left"
+  alias notify="kitten notify"
 fi
 
 # find/pag{ers,ing}/editors
