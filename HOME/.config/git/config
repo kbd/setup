@@ -61,6 +61,10 @@
 [delta "sbs"]
 	side-by-side = true
 
+[delta "blame-iso"]
+	blame-timestamp-output-format = "%Y-%m-%d %H:%M"
+	blame-format = "{timestamp:17} {author:15.14} {commit:8}"
+
 [color "diff"]
 	meta = yellow
 	frag = magenta bold
@@ -268,3 +272,4 @@
 	fixup  = "!f() { git commit --fixup  $1      && GIT_EDITOR=true          git ri --autosquash $1~; }; f"
 	squash = "!f() { git commit --squash $1 -C$1 && GIT_SEQUENCE_EDITOR=true git ri --autosquash $1~; }; f"
 	fix-author = !GIT_AUTHOR_DATE="$(git log -n1 --format=%aD)" GIT_COMMITTER_DATE="$(git log -n1 --format=%cD)" git commit --amend --reset-author --no-edit
+	blame-iso = !DELTA_FEATURES=blame-iso git blame
