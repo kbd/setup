@@ -2,6 +2,7 @@
 set -Eeuo pipefail
 
 export HOMEBREW_NO_INSTALL_CLEANUP=1 # ensure cleanup is only run once at end
+export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
 unset HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK # do a "full" update
 
 bundle="${1:-}"
