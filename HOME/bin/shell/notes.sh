@@ -8,34 +8,54 @@ alias daily=note-daily
 alias dear=diary
 alias diary=daily
 export NOTES_DIR=~/notes
+
 note-tmpl() {
   "$NOTES_DIR/templates/${1:-_}.sh" "${@:2}"
 }
+
 note-daily() {
   local dt="${1:-$(today)}"
   note "$(note-daily-file "$dt")" "$(note-tmpl daily "$(date-full "$dt")")";
 }
+
 note-daily-file() {
   note-file "diary/${1:-$(today)}"
 }
+
 note-file() {
   local f="${1%.md}.md"
   is-absolute "$f" || f="$NOTES_DIR/$f"
   echo "$f"
 }
+
 note-create() {
   local name="${1%.md}"
   local f="$(note-file "$name")"
   [[ -f "$f" ]] || echo "${2:-$(note-tmpl _ "$name")}" > "$f"
   echo "$f"
 }
+
 note() {
   [[ -z "$1" ]] && exec a Typora $NOTES_DIR
   a Typora "$(note-create "$@")"
 }
+
 note-tasks() {
   <"$(note-daily-file "$@")" mdq '# ^tasks | - [ ]' | glow
 }
+
+# date pickers
+alias pd='pickdate --format=yyyy-mm-dd'
+kpd() {
+  local tmp=$(mktemp)
+  local ret=$(kitty @ launch --wait-for-child-to-exit --copy-env sh -c "pickdate --format=yyyy-mm-dd > $tmp")
+  if [[ $ret -ne 0 ]]; then
+    rm "$tmp"
+    return $ret
+  fi
+  cat "$tmp" && rm "$tmp"
+}
+
 if [[ $ZSH_VERSION ]]; then
   compdef '_files -W "$NOTES_DIR" -g "**/*.md~*(Library|diary|templates)/**/*.md"' note
   compdef "_files -W \"$NOTES_DIR/diary/\"" note-daily
