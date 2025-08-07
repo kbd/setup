@@ -150,11 +150,6 @@ gccb() {
   git clone -- "$url" "$dir" && cd "$dir" || return
 }
 
-# go
-go(){ if [[ $# -eq 0 ]]; then rlwrap yaegi; else command go "$@"; fi }
-alias gort='go test ./...'
-alias yaegi='rlwrap yaegi'
-
 # python
 export PTPYTHON_CONFIG_HOME=$XDG_CONFIG_HOME/ptpython  # defaults to ~/Library/Application Support/... on Mac
 export PYTHONBREAKPOINT=pudb.set_trace
