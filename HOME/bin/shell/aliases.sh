@@ -211,6 +211,16 @@ alias my_home='user_home "$(logname)"'
 alias ncdu='ncdu --color=dark'
 alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
+alias pd='pickdate --format=yyyy-mm-dd'
+kpd() {
+  local tmp=$(mktemp)
+  local ret=$(kitty @ launch --wait-for-child-to-exit --copy-env sh -c "pickdate --format=yyyy-mm-dd > $tmp")
+  if [[ $ret -ne 0 ]]; then
+    rm "$tmp"
+    return $ret
+  fi
+  cat "$tmp" && rm "$tmp"
+}
 alias printv='printf "%q\n"' # v for verbatim
 alias qalc='noglob qalc'
 alias q=qalc
