@@ -248,7 +248,7 @@
 	repo-parent = rev-parse --show-superproject-working-tree # for submodules
 	patch = !git --no-pager diff --no-color
 	set-upstream = !git branch --set-upstream-to=origin/$(git current-branch)
-	l = log --date=format:'%a %Y-%m-%d %k:%M' --color=always --format='%C(cyan)%ad %C(blue)%an <%ae> %C(auto)%h%d%n%n% s%n%w(0,2,2)%+b%+N%C(reset)' --compact-summary
+	l = log --date=format:'%a %Y-%m-%d %H:%M' --color=always --format='%C(cyan)%ad %C(blue)%an <%ae> %C(auto)%h%d%n%n% s%n%w(0,2,2)%+b%+N%C(reset)' --compact-summary
 	lp = l -p
 	lg-base = log --graph --format='%C(auto)%h %C(cyan)%<(7,trunc)-%ar-%C(auto)%d %s %C(blue)<%an>%C(reset)'
 	# format the date from git log into a fixed-width format like 04ho 05da 02we
