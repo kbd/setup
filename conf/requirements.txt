@@ -38,6 +38,7 @@ pygit2
 pygments
 pylint
 pymongo
+pyobjc
 pyquery
 pytest
 pytest-cov
