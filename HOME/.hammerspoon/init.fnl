@@ -304,7 +304,7 @@
 (hs.hotkey.bind hyper "," #(specific-vscode-window setup-dir))
 (hs.hotkey.bind hyper "K" #(specific-vscode-window tasks-dir))
 (hs.hotkey.bind hyper "N" #(show-notes-fuzzy))
-(hs.hotkey.bind hyper "D" #(hs.execute "daily" true))
+(hs.hotkey.bind hyper "D" #(hs.execute "note-daily" true))
 (hs.hotkey.bind "alt" "tab" hs.window.switcher.nextWindow)
 (hs.hotkey.bind "alt-shift" "tab" hs.window.switcher.previousWindow)
 
