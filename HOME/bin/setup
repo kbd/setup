@@ -54,7 +54,7 @@ brew:
 	rm -f "$BREW_SHELLENV_PATH" # delete cached brew script so it's regenerated
 
 python:
-	uv venv ~/bin/.venv
+	uv venv --allow-existing ~/bin/.venv
 	uv pip install --strict --python ~/bin/.venv/bin/python -r {{conf}}/requirements.txt
 
 python-tools:
