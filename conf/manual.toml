@@ -46,7 +46,3 @@ git = "https://github.com/romkatv/zsh-bench.git"
 
 [zsh-defer]
 git = "https://github.com/romkatv/zsh-defer.git"
-
-[pickdate]
-git = "https://github.com/maraloon/pickdate.git"
-cmd = "go install"
