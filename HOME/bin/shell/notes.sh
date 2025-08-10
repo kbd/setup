@@ -4,7 +4,7 @@ alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
 alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
 alias date-full="ts -f"
 alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
-alias dear='note-daily "$(kpd)"'
+alias dear='dt="$(kpd)" && note-daily "$dt"'
 export NOTES_DIR=~/notes
 
 note-tmpl() {
