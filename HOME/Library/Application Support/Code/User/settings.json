@@ -120,6 +120,11 @@
         "editor.findMatchHighlightBorder": "#F00",
         "minimap.findMatchHighlight": "#A00",
         "editorOverviewRuler.findMatchForeground": "#A00E",
+
+        "diffEditor.insertedTextBackground": "#0603",
+        "diffEditor.removedTextBackground": "#900A",
+        "diffEditor.insertedLineBackground": "#060A",
+        "diffEditor.removedLineBackground": "#6006",
     },
 
     "editor.tokenColorCustomizations": {
