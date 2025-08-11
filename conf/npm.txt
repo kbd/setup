@@ -1,5 +1,2 @@
 git-open
-jest
 prettier
-ts-node
-typescript
