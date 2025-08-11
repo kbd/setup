@@ -239,17 +239,17 @@
         options {:relativePath true :subdirs true :ignore ignores}
         files (sort-naturally (hs.fs.fileListForPath notes-dir options))
         choices []]
-        (each [_ window (ipairs windows)]
-          (let [text (window:title)
-                image notes-app-image
-                id (window:id)
-                subText "open file"]
-            (table.insert choices {: text : image : subText : id})))
-        (each [_ file (ipairs files)]
-          (let [text file
-                image notes-app-image]
-            (table.insert choices {: text : image })))
-        choices))
+    (each [_ window (ipairs windows)]
+      (let [text (window:title)
+            image notes-app-image
+            id (window:id)
+            subText "open file"]
+        (table.insert choices {: text : image : subText : id})))
+    (each [_ file (ipairs files)]
+      (let [text file
+            image notes-app-image]
+        (table.insert choices {: text : image })))
+    choices))
 
 (fn show-notes-fuzzy []
   (local chooser (fuzzy get-notes-choices open-note))
