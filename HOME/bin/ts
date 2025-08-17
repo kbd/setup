@@ -1,4 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "python-dateutil",
+# ]
+# ///
 # if given nothing, print the time
 # if given the time, print the human time
 # if given the human time, print the time
