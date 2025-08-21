@@ -4,7 +4,6 @@ alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
 alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
 alias date-full="ts -f"
 alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
-alias dear='dt="$(kpd)" && note-daily "$dt"'
 export NOTES_DIR=~/notes
 
 note-tmpl() {
@@ -14,6 +13,11 @@ note-tmpl() {
 note-daily() {
   local dt="${1:-$(today)}"
   note "$(note-daily-file "$dt")" "$(note-tmpl daily "$(date-full "$dt")")";
+}
+
+dear() {
+  local dt="${1:-$(kpd)}"
+  [[ "$dt" ]] && note-daily "$dt"
 }
 
 note-daily-file() {
