@@ -36,7 +36,7 @@
     "terminal.integrated.fontWeight": 600,
     "terminal.integrated.splitCwd": "workspaceRoot",
     "terminal.integrated.profiles.osx": {
-        "zsh": {"path": "zsh", "args": ["-l"]},
+        "zsh": {"path": "zsh", "args": ["-l"], "env": {"PROMPT_BARE": "1"}},
     },
     "terminal.integrated.defaultProfile.osx": "zsh",
     "terminal.integrated.commandsToSkipShell": [
