@@ -43,7 +43,11 @@ note() {
 }
 
 note-tasks() {
-  <"$(note-daily-file "$@")" kmd -Ptasks | glow
+  kmd "$(note-daily-file "$1")" -Ptasks "${@:2}" | glow
+}
+
+kmdd() {
+  kmd "$(note-daily-file "$1")" "${@:2}"
 }
 
 # date pickers
