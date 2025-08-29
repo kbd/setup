@@ -43,7 +43,7 @@ note() {
 }
 
 note-tasks() {
-  kmd "$(note-daily-file "$1")" -Ptasks "${@:2}" | glow
+  kmd "$(note-daily-file "$1")" -ptasks "${@:2}" | glow
 }
 
 kmdd() {
