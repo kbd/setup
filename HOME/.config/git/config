@@ -226,7 +226,7 @@
 	w- = w -
 	watch = !watchexec --print-events --no-meta --debounce=1000 git cam .
 	watchp = !watchexec --print-events --no-meta --debounce=1000 git camp .
-	tail-log = !watchexec --ignore-nothing -r -w .git/COMMIT_EDITMSG git lp -n1
+	tail-log = !watchexec --fs-events=modify -r -w .git/COMMIT_EDITMSG git lp
 	wc = w -c
 	set-main-branch = remote set-head origin
 	set-branch-here = !git pick-branch | xargs -tp git branch --force
