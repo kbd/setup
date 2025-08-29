@@ -57,6 +57,7 @@ fi
 # find/pag{ers,ing}/editors
 export PAGER=less
 export LESS='-iMFx4 --mouse --incsearch --exit-follow-on-close' # smart-case, status bar, quit 1 screen, 4sp tabs
+export LESSEDIT='code -ng %f:%l'
 export EDITOR=hx
 export VISUAL='code -nw'
 export GIT_EDITOR='kitty-launch-and-wait "$EDITOR"'
