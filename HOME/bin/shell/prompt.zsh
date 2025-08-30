@@ -14,10 +14,10 @@ precmd() {
   export PROMPT_HR=$COLUMNS
   title "$PROMPT_PATH${TABTITLE:+" ($TABTITLE)"}"
 
-  set_kitty_tab_color
+  set-kitty-tab-color
 }
 
-set_kitty_tab_color() {
+set-kitty-tab-color() {
   [[ $TERM != xterm-kitty || $DIR_COLOR == $OLD_DIR_COLOR ]] && return
 
   local active_fg inactive_fg
