@@ -18,19 +18,19 @@ precmd() {
 }
 
 set_kitty_tab_color() {
-  [[ $TERM != xterm-kitty ]] && return;
-  if [[ $DIR_COLOR != $OLD_DIR_COLOR ]]; then
-    if [[ "$DIR_COLOR" ]]; then
-      local active_fg=$(pastel textcolor "$DIR_COLOR" | pastel format hex)
-      local inactive_fg="#333"; [[ "$active_fg" != "#000000" ]] && inactive_fg="#ccc"
-    fi
+  [[ $TERM != xterm-kitty || $DIR_COLOR == $OLD_DIR_COLOR ]] && return
 
-    kitty @ set-tab-color --self \
-      active_bg="${DIR_COLOR:-NONE}" inactive_bg="${DIR_COLOR:-NONE}" \
-      active_fg="${active_fg:-NONE}" inactive_fg="${inactive_fg:-NONE}"
-
-    OLD_DIR_COLOR=$DIR_COLOR
+  local active_fg inactive_fg
+  if [[ "$DIR_COLOR" ]]; then
+    active_fg=$(pastel textcolor "$DIR_COLOR" | pastel format hex)
+    inactive_fg="#333"; [[ "$active_fg" != "#000000" ]] && inactive_fg="#ccc"
   fi
+
+  kitty @ set-tab-color --self \
+    active_bg="${DIR_COLOR:-NONE}" inactive_bg="${DIR_COLOR:-NONE}" \
+    active_fg="${active_fg:-NONE}" inactive_fg="${inactive_fg:-NONE}"
+
+  OLD_DIR_COLOR=$DIR_COLOR
 }
 
 preexec(){
