@@ -1,5 +1,5 @@
-if [[ $TERM == xterm-kitty ]] && has kitty-tab-color; then
+if [[ $TERM == xterm-kitty ]]; then
   if file="$(find_up .vscode/settings.json)"; then
-    eval "$(kitty-tab-color "$file")"
+    export DIR_COLOR="$(jq <"$file" -r '."peacock.color" // empty')"
   fi
 fi
