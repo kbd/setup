@@ -6,24 +6,18 @@ export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
 unset HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK # do a "full" update
 
 bundle="${1:-}"
+[[ -z "$bundle" ]] && echo >&2 "Must specify brew bundle file" && exit 1
 
-if [[ -z "$bundle" ]]; then
-  echo >&2 "Must specify brew bundle file"
-  exit 1
-fi
-
-if which brew > /dev/null; then
-  echo "Homebrew is installed"
-else
+install-homebrew() {
+  # https://brew.sh/
   echo "Installing Homebrew"
-  # command from https://brew.sh/
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
+}
+echo "Ensuring Homebrew is installed"
+which brew >/dev/null || install-homebrew
 
 echo "Ensuring command line tools are installed"
-if ! xcode-select --install; then
-  echo "Command line tools are installed"
-else
+if xcode-select --install; then
   echo "Installing command line tools. Hit enter when installer is finished, or ctrl+c to quit "
   read -r
 fi
@@ -32,9 +26,7 @@ echo "Updating Homebrew"
 brew update
 
 echo "Ensuring 'mas' is installed"
-if ! which mas > /dev/null; then
-  brew install mas
-fi
+which mas >/dev/null || brew install mas
 
 echo "Executing brew bundle"
 brew bundle -v --file="$bundle"
