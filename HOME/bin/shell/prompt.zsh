@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 PROMPT='$(prompt zsh)'
-RPROMPT='$([[ ! $PROMPT_BARE ]] && echo $(date +"%m/%d %H:%M:%S"))'
+RPROMPT='$([[ ! $PROMPT_BARE ]] && date +"%m/%d %H:%M:%S")'
 
 alias pb='[[ $PROMPT_BARE ]] && unset PROMPT_BARE || export PROMPT_BARE=1'
 
