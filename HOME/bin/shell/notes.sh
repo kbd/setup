@@ -50,6 +50,10 @@ kmdd() {
   kmd "$(note-daily-file "$1")" "${@:2}"
 }
 
+jr() {
+  kmd "$(note-daily-file)" -Pjournal -i --add "<u>$(ts -t)</u> $*"
+}
+
 # date pickers
 alias pd='pickdate --format=yyyy-mm-dd'
 kpd() {

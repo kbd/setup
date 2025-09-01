@@ -26,12 +26,16 @@ def isfloat(arg):
 
 
 def format_date(dt, fmt, strftime):
-    if fmt in (None, 'timestamp'):
+    if fmt in (None, 'unixtime'):
         return dt.timestamp()
     elif fmt == 'full_iso':
         return dt.isoformat()
     elif fmt == 'iso':
         return dt.strftime('%Y-%m-%d %H:%M:%S')
+    elif fmt == 'date':
+        return dt.strftime('%Y-%m-%d')
+    elif fmt == 'time':
+        return dt.strftime('%H:%M:%S')
     elif fmt == 'rfc2822':
         from email import utils
         return utils.format_datetime(dt)
@@ -65,9 +69,9 @@ def main(arg, opts, utc):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Show/convert timestamp')
     parser.add_argument('arg', nargs='*', help='Timestamp')
-    parser.add_argument('-u', '--utc', action='store_true', help='use UTC')
+    parser.add_argument('-U', '--utc', action='store_true', help='use UTC')
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-t', '--timestamp', action='store_true',
+    group.add_argument('-u', '--unixtime', action='store_true',
         help='unix timestamp (default if no arg or human arg)')
     group.add_argument('-i', '--iso', action='store_true', help='short iso')
     group.add_argument('-I', '--full_iso', action='store_true',
@@ -76,6 +80,8 @@ if __name__ == '__main__':
     group.add_argument('-l', '-c', '--locale', action='store_true', help='locale')
     group.add_argument('-s', '--strftime', metavar="S", help='Use strftime format string')
     group.add_argument('-f', '--full', action='store_true', help='Full English date')
+    group.add_argument('-t', '--time', action='store_true', help='Time portion of iso date/time')
+    group.add_argument('-d', '--date', action='store_true', help='Date portion of iso date/time')
     args = vars(parser.parse_args())
 
     # pick out primary arguments and pass format options
