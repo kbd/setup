@@ -35,10 +35,9 @@
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.fontWeight": 600,
     "terminal.integrated.splitCwd": "workspaceRoot",
-    "terminal.integrated.profiles.osx": {
-        "zsh": {"path": "zsh", "args": ["-l"], "env": {"PROMPT_BARE": "1"}},
+    "terminal.integrated.env.osx": {,
+        "PROMPT_BARE": "1"
     },
-    "terminal.integrated.defaultProfile.osx": "zsh",
     "terminal.integrated.commandsToSkipShell": [
         "binrun.show",
     ],
@@ -81,7 +80,7 @@
     "security.workspace.trust.untrustedFiles": "open",
     "editor.lightbulb.enabled": "onCode",
     "github.copilot.nextEditSuggestions.enabled": true,
-    "chat.editing.alwaysSaveWithGeneratedChanges": true,
+    "chat.agent.maxRequests": 100,
 
     // workbench
     "workbench.tree.indent": 15,
@@ -406,7 +405,6 @@
     },
     "json.schemas": [],
     "debug.javascript.autoAttachFilter": "smart",
-    "javascript.inlayHints.enumMemberValues.enabled": true,
     "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
     "javascript.inlayHints.parameterNames.enabled": "all",
     "javascript.inlayHints.parameterTypes.enabled": true,
