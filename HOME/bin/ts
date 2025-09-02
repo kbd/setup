@@ -25,6 +25,10 @@ def isfloat(arg):
         return False
 
 
+def num_suffix(n):
+    return 'th st nd rd'.split()[n%10<4 and n%100//10!=1 and n%10]
+
+
 def format_date(dt, fmt, strftime):
     if fmt in (None, 'unixtime'):  # 1756833198.85659
         return dt.timestamp()
@@ -44,8 +48,7 @@ def format_date(dt, fmt, strftime):
     elif fmt == 'strftime':
         return dt.strftime(strftime)
     elif fmt == 'full':  # "Tuesday, September 2nd 2025", impossible with 'date'
-        s = 'th st nd rd'.split()[dt.day%10<4 and dt.day//10!=1 and dt.day%10]
-        return dt.strftime(f"%A, %B %-d{s} %Y")
+        return dt.strftime(f"%A, %B %-d{num_suffix(dt.day)} %Y")
 
     raise Exception(f"Unknown format option: {fmt}")
 
