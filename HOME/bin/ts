@@ -25,11 +25,11 @@ def isfloat(arg):
         return False
 
 
-def num_suffix(n):
+def num_suffix(n: int) -> str:
     return 'th st nd rd'.split()[n%10<4 and n%100//10!=1 and n%10]
 
 
-def format_date(dt, fmt, strftime):
+def format_date(dt: datetime, fmt: str | None, strftime: str):
     if fmt in (None, 'unixtime'):  # 1756833198.85659
         return dt.timestamp()
     elif fmt == 'full_iso':  # 2025-09-02T13:13:36.826109-04:00
