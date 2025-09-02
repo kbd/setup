@@ -26,26 +26,26 @@ def isfloat(arg):
 
 
 def format_date(dt, fmt, strftime):
-    if fmt in (None, 'unixtime'):
+    if fmt in (None, 'unixtime'):  # 1756833198.85659
         return dt.timestamp()
-    elif fmt == 'full_iso':
+    elif fmt == 'full_iso':  # 2025-09-02T13:13:36.826109-04:00
         return dt.isoformat()
-    elif fmt == 'iso':
+    elif fmt == 'iso':  # 2025-09-02 13:13:48
         return dt.strftime('%Y-%m-%d %H:%M:%S')
-    elif fmt == 'date':
+    elif fmt == 'date':  # 2025-09-02
         return dt.strftime('%Y-%m-%d')
-    elif fmt == 'time':
+    elif fmt == 'time':  # 13:13:48
         return dt.strftime('%H:%M:%S')
-    elif fmt == 'rfc2822':
+    elif fmt == 'rfc2822':  # Tue, 02 Sep 2025 13:14:32 -0400
         from email import utils
         return utils.format_datetime(dt)
-    elif fmt == 'locale':
+    elif fmt == 'locale':  # Tue Sep  2 13:14:54 2025
         return dt.strftime('%c')
     elif fmt == 'strftime':
         return dt.strftime(strftime)
-    elif fmt == 'full':
-        o = 'th' if 11 <= dt.day <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(dt.day % 10, 'th')
-        return dt.strftime(f"%A, %B %-d{o} %Y")
+    elif fmt == 'full':  # "Tuesday, September 2nd 2025", impossible with 'date'
+        s = 'th st nd rd'.split()[dt.day%10<4 and dt.day//10!=1 and dt.day%10]
+        return dt.strftime(f"%A, %B %-d{s} %Y")
 
     raise Exception(f"Unknown format option: {fmt}")
 

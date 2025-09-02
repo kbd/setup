@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-alias today="gdate '+%Y-%m-%d'"
-alias yesterday="gdate -d '-1day' '+%Y-%m-%d'"
-alias tomorrow="gdate -d '+1day' '+%Y-%m-%d'"
+alias today="gdate +%Y-%m-%d"
+alias yesterday="today -d-1day"
+alias tomorrow="today -d+1day"
 alias date-full="ts -f"
-alias tss="gdate +'%a %b %d %Y %H:%M:%S'"
+alias tss="gdate +'%a %b %d %Y %H:%M:%S'" # Tue Sep 02 2025 15:53:09
+alias typora="/Applications/Typora.app/Contents/MacOS/Typora"
 export NOTES_DIR=~/notes
 
 note-tmpl() {
@@ -51,7 +52,11 @@ kmdd() {
 }
 
 jr() {
-  kmd "$(note-daily-file)" -Pjournal -i --add "<u>$(ts -t)</u> $*"
+  kmd "$(note-daily-file)" -Pjournal -i --add-item "<u>$(ts -t)</u> $*"
+}
+
+ta() {
+  kmd "$(note-daily-file)" -Ptasks -i --add-task "$*"
 }
 
 # date pickers
