@@ -68,6 +68,10 @@
         "*.heex": "html-eex",
     },
 
+    // security
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.promptForLocalFileProtocolHandling": false,
+
     // misc
     "breadcrumbs.enabled": true,
     "outline.showVariables": false,
@@ -77,7 +81,6 @@
     "debug.showBreakpointsInOverviewRuler": true,
     "scm.alwaysShowRepositories": true,
     "git.openRepositoryInParentFolders": "always",
-    "security.workspace.trust.untrustedFiles": "open",
     "editor.lightbulb.enabled": "onCode",
     "github.copilot.nextEditSuggestions.enabled": true,
     "chat.agent.maxRequests": 100,

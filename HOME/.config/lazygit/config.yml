@@ -1,0 +1,9 @@
+# https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+git:
+  # https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+
+os:
+  editPreset: 'vscode'

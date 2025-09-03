@@ -57,6 +57,7 @@
 	file-decoration-style = yellow box
 	commit-regex = > [0-9a-f]{7,}
 	hyperlinks = true
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
 
 [delta "sbs"]
 	side-by-side = true
