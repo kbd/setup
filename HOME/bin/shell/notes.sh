@@ -44,7 +44,7 @@ note() {
 }
 
 note-tasks() {
-  kmd "$(note-daily-file "$1")" -ptasks "${@:2}" | glow
+  kmd --tasks "$NOTES_DIR" --tasks "$(note-daily-file "$1")" --complete=false "${@:2}"
 }
 
 kmdd() {
@@ -54,10 +54,12 @@ kmdd() {
 jr() {
   kmd "$(note-daily-file)" -Pjournal -i --add-item "<u>$(ts -t)</u> $*"
 }
+alias jr='noglob jr'
 
 ta() {
   kmd "$(note-daily-file)" -Ptasks -i --add-task "$*"
 }
+alias ta='noglob ta'
 
 # date pickers
 alias pd='pickdate --format=yyyy-mm-dd'
