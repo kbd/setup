@@ -179,6 +179,9 @@
 	mf = m --ff-only
 	mn = m --no-ff
 	mb = !git pick-branch | xargs -t git mn
+	mi = !git pick-branch | xargs -t git merge --interactive
+	# new setting, push.autoSetupRemote, probably replaces this alias
+	# https://git-scm.com/docs/git-config#Documentation/git-config.txt-pushautoSetupRemote
 	p = "!f() { if git upstream; then git push \"$@\"; else git push -u \"$@\"; fi }; f" # push, set upstream if necessary
 	# "push --force", requiring confirmation. AFAIK, you ~always want --force-with-lease over plain --force
 	# https://git-scm.com/docs/git-push#Documentation/git-push.txt---no-force-with-lease
