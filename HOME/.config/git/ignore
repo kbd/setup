@@ -11,5 +11,7 @@ __*
 
 .DS_Store
 .envrc
-.vscode/
-.jj/
+
+# Ignore hidden directories but allow explicitly adding files within them
+.*/**
+!.*/
