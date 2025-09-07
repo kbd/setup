@@ -43,21 +43,21 @@ note() {
   a Typora "$(note-create "$@")"
 }
 
-note-tasks() {
-  kmd --tasks "$NOTES_DIR" --tasks "$(note-daily-file "$1")" --complete=false "${@:2}"
+mdf () {
+  glow | less -R
 }
 
-kmdd() {
-  kmd "$(note-daily-file "$1")" "${@:2}"
+note-tasks() {
+  kmd @- "$(note-daily-file "$1")" "${@:2}" --tags --color=always | mdf
 }
 
 jr() {
-  kmd "$(note-daily-file)" -Pjournal -i --add-item "<u>$(ts -t)</u> $*"
+  kmd -i 'journal | append({})' "<u>$(ts -t)</u> $*" -- "$(note-daily-file)"
 }
 alias jr='noglob jr'
 
 ta() {
-  kmd "$(note-daily-file)" -Ptasks -i --add-task "$*"
+  kmd 'tasks | prepend({})' "$*" -- "$(note-daily-file)"
 }
 alias ta='noglob ta'
 
