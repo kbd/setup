@@ -52,12 +52,12 @@ note-tasks() {
 }
 
 jr() {
-  kmd -i 'journal | append({})' "<u>$(ts -t)</u> $*" -- "$(note-daily-file)"
+  kmd -i 'journal | append*({})' "<u>$(ts -t)</u> $*" -- "$(note-daily-file)"
 }
 alias jr='noglob jr'
 
 ta() {
-  kmd 'tasks | prepend({})' "$*" -- "$(note-daily-file)"
+  kmd -i 'tasks | prepend({})' "$*" -- "$(note-daily-file)"
 }
 alias ta='noglob ta'
 
