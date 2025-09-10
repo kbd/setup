@@ -87,6 +87,7 @@
 	au = a -u
 	ap = a -p
 	rp = reset -p # reset --patch is the opposite of add --patch
+	ep = restore -p # affects the working directory
 	rpc = !git pick-commits | xargs -toI% git rp %~ # "oops that shouldn't be in that commit"
 
 	b = branch
