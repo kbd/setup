@@ -25,6 +25,10 @@ note-daily-file() {
   note-file "diary/${1:-$(today)}"
 }
 
+journal() {
+  note-daily-file "$@"
+}
+
 note-file() {
   local f="${1%.md}.md"
   is-absolute "$f" || f="$NOTES_DIR/$f"
