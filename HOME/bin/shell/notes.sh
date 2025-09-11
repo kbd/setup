@@ -52,7 +52,7 @@ mdf () {
 }
 
 note-tasks() {
-  kmd @- "$(note-daily-file "$1")" "${@:2}" --tags --color=always | mdf
+  kmd '@-[!cats]' "$(note-daily-file "$1")" "${@:2}" --tags --color=always | mdf
 }
 
 jr() {
