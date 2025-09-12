@@ -20,9 +20,9 @@ bindkey "\e[H" beginning-of-line # home
 bindkey "\e[F" end-of-line # end
 bindkey "\e[3~" delete-char # delete
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
-bindplugin "^[e" ecled # ⌥e
 bindplugin "^[E" edit-command-line # ⌥E
-ecled() { VISUAL="$EDITOR" edit-command-line; }
+ecl-ed() { VISUAL="$EDITOR" edit-command-line; }
+bindplugin "^[e" ecl-ed # ⌥e
 
 auto-expand() {
   if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
