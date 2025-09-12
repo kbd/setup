@@ -65,6 +65,10 @@ ta() {
 }
 alias ta='noglob ta'
 
+em() {
+  kmd -i 'tasks | append@({})' "[$*]($(cb))" -- "$(note-file email)"
+}
+
 # date pickers
 alias pd='pickdate --format=yyyy-mm-dd'
 kpd() {
