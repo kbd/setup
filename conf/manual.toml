@@ -42,3 +42,8 @@ git = "https://github.com/romkatv/zsh-bench.git"
 
 [zsh-defer]
 git = "https://github.com/romkatv/zsh-defer.git"
+
+[cmdg]
+git = "https://github.com/ThomasHabets/cmdg.git"
+cmd = "go build ./cmd/cmdg"
+bin = "cmdg"
