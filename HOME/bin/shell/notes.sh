@@ -52,7 +52,10 @@ mdf () {
 }
 
 note-tasks() {
-  kmd '@-[!cats]' "$(note-daily-file "$1")" "${@:2}" --tags --color=always | mdf
+  # highlight the first task
+  kmd '@-[!cats]' "$(note-daily-file "$1")" "${@:2}" --tags --color=always \
+  | sd '^(\s*[-*+].*?\[[ Xx]\]\s*)(.*)' $'$1\e[32m***$2***\e[0m' -n1 \
+  | mdf
 }
 
 jr() {
