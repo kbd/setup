@@ -181,6 +181,8 @@ cask "font-noto-mono"
 cask "font-victor-mono"
 cask "font-victor-mono-nerd-font"
 cask "font-symbols-only-nerd-font"
+cask "font-iosevka"
+cask "font-iosevka-aile"
 
 # mas "Amazon Kindle", id: 302584613
 mas "Cyberduck", id: 409222199

@@ -390,7 +390,7 @@
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
         "editor.wordWrap": "bounded",
-        "editor.fontFamily": "Inter",  // use proportional font for writing
+        "editor.fontFamily": "Iosevka Aile",
         "files.trimTrailingWhitespace": false,  // actually syntactically necessary
     },
     "markdown.preview.fontFamily": "Inter",
