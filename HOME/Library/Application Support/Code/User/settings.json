@@ -50,7 +50,7 @@
     "search.quickOpen.includeHistory": false,
 
     // window
-    "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}",
+    "window.title": "${rootPath}${separator}${activeFolderMedium}${separator}${activeEditorShort}${separator}${activeEditorState}",
     "window.titleSeparator": " // ",
     "window.restoreWindows": "preserve",
     "window.closeWhenEmpty": true,
