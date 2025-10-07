@@ -1,3 +1,6 @@
 if file="$(find_up .vscode/settings.json)"; then
-  export DIR_COLOR="$(jq <"$file" -r '."peacock.color" // empty')"
+  export DIR_COLOR="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.activeBackground" // empty')"
+  export DIR_COLOR_FG="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.activeForeground" // empty')"
+  export DIR_COLOR_INACTIVE="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.inactiveBackground" // empty')"
+  export DIR_COLOR_INACTIVE_FG="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.inactiveForeground" // empty')"
 fi

@@ -202,10 +202,15 @@
     ],
 
     // peacock
-    "peacock.surpriseMeOnStartup": false,
-    "peacock.affectStatusBar": true,
     "peacock.affectActivityBar": true,
+    "peacock.affectDebuggingStatusBar": true,
+    "peacock.affectEditorGroupBorder": true,
+    "peacock.affectPanelBorder": true,
+    "peacock.affectSideBarBorder": true,
+    "peacock.affectStatusAndTitleBorders": true,
+    "peacock.affectStatusBar": true,
     "peacock.affectTabActiveBorder": true,
+    "peacock.surpriseMeOnStartup": true,
     "peacock.favoriteColors": [
         {
             "name": "Angular Red",
