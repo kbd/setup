@@ -1,5 +1,3 @@
-if [[ $TERM == xterm-kitty ]]; then
-  if file="$(find_up .vscode/settings.json)"; then
-    export DIR_COLOR="$(jq <"$file" -r '."peacock.color" // empty')"
-  fi
+if file="$(find_up .vscode/settings.json)"; then
+  export DIR_COLOR="$(jq <"$file" -r '."peacock.color" // empty')"
 fi
