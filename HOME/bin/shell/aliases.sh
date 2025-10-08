@@ -100,6 +100,7 @@ ze(){ z "$@" && e .; } # z to dir then edit
 zE(){ EDITOR="code" ze "$@"; }
 
 # directory/navigation
+alias ,,='..;-' # exit and re-enter the current directory
 alias   -- -='cd -'
 alias  -- --='cd -2'
 alias -- ---='cd -3'
@@ -221,7 +222,6 @@ user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
 alias S='~S' # too often I miss the ~ when I ~S. Make it work anyway.
 alias ,='~S'
-alias ,,='..;-' # exit and re-enter the current directory
 alias zj=zellij
 alias zja='zj ls | fzf -0 -1 --ansi --bind "enter:become(echo {1})" | xargs -to zellij a'
 

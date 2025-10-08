@@ -1,6 +1,12 @@
+set-dir-colors() {
+  local keys=$(printf '"%s",' titleBar.{active,inactive}{Background,Foreground})
+  local q='."workbench.colorCustomizations"['${keys%,}'] | . // ""'
+  local r
+  mapfile -t r < <(jq -r <"$1" "$q")
+  export DIR_COLOR="${r[0]}" DIR_COLOR_FG="${r[1]}" DIR_COLOR_INACTIVE="${r[2]}" DIR_COLOR_INACTIVE_FG="${r[3]}"
+}
+
 if file="$(find_up .vscode/settings.json)"; then
-  export DIR_COLOR="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.activeBackground" // empty')"
-  export DIR_COLOR_FG="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.activeForeground" // empty')"
-  export DIR_COLOR_INACTIVE="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.inactiveBackground" // empty')"
-  export DIR_COLOR_INACTIVE_FG="$(jq <"$file" -r '."workbench.colorCustomizations"."titleBar.inactiveForeground" // empty')"
+  export VSCODE_SETTINGS="$file"
+  set-dir-colors "$VSCODE_SETTINGS"
 fi

@@ -17,6 +17,14 @@ precmd() {
   set-kitty-tab-color
 }
 
+set-dir-colors(){
+  local keys=(titleBar.{active,inactive}{Background,Foreground})
+  local arr="\"${(j:", ":)keys}\""
+  local q='."workbench.colorCustomizations"['$arr'] | . // ""'
+  local r=("${(@f)$(jq -r <"$1" "$q")}")
+  export DIR_COLOR=$r[1] DIR_COLOR_FG=$r[2] DIR_COLOR_INACTIVE=$r[3] DIR_COLOR_INACTIVE_FG=$r[4]
+}
+
 rgba-to-rgb() {
   local c="${1#\#}"
   [[ ${#c} -ne 8 ]] && { echo "$1"; return; }
@@ -28,8 +36,8 @@ set-kitty-tab-color() {
   [[ $TERM != xterm-kitty || $DIR_COLOR == $OLD_DIR_COLOR ]] && return
   local abg="${DIR_COLOR:-NONE}"
   local afg="${DIR_COLOR_FG:-NONE}"
-  local ibg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE:-$DIR_COLOR}")"
-  local ifg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE_FG:-$DIR_COLOR_FG}")"
+  local ibg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE:-NONE}")"
+  local ifg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE_FG:-NONE}")"
   kitty @ set-tab-color --self active_bg=$abg inactive_bg=$ibg active_fg=$afg inactive_fg=$ifg
   OLD_DIR_COLOR=$DIR_COLOR
 }
