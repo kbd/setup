@@ -14,13 +14,12 @@ precmd() {
   export PROMPT_HR=$COLUMNS
   title "$PROMPT_PATH${TABTITLE:+" ($TABTITLE)"}"
 
-  set-kitty-tab-color
+  set-tab-color
 }
 
 set-dir-colors(){
   local keys=(titleBar.{active,inactive}{Background,Foreground})
-  local arr="\"${(j:", ":)keys}\""
-  local q='."workbench.colorCustomizations"['$arr'] | . // ""'
+  local q='."workbench.colorCustomizations"["'"${(j:", ":)keys}"'"] | . // ""'
   local r=("${(@f)$(jq -r <"$1" "$q")}")
   export DIR_COLOR=$r[1] DIR_COLOR_FG=$r[2] DIR_COLOR_INACTIVE=$r[3] DIR_COLOR_INACTIVE_FG=$r[4]
 }
@@ -32,14 +31,19 @@ rgba-to-rgb() {
   printf "#%02x%02x%02x" $((r*a/255)) $((g*a/255)) $((b*a/255))
 }
 
-set-kitty-tab-color() {
-  [[ $TERM != xterm-kitty || $DIR_COLOR == $OLD_DIR_COLOR ]] && return
-  local abg="${DIR_COLOR:-NONE}"
-  local afg="${DIR_COLOR_FG:-NONE}"
-  local ibg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE:-NONE}")"
-  local ifg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE_FG:-NONE}")"
-  kitty @ set-tab-color --self active_bg=$abg inactive_bg=$ibg active_fg=$afg inactive_fg=$ifg
-  OLD_DIR_COLOR=$DIR_COLOR
+set-tab-color() {
+  [[ $TERM != xterm-kitty || $VSCODE_SETTINGS == $OLD_VSCODE_SETTINGS ]] && return
+  if [[ $VSCODE_SETTINGS ]]; then
+    set-dir-colors "$VSCODE_SETTINGS"
+  else
+    unset DIR_COLOR DIR_COLOR_FG DIR_COLOR_INACTIVE DIR_COLOR_INACTIVE_FG
+  fi
+  kitty @ set-tab-color --self \
+    active_bg="${DIR_COLOR:-NONE}" \
+    active_fg="${DIR_COLOR_FG:-NONE}" \
+    inactive_bg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE:-NONE}")" \
+    inactive_fg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE_FG:-NONE}")"
+  OLD_VSCODE_SETTINGS=$VSCODE_SETTINGS
 }
 
 preexec(){
