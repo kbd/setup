@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+eval "$* 2> >(sed 's/^/\x1b[31m[STDERR]\x1b[0m /') 1> >(sed 's/^/\x1b[34m[STDOUT]\x1b[0m /')"
