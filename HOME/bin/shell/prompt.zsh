@@ -20,8 +20,7 @@ precmd() {
 set-dir-colors(){
   local keys=(titleBar.{active,inactive}{Background,Foreground})
   local q='."workbench.colorCustomizations"["'"${(j:", ":)keys}"'"] | . // ""'
-  local r=("${(@f)$(jq -r <"$1" "$q")}")
-  export DIR_COLOR=$r[1] DIR_COLOR_FG=$r[2] DIR_COLOR_INACTIVE=$r[3] DIR_COLOR_INACTIVE_FG=$r[4]
+  DIR_COLOR=("${(@f)$(jq -r <"$1" "$q")}")
 }
 
 rgba-to-rgb() {
@@ -33,16 +32,10 @@ rgba-to-rgb() {
 
 set-tab-color() {
   [[ $TERM != xterm-kitty || $VSCODE_SETTINGS == $OLD_VSCODE_SETTINGS ]] && return
-  if [[ $VSCODE_SETTINGS ]]; then
-    set-dir-colors "$VSCODE_SETTINGS"
-  else
-    unset DIR_COLOR DIR_COLOR_FG DIR_COLOR_INACTIVE DIR_COLOR_INACTIVE_FG
-  fi
-  kitty @ set-tab-color --self \
-    active_bg="${DIR_COLOR:-NONE}" \
-    active_fg="${DIR_COLOR_FG:-NONE}" \
-    inactive_bg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE:-NONE}")" \
-    inactive_fg="$(rgba-to-rgb "${DIR_COLOR_INACTIVE_FG:-NONE}")"
+  [[ $VSCODE_SETTINGS ]] && set-dir-colors "$VSCODE_SETTINGS" || unset DIR_COLOR
+  local k=({active,inactive}_{bg,fg}) args=() i
+  for i in {1..$#k}; do args+="$k[i]=${$(rgba-to-rgb "${DIR_COLOR[i]}"):-NONE}"; done
+  kitty @ set-tab-color --self "${args[@]}"
   OLD_VSCODE_SETTINGS=$VSCODE_SETTINGS
 }
 
