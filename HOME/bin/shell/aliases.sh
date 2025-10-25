@@ -38,7 +38,6 @@ if [[ $ZSH_VERSION ]]; then
   # global aliases
   alias -g L='| $PAGER'
   alias -g H='| head'
-  alias -g C='| grcat log'
 
   # suffix aliases
   alias -s txt='$EDITOR'
@@ -90,6 +89,7 @@ alias Eg='E -g' # edit (go to line)
 alias o=open
 alias o.='o .'
 alias a='o -a'
+alias ss='o ~R' # open screenshots dir
 alias x='chmod +x'
 alias c='bat --style=header,numbers'
 te(){ t "$@" && e "$@"; }
@@ -100,6 +100,8 @@ ze(){ z "$@" && e .; } # z to dir then edit
 zE(){ EDITOR="code" ze "$@"; }
 
 # directory/navigation
+alias S='~S' # "settings dir"
+alias ,='~S'
 alias ,,='..;-' # exit and re-enter the current directory
 alias   -- -='cd -'
 alias  -- --='cd -2'
@@ -220,8 +222,6 @@ alias ug='ug --smart-case'
 alias uq='ug -Q --no-confirm -e'
 user_home() { eval echo "~$1"; } # http://stackoverflow.com/a/20506895
 alias wcl='wc -l'
-alias S='~S' # too often I miss the ~ when I ~S. Make it work anyway.
-alias ,='~S'
 alias zj=zellij
 alias zja='zj ls | fzf -0 -1 --ansi --bind "enter:become(echo {1})" | xargs -to zellij a'
 
