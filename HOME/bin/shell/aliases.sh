@@ -133,9 +133,9 @@ mcd() {
   mkdir -p -- "$1" && cl "$@" -A
 }
 
-# git
+# source control
 alias g=git
-alias s='gs' # status
+alias s='jj st' # status
 alias d='gd' # diff
 alias p='gpg' # pull and show graph of recent changes
 alias g-='gco -' # switch to most recent branch (can't alias '-' directly in git)
