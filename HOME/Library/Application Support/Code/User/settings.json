@@ -35,7 +35,7 @@
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.fontWeight": 600,
     "terminal.integrated.splitCwd": "workspaceRoot",
-    "terminal.integrated.env.osx": {,
+    "terminal.integrated.env.osx": {
         "PROMPT_BARE": "1"
     },
     "terminal.integrated.commandsToSkipShell": [
