@@ -119,6 +119,7 @@ alias ll='ls -lh'
 alias lla='ll -A'
 alias llt='ll -t'
 alias llat='ll -At'
+nls(){ nu -c "ls $*"; };
 lsd() { ls -d --indicator-style=none "$@" -- */; }
 lld() { ll -d --indicator-style=none "$@" -- */; }
 cl() { cd -- "${1-$HOME}" && l "${@:2}"; }
