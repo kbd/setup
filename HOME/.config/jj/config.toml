@@ -3,3 +3,7 @@
 [ui]
 diff-editor = ":builtin"
 default-command = "log"
+
+[aliases]
+l = ["log", "-r", "(main..@):: | (main..@)-"]
+tail = ["util", "exec", "--", "hwatch", "--color", "jj", "--ignore-working-copy", "log", "-n10", "-p", "--color=always"]
