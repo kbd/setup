@@ -1,3 +1,2 @@
 git-open
 prettier
-@anthropic-ai/claude-code
