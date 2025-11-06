@@ -1,2 +1,2 @@
-harlequin[mysql,postgres,s3]
---python 3.12 posting
+--python 3.13 harlequin[mysql,postgres,s3]
+posting
