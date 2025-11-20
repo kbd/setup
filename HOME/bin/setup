@@ -101,7 +101,7 @@ edit:
 
 # Update the setup repository
 pull:
-	cd {{setup-path}} && git pull
+	cd {{setup-path}} && jj git fetch
 
 # Install all software packages
 packages: python python-tools js go rust cargo vscode
