@@ -194,3 +194,4 @@ sudo.pmset.displaysleep(10)
 
 # Typora settings
 defaults["abnerworks.Typora"]["NSUserKeyEquivalents"] = {"Open Link": "@$k"}
+defaults["abnerworks.Typora"]["quitAfterWindowClose"] = True
