@@ -4,8 +4,12 @@
 diff-editor = ":builtin"
 default-command = "log"
 
+[revset-aliases]
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+
 [aliases]
 l = ["log", "-r", "(main..@):: | (main..@)-"]
 tail = ["util", "exec", "--", "hwatch", "--color", "jj", "--ignore-working-copy", "log", "-n10", "-p", "--color=always"]
 set-main = ["b", "s", "main", "-r", "git_head()"]
 track-main = ["b", "t", "main@origin"]
+tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
