@@ -24,14 +24,8 @@ fi
 echo "Updating Homebrew"
 brew update
 
-echo "Ensuring 'mas' is installed"
-which mas >/dev/null || brew install mas
-
 echo "Executing brew bundle"
 brew bundle -v --file="$bundle"
-
-echo "Updating App Store"
-mas upgrade
 
 echo "Running cleanup"
 HOMEBREW_CLEANUP_MAX_AGE_DAYS=0 brew cleanup -s
