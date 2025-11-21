@@ -2,16 +2,13 @@
 
 My config, system settings, dotfiles, utilities, etc.
 
-## Usage
-
-To run, clone into `~/setup` (though location of the repository doesn't
-matter), and run `~/setup/HOME/bin/setup`.
-
 ## Bootstrap
 
-You can bootstrap this onto a new system with:
+Bootstrap this onto a new system with:
 
 ```python3 -c "$(curl -fsSL https://raw.githubusercontent.com/kbd/setup/main/bootstrap.py)"```
+
+That clones into `~/setup`, installs and runs [Homebrew](https://brew.sh/) to install core software, and then runs [setup](HOME/bin/setup) to install other packages and create symlinks.
 
 ## Details
 
