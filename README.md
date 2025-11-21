@@ -4,7 +4,7 @@ My config, system settings, dotfiles, utilities, etc.
 
 ## Bootstrap
 
-Bootstrap this onto a new system with:
+[Bootstrap](bootstrap.py) this onto a new system with:
 
 ```python3 -c "$(curl -fsSL https://raw.githubusercontent.com/kbd/setup/main/bootstrap.py)"```
 
