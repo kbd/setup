@@ -21,6 +21,7 @@
 [diff]
 	tool = kdiff3
 	renameLimit = 1000
+	colorMoved = default
 [merge]
 	tool = kdiff3
 	conflictstyle = zdiff3
@@ -46,7 +47,8 @@
 	diffFilter = delta --color-only
 
 [delta]
-	features = line-numbers decorations
+	navigate = true
+	line-numbers = true
 	whitespace-error-style = 22 reverse
 	syntax-theme = OneHalfDark
 	line-numbers-zero-style = white
@@ -55,6 +57,7 @@
 	commit-decoration-style = magenta box ul
 	file-style = brightyellow italic
 	file-decoration-style = yellow box
+	hunk-header-style = omit
 	commit-regex = > [0-9a-f]{7,}
 	hyperlinks = true
 	hyperlinks-file-link-format = "vscode://file/{path}:{line}"

@@ -1,8 +1,12 @@
 "$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
 
 [ui]
-diff-editor = ":builtin"
 default-command = "log"
+diff-editor = ":builtin"
+diff-formatter = "delta"
+
+[merge-tools.delta]
+diff-expected-exit-codes = [0, 1]
 
 [revset-aliases]
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
