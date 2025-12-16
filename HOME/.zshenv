@@ -9,4 +9,5 @@ hash -d D=~/Downloads
 hash -d E=~/Desktop
 hash -d A=~E/share
 hash -d R=~E/Screenshots
+hash -d .=~/.config
 BREW_SHELLENV_PATH=~/bin/shell/3rdparty/.brew.sh
