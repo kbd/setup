@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2139
-export XDG_CONFIG_HOME=~/.config
-export LANG=en_US.UTF-8
-export OS="$(uname)"
-
 # homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
@@ -19,7 +14,7 @@ _fzf_compgen_path() { fd -tf -HL . "$1"; }
 _fzf_compgen_dir() { fd -td -HL . "$1"; }
 
 # PLATFORM SPECIFIC
-if [[ $OS == Darwin ]]; then
+if [[ "$(uname)" == Darwin ]]; then
   # prefer GNU versions of common utils
   alias awk=gawk
   alias sed=gsed
