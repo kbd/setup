@@ -58,8 +58,7 @@ python:
 	uv pip install --strict --python ~/bin/.venv/bin/python -r {{conf}}/requirements.txt
 
 python-tools:
-	cat {{conf}}/python-tools.txt | xargs -t -L1 uv tool install
-	uv tool upgrade --all
+	cat {{conf}}/python-tools.txt | xargs -t -L1 uv tool install -U
 
 js:
 	cat {{conf}}/npm.txt | xargs -t bun install -g
