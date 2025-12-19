@@ -5,6 +5,7 @@ alias tomorrow="today -d+1day"
 alias date-full="ts -f"
 alias tss="gdate +'%a %b %d %Y %H:%M:%S'" # Tue Sep 02 2025 15:53:09
 alias typora="/Applications/Typora.app/Contents/MacOS/Typora"
+alias N=~N
 export NOTES_DIR=~/notes
 
 note-tmpl() {
