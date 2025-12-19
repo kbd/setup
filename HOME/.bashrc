@@ -17,7 +17,7 @@ stty -ixon  # allow C-s and C-q to be used for things (see .vimrc)
 
 if ! declare -f is_remote > /dev/null; then
   # source files if running locally, otherwise everything is sourced in a bundle
-  for file in "$HOME/bin/shell"/**/*.{sh,bash}; do
+  for file in "$HOME/bin/shell"/**/*.sh; do
     source "$file"
   done
 else
