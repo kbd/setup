@@ -1,9 +1,8 @@
 # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
 git:
   # https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
-
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
 os:
   editPreset: 'vscode'
