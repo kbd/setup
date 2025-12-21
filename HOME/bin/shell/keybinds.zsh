@@ -14,7 +14,7 @@ bindkey "\e[H" beginning-of-line # home
 bindkey "\e[F" end-of-line # end
 bindkey "\e[3;3~" kill-word # ⌥del (kitty only, iterm ⌥del==del)
 bindplugin "^[E" edit-command-line # ⌥E
-.ECL() { VISUAL="kitty-launch-and-wait \"$EDITOR\"" edit-command-line; }
+.ECL() { VISUAL="$GIT_EDITOR" edit-command-line; }
 bindplugin "^[e" .ECL # ⌥e
 
 auto-expand() {
