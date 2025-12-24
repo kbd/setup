@@ -1,5 +1,6 @@
 hash -d S=~/setup
 hash -d H=~S/HOME
+hash -d H.=~H/.config
 hash -d P=~/proj
 hash -d N=~/notes
 hash -d K=~/tasks
