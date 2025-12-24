@@ -53,6 +53,9 @@ brew:
 
 	rm -f "$BREW_SHELLENV_PATH" # delete cached brew script so it's regenerated
 
+	# ensure karabiner elements config directory is symlinked
+	ln -sf ~H./karabiner/ ~./
+
 python:
 	uv venv --allow-existing ~/bin/.venv
 	uv pip install --strict --python ~/bin/.venv/bin/python -r {{conf}}/requirements.txt
