@@ -22,6 +22,7 @@ p = ["git", "push"]
 cm = ["ci", "-m"]
 d = ["desc"]
 dm = ["d", "-m"]
+al = ["d", "-r@-"] # amend last
 
 [remotes.origin]
 auto-track-bookmarks = "glob:*"
